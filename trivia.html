@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משחק טריוויה</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffecd2,#fcb69f);
+  min-height:100vh;
+  text-align:center;
+  color:#222;
+}
+.container{
+  max-width:700px;
+  margin:40px auto;
+  background:white;
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+h1{font-size:38px;}
+#question{
+  font-size:25px;
+  margin:25px 0;
+  font-weight:bold;
+}
+.answer{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:#e0f2fe;
+  font-size:20px;
+  cursor:pointer;
+}
+.answer:hover{
+  background:#bae6fd;
+}
+#result{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:20px;
+}
+#next{
+  margin-top:20px;
+  padding:13px 28px;
+  border:0;
+  border-radius:12px;
+  background:#22c55e;
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+a{
+  display:inline-block;
+  margin-top:25px;
+  color:#2563eb;
+  font-size:18px;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🧠 משחק טריוויה</h1>
+
+  <div id="score">ניקוד: 0</div>
+  <div id="question"></div>
+  <div id="answers"></div>
+  <div id="result"></div>
+
+  <button id="next" onclick="nextQuestion()">שאלה הבאה</button>
+
+  <br>
+  <a href="index.html">⬅ חזרה לדף הבית</a>
+</div>
+
+<script>
+const questions = [
+  {
+    q:"כמה ימים יש בשבוע?",
+    a:["5","6","7","8"],
+    correct:2
+  },
+  {
+    q:"איזו חיה אומרת מיאו?",
+    a:["כלב","חתול","סוס","פיל"],
+    correct:1
+  },
+  {
+    q:"מה הצבע של השמש בציורים בדרך כלל?",
+    a:["כחול","ירוק","צהוב","סגול"],
+    correct:2
+  },
+  {
+    q:"כמה רגליים יש לכלב?",
+    a:["2","3","4","6"],
+    correct:2
+  },
+  {
+    q:"איזה פרי הוא אדום בדרך כלל?",
+    a:["בננה","תפוח","מלפפון","ענב ירוק"],
+    correct:1
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function showQuestion(){
+  answered = false;
+  document.getElementById("result").innerText = "";
+  document.getElementById("score").innerText = "ניקוד: " + score;
+
+  const q = questions[current];
+  document.getElementById("question").innerText = q.q;
+
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  q.a.forEach((answer,index)=>{
+    const btn = document.createElement("button");
+    btn.className = "answer";
+    btn.innerText = answer;
+    btn.onclick = () => checkAnswer(index);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(index){
+  if(answered) return;
+  answered = true;
+
+  if(index === questions[current].correct){
+    score++;
+    document.getElementById("result").innerText = "נכון מאוד! 🎉";
+  } else {
+    document.getElementById("result").innerText = "לא נכון, נסה בשאלה הבאה 😊";
+  }
+
+  document.getElementById("score").innerText = "ניקוד: " + score;
+}
+
+function nextQuestion(){
+  current++;
+
+  if(current >= questions.length){
+    document.getElementById("question").innerText = "המשחק נגמר!";
+    document.getElementById("answers").innerHTML = "";
+    document.getElementById("result").innerText = "הניקוד הסופי שלך: " + score + " מתוך " + questions.length;
+    document.getElementById("next").style.display = "none";
+    return;
+  }
+
+  showQuestion();
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
