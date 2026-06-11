@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>טריוויה 4 שחקנים</title>
+<title>טריוויה משפחתית</title>
 <style>
 *{box-sizing:border-box;font-family:Arial,"Segoe UI",sans-serif}
 body{margin:0;min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2,#f093fb);color:#18304b;display:flex;align-items:center;justify-content:center;padding:18px;overflow-x:hidden}
@@ -12,7 +12,7 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle
 h1{margin:8px 0 8px;font-size:clamp(30px,5vw,54px);color:#ff5e78;text-align:center;text-shadow:0 2px 0 #fff}
 p{font-size:18px;line-height:1.5}.center{text-align:center}.hidden{display:none!important}
 .card{background:#f8fbff;border:3px solid #e8efff;border-radius:22px;padding:18px;margin:14px 0}
-.players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.players-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
 .player-card{border-radius:20px;padding:14px;text-align:center;font-weight:900;border:3px solid transparent;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.08)}
 .player-card.active{border-color:#ffbe0b;transform:scale(1.03);box-shadow:0 10px 26px rgba(255,190,11,.45)}
 .p1{background:#ffe3ec}.p2{background:#e0f7ff}.p3{background:#e8ffe0}.p4{background:#fff4cc}
@@ -37,7 +37,7 @@ button:hover{transform:translateY(-2px)}.main-btn{background:#6c5ce7;color:white
 .timer{font-size:34px;font-weight:1000;color:#ff5e78}.timer.low{animation:pulse .6s infinite alternate;color:#d63031}
 @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.12)}}.confetti{position:fixed;width:10px;height:10px;top:-20px;animation:fall 2.5s linear forwards;z-index:99}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
-.results{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}.result{border-radius:22px;padding:16px;text-align:center;font-weight:900;background:#fff;border:3px solid #e8efff}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0}.result{border-radius:22px;padding:16px;text-align:center;font-weight:900;background:#fff;border:3px solid #e8efff}
 .winner{background:linear-gradient(135deg,#fff1a8,#ffd166);border-color:#ffbe0b;transform:scale(1.04)}
 .home{display:inline-block;margin-top:12px;text-decoration:none;background:#ff9f43;color:#fff;padding:13px 20px;border-radius:18px;font-weight:900}.small{font-size:15px;color:#52667a}
 @media(max-width:760px){.players-grid,.stats,.results{grid-template-columns:repeat(2,1fr)}.answers,.inputs{grid-template-columns:1fr}.app{padding:18px}}
@@ -46,9 +46,18 @@ button:hover{transform:translateY(-2px)}.main-btn{background:#6c5ce7;color:white
 <body>
 <main class="app">
 <section id="start">
-<h1>🏆 טריוויה 4 שחקנים</h1>
-<p class="center">300 שאלות לגילאי 10–15 · משחק בתורות · טיימר · ניקוד · שיא נשמר בדפדפן</p>
+<h1>🏆 טריוויה משפחתית</h1>
+<p class="center">300 שאלות לגילאי 10–15 · אפשר לשחק לבד, בזוג, בשלישייה או בארבעה · טיימר · ניקוד · שיא נשמר בדפדפן</p>
 <div class="card">
+<div class="inputs">
+<select id="playerCount" onchange="updatePlayerInputs()">
+<option value="1">שחקן בודד</option>
+<option value="2">2 שחקנים</option>
+<option value="3">3 שחקנים</option>
+<option value="4" selected>4 שחקנים</option>
+</select>
+<div class="small" style="display:flex;align-items:center;justify-content:center;font-weight:900;background:#fff;border:2px solid #d7e3ff;border-radius:16px;padding:10px;">בחרו כמה שחקנים משתתפים</div>
+</div>
 <div class="inputs">
 <input id="name1" value="שחקן 1" placeholder="שם שחקן 1">
 <input id="name2" value="שחקן 2" placeholder="שם שחקן 2">
@@ -99,9 +108,26 @@ const ALL_QUESTIONS = [{"category": "ידע כללי", "question": "כמה ימ�
 let players=[], questions=[], currentIndex=0, currentPlayer=0, answered=false, timerInterval=null, timeLeft=15, chosenTime=15;
 const bestKey="trivia4playersBestScore";
 document.getElementById("bestScore").textContent=localStorage.getItem(bestKey)||0;
+function updatePlayerInputs(){
+  const count=parseInt(document.getElementById("playerCount").value);
+  for(let i=1;i<=4;i++){
+    const input=document.getElementById("name"+i);
+    if(input){
+      input.style.display = i<=count ? "block" : "none";
+    }
+  }
+}
+updatePlayerInputs();
 function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5)}
 function startGame(){
-players=[{name:document.getElementById("name1").value||"שחקן 1",score:0},{name:document.getElementById("name2").value||"שחקן 2",score:0},{name:document.getElementById("name3").value||"שחקן 3",score:0},{name:document.getElementById("name4").value||"שחקן 4",score:0}];
+const count=parseInt(document.getElementById("playerCount").value);
+const allPlayers=[
+{name:document.getElementById("name1").value||"שחקן 1",score:0},
+{name:document.getElementById("name2").value||"שחקן 2",score:0},
+{name:document.getElementById("name3").value||"שחקן 3",score:0},
+{name:document.getElementById("name4").value||"שחקן 4",score:0}
+];
+players=allPlayers.slice(0,count);
 let len=parseInt(document.getElementById("gameLength").value);chosenTime=parseInt(document.getElementById("timeLimit").value);
 questions=shuffle(ALL_QUESTIONS).slice(0,len);currentIndex=0;currentPlayer=0;answered=false;
 document.getElementById("start").classList.add("hidden");document.getElementById("end").classList.add("hidden");document.getElementById("game").classList.remove("hidden");
