@@ -1,6 +1,4 @@
-להורדת הקובץ המוכן
-
-תחליף באתר את קובץ הסוליטר בקובץ הזה. 
+להורדת הגרסה לאייפון 
 
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
@@ -123,6 +121,10 @@ button:hover{transform:translateY(-2px)}
   .panel{grid-template-columns:1fr}.playerbar{grid-template-columns:1fr}
   button,.home{width:100%}
 }
+
+.board,.tableau,.top-row,.pile,.foundation,.stock,.waste,.card{
+  touch-action:none;
+}
 </style>
 </head>
 <body>
@@ -150,7 +152,9 @@ button:hover{transform:translateY(-2px)}
   <div class="playerbar" id="playerbar"></div>
 </header>
 
-<div class="message" id="message">איך משחקים: בטלפון אפשר ללחוץ על קלף ואז ללחוץ על היעד, או לגרור עם האצבע. דאבל־טאפ יעביר קלף אוטומטית ליסודות אם אפשר.</div>
+<div class="message" id="message">איך משחקים בטלפון: לוחצים פעם אחת על קלף פתוח, ואז לוחצים על העמודה/הקלף שאליו רוצים להעביר. לא חייבים לגרור. דאבל־טאפ יעביר קלף למעלה אם אפשר.</div>
+
+<div class="message" style="font-size:16px;margin-top:-6px;color:#eafff5">באייפון: לא גוררים ימינה. לוחצים על קלף → לוחצים על יעד.</div>
 
 <section class="board">
   <div class="top-row">
@@ -299,6 +303,7 @@ function renderPile(container,cards,type,suit){
   }
   if(type==="foundation"){
     el.dataset.source="foundation";el.dataset.suit=suit;
+    el.onclick=(e)=>{e.stopPropagation();clickFoundation(suit)};
   }
   container.appendChild(el);
 }
@@ -325,19 +330,56 @@ function drawFromStock(){
 }
 
 function clickCard(source,col,index){
+  // אם כבר נבחר קלף, ונוגעים בקלף אחר בעמודה — ננסה להעביר אליו במקום לבחור אותו מחדש.
+  // זה חשוב במיוחד באייפון, כי המשתמש לוחץ על הקלף העליון בעמודת היעד ולא על הרקע הריק.
+  if(selected && source==="tableau"){
+    if(moveToTableau(selected,col)){
+      afterMove();
+      msg("הקלף עבר לעמודה");
+      return;
+    }
+  }
+
+  // אם כבר נבחר קלף ונוגעים בקלף שביסודות — ננסה להעביר ליסודות המתאימים.
+  if(selected && source==="foundation"){
+    const suit=col;
+    if(moveToFoundation(selected,suit)){
+      afterMove();
+      msg("הקלף עבר למעלה");
+      return;
+    }
+  }
+
   const moving=getMoving(source,col,index);
   if(!moving.length)return;
   select({source,col,index,cards:moving});
+  msg("הקלף סומן. עכשיו לחץ על העמודה או הסימן למעלה שאליהם תרצה להעביר.");
 }
 
 function clickTableau(col){
-  if(!selected)return;
-  if(moveToTableau(selected,col)){afterMove()} else msg("מהלך לא חוקי");
+  if(!selected){
+    msg("קודם לחץ על קלף פתוח, ואז לחץ על העמודה שאליה תרצה להעביר.");
+    return;
+  }
+  if(moveToTableau(selected,col)){
+    afterMove();
+    msg("הקלף עבר לעמודה");
+  } else {
+    msg("מהלך לא חוקי: בעמודות מניחים צבע הפוך ומספר נמוך ב־1. על עמודה ריקה אפשר רק מלך.");
+  }
 }
 
 function clickFoundation(suit){
-  if(!selected)return;
-  if(moveToFoundation(selected,suit)){afterMove()} else msg("אפשר להניח ביסודות רק לפי סדר מאס עד מלך ובאותו סימן");
+  if(!selected){
+    msg("קודם לחץ על קלף פתוח, ואז לחץ על הסימן למעלה.");
+    return;
+  }
+  if(moveToFoundation(selected,suit)){
+    afterMove();
+    msg("הקלף עבר למעלה");
+  } else {
+    msg("אפשר להניח ביסודות רק לפי סדר מאס עד מלך ובאותו סימן.");
+  }
 }
 
 function select(sel){
