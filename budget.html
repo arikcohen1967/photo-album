@@ -69,6 +69,7 @@ button:hover{opacity:.9;}
 }
 .secondary{background:#22a6b3;}
 .danger{background:#ff4d6d;}
+.lockBtn{background:#444;}
 table{
   width:100%;
   border-collapse:collapse;
@@ -111,6 +112,44 @@ canvas{
   color:#666;
 }
 footer{color:white;padding:30px;}
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  box-sizing:border-box;
+}
+.loginBox{
+  background:white;
+  max-width:430px;
+  width:100%;
+  border-radius:28px;
+  padding:32px 24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+.loginBox h1{
+  color:#333;
+  font-size:34px;
+  margin-bottom:10px;
+}
+.loginBox input{
+  width:100%;
+  box-sizing:border-box;
+  margin:14px 0;
+  text-align:center;
+  font-size:22px;
+  letter-spacing:4px;
+}
+.error{
+  color:#d93025;
+  font-weight:bold;
+  min-height:22px;
+}
+#app{
+  display:none;
+}
 @media(max-width:700px){
   h1{font-size:31px;}
   th,td{font-size:14px;padding:8px;}
@@ -119,6 +158,19 @@ footer{color:white;padding:30px;}
 </head>
 <body>
 
+<div id="loginScreen">
+  <div class="loginBox">
+    <h1>🔐 כניסה לתקציב</h1>
+    <p>הכנס סיסמה כדי לפתוח את ניהול התקציב המשפחתי</p>
+    <input id="passwordInput" type="password" placeholder="סיסמה">
+    <button onclick="checkPassword()">כניסה</button>
+    <p id="errorMsg" class="error"></p>
+    <a class="back" href="index.html">⬅ חזרה למסך הבית</a>
+    <p class="small">ברירת מחדל: 1234. אפשר לשנות בקוד בשורה של PASSWORD.</p>
+  </div>
+</div>
+
+<div id="app">
 <header>
   <h1>💰 ניהול תקציב משפחתי</h1>
   <p>הכנסות, הוצאות, קטגוריות, גרף וייצוא לאקסל</p>
@@ -177,6 +229,7 @@ footer{color:white;padding:30px;}
     <div class="actions">
       <button class="secondary" onclick="exportCSV()">ייצוא לאקסל</button>
       <button class="danger" onclick="clearAll()">מחיקת כל הנתונים</button>
+      <button class="lockBtn" onclick="lockBudget()">נעילת התקציב</button>
     </div>
   </div>
 
@@ -202,11 +255,49 @@ footer{color:white;padding:30px;}
 <footer>
   © 2026 משפחת כהן
 </footer>
+</div>
 
 <script>
+/* שנה כאן את הסיסמה */
+const PASSWORD = "1234";
+
 let transactions = JSON.parse(localStorage.getItem("familyBudget")) || [];
 
-document.getElementById("date").valueAsDate = new Date();
+function checkPassword(){
+  const input = document.getElementById("passwordInput").value;
+  const error = document.getElementById("errorMsg");
+
+  if(input === PASSWORD){
+    sessionStorage.setItem("budgetUnlocked", "yes");
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    startApp();
+  } else {
+    error.innerText = "סיסמה שגויה";
+  }
+}
+
+function lockBudget(){
+  sessionStorage.removeItem("budgetUnlocked");
+  document.getElementById("passwordInput").value = "";
+  document.getElementById("errorMsg").innerText = "";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("loginScreen").style.display = "flex";
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    checkPassword();
+  }
+});
+
+function startApp(){
+  const dateInput = document.getElementById("date");
+  if(dateInput && !dateInput.value){
+    dateInput.valueAsDate = new Date();
+  }
+  render();
+}
 
 function save(){
   localStorage.setItem("familyBudget", JSON.stringify(transactions));
@@ -300,6 +391,8 @@ function drawChart(income, expense){
 
 function render(){
   const list = document.getElementById("list");
+  if(!list) return;
+
   list.innerHTML = "";
 
   let income = 0;
@@ -341,7 +434,11 @@ function render(){
   drawChart(income, expense);
 }
 
-render();
+if(sessionStorage.getItem("budgetUnlocked") === "yes"){
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  startApp();
+}
 </script>
 
 </body>
