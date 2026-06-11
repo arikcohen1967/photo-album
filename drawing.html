@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ציור וצביעה - האתר של ליאן</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  min-height:100vh;
+  text-align:center;
+  color:#222;
+}
+header{
+  padding:35px 20px 20px;
+  color:white;
+}
+h1{
+  font-size:38px;
+  margin:0;
+}
+p{
+  font-size:19px;
+}
+.back{
+  display:inline-block;
+  margin-top:10px;
+  background:white;
+  color:#333;
+  text-decoration:none;
+  padding:12px 22px;
+  border-radius:18px;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+.container{
+  max-width:1000px;
+  margin:20px auto 50px;
+  padding:20px;
+}
+.panel{
+  background:white;
+  border-radius:25px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  margin-bottom:20px;
+}
+.tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  align-items:center;
+}
+button,input,select{
+  font-size:17px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+}
+button{
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
+  background:#7b61ff;
+  color:white;
+}
+button:hover{
+  opacity:.9;
+}
+.clear{
+  background:#ff4d6d;
+}
+.save{
+  background:#179b4d;
+}
+.eraser{
+  background:#444;
+}
+canvas{
+  background:white;
+  border:5px solid #fff;
+  border-radius:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  touch-action:none;
+  width:100%;
+  max-width:900px;
+  height:520px;
+}
+.small{
+  font-size:14px;
+  color:#666;
+}
+.colorBtn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:3px solid white;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  padding:0;
+}
+footer{
+  color:white;
+  padding:30px;
+}
+@media(max-width:700px){
+  h1{font-size:31px;}
+  canvas{height:430px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎨 ציור וצביעה</h1>
+  <p>לצייר, למחוק, לבחור צבעים ולשמור את הציור</p>
+  <a class="back" href="index.html">⬅ חזרה למסך הבית</a>
+</header>
+
+<div class="container">
+
+  <div class="panel">
+    <h2>כלי ציור</h2>
+    <div class="tools">
+      <button class="colorBtn" style="background:#ff4d6d" onclick="setColor('#ff4d6d')"></button>
+      <button class="colorBtn" style="background:#7b61ff" onclick="setColor('#7b61ff')"></button>
+      <button class="colorBtn" style="background:#22a6b3" onclick="setColor('#22a6b3')"></button>
+      <button class="colorBtn" style="background:#179b4d" onclick="setColor('#179b4d')"></button>
+      <button class="colorBtn" style="background:#ffb703" onclick="setColor('#ffb703')"></button>
+      <button class="colorBtn" style="background:#000000" onclick="setColor('#000000')"></button>
+
+      <label>צבע חופשי:
+        <input type="color" id="colorPicker" value="#7b61ff" onchange="setColor(this.value)">
+      </label>
+
+      <label>עובי:
+        <select id="sizePicker" onchange="setSize(this.value)">
+          <option value="4">דק</option>
+          <option value="8" selected>רגיל</option>
+          <option value="14">עבה</option>
+          <option value="24">עבה מאוד</option>
+        </select>
+      </label>
+
+      <button class="eraser" onclick="useEraser()">מחק</button>
+      <button class="clear" onclick="clearCanvas()">נקה הכל</button>
+      <button class="save" onclick="saveDrawing()">שמור ציור</button>
+    </div>
+    <p class="small">בטלפון מציירים עם האצבע. במחשב מציירים עם העכבר.</p>
+  </div>
+
+  <canvas id="drawingCanvas"></canvas>
+
+</div>
+
+<footer>
+  © 2026 משפחת כהן
+</footer>
+
+<script>
+const canvas = document.getElementById("drawingCanvas");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+let currentColor = "#7b61ff";
+let currentSize = 8;
+
+function resizeCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const saved = ctx.getImageData(0, 0, canvas.width || 1, canvas.height || 1);
+
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  try{
+    ctx.putImageData(saved, 0, 0);
+  }catch(e){}
+}
+
+window.addEventListener("load", resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
+
+function getPosition(e){
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches ? e.touches[0] : e;
+  return {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
+}
+
+function startDrawing(e){
+  e.preventDefault();
+  drawing = true;
+  const pos = getPosition(e);
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+}
+
+function draw(e){
+  if(!drawing) return;
+  e.preventDefault();
+  const pos = getPosition(e);
+  ctx.lineWidth = currentSize;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = currentColor;
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+}
+
+function stopDrawing(){
+  drawing = false;
+  ctx.beginPath();
+}
+
+function setColor(color){
+  currentColor = color;
+  document.getElementById("colorPicker").value = color;
+}
+
+function setSize(size){
+  currentSize = Number(size);
+}
+
+function useEraser(){
+  currentColor = "white";
+  currentSize = 28;
+}
+
+function clearCanvas(){
+  if(confirm("לנקות את כל הציור?")){
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+function saveDrawing(){
+  const link = document.createElement("a");
+  link.download = "lian-drawing.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+
+canvas.addEventListener("mousedown", startDrawing);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stopDrawing);
+canvas.addEventListener("mouseleave", stopDrawing);
+
+canvas.addEventListener("touchstart", startDrawing);
+canvas.addEventListener("touchmove", draw);
+canvas.addEventListener("touchend", stopDrawing);
+</script>
+
+</body>
+</html>
