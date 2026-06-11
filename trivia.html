@@ -1,169 +1,1913 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>משחק טריוויה</title>
-<style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#ffecd2,#fcb69f);
-  min-height:100vh;
-  text-align:center;
-  color:#222;
-}
-.container{
-  max-width:700px;
-  margin:40px auto;
-  background:white;
-  border-radius:25px;
-  padding:30px;
-  box-shadow:0 8px 25px rgba(0,0,0,.2);
-}
-h1{font-size:38px;}
-#question{
-  font-size:25px;
-  margin:25px 0;
-  font-weight:bold;
-}
-.answer{
-  display:block;
-  width:100%;
-  margin:12px 0;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:#e0f2fe;
-  font-size:20px;
-  cursor:pointer;
-}
-.answer:hover{
-  background:#bae6fd;
-}
-#result{
-  font-size:22px;
-  font-weight:bold;
-  margin-top:20px;
-}
-#next{
-  margin-top:20px;
-  padding:13px 28px;
-  border:0;
-  border-radius:12px;
-  background:#22c55e;
-  color:white;
-  font-size:20px;
-  cursor:pointer;
-}
-a{
-  display:inline-block;
-  margin-top:25px;
-  color:#2563eb;
-  font-size:18px;
-  font-weight:bold;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>משחק טריוויה לילדים</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #8fd3f4, #84fab0);
+      color: #213547;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+      padding: 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game::before {
+      content: "⭐";
+      position: absolute;
+      font-size: 90px;
+      opacity: 0.12;
+      top: -15px;
+      left: 25px;
+      transform: rotate(-20deg);
+    }
+
+    h1 {
+      margin: 5px 0 10px;
+      font-size: clamp(28px, 5vw, 46px);
+      color: #ff6b6b;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      font-size: 18px;
+      color: #3d5a80;
+    }
+
+    .top-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: #f4f7ff;
+      border-radius: 16px;
+      padding: 12px;
+      font-weight: bold;
+      border: 2px solid #e4ebff;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 16px;
+      background: #e9eef7;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 15px 0 20px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff9a9e, #fad0c4, #84fab0);
+      transition: width 0.3s ease;
+    }
+
+    .question-box {
+      background: linear-gradient(135deg, #fff7ad, #ffe4e1);
+      padding: 24px;
+      border-radius: 22px;
+      margin-bottom: 20px;
+      border: 3px solid #fff;
+    }
+
+    #question {
+      font-size: clamp(22px, 4vw, 31px);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 18px;
+      padding: 15px 18px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .answer {
+      background: #ffffff;
+      color: #213547;
+      border: 3px solid #dbe7ff;
+      min-height: 72px;
+    }
+
+    .answer:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.13);
+      background: #f8fbff;
+    }
+
+    .answer.correct {
+      background: #78e08f;
+      border-color: #38ada9;
+      color: #064420;
+    }
+
+    .answer.wrong {
+      background: #ff7675;
+      border-color: #d63031;
+      color: white;
+    }
+
+    .answer:disabled {
+      cursor: not-allowed;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .main-btn {
+      background: #5f27cd;
+      color: white;
+      box-shadow: 0 8px 16px rgba(95,39,205,0.25);
+    }
+
+    .main-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+      background: #00d2d3;
+      color: #063b3b;
+    }
+
+    .home-btn {
+      display: inline-block;
+      margin-top: 18px;
+      text-decoration: none;
+      background: #ff9f43;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 16px;
+      font-weight: bold;
+    }
+
+    #feedback {
+      min-height: 32px;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, #dff9fb, #f8c291);
+      border-radius: 24px;
+      padding: 25px;
+      margin-top: 15px;
+    }
+
+    .big-score {
+      font-size: 54px;
+      color: #5f27cd;
+      margin: 10px 0;
+      font-weight: 900;
+    }
+
+    @media (max-width: 650px) {
+      .game {
+        padding: 18px;
+      }
+
+      .answers {
+        grid-template-columns: 1fr;
+      }
+
+      .top-bar {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        font-size: 17px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <main class="game">
+    <section id="start-screen">
+      <h1>🎉 משחק טריוויה 🎉</h1>
+      <p class="subtitle">150 שאלות לגילאי 10–15</p>
+      <p>בחרו תשובה נכונה, צברו נקודות ונסו להגיע לתוצאה מושלמת!</p>
+      <div class="controls">
+        <button class="main-btn" onclick="startGame()">התחלת משחק</button>
+      </div>
+      <a class="home-btn" href="index.html">⬅ חזרה לעמוד הבית</a>
+    </section>
 
-<div class="container">
-  <h1>🧠 משחק טריוויה</h1>
+    <section id="quiz-screen" class="hidden">
+      <h1>🧠 טריוויה</h1>
 
-  <div id="score">ניקוד: 0</div>
-  <div id="question"></div>
-  <div id="answers"></div>
-  <div id="result"></div>
+      <div class="top-bar">
+        <div class="stat">שאלה: <span id="question-number">1</span>/<span id="total-questions">150</span></div>
+        <div class="stat">ניקוד: <span id="score">0</span></div>
+        <div class="stat">נכונות: <span id="correct-count">0</span></div>
+      </div>
 
-  <button id="next" onclick="nextQuestion()">שאלה הבאה</button>
+      <div class="progress-wrap">
+        <div id="progress" class="progress"></div>
+      </div>
 
-  <br>
-  <a href="index.html">⬅ חזרה לדף הבית</a>
-</div>
+      <div class="question-box">
+        <h2 id="question"></h2>
+      </div>
 
-<script>
-const questions = [
-  {
-    q:"כמה ימים יש בשבוע?",
-    a:["5","6","7","8"],
-    correct:2
-  },
-  {
-    q:"איזו חיה אומרת מיאו?",
-    a:["כלב","חתול","סוס","פיל"],
-    correct:1
-  },
-  {
-    q:"מה הצבע של השמש בציורים בדרך כלל?",
-    a:["כחול","ירוק","צהוב","סגול"],
-    correct:2
-  },
-  {
-    q:"כמה רגליים יש לכלב?",
-    a:["2","3","4","6"],
-    correct:2
-  },
-  {
-    q:"איזה פרי הוא אדום בדרך כלל?",
-    a:["בננה","תפוח","מלפפון","ענב ירוק"],
-    correct:1
-  }
+      <div id="answers" class="answers"></div>
+
+      <div id="feedback"></div>
+
+      <div class="controls">
+        <button id="next-btn" class="main-btn hidden" onclick="nextQuestion()">שאלה הבאה ➜</button>
+        <button class="secondary-btn" onclick="restartGame()">התחל מחדש</button>
+      </div>
+    </section>
+
+    <section id="end-screen" class="hidden">
+      <h1>🏆 סיימתם!</h1>
+      <div class="result-card">
+        <p>התוצאה שלכם:</p>
+        <div class="big-score"><span id="final-score">0</span>/150</div>
+        <p id="final-message"></p>
+      </div>
+      <div class="controls">
+        <button class="main-btn" onclick="restartGame()">שחק שוב</button>
+      </div>
+      <a class="home-btn" href="index.html">⬅ חזרה לעמוד הבית</a>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {
+            "question": "מהי עיר הבירה של ישראל?",
+            "answers": [
+                  "ירושלים",
+                  "תל אביב",
+                  "חיפה",
+                  "באר שבע"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה כוכב לכת הכי קרוב לשמש?",
+            "answers": [
+                  "נוגה",
+                  "מאדים",
+                  "חמה",
+                  "צדק"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "כמה ימים יש בשנה רגילה?",
+            "answers": [
+                  "365",
+                  "360",
+                  "366",
+                  "364"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזו חיה נקראת מלך החיות?",
+            "answers": [
+                  "פיל",
+                  "אריה",
+                  "נמר",
+                  "זאב"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מה הצבע שמתקבל מערבוב כחול וצהוב?",
+            "answers": [
+                  "ירוק",
+                  "כתום",
+                  "סגול",
+                  "אדום"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה רגליים יש לעכביש?",
+            "answers": [
+                  "6",
+                  "8",
+                  "10",
+                  "12"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "באיזה יבשת נמצאת ישראל?",
+            "answers": [
+                  "אירופה",
+                  "אסיה",
+                  "אפריקה",
+                  "אמריקה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי השפה הרשמית העיקרית בישראל?",
+            "answers": [
+                  "עברית",
+                  "אנגלית",
+                  "צרפתית",
+                  "ספרדית"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה ים נמצא ממערב לישראל?",
+            "answers": [
+                  "ים סוף",
+                  "ים המלח",
+                  "הים התיכון",
+                  "הים הכספי"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "כמה שחקנים יש בקבוצת כדורגל על המגרש?",
+            "answers": [
+                  "9",
+                  "10",
+                  "11",
+                  "12"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה איבר בגוף מזרים דם?",
+            "answers": [
+                  "ריאות",
+                  "לב",
+                  "קיבה",
+                  "כבד"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו המספר הבא: 2, 4, 6, 8, ?",
+            "answers": [
+                  "9",
+                  "10",
+                  "11",
+                  "12"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזו חיה נותנת לנו חלב?",
+            "answers": [
+                  "תרנגולת",
+                  "פרה",
+                  "אריה",
+                  "דג"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה אותיות יש באלפבית העברי?",
+            "answers": [
+                  "20",
+                  "22",
+                  "24",
+                  "26"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו החג שבו מדליקים חנוכייה?",
+            "answers": [
+                  "פסח",
+                  "פורים",
+                  "חנוכה",
+                  "סוכות"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה צבע יש לעננים בדרך כלל ביום בהיר?",
+            "answers": [
+                  "לבן",
+                  "שחור",
+                  "אדום",
+                  "ירוק"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי עיר הבירה של צרפת?",
+            "answers": [
+                  "רומא",
+                  "פריז",
+                  "לונדון",
+                  "ברלין"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה כלי נגינה יש לו קלידים?",
+            "answers": [
+                  "כינור",
+                  "פסנתר",
+                  "חליל",
+                  "תוף"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה חודשים יש בשנה?",
+            "answers": [
+                  "10",
+                  "11",
+                  "12",
+                  "13"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה בעל חיים חי במים ויש לו זימים?",
+            "answers": [
+                  "כלב",
+                  "דג",
+                  "חתול",
+                  "סוס"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מי כתב את הספר 'הארי פוטר'?",
+            "answers": [
+                  "ג'יי קיי רולינג",
+                  "וולט דיסני",
+                  "רואלד דאל",
+                  "דוד גרוסמן"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי עיר הבירה של איטליה?",
+            "answers": [
+                  "מילאנו",
+                  "ונציה",
+                  "רומא",
+                  "נאפולי"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "באיזה ספורט משתמשים במחבט וכדור צהוב קטן?",
+            "answers": [
+                  "כדורגל",
+                  "טניס",
+                  "שחייה",
+                  "ריצה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה צלעות יש למשולש?",
+            "answers": [
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו האוקיינוס הגדול בעולם?",
+            "answers": [
+                  "האטלנטי",
+                  "השקט",
+                  "ההודי",
+                  "הארקטי"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה כוכב לכת נקרא הכוכב האדום?",
+            "answers": [
+                  "מאדים",
+                  "שבתאי",
+                  "נוגה",
+                  "אורנוס"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזו מדינה מפורסמת בפירמידות?",
+            "answers": [
+                  "יוון",
+                  "מצרים",
+                  "קנדה",
+                  "יפן"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי בירת ארצות הברית?",
+            "answers": [
+                  "ניו יורק",
+                  "וושינגטון די.סי.",
+                  "לוס אנג'לס",
+                  "שיקגו"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה חג מתחפשים בו?",
+            "answers": [
+                  "פורים",
+                  "ראש השנה",
+                  "שבועות",
+                  "פסח"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו מקור האור והחום של כדור הארץ?",
+            "answers": [
+                  "הירח",
+                  "השמש",
+                  "מאדים",
+                  "כוכב שביט"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה שעות יש ביממה?",
+            "answers": [
+                  "12",
+                  "18",
+                  "24",
+                  "30"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה חומר שותים כדי לא להתייבש?",
+            "answers": [
+                  "מים",
+                  "שמן",
+                  "חול",
+                  "אוויר"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי החיה היבשתית הגדולה ביותר?",
+            "answers": [
+                  "פיל",
+                  "ג'ירפה",
+                  "קרנף",
+                  "דוב"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה צבע מתקבל מערבוב אדום ולבן?",
+            "answers": [
+                  "ורוד",
+                  "חום",
+                  "ירוק",
+                  "שחור"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה עונות יש בשנה?",
+            "answers": [
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "באיזה חג אוכלים מצות?",
+            "answers": [
+                  "חנוכה",
+                  "פסח",
+                  "פורים",
+                  "סוכות"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה כוכב לכת יש לו טבעות מפורסמות?",
+            "answers": [
+                  "שבתאי",
+                  "כדור הארץ",
+                  "מאדים",
+                  "חמה"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת אנגליה?",
+            "answers": [
+                  "לונדון",
+                  "מנצ'סטר",
+                  "ליברפול",
+                  "בריסטול"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו בעל החיים הכי מהיר ביבשה?",
+            "answers": [
+                  "ברדלס",
+                  "אריה",
+                  "סוס",
+                  "זאב"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה שיניים בערך יש לאדם בוגר?",
+            "answers": [
+                  "20",
+                  "28",
+                  "32",
+                  "40"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהו ההפך מחושך?",
+            "answers": [
+                  "קור",
+                  "אור",
+                  "רעש",
+                  "שקט"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה יום בא אחרי יום שישי?",
+            "answers": [
+                  "חמישי",
+                  "שבת",
+                  "ראשון",
+                  "שני"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה כלי תחבורה נוסע על מסילות?",
+            "answers": [
+                  "מטוס",
+                  "רכבת",
+                  "אונייה",
+                  "אופניים"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו שם הגלקסיה שבה נמצא כדור הארץ?",
+            "answers": [
+                  "שביל החלב",
+                  "אנדרומדה",
+                  "העגלה הגדולה",
+                  "כוכב הצפון"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה שחקנים יש בקבוצת כדורסל על המגרש?",
+            "answers": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה פרי ידוע כצהוב ומעוקל?",
+            "answers": [
+                  "תפוח",
+                  "בננה",
+                  "אגס",
+                  "שזיף"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי עיר הבירה של יפן?",
+            "answers": [
+                  "קיוטו",
+                  "טוקיו",
+                  "אוסקה",
+                  "הירושימה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מה מודדים במדחום?",
+            "answers": [
+                  "מהירות",
+                  "חום",
+                  "משקל",
+                  "גובה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים נובח?",
+            "answers": [
+                  "חתול",
+                  "כלב",
+                  "פרה",
+                  "סוס"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה דקות יש בשעה?",
+            "answers": [
+                  "30",
+                  "45",
+                  "60",
+                  "90"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה יסוד כימי מסומן H?",
+            "answers": [
+                  "חמצן",
+                  "מימן",
+                  "זהב",
+                  "כסף"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו הכוכב שסביבו הירח מסתובב?",
+            "answers": [
+                  "השמש",
+                  "כדור הארץ",
+                  "מאדים",
+                  "צדק"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "באיזו יבשת נמצאת ברזיל?",
+            "answers": [
+                  "אירופה",
+                  "אפריקה",
+                  "דרום אמריקה",
+                  "אסיה"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה משחק כולל מלך, מלכה וצריח?",
+            "answers": [
+                  "שחמט",
+                  "דמקה",
+                  "מונופול",
+                  "טאקי"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי יחידת הכסף בישראל?",
+            "answers": [
+                  "דולר",
+                  "שקל",
+                  "אירו",
+                  "לירה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזו חיה מטילה ביצים ומקרקרת?",
+            "answers": [
+                  "ברווז",
+                  "תרנגולת",
+                  "פרה",
+                  "כבשה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה צבעים יש בקשת בענן בדרך כלל?",
+            "answers": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהו ההפך ממהיר?",
+            "answers": [
+                  "חזק",
+                  "איטי",
+                  "גבוה",
+                  "קרוב"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה ים הוא המקום הנמוך בעולם ביבשה?",
+            "answers": [
+                  "ים סוף",
+                  "הכנרת",
+                  "ים המלח",
+                  "הים התיכון"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהו הספורט שבו מנסים להבקיע שער?",
+            "answers": [
+                  "כדורגל",
+                  "שחייה",
+                  "טניס",
+                  "ג'ודו"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו החומר שממנו עשוי רוב גוף האדם?",
+            "answers": [
+                  "מים",
+                  "ברזל",
+                  "חול",
+                  "עץ"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה חודש מגיע אחרי ינואר?",
+            "answers": [
+                  "פברואר",
+                  "מרץ",
+                  "דצמבר",
+                  "יולי"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזו חיה אומרת מיאו?",
+            "answers": [
+                  "כלב",
+                  "חתול",
+                  "עז",
+                  "סוס"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי צורת כדור הארץ?",
+            "answers": [
+                  "שטוחה לגמרי",
+                  "כדורית",
+                  "משולשת",
+                  "מרובעת"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו בית הספר הראשון בדרך כלל אחרי גן?",
+            "answers": [
+                  "אוניברסיטה",
+                  "יסודי",
+                  "תיכון",
+                  "צבא"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה כלי תחבורה טס באוויר?",
+            "answers": [
+                  "מכונית",
+                  "מטוס",
+                  "רכבת",
+                  "אופנוע"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו שם החג שבו יושבים בסוכה?",
+            "answers": [
+                  "סוכות",
+                  "שבועות",
+                  "חנוכה",
+                  "פורים"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה ירק ידוע בצבע כתום?",
+            "answers": [
+                  "מלפפון",
+                  "גזר",
+                  "חסה",
+                  "בצל"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה ימים יש בשבוע?",
+            "answers": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "באיזה ספורט משתמשים בכדור כתום וסל?",
+            "answers": [
+                  "כדורגל",
+                  "כדורסל",
+                  "כדורעף",
+                  "בייסבול"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי בירת גרמניה?",
+            "answers": [
+                  "מינכן",
+                  "ברלין",
+                  "המבורג",
+                  "פרנקפורט"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי החיה הגבוהה ביותר בעולם?",
+            "answers": [
+                  "פיל",
+                  "ג'ירפה",
+                  "סוס",
+                  "דוב"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו הצבע של דם אצל בני אדם?",
+            "answers": [
+                  "אדום",
+                  "כחול",
+                  "ירוק",
+                  "צהוב"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה חג נקרא חג האורות?",
+            "answers": [
+                  "חנוכה",
+                  "פסח",
+                  "סוכות",
+                  "שבועות"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו כלי כתיבה שמשתמשים בו עם דיו?",
+            "answers": [
+                  "עיפרון",
+                  "עט",
+                  "מחק",
+                  "סרגל"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי בירת ספרד?",
+            "answers": [
+                  "ברצלונה",
+                  "מדריד",
+                  "סביליה",
+                  "ולנסיה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה איבר מאפשר לנו לראות?",
+            "answers": [
+                  "אוזן",
+                  "עין",
+                  "אף",
+                  "יד"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו המספר אחרי 99?",
+            "answers": [
+                  "98",
+                  "100",
+                  "101",
+                  "90"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים חי בקוטב הצפוני?",
+            "answers": [
+                  "דב קוטב",
+                  "קנגורו",
+                  "אריה",
+                  "גמל"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו שם הכוכב שעליו אנחנו חיים?",
+            "answers": [
+                  "מאדים",
+                  "כדור הארץ",
+                  "שבתאי",
+                  "נוגה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי בירת יוון?",
+            "answers": [
+                  "אתונה",
+                  "סלוניקי",
+                  "רודוס",
+                  "כרתים"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו ההפך מקר?",
+            "answers": [
+                  "רטוב",
+                  "חם",
+                  "נמוך",
+                  "קל"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "באיזה חג אוכלים אוזני המן?",
+            "answers": [
+                  "פורים",
+                  "פסח",
+                  "ראש השנה",
+                  "סוכות"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה בעל חיים ידוע בכיס בבטן?",
+            "answers": [
+                  "קנגורו",
+                  "חתול",
+                  "כלב",
+                  "ג'ירפה"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה אפסים יש באלף?",
+            "answers": [
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו הסמל הכימי של חמצן?",
+            "answers": [
+                  "O",
+                  "H",
+                  "C",
+                  "Fe"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה ספורט קשור לבריכה?",
+            "answers": [
+                  "שחייה",
+                  "כדורגל",
+                  "רכיבה",
+                  "טניס"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת רוסיה?",
+            "answers": [
+                  "מוסקבה",
+                  "סנט פטרבורג",
+                  "קאזאן",
+                  "סוצ'י"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזו חיה מכונה ספינת המדבר?",
+            "answers": [
+                  "סוס",
+                  "גמל",
+                  "פיל",
+                  "זברה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי התוצאה של 7 כפול 8?",
+            "answers": [
+                  "54",
+                  "56",
+                  "64",
+                  "58"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה חודש הוא האחרון בשנה?",
+            "answers": [
+                  "נובמבר",
+                  "דצמבר",
+                  "ינואר",
+                  "אוגוסט"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו המטבע באירופה ברוב המדינות?",
+            "answers": [
+                  "שקל",
+                  "אירו",
+                  "דולר",
+                  "ין"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "באיזה איבר אנחנו שומעים?",
+            "answers": [
+                  "עיניים",
+                  "אוזניים",
+                  "רגליים",
+                  "ידיים"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי בירת הולנד?",
+            "answers": [
+                  "אמסטרדם",
+                  "רוטרדם",
+                  "האאג",
+                  "אוטרכט"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה בעל חיים מפיק דבש?",
+            "answers": [
+                  "פרפר",
+                  "דבורה",
+                  "נמלה",
+                  "זבוב"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו ההפך מיום?",
+            "answers": [
+                  "בוקר",
+                  "לילה",
+                  "שמש",
+                  "צהריים"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה צמח נותן לנו זיתים?",
+            "answers": [
+                  "עץ זית",
+                  "עץ תפוח",
+                  "דקל",
+                  "אורן"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת קנדה?",
+            "answers": [
+                  "טורונטו",
+                  "ונקובר",
+                  "אוטווה",
+                  "מונטריאול"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "כמה מעלות יש בזווית ישרה?",
+            "answers": [
+                  "45",
+                  "90",
+                  "180",
+                  "360"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה משחק קלפים ישראלי מפורסם?",
+            "answers": [
+                  "טאקי",
+                  "שחמט",
+                  "כדורגל",
+                  "סודוקו"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו שם הנהר הארוך בישראל?",
+            "answers": [
+                  "הירדן",
+                  "הירקון",
+                  "נחל איילון",
+                  "הקישון"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה בעל חיים משנה צבעים?",
+            "answers": [
+                  "זיקית",
+                  "כלב",
+                  "סוס",
+                  "דולפין"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו ההפך מקטן?",
+            "answers": [
+                  "גדול",
+                  "צר",
+                  "קצר",
+                  "שקט"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת תאילנד?",
+            "answers": [
+                  "בנגקוק",
+                  "פוקט",
+                  "צ'יאנג מאי",
+                  "פטאיה"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה כוכב לכת הוא הגדול ביותר במערכת השמש?",
+            "answers": [
+                  "צדק",
+                  "מאדים",
+                  "שבתאי",
+                  "כדור הארץ"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי התוצאה של 12 ועוד 15?",
+            "answers": [
+                  "25",
+                  "26",
+                  "27",
+                  "28"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה כלי נגינה מנגנים עליו עם קשת?",
+            "answers": [
+                  "גיטרה",
+                  "כינור",
+                  "תוף",
+                  "פסנתר"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "באיזה חג אוכלים תפוח בדבש?",
+            "answers": [
+                  "ראש השנה",
+                  "חנוכה",
+                  "שבועות",
+                  "פורים"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת סין?",
+            "answers": [
+                  "שנגחאי",
+                  "בייג'ינג",
+                  "הונג קונג",
+                  "שנזן"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים חי בים והוא יונק?",
+            "answers": [
+                  "כריש",
+                  "דולפין",
+                  "מדוזה",
+                  "תמנון"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו ההפך משמאל?",
+            "answers": [
+                  "למעלה",
+                  "ימין",
+                  "קדימה",
+                  "אחורה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה צבע יש לשמש בציורים רבים?",
+            "answers": [
+                  "צהוב",
+                  "כחול",
+                  "סגול",
+                  "שחור"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת אוסטרליה?",
+            "answers": [
+                  "סידני",
+                  "מלבורן",
+                  "קנברה",
+                  "פרת"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזו חיה ידועה בפסים שחור-לבן?",
+            "answers": [
+                  "זברה",
+                  "פיל",
+                  "גמל",
+                  "שועל"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו שם המשחק שבו בונים עם קוביות צבעוניות?",
+            "answers": [
+                  "לגו",
+                  "שחמט",
+                  "טניס",
+                  "פאזל"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה רגליים יש לחרק בדרך כלל?",
+            "answers": [
+                  "4",
+                  "6",
+                  "8",
+                  "10"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי התוצאה של 100 פחות 25?",
+            "answers": [
+                  "50",
+                  "65",
+                  "75",
+                  "85"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "איזה איבר עוזר לנו לנשום?",
+            "answers": [
+                  "לב",
+                  "ריאות",
+                  "קיבה",
+                  "יד"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו החג שבו קוראים הגדה?",
+            "answers": [
+                  "פסח",
+                  "פורים",
+                  "חנוכה",
+                  "סוכות"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה ים נמצא בדרום ישראל?",
+            "answers": [
+                  "ים סוף",
+                  "הכנרת",
+                  "ים המלח",
+                  "הים התיכון"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מי היה האדם הראשון לפי התורה?",
+            "answers": [
+                  "נח",
+                  "אברהם",
+                  "אדם",
+                  "משה"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהי בירת ארגנטינה?",
+            "answers": [
+                  "בואנוס איירס",
+                  "לימה",
+                  "סנטיאגו",
+                  "מונטווידאו"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזו חיה ישנה הפוכה?",
+            "answers": [
+                  "עטלף",
+                  "סוס",
+                  "פיל",
+                  "דג"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו המספר הזוגי הבא אחרי 14?",
+            "answers": [
+                  "15",
+                  "16",
+                  "17",
+                  "18"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהו שם מערכת ההפעלה של אייפון?",
+            "answers": [
+                  "Android",
+                  "iOS",
+                  "Windows",
+                  "Linux"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה ספורט משחקים בו על קרח עם מקלות?",
+            "answers": [
+                  "הוקי קרח",
+                  "כדורגל",
+                  "כדורסל",
+                  "גולף"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת פורטוגל?",
+            "answers": [
+                  "פורטו",
+                  "ליסבון",
+                  "פארו",
+                  "מדיירה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "מהי החיה שמייללת?",
+            "answers": [
+                  "חתול",
+                  "פרה",
+                  "תרנגול",
+                  "סוס"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "כמה יבשות יש בעולם לפי החלוקה המקובלת?",
+            "answers": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהו שם המקום שבו לומדים אחרי תיכון?",
+            "answers": [
+                  "גן",
+                  "אוניברסיטה",
+                  "יסודי",
+                  "מעון"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים מפורסם בצוואר ארוך?",
+            "answers": [
+                  "ג'ירפה",
+                  "דוב",
+                  "כלב",
+                  "ארנב"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת נורווגיה?",
+            "answers": [
+                  "אוסלו",
+                  "סטוקהולם",
+                  "קופנהגן",
+                  "הלסינקי"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו ההפך מלמעלה?",
+            "answers": [
+                  "למטה",
+                  "ימין",
+                  "שמאל",
+                  "קדימה"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "באיזה מקצוע לומדים על מספרים?",
+            "answers": [
+                  "היסטוריה",
+                  "מתמטיקה",
+                  "ספרות",
+                  "גיאוגרפיה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים ידוע כמלך הג'ונגל?",
+            "answers": [
+                  "אריה",
+                  "קוף",
+                  "פיל",
+                  "נמר"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת טורקיה?",
+            "answers": [
+                  "איסטנבול",
+                  "אנקרה",
+                  "איזמיר",
+                  "אנטליה"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "כמה גרם יש בקילוגרם אחד?",
+            "answers": [
+                  "10",
+                  "100",
+                  "1000",
+                  "10000"
+            ],
+            "correct": 2
+      },
+      {
+            "question": "מהו צבע הדגל של ישראל בנוסף ללבן?",
+            "answers": [
+                  "אדום",
+                  "כחול",
+                  "ירוק",
+                  "צהוב"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה איבר משמש להרחה?",
+            "answers": [
+                  "אף",
+                  "פה",
+                  "אוזן",
+                  "עין"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת פולין?",
+            "answers": [
+                  "קרקוב",
+                  "ורשה",
+                  "גדנסק",
+                  "לודז'"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזו חיה חיה לרוב על עצים ואוכלת בננות?",
+            "answers": [
+                  "קוף",
+                  "זאב",
+                  "דב",
+                  "גמל"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו המשחק שבו מחפשים מילים ברשת אותיות?",
+            "answers": [
+                  "תפזורת",
+                  "כדורגל",
+                  "טאקי",
+                  "מחבואים"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "איזה חודש מגיע לפני אוקטובר?",
+            "answers": [
+                  "ספטמבר",
+                  "נובמבר",
+                  "יולי",
+                  "ינואר"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת שוודיה?",
+            "answers": [
+                  "סטוקהולם",
+                  "אוסלו",
+                  "הלסינקי",
+                  "רייקיאוויק"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי התוצאה של 9 כפול 9?",
+            "answers": [
+                  "72",
+                  "81",
+                  "90",
+                  "99"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה בעל חיים יכול לעוף?",
+            "answers": [
+                  "ציפור",
+                  "פיל",
+                  "חתול",
+                  "פרה"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו שם האתר שבו רואים סרטונים רבים?",
+            "answers": [
+                  "YouTube",
+                  "Excel",
+                  "Word",
+                  "Paint"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהי בירת הודו?",
+            "answers": [
+                  "מומבאי",
+                  "ניו דלהי",
+                  "גואה",
+                  "בנגלור"
+            ],
+            "correct": 1
+      },
+      {
+            "question": "איזה ספורט כולל שער, כדור וידיים אך אסור לשחקני שדה בכדורגל להשתמש בידיים?",
+            "answers": [
+                  "כדוריד",
+                  "שחייה",
+                  "ריצה",
+                  "טניס"
+            ],
+            "correct": 0
+      },
+      {
+            "question": "מהו ההפך מרעש?",
+            "answers": [
+                  "שקט",
+                  "אור",
+                  "חום",
+                  "מים"
+            ],
+            "correct": 0
+      }
 ];
 
-let current = 0;
-let score = 0;
-let answered = false;
+    let shuffledQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let correctCount = 0;
+    let answered = false;
 
-function showQuestion(){
-  answered = false;
-  document.getElementById("result").innerText = "";
-  document.getElementById("score").innerText = "ניקוד: " + score;
+    const startScreen = document.getElementById("start-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const endScreen = document.getElementById("end-screen");
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const questionNumberEl = document.getElementById("question-number");
+    const totalQuestionsEl = document.getElementById("total-questions");
+    const scoreEl = document.getElementById("score");
+    const correctCountEl = document.getElementById("correct-count");
+    const feedbackEl = document.getElementById("feedback");
+    const nextBtn = document.getElementById("next-btn");
+    const progressEl = document.getElementById("progress");
 
-  const q = questions[current];
-  document.getElementById("question").innerText = q.q;
+    totalQuestionsEl.textContent = questions.length;
 
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
+    function shuffleArray(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
 
-  q.a.forEach((answer,index)=>{
-    const btn = document.createElement("button");
-    btn.className = "answer";
-    btn.innerText = answer;
-    btn.onclick = () => checkAnswer(index);
-    answersDiv.appendChild(btn);
-  });
-}
+    function startGame() {
+      shuffledQuestions = shuffleArray(questions);
+      currentIndex = 0;
+      score = 0;
+      correctCount = 0;
+      answered = false;
 
-function checkAnswer(index){
-  if(answered) return;
-  answered = true;
+      startScreen.classList.add("hidden");
+      endScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
 
-  if(index === questions[current].correct){
-    score++;
-    document.getElementById("result").innerText = "נכון מאוד! 🎉";
-  } else {
-    document.getElementById("result").innerText = "לא נכון, נסה בשאלה הבאה 😊";
-  }
+      showQuestion();
+    }
 
-  document.getElementById("score").innerText = "ניקוד: " + score;
-}
+    function showQuestion() {
+      answered = false;
+      feedbackEl.textContent = "";
+      nextBtn.classList.add("hidden");
+      answersEl.innerHTML = "";
 
-function nextQuestion(){
-  current++;
+      const current = shuffledQuestions[currentIndex];
+      questionEl.textContent = current.question;
+      questionNumberEl.textContent = currentIndex + 1;
+      scoreEl.textContent = score;
+      correctCountEl.textContent = correctCount;
+      progressEl.style.width = ((currentIndex) / questions.length) * 100 + "%";
 
-  if(current >= questions.length){
-    document.getElementById("question").innerText = "המשחק נגמר!";
-    document.getElementById("answers").innerHTML = "";
-    document.getElementById("result").innerText = "הניקוד הסופי שלך: " + score + " מתוך " + questions.length;
-    document.getElementById("next").style.display = "none";
-    return;
-  }
+      current.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.className = "answer";
+        btn.textContent = answer;
+        btn.onclick = () => chooseAnswer(btn, index);
+        answersEl.appendChild(btn);
+      });
+    }
 
-  showQuestion();
-}
+    function chooseAnswer(button, selectedIndex) {
+      if (answered) return;
+      answered = true;
 
-showQuestion();
-</script>
+      const current = shuffledQuestions[currentIndex];
+      const allButtons = document.querySelectorAll(".answer");
 
+      allButtons.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === current.correct) {
+          btn.classList.add("correct");
+        }
+      });
+
+      if (selectedIndex === current.correct) {
+        score++;
+        correctCount++;
+        button.classList.add("correct");
+        feedbackEl.textContent = "כל הכבוד! תשובה נכונה ✅";
+        feedbackEl.style.color = "#138a36";
+      } else {
+        button.classList.add("wrong");
+        feedbackEl.textContent = "לא נורא! התשובה הנכונה מסומנת בירוק 🙂";
+        feedbackEl.style.color = "#d63031";
+      }
+
+      scoreEl.textContent = score;
+      correctCountEl.textContent = correctCount;
+      nextBtn.classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex >= shuffledQuestions.length) {
+        finishGame();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function finishGame() {
+      quizScreen.classList.add("hidden");
+      endScreen.classList.remove("hidden");
+      progressEl.style.width = "100%";
+
+      document.getElementById("final-score").textContent = score;
+
+      const percent = Math.round((score / questions.length) * 100);
+      let message = "";
+
+      if (percent >= 90) {
+        message = "אלופים! ידע מטורף! 🌟";
+      } else if (percent >= 75) {
+        message = "מצוין! אתם ממש חזקים בטריוויה 💪";
+      } else if (percent >= 50) {
+        message = "יפה מאוד! עוד משחק ותשתפרו עוד יותר 😊";
+      } else {
+        message = "העיקר שנהניתם! נסו שוב ותפתיעו את עצמכם 🚀";
+      }
+
+      document.getElementById("final-message").textContent = message;
+    }
+
+    function restartGame() {
+      startGame();
+    }
+  </script>
 </body>
-</html>
+</html
