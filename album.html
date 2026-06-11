@@ -170,6 +170,15 @@
       color: #063d25;
     }
 
+    .manage-btn {
+      background: #54a0ff;
+      color: white;
+    }
+
+    .manage-btn.active {
+      background: #5f27cd;
+    }
+
     .count {
       text-align: center;
       font-weight: 1000;
@@ -245,12 +254,22 @@
       left: 8px;
       background: rgba(255, 94, 120, 0.95);
       color: white;
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       padding: 0;
-      font-size: 18px;
+      font-size: 20px;
       box-shadow: 0 5px 14px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 5;
+    }
+
+    body.manage-mode .delete-photo {
+      display: block;
+    }
+
+    body.manage-mode .photo-card {
+      outline: 3px dashed rgba(255, 94, 120, 0.45);
     }
 
     .empty {
@@ -389,7 +408,7 @@
     <h1>📸 האלבום של ליאן</h1>
     <div class="family-title">אלבום תמונות משפחתי וצבעוני 💖</div>
     <p class="subtitle">
-      כאן אפשר להעלות תמונות מהמחשב או מהטלפון, כולל אייפון. התמונות מוצגות בגלריה יפה ונשמרות מקומית בדפדפן של אותו מכשיר.
+      כאן אפשר להעלות תמונות מהמחשב או מהטלפון, כולל אייפון. התמונות מוצגות בגלריה יפה ונשמרות מקומית בדפדפן של אותו מכשיר. למחיקת תמונות לחצו על “ניהול תמונות”.
     </p>
 
     <section class="upload-card">
@@ -404,6 +423,7 @@
 
     <div class="actions">
       <a class="home-btn" href="index.html">⬅ חזרה לעמוד הבית</a>
+      <button id="manageBtn" class="manage-btn" onclick="toggleManageMode()">🛠 ניהול תמונות</button>
       <button class="download-btn" onclick="downloadAll()">⬇ שמירת גיבוי</button>
       <button class="clear-btn" onclick="clearAlbum()">🗑 מחיקת כל האלבום</button>
     </div>
@@ -438,6 +458,7 @@
     const modalImage = document.getElementById("modalImage");
     const modalName = document.getElementById("modalName");
     const toast = document.getElementById("toast");
+    const manageBtn = document.getElementById("manageBtn");
 
     loadAlbum();
 
@@ -532,8 +553,8 @@
 
         const del = document.createElement("button");
         del.className = "delete-photo";
-        del.textContent = "×";
-        del.title = "מחיקת תמונה";
+        del.textContent = "🗑";
+        del.title = "מחיקת תמונה במצב ניהול";
         del.onclick = (event) => {
           event.stopPropagation();
           deletePhoto(photo.id);
@@ -583,6 +604,16 @@
       modalImage.src = "";
     }
 
+    function toggleManageMode() {
+      document.body.classList.toggle("manage-mode");
+      const isManage = document.body.classList.contains("manage-mode");
+
+      manageBtn.textContent = isManage ? "✅ סיום ניהול" : "🛠 ניהול תמונות";
+      manageBtn.classList.toggle("active", isManage);
+
+      showToast(isManage ? "מצב ניהול הופעל - עכשיו אפשר למחוק תמונות" : "מצב ניהול נסגר");
+    }
+
     function downloadAll() {
       if (!photos.length) {
         showToast("אין תמונות לגיבוי");
@@ -615,6 +646,3 @@
   </script>
 </body>
 </html>
-
-Sources
-No additional sources found
