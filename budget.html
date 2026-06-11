@@ -17,18 +17,9 @@ header{
   padding:35px 20px 20px;
   color:white;
 }
-h1{
-  font-size:38px;
-  margin:0;
-}
-p{
-  font-size:19px;
-}
-.container{
-  max-width:1000px;
-  margin:20px auto 50px;
-  padding:20px;
-}
+h1{font-size:38px;margin:0;}
+p{font-size:19px;}
+.container{max-width:1100px;margin:20px auto 50px;padding:20px;}
 .panel{
   background:white;
   border-radius:25px;
@@ -38,7 +29,7 @@ p{
 }
 .form{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(165px,1fr));
   gap:12px;
 }
 input,select,button{
@@ -54,9 +45,7 @@ button{
   background:#7b61ff;
   color:white;
 }
-button:hover{
-  opacity:.9;
-}
+button:hover{opacity:.9;}
 .summary{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -72,20 +61,25 @@ button:hover{
 .income{color:#179b4d;}
 .expense{color:#d93025;}
 .balance{color:#2457d6;}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+.secondary{background:#22a6b3;}
+.danger{background:#ff4d6d;}
 table{
   width:100%;
   border-collapse:collapse;
   margin-top:15px;
-  overflow:hidden;
 }
 th,td{
   padding:12px;
   border-bottom:1px solid #eee;
   font-size:16px;
 }
-th{
-  background:#f0efff;
-}
+th{background:#f0efff;}
 .delete{
   background:#ff4d6d;
   padding:8px 12px;
@@ -102,9 +96,24 @@ th{
   font-weight:bold;
   box-shadow:0 5px 15px rgba(0,0,0,.15);
 }
-footer{
-  color:white;
-  padding:30px;
+.chartWrap{
+  max-width:620px;
+  margin:0 auto;
+}
+canvas{
+  max-width:100%;
+  background:#fafafa;
+  border-radius:18px;
+  padding:12px;
+}
+.small{
+  font-size:14px;
+  color:#666;
+}
+footer{color:white;padding:30px;}
+@media(max-width:700px){
+  h1{font-size:31px;}
+  th,td{font-size:14px;padding:8px;}
 }
 </style>
 </head>
@@ -112,7 +121,7 @@ footer{
 
 <header>
   <h1>💰 ניהול תקציב משפחתי</h1>
-  <p>הכנסות, הוצאות וסיכום חודשי — נשמר אוטומטית במכשיר</p>
+  <p>הכנסות, הוצאות, קטגוריות, גרף וייצוא לאקסל</p>
   <a class="back" href="index.html">⬅ חזרה למסך הבית</a>
 </header>
 
@@ -126,7 +135,18 @@ footer{
         <option value="expense">הוצאה</option>
       </select>
 
-      <input id="desc" type="text" placeholder="תיאור לדוגמה: קניות / משכורת">
+      <select id="category">
+        <option value="משכורת">משכורת</option>
+        <option value="מזון">מזון</option>
+        <option value="דלק ורכב">דלק ורכב</option>
+        <option value="בילויים">בילויים</option>
+        <option value="בית וחשבונות">בית וחשבונות</option>
+        <option value="ילדים">ילדים</option>
+        <option value="בריאות">בריאות</option>
+        <option value="אחר">אחר</option>
+      </select>
+
+      <input id="desc" type="text" placeholder="תיאור: קניות / משכורת">
       <input id="amount" type="number" placeholder="סכום ₪">
       <input id="date" type="date">
 
@@ -140,6 +160,23 @@ footer{
       <div class="box income">הכנסות<br><span id="incomeTotal">0 ₪</span></div>
       <div class="box expense">הוצאות<br><span id="expenseTotal">0 ₪</span></div>
       <div class="box balance">יתרה<br><span id="balanceTotal">0 ₪</span></div>
+      <div class="box">חודש נוכחי<br><span id="monthTotal">0 ₪</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>גרף הכנסות מול הוצאות</h2>
+    <div class="chartWrap">
+      <canvas id="budgetChart" width="600" height="300"></canvas>
+    </div>
+    <p class="small">הגרף מתעדכן אוטומטית לפי הנתונים שהזנת.</p>
+  </div>
+
+  <div class="panel">
+    <h2>פעולות מהירות</h2>
+    <div class="actions">
+      <button class="secondary" onclick="exportCSV()">ייצוא לאקסל</button>
+      <button class="danger" onclick="clearAll()">מחיקת כל הנתונים</button>
     </div>
   </div>
 
@@ -150,6 +187,7 @@ footer{
         <tr>
           <th>תאריך</th>
           <th>סוג</th>
+          <th>קטגוריה</th>
           <th>תיאור</th>
           <th>סכום</th>
           <th>מחיקה</th>
@@ -176,6 +214,7 @@ function save(){
 
 function addTransaction(){
   const type = document.getElementById("type").value;
+  const category = document.getElementById("category").value;
   const desc = document.getElementById("desc").value.trim();
   const amount = Number(document.getElementById("amount").value);
   const date = document.getElementById("date").value;
@@ -188,6 +227,7 @@ function addTransaction(){
   transactions.push({
     id: Date.now(),
     type,
+    category,
     desc,
     amount,
     date
@@ -206,12 +246,69 @@ function deleteTransaction(id){
   render();
 }
 
+function clearAll(){
+  if(confirm("למחוק את כל נתוני התקציב?")){
+    transactions = [];
+    save();
+    render();
+  }
+}
+
+function exportCSV(){
+  if(transactions.length === 0){
+    alert("אין נתונים לייצוא");
+    return;
+  }
+
+  let csv = "\uFEFFתאריך,סוג,קטגוריה,תיאור,סכום\n";
+  transactions.forEach(t => {
+    csv += `${t.date},${t.type === "income" ? "הכנסה" : "הוצאה"},${t.category || ""},${t.desc},${t.amount}\n`;
+  });
+
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "family-budget.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function drawChart(income, expense){
+  const canvas = document.getElementById("budgetChart");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const max = Math.max(income, expense, 1);
+  const incomeHeight = (income / max) * 190;
+  const expenseHeight = (expense / max) * 190;
+
+  ctx.font = "18px Arial";
+  ctx.textAlign = "center";
+
+  ctx.fillStyle = "#179b4d";
+  ctx.fillRect(160, 240 - incomeHeight, 90, incomeHeight);
+  ctx.fillText("הכנסות", 205, 270);
+  ctx.fillText(income.toLocaleString() + " ₪", 205, 220 - incomeHeight);
+
+  ctx.fillStyle = "#d93025";
+  ctx.fillRect(350, 240 - expenseHeight, 90, expenseHeight);
+  ctx.fillText("הוצאות", 395, 270);
+  ctx.fillText(expense.toLocaleString() + " ₪", 395, 220 - expenseHeight);
+}
+
 function render(){
   const list = document.getElementById("list");
   list.innerHTML = "";
 
   let income = 0;
   let expense = 0;
+  let monthBalance = 0;
+
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
 
   transactions
     .sort((a,b) => new Date(b.date) - new Date(a.date))
@@ -219,10 +316,16 @@ function render(){
       if(t.type === "income") income += t.amount;
       else expense += t.amount;
 
+      const d = new Date(t.date);
+      if(d.getMonth() === currentMonth && d.getFullYear() === currentYear){
+        monthBalance += t.type === "income" ? t.amount : -t.amount;
+      }
+
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${t.date}</td>
         <td>${t.type === "income" ? "הכנסה" : "הוצאה"}</td>
+        <td>${t.category || "אחר"}</td>
         <td>${t.desc}</td>
         <td>${t.amount.toLocaleString()} ₪</td>
         <td><button class="delete" onclick="deleteTransaction(${t.id})">מחק</button></td>
@@ -233,6 +336,9 @@ function render(){
   document.getElementById("incomeTotal").innerText = income.toLocaleString() + " ₪";
   document.getElementById("expenseTotal").innerText = expense.toLocaleString() + " ₪";
   document.getElementById("balanceTotal").innerText = (income - expense).toLocaleString() + " ₪";
+  document.getElementById("monthTotal").innerText = monthBalance.toLocaleString() + " ₪";
+
+  drawChart(income, expense);
 }
 
 render();
