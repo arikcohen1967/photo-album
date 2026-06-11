@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>האתר של ליאן</title>
+<title>ניהול תקציב משפחתי</title>
 <style>
 body{
   margin:0;
@@ -11,44 +11,96 @@ body{
   background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
   min-height:100vh;
   text-align:center;
+  color:#222;
 }
 header{
-  padding:50px 20px 25px;
+  padding:35px 20px 20px;
   color:white;
 }
 h1{
-  font-size:44px;
+  font-size:38px;
   margin:0;
 }
 p{
-  font-size:22px;
+  font-size:19px;
 }
-.menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:25px;
-  max-width:900px;
-  margin:40px auto;
+.container{
+  max-width:1000px;
+  margin:20px auto 50px;
   padding:20px;
 }
-.card{
+.panel{
   background:white;
   border-radius:25px;
-  padding:35px 20px;
+  padding:25px;
   box-shadow:0 8px 20px rgba(0,0,0,.2);
-  text-decoration:none;
-  color:#222;
-  font-size:25px;
+  margin-bottom:25px;
+}
+.form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:12px;
+}
+input,select,button{
+  font-size:17px;
+  padding:13px;
+  border-radius:14px;
+  border:1px solid #ddd;
+}
+button{
+  border:0;
+  cursor:pointer;
   font-weight:bold;
-  transition:.25s;
+  background:#7b61ff;
+  color:white;
 }
-.card:hover{
-  transform:scale(1.06);
+button:hover{
+  opacity:.9;
 }
-.icon{
-  font-size:60px;
-  display:block;
-  margin-bottom:15px;
+.summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.box{
+  background:#f7f7ff;
+  border-radius:20px;
+  padding:20px;
+  font-size:20px;
+  font-weight:bold;
+}
+.income{color:#179b4d;}
+.expense{color:#d93025;}
+.balance{color:#2457d6;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  overflow:hidden;
+}
+th,td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:16px;
+}
+th{
+  background:#f0efff;
+}
+.delete{
+  background:#ff4d6d;
+  padding:8px 12px;
+  border-radius:10px;
+}
+.back{
+  display:inline-block;
+  margin-top:10px;
+  background:white;
+  color:#333;
+  text-decoration:none;
+  padding:12px 22px;
+  border-radius:18px;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
 }
 footer{
   color:white;
@@ -59,35 +111,132 @@ footer{
 <body>
 
 <header>
-  <h1>🌈 האתר של ליאן</h1>
-  <p>משחקים, תמונות וכיף משפחתי</p>
+  <h1>💰 ניהול תקציב משפחתי</h1>
+  <p>הכנסות, הוצאות וסיכום חודשי — נשמר אוטומטית במכשיר</p>
+  <a class="back" href="index.html">⬅ חזרה למסך הבית</a>
 </header>
 
-<div class="menu">
-  <a class="card" href="album-lian.html">
-    <span class="icon">📸</span>
-    אלבום תמונות
-  </a>
+<div class="container">
 
-  <a class="card" href="solitaire.html">
-    <span class="icon">🃏</span>
-    סוליטר
-  </a>
+  <div class="panel">
+    <h2>הוספת פעולה</h2>
+    <div class="form">
+      <select id="type">
+        <option value="income">הכנסה</option>
+        <option value="expense">הוצאה</option>
+      </select>
 
-  <a class="card" href="trivia.html">
-    <span class="icon">🧠</span>
-    משחק טריוויה
-  </a>
+      <input id="desc" type="text" placeholder="תיאור לדוגמה: קניות / משכורת">
+      <input id="amount" type="number" placeholder="סכום ₪">
+      <input id="date" type="date">
 
-  <a class="card" href="budget.html">
-    <span class="icon">💰</span>
-    ניהול תקציב משפחתי
-  </a>
+      <button onclick="addTransaction()">הוסף</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>סיכום</h2>
+    <div class="summary">
+      <div class="box income">הכנסות<br><span id="incomeTotal">0 ₪</span></div>
+      <div class="box expense">הוצאות<br><span id="expenseTotal">0 ₪</span></div>
+      <div class="box balance">יתרה<br><span id="balanceTotal">0 ₪</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>רשימת פעולות</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>תאריך</th>
+          <th>סוג</th>
+          <th>תיאור</th>
+          <th>סכום</th>
+          <th>מחיקה</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </div>
+
 </div>
 
 <footer>
   © 2026 משפחת כהן
 </footer>
+
+<script>
+let transactions = JSON.parse(localStorage.getItem("familyBudget")) || [];
+
+document.getElementById("date").valueAsDate = new Date();
+
+function save(){
+  localStorage.setItem("familyBudget", JSON.stringify(transactions));
+}
+
+function addTransaction(){
+  const type = document.getElementById("type").value;
+  const desc = document.getElementById("desc").value.trim();
+  const amount = Number(document.getElementById("amount").value);
+  const date = document.getElementById("date").value;
+
+  if(!desc || !amount || amount <= 0 || !date){
+    alert("נא למלא תיאור, סכום ותאריך");
+    return;
+  }
+
+  transactions.push({
+    id: Date.now(),
+    type,
+    desc,
+    amount,
+    date
+  });
+
+  document.getElementById("desc").value = "";
+  document.getElementById("amount").value = "";
+
+  save();
+  render();
+}
+
+function deleteTransaction(id){
+  transactions = transactions.filter(t => t.id !== id);
+  save();
+  render();
+}
+
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  let income = 0;
+  let expense = 0;
+
+  transactions
+    .sort((a,b) => new Date(b.date) - new Date(a.date))
+    .forEach(t => {
+      if(t.type === "income") income += t.amount;
+      else expense += t.amount;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${t.date}</td>
+        <td>${t.type === "income" ? "הכנסה" : "הוצאה"}</td>
+        <td>${t.desc}</td>
+        <td>${t.amount.toLocaleString()} ₪</td>
+        <td><button class="delete" onclick="deleteTransaction(${t.id})">מחק</button></td>
+      `;
+      list.appendChild(tr);
+    });
+
+  document.getElementById("incomeTotal").innerText = income.toLocaleString() + " ₪";
+  document.getElementById("expenseTotal").innerText = expense.toLocaleString() + " ₪";
+  document.getElementById("balanceTotal").innerText = (income - expense).toLocaleString() + " ₪";
+}
+
+render();
+</script>
 
 </body>
 </html>
