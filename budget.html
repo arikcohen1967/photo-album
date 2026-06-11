@@ -1,582 +1,93 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ניהול תקציב משפחתי</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>האתר של ליאן</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,"Segoe UI",sans-serif}
-:root{
-  --bg1:#16213e;--bg2:#0f3460;--card:#ffffff;--text:#152238;--muted:#6b7280;
-  --green:#16a34a;--red:#dc2626;--blue:#2563eb;--gold:#f59e0b;--purple:#7c3aed;
-}
 body{
-  margin:0;min-height:100vh;padding:14px;color:#fff;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(255,255,255,.18),transparent 20%),
-    linear-gradient(135deg,var(--bg1),var(--bg2),#1a5f7a);
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  min-height:100vh;
+  text-align:center;
 }
-.app{max-width:1250px;margin:0 auto}
 header{
-  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);
-  border-radius:28px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.25);backdrop-filter:blur(8px);
-  margin-bottom:14px
+  padding:50px 20px 25px;
+  color:white;
 }
-h1{margin:0;text-align:center;font-size:clamp(30px,5vw,54px)}
-.sub{text-align:center;margin:8px 0 0;font-weight:800;color:#e7f7ff}
-.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-button,input,select,textarea{
-  border:0;border-radius:15px;padding:12px 14px;font-size:16px;font-weight:800
+h1{
+  font-size:44px;
+  margin:0;
 }
-button{cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.18);transition:.12s}
-button:hover{transform:translateY(-2px)}
-.btn{background:#fff;color:var(--text)}
-.btn-blue{background:var(--blue);color:#fff}
-.btn-green{background:var(--green);color:#fff}
-.btn-red{background:var(--red);color:#fff}
-.btn-gold{background:var(--gold);color:#fff}
-.btn-purple{background:var(--purple);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+p{
+  font-size:22px;
+}
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px;
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+}
 .card{
-  background:rgba(255,255,255,.96);color:var(--text);border-radius:24px;padding:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.18)
+  background:white;
+  border-radius:25px;
+  padding:35px 20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  text-decoration:none;
+  color:#222;
+  font-size:25px;
+  font-weight:bold;
+  transition:.25s;
 }
-.metric{text-align:center;font-weight:1000}
-.metric .label{font-size:16px;color:var(--muted)}
-.metric .num{font-size:clamp(28px,4vw,42px);direction:ltr;margin-top:8px}
-.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.gold{color:var(--gold)}
-.main{display:grid;grid-template-columns:390px 1fr;gap:14px}
-.formrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.formrow.full{grid-template-columns:1fr}
-label{display:block;font-weight:1000;margin-bottom:6px;color:#334155}
-input,select,textarea{width:100%;background:#f1f5f9;color:#111827}
-textarea{min-height:80px;resize:vertical}
-.section-title{font-size:24px;margin:0 0 12px;color:var(--purple)}
-.tablewrap{overflow:auto;border-radius:18px;border:1px solid #e5e7eb}
-table{width:100%;border-collapse:collapse;background:#fff;color:var(--text);min-width:760px}
-th,td{padding:12px;border-bottom:1px solid #e5e7eb;text-align:right}
-th{background:#f8fafc;color:#334155;font-weight:1000;position:sticky;top:0}
-tr:hover{background:#f8fafc}
-.badge{display:inline-block;border-radius:999px;padding:6px 10px;font-weight:1000;font-size:13px}
-.income{background:#dcfce7;color:#166534}.expense{background:#fee2e2;color:#991b1b}
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.small{padding:8px 10px;font-size:13px;border-radius:10px}
-.notice{
-  background:#eef2ff;color:#312e81;border-radius:18px;padding:12px;font-weight:800;margin-top:12px;line-height:1.5
+.card:hover{
+  transform:scale(1.06);
 }
-.recommendations{display:grid;gap:10px}
-.rec{
-  background:#f8fafc;border-right:6px solid var(--blue);border-radius:16px;padding:12px;color:#1f2937;font-weight:800
+.icon{
+  font-size:60px;
+  display:block;
+  margin-bottom:15px;
 }
-.rec.warn{border-right-color:var(--gold)}.rec.bad{border-right-color:var(--red)}.rec.good{border-right-color:var(--green)}
-.footer{margin-top:14px;text-align:center;color:#dbeafe;font-weight:800}
-.monthbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:12px}
-.monthbar > div{min-width:190px;flex:1}
-.hidden{display:none!important}
-.syncbox{
-  background:#fff7ed;color:#7c2d12;border-radius:18px;padding:12px;margin-top:12px;font-weight:800;line-height:1.55
-}
-@media(max-width:950px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .main{grid-template-columns:1fr}
-}
-@media(max-width:620px){
-  body{padding:8px}
-  .grid{grid-template-columns:1fr}
-  .formrow{grid-template-columns:1fr}
-  button{width:100%}
-  .nav button{width:auto}
-  .card{padding:13px;border-radius:20px}
+footer{
+  color:white;
+  padding:30px;
 }
 </style>
 </head>
 <body>
-<div class="app">
+
 <header>
-  <h1>💰 ניהול תקציב משפחתי</h1>
-  <div class="sub">הכנסות · הוצאות · תקציב חודשי · המלצות · שמירה מקומית ואפשרות חיבור מרחוק</div>
-  <div class="nav">
-    <button class="btn-blue" onclick="showView('dashboard')">לוח ראשי</button>
-    <button class="btn-green" onclick="showView('add')">הוספת פעולה</button>
-    <button class="btn-purple" onclick="showView('settings')">הגדרות וסנכרון</button>
-    <button class="btn-gold" onclick="exportData()">ייצוא גיבוי</button>
-    <button class="btn" onclick="document.getElementById('importFile').click()">ייבוא גיבוי</button>
-    <input id="importFile" class="hidden" type="file" accept=".json" onchange="importData(event)">
-  </div>
+  <h1>🌈 האתר של ליאן</h1>
+  <p>משחקים, תמונות וכיף משפחתי</p>
 </header>
 
-<section class="card">
-  <div class="monthbar">
-    <div>
-      <label>חודש להצגה</label>
-      <input type="month" id="monthFilter" onchange="render()">
-    </div>
-    <div>
-      <label>חיפוש</label>
-      <input id="searchText" placeholder="חפש לפי תיאור/קטגוריה..." oninput="render()">
-    </div>
-    <div>
-      <label>סוג</label>
-      <select id="typeFilter" onchange="render()">
-        <option value="all">הכול</option>
-        <option value="income">הכנסות</option>
-        <option value="expense">הוצאות</option>
-      </select>
-    </div>
-  </div>
-</section>
+<div class="menu">
+  <a class="card" href="album-lian.html">
+    <span class="icon">📸</span>
+    אלבום תמונות
+  </a>
 
-<div id="dashboardView">
-  <section class="grid">
-    <div class="card metric"><div class="label">סה״כ הכנסות</div><div id="incomeTotal" class="num green">₪0</div></div>
-    <div class="card metric"><div class="label">סה״כ הוצאות</div><div id="expenseTotal" class="num red">₪0</div></div>
-    <div class="card metric"><div class="label">יתרה חודשית</div><div id="balanceTotal" class="num blue">₪0</div></div>
-    <div class="card metric"><div class="label">אחוז חיסכון</div><div id="savingRate" class="num gold">0%</div></div>
-  </section>
+  <a class="card" href="solitaire.html">
+    <span class="icon">🃏</span>
+    סוליטר
+  </a>
 
-  <section class="main">
-    <div class="card">
-      <h2 class="section-title">🤖 המלצות חכמות</h2>
-      <div id="recommendations" class="recommendations"></div>
-      <div class="notice">
-        טיפ: מומלץ לעדכן כל הוצאה בזמן אמת מהטלפון. כך רואים מיד אם החודש מאוזן.
-      </div>
-    </div>
+  <a class="card" href="trivia.html">
+    <span class="icon">🧠</span>
+    משחק טריוויה
+  </a>
 
-    <div class="card">
-      <h2 class="section-title">📋 פעולות החודש</h2>
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr>
-              <th>תאריך</th>
-              <th>סוג</th>
-              <th>קטגוריה</th>
-              <th>תיאור</th>
-              <th>סכום</th>
-              <th>פעולות</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+  <a class="card" href="budget.html">
+    <span class="icon">💰</span>
+    ניהול תקציב משפחתי
+  </a>
 </div>
 
-<div id="addView" class="hidden">
-  <section class="main">
-    <div class="card">
-      <h2 class="section-title" id="formTitle">➕ הוספת פעולה</h2>
-      <input type="hidden" id="editId">
-      <div class="formrow">
-        <div>
-          <label>סוג</label>
-          <select id="txType" onchange="updateCategoryOptions()">
-            <option value="expense">הוצאה</option>
-            <option value="income">הכנסה</option>
-          </select>
-        </div>
-        <div>
-          <label>סכום ₪</label>
-          <input id="amount" type="number" min="0" step="0.01" placeholder="לדוגמה 250">
-        </div>
-      </div>
-      <div class="formrow">
-        <div>
-          <label>תאריך</label>
-          <input id="date" type="date">
-        </div>
-        <div>
-          <label>קטגוריה</label>
-          <select id="category"></select>
-        </div>
-      </div>
-      <div class="formrow full">
-        <div>
-          <label>תיאור</label>
-          <input id="description" placeholder="לדוגמה: קניות בסופר / משכורת / חשמל">
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn-green" onclick="saveTransaction()">שמור</button>
-        <button class="btn" onclick="resetForm()">נקה</button>
-        <button class="btn-blue" onclick="showView('dashboard')">חזרה ללוח</button>
-      </div>
-      <div class="notice">הנתונים נשמרים אוטומטית בדפדפן. לחיבור מרחוק בין מכשירים יש להגדיר Firebase במסך ההגדרות.</div>
-    </div>
+<footer>
+  © 2026 משפחת כהן
+</footer>
 
-    <div class="card">
-      <h2 class="section-title">קטגוריות נפוצות</h2>
-      <div id="categorySummary"></div>
-    </div>
-  </section>
-</div>
-
-<div id="settingsView" class="hidden">
-  <section class="main">
-    <div class="card">
-      <h2 class="section-title">⚙️ הגדרות תקציב</h2>
-      <div class="formrow">
-        <div>
-          <label>יעד חיסכון חודשי ₪</label>
-          <input id="savingGoal" type="number" min="0" step="1" onchange="saveSettings()">
-        </div>
-        <div>
-          <label>תקציב הוצאות חודשי ₪</label>
-          <input id="expenseBudget" type="number" min="0" step="1" onchange="saveSettings()">
-        </div>
-      </div>
-      <button class="btn-red" onclick="clearAll()">מחיקת כל הנתונים</button>
-    </div>
-
-    <div class="card">
-      <h2 class="section-title">🌐 חיבור מרחוק</h2>
-      <div class="syncbox">
-        כדי לערוך מכל טלפון/מחשב מרחוק, העלה את הקובץ ל־GitHub Pages וחבר Firebase.
-        אחרי שתיצור פרויקט Firebase, הדבק כאן את ההגדרות.
-      </div>
-      <div class="formrow full">
-        <div>
-          <label>Firebase Config</label>
-          <textarea id="firebaseConfig" placeholder='לדוגמה:
-{
-  "apiKey": "...",
-  "authDomain": "...firebaseapp.com",
-  "projectId": "...",
-  "storageBucket": "...",
-  "messagingSenderId": "...",
-  "appId": "..."
-}'></textarea>
-        </div>
-      </div>
-      <div class="formrow">
-        <div>
-          <label>שם משפחה / קוד פרטי</label>
-          <input id="familyKey" placeholder="לדוגמה: cohen-family-budget">
-        </div>
-        <div>
-          <label>סטטוס</label>
-          <input id="syncStatus" disabled value="שמירה מקומית בלבד">
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn-purple" onclick="saveFirebaseSettings()">שמור הגדרות חיבור</button>
-        <button class="btn-blue" onclick="connectFirebase()">הפעל סנכרון</button>
-      </div>
-      <div class="notice">
-        הערה: בלי Firebase, המערכת עובדת מצוין אבל הנתונים נשמרים רק במכשיר שבו משתמשים.
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="footer">נבנה עבורך לניהול כספים משפחתי פשוט, צבעוני ונוח מהטלפון.</div>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-window.firebaseTools = { initializeApp, getFirestore, doc, setDoc, onSnapshot };
-</script>
-
-<script>
-const incomeCategories=["משכורת","בונוס","קצבה","החזר","מתנה","אחר"];
-const expenseCategories=["סופר","משכנתא/שכירות","חשבונות","רכב ודלק","חינוך וילדים","מסעדות","בריאות","ביגוד","בילויים","חופשות","ביטוחים","אשראי","אחר"];
-let data={transactions:[],settings:{savingGoal:1000,expenseBudget:12000},firebase:{config:"",familyKey:""}};
-let remoteReady=false, db=null, unsub=null, remoteDoc=null, suppressRemoteSave=false;
-
-function money(n){
-  return new Intl.NumberFormat("he-IL",{style:"currency",currency:"ILS",maximumFractionDigits:0}).format(Number(n)||0);
-}
-function uid(){return "tx_"+Date.now()+"_"+Math.random().toString(16).slice(2)}
-function today(){return new Date().toISOString().slice(0,10)}
-function currentMonth(){return new Date().toISOString().slice(0,7)}
-
-function load(){
-  const saved=localStorage.getItem("familyBudgetData");
-  if(saved){
-    try{data=JSON.parse(saved)}catch(e){}
-  }
-  if(!data.transactions)data.transactions=[];
-  if(!data.settings)data.settings={savingGoal:1000,expenseBudget:12000};
-  if(!data.firebase)data.firebase={config:"",familyKey:""};
-  document.getElementById("monthFilter").value=currentMonth();
-  document.getElementById("date").value=today();
-  document.getElementById("savingGoal").value=data.settings.savingGoal||0;
-  document.getElementById("expenseBudget").value=data.settings.expenseBudget||0;
-  document.getElementById("firebaseConfig").value=data.firebase.config||"";
-  document.getElementById("familyKey").value=data.firebase.familyKey||"";
-  updateCategoryOptions();
-  render();
-}
-function persist(){
-  localStorage.setItem("familyBudgetData",JSON.stringify(data));
-  if(remoteReady && !suppressRemoteSave) saveRemote();
-}
-
-function showView(view){
-  document.getElementById("dashboardView").classList.toggle("hidden",view!=="dashboard");
-  document.getElementById("addView").classList.toggle("hidden",view!=="add");
-  document.getElementById("settingsView").classList.toggle("hidden",view!=="settings");
-  if(view==="add") updateCategorySummary();
-  render();
-}
-window.showView=showView;
-
-function updateCategoryOptions(){
-  const type=document.getElementById("txType").value;
-  const cats=type==="income"?incomeCategories:expenseCategories;
-  document.getElementById("category").innerHTML=cats.map(c=>`<option value="${c}">${c}</option>`).join("");
-}
-window.updateCategoryOptions=updateCategoryOptions;
-
-function saveTransaction(){
-  const id=document.getElementById("editId").value;
-  const type=document.getElementById("txType").value;
-  const amount=Number(document.getElementById("amount").value);
-  const date=document.getElementById("date").value;
-  const category=document.getElementById("category").value;
-  const description=document.getElementById("description").value.trim();
-
-  if(!amount || amount<=0){alert("נא להזין סכום תקין");return}
-  if(!date){alert("נא לבחור תאריך");return}
-
-  const tx={id:id||uid(),type,amount,date,category,description};
-  if(id){
-    const idx=data.transactions.findIndex(t=>t.id===id);
-    if(idx>-1)data.transactions[idx]=tx;
-  }else{
-    data.transactions.push(tx);
-  }
-  persist();
-  resetForm();
-  showView("dashboard");
-}
-window.saveTransaction=saveTransaction;
-
-function editTransaction(id){
-  const tx=data.transactions.find(t=>t.id===id);
-  if(!tx)return;
-  document.getElementById("editId").value=tx.id;
-  document.getElementById("txType").value=tx.type;
-  updateCategoryOptions();
-  document.getElementById("amount").value=tx.amount;
-  document.getElementById("date").value=tx.date;
-  document.getElementById("category").value=tx.category;
-  document.getElementById("description").value=tx.description||"";
-  document.getElementById("formTitle").textContent="✏️ עריכת פעולה";
-  showView("add");
-}
-window.editTransaction=editTransaction;
-
-function deleteTransaction(id){
-  if(!confirm("למחוק את הפעולה?"))return;
-  data.transactions=data.transactions.filter(t=>t.id!==id);
-  persist();
-  render();
-}
-window.deleteTransaction=deleteTransaction;
-
-function resetForm(){
-  document.getElementById("editId").value="";
-  document.getElementById("txType").value="expense";
-  updateCategoryOptions();
-  document.getElementById("amount").value="";
-  document.getElementById("date").value=today();
-  document.getElementById("description").value="";
-  document.getElementById("formTitle").textContent="➕ הוספת פעולה";
-}
-window.resetForm=resetForm;
-
-function getFiltered(){
-  const month=document.getElementById("monthFilter").value;
-  const q=(document.getElementById("searchText").value||"").toLowerCase();
-  const type=document.getElementById("typeFilter").value;
-  return data.transactions
-    .filter(t=>!month || t.date.slice(0,7)===month)
-    .filter(t=>type==="all" || t.type===type)
-    .filter(t=>!q || (t.description||"").toLowerCase().includes(q) || (t.category||"").toLowerCase().includes(q))
-    .sort((a,b)=>b.date.localeCompare(a.date));
-}
-
-function render(){
-  const rows=getFiltered();
-  const income=rows.filter(t=>t.type==="income").reduce((s,t)=>s+Number(t.amount),0);
-  const expense=rows.filter(t=>t.type==="expense").reduce((s,t)=>s+Number(t.amount),0);
-  const balance=income-expense;
-  const savingRate=income>0?Math.round((balance/income)*100):0;
-
-  document.getElementById("incomeTotal").textContent=money(income);
-  document.getElementById("expenseTotal").textContent=money(expense);
-  document.getElementById("balanceTotal").textContent=money(balance);
-  document.getElementById("balanceTotal").className="num "+(balance>=0?"green":"red");
-  document.getElementById("savingRate").textContent=savingRate+"%";
-  document.getElementById("savingRate").className="num "+(savingRate>=10?"green":savingRate>=0?"gold":"red");
-
-  document.getElementById("rows").innerHTML=rows.length?rows.map(t=>`
-    <tr>
-      <td>${t.date}</td>
-      <td><span class="badge ${t.type}">${t.type==="income"?"הכנסה":"הוצאה"}</span></td>
-      <td>${escapeHtml(t.category)}</td>
-      <td>${escapeHtml(t.description||"")}</td>
-      <td class="${t.type==="income"?"green":"red"}">${money(t.amount)}</td>
-      <td>
-        <div class="actions">
-          <button class="btn-blue small" onclick="editTransaction('${t.id}')">ערוך</button>
-          <button class="btn-red small" onclick="deleteTransaction('${t.id}')">מחק</button>
-        </div>
-      </td>
-    </tr>
-  `).join(""):`<tr><td colspan="6">אין פעולות לחודש הזה עדיין.</td></tr>`;
-
-  renderRecommendations(income,expense,balance,savingRate,rows);
-  updateCategorySummary();
-}
-window.render=render;
-
-function renderRecommendations(income,expense,balance,savingRate,rows){
-  const recs=[];
-  const budget=Number(data.settings.expenseBudget)||0;
-  const goal=Number(data.settings.savingGoal)||0;
-
-  if(income===0) recs.push({type:"warn",text:"עדיין לא הוזנו הכנסות לחודש. כדאי להתחיל מהכנסת משכורת/הכנסות קבועות."});
-  if(expense===0) recs.push({type:"good",text:"עדיין לא הוזנו הוצאות החודש. מצב טוב להתחיל לעקוב מהיום הראשון."});
-  if(balance<0) recs.push({type:"bad",text:"החודש כרגע במינוס. מומלץ לעצור הוצאות לא הכרחיות ולבדוק קטגוריות גבוהות."});
-  if(balance>=goal && goal>0) recs.push({type:"good",text:`מעולה: הגעתם ליעד החיסכון החודשי של ${money(goal)}.`});
-  if(balance>0 && balance<goal) recs.push({type:"warn",text:`יש יתרה חיובית, אבל עדיין חסר ${money(goal-balance)} כדי להגיע ליעד החיסכון.`});
-  if(budget>0 && expense>budget) recs.push({type:"bad",text:`חרגתם מתקציב ההוצאות החודשי ב־${money(expense-budget)}.`});
-  if(budget>0 && expense<=budget) recs.push({type:"good",text:`אתם בתוך תקציב ההוצאות החודשי. נשארו ${money(budget-expense)}.`});
-  if(savingRate<0) recs.push({type:"bad",text:"אחוז החיסכון שלילי. זה סימן שההוצאות גבוהות מההכנסות."});
-  if(savingRate>=10) recs.push({type:"good",text:"אחוז החיסכון טוב. אם אפשר, העבירו את היתרה לחיסכון בתחילת החודש הבא."});
-
-  const byCat={};
-  rows.filter(t=>t.type==="expense").forEach(t=>byCat[t.category]=(byCat[t.category]||0)+Number(t.amount));
-  const top=Object.entries(byCat).sort((a,b)=>b[1]-a[1])[0];
-  if(top) recs.push({type:"warn",text:`הקטגוריה הכי יקרה החודש היא "${top[0]}" עם ${money(top[1])}. כדאי לבדוק אם יש שם מקום לצמצום.`});
-
-  document.getElementById("recommendations").innerHTML=(recs.length?recs:[{type:"good",text:"הכול נראה מאוזן. המשיכו לעדכן פעולות במהלך החודש."}])
-    .map(r=>`<div class="rec ${r.type}">${r.text}</div>`).join("");
-}
-
-function updateCategorySummary(){
-  const rows=getFiltered().filter(t=>t.type==="expense");
-  const byCat={};
-  rows.forEach(t=>byCat[t.category]=(byCat[t.category]||0)+Number(t.amount));
-  const list=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
-  const el=document.getElementById("categorySummary");
-  if(!el)return;
-  el.innerHTML=list.length?`
-    <div class="tablewrap"><table style="min-width:0">
-      <thead><tr><th>קטגוריה</th><th>סה״כ</th></tr></thead>
-      <tbody>${list.map(([c,v])=>`<tr><td>${escapeHtml(c)}</td><td class="red">${money(v)}</td></tr>`).join("")}</tbody>
-    </table></div>`:`<div class="notice">אין עדיין הוצאות להצגה.</div>`;
-}
-
-function saveSettings(){
-  data.settings.savingGoal=Number(document.getElementById("savingGoal").value)||0;
-  data.settings.expenseBudget=Number(document.getElementById("expenseBudget").value)||0;
-  persist();
-  render();
-}
-window.saveSettings=saveSettings;
-
-function exportData(){
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="family-budget-backup.json";
-  a.click();
-}
-window.exportData=exportData;
-
-function importData(event){
-  const file=event.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try{
-      const imported=JSON.parse(reader.result);
-      if(!imported.transactions)throw new Error("bad file");
-      data=imported;
-      persist();
-      load();
-      alert("הייבוא הושלם");
-    }catch(e){
-      alert("קובץ לא תקין");
-    }
-  };
-  reader.readAsText(file);
-}
-window.importData=importData;
-
-function clearAll(){
-  if(!confirm("למחוק את כל הנתונים? אין דרך חזרה בלי גיבוי."))return;
-  data.transactions=[];
-  persist();
-  render();
-}
-window.clearAll=clearAll;
-
-function saveFirebaseSettings(){
-  data.firebase.config=document.getElementById("firebaseConfig").value.trim();
-  data.firebase.familyKey=document.getElementById("familyKey").value.trim();
-  persist();
-  alert("הגדרות החיבור נשמרו. עכשיו לחץ 'הפעל סנכרון'.");
-}
-window.saveFirebaseSettings=saveFirebaseSettings;
-
-async function connectFirebase(){
-  try{
-    saveFirebaseSettings();
-    if(!data.firebase.config || !data.firebase.familyKey){
-      alert("חסר Firebase Config או שם משפחה/קוד פרטי.");
-      return;
-    }
-    const config=JSON.parse(data.firebase.config);
-    const app=window.firebaseTools.initializeApp(config);
-    db=window.firebaseTools.getFirestore(app);
-    remoteDoc=window.firebaseTools.doc(db,"familyBudgets",data.firebase.familyKey);
-    remoteReady=true;
-    document.getElementById("syncStatus").value="מחובר ומסונכרן";
-
-    if(unsub)unsub();
-    unsub=window.firebaseTools.onSnapshot(remoteDoc,(snap)=>{
-      if(snap.exists()){
-        const remote=snap.data();
-        if(remote && remote.payload){
-          suppressRemoteSave=true;
-          data={...data,...remote.payload};
-          localStorage.setItem("familyBudgetData",JSON.stringify(data));
-          suppressRemoteSave=false;
-          render();
-        }
-      }else{
-        saveRemote();
-      }
-    });
-
-    saveRemote();
-    alert("הסנכרון הופעל.");
-  }catch(e){
-    console.error(e);
-    document.getElementById("syncStatus").value="שגיאת חיבור";
-    alert("לא הצלחתי להתחבר. בדוק שה־Firebase Config תקין וש־Firestore פעיל.");
-  }
-}
-window.connectFirebase=connectFirebase;
-
-async function saveRemote(){
-  if(!remoteReady || !remoteDoc)return;
-  await window.firebaseTools.setDoc(remoteDoc,{payload:data,updatedAt:new Date().toISOString()},{merge:true});
-}
-
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[s]));
-}
-
-load();
-</script>
 </body>
 </html>
