@@ -1,7 +1,3 @@
-מוכן ✅
-
-להורדת האלבום עם עריכת תמונות 
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -9,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>האלבום של ליאן</title>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, "Segoe UI", sans-serif;
-    }
+    * { box-sizing: border-box; font-family: Arial, "Segoe UI", sans-serif; }
 
     body {
       margin: 0;
@@ -20,8 +13,7 @@
       background:
         radial-gradient(circle at 10% 10%, rgba(255,255,255,0.55), transparent 18%),
         radial-gradient(circle at 90% 15%, rgba(255,255,255,0.35), transparent 16%),
-        radial-gradient(circle at 50% 95%, rgba(255,255,255,0.32), transparent 20%),
-        linear-gradient(135deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2ffd8 100%);
+        linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2ffd8);
       color: #26334d;
       padding: 18px;
     }
@@ -29,34 +21,12 @@
     .page {
       max-width: 1150px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255,255,255,0.94);
       border-radius: 36px;
       padding: 24px;
       box-shadow: 0 24px 80px rgba(0,0,0,0.23);
       min-height: calc(100vh - 36px);
-      position: relative;
-      overflow: hidden;
       border: 4px solid rgba(255,255,255,0.7);
-    }
-
-    .page::before {
-      content: "💖";
-      position: absolute;
-      top: 8px;
-      left: 20px;
-      font-size: 76px;
-      opacity: 0.14;
-      transform: rotate(-15deg);
-    }
-
-    .page::after {
-      content: "⭐";
-      position: absolute;
-      bottom: 16px;
-      right: 24px;
-      font-size: 88px;
-      opacity: 0.11;
-      transform: rotate(18deg);
     }
 
     h1 {
@@ -91,9 +61,6 @@
       padding: 26px;
       text-align: center;
       margin: 20px 0;
-      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.38);
-      position: relative;
-      z-index: 1;
     }
 
     .upload-title {
@@ -113,17 +80,10 @@
       font-weight: 1000;
       cursor: pointer;
       box-shadow: 0 12px 24px rgba(108,92,231,0.32);
-      transition: 0.18s;
       min-width: 270px;
     }
 
-    .upload-label:hover {
-      transform: translateY(-3px) scale(1.02);
-    }
-
-    input[type="file"] {
-      display: none;
-    }
+    input[type="file"] { display: none; }
 
     .hint {
       margin-top: 14px;
@@ -138,8 +98,6 @@
       flex-wrap: wrap;
       gap: 12px;
       margin: 18px 0;
-      position: relative;
-      z-index: 1;
     }
 
     button, .home-btn {
@@ -155,33 +113,16 @@
       box-shadow: 0 9px 18px rgba(0,0,0,0.13);
     }
 
-    button:hover, .home-btn:hover {
-      transform: translateY(-2px);
-    }
+    button:hover, .home-btn:hover { transform: translateY(-2px); }
 
-    .clear-btn {
-      background: #ff5e78;
-      color: white;
-    }
-
-    .home-btn {
-      background: #ff9f43;
-      color: white;
-    }
-
-    .download-btn {
-      background: #00d084;
-      color: #063d25;
-    }
-
-    .manage-btn {
-      background: #54a0ff;
-      color: white;
-    }
-
-    .manage-btn.active {
-      background: #5f27cd;
-    }
+    .clear-btn { background: #ff5e78; color: white; }
+    .home-btn { background: #ff9f43; color: white; }
+    .download-btn { background: #00d084; color: #063d25; }
+    .manage-btn { background: #54a0ff; color: white; }
+    .manage-btn.active { background: #5f27cd; }
+    .blue-btn { background: #54a0ff; color: white; }
+    .green-btn { background: #00d084; color: #063d25; }
+    .gray-btn { background: #8395a7; color: white; }
 
     .count {
       text-align: center;
@@ -189,8 +130,6 @@
       color: #5f27cd;
       margin: 12px 0;
       font-size: 19px;
-      position: relative;
-      z-index: 1;
     }
 
     .gallery {
@@ -198,8 +137,6 @@
       grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
       gap: 18px;
       margin-top: 20px;
-      position: relative;
-      z-index: 1;
     }
 
     .photo-card {
@@ -209,21 +146,7 @@
       box-shadow: 0 12px 26px rgba(0,0,0,0.15);
       position: relative;
       border: 4px solid #fff;
-      transform: rotate(-0.5deg);
       transition: 0.16s;
-    }
-
-    .photo-card:nth-child(2n) {
-      transform: rotate(0.6deg);
-      border-color: #d7fff1;
-    }
-
-    .photo-card:nth-child(3n) {
-      border-color: #ffd6e8;
-    }
-
-    .photo-card:nth-child(4n) {
-      border-color: #dbe7ff;
     }
 
     .photo-card:hover {
@@ -252,34 +175,11 @@
       background: linear-gradient(90deg, #fff, #f8fbff);
     }
 
-    .edit-photo {
+    .delete-photo, .edit-photo {
       position: absolute;
       top: 8px;
-      right: 8px;
-      background: rgba(84, 160, 255, 0.96);
-      color: white;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      padding: 0;
-      font-size: 19px;
-      box-shadow: 0 5px 14px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 5;
-    }
-
-    body.manage-mode .edit-photo {
-      display: block;
-    }
-
-    .delete-photo {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(255, 94, 120, 0.95);
-      color: white;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       padding: 0;
       font-size: 20px;
@@ -288,12 +188,14 @@
       z-index: 5;
     }
 
-    body.manage-mode .delete-photo {
-      display: block;
-    }
+    .delete-photo { left: 8px; background: rgba(255,94,120,0.96); color: white; }
+    .edit-photo { right: 8px; background: rgba(84,160,255,0.96); color: white; }
+
+    body.manage-mode .delete-photo,
+    body.manage-mode .edit-photo { display: block; }
 
     body.manage-mode .photo-card {
-      outline: 3px dashed rgba(255, 94, 120, 0.45);
+      outline: 3px dashed rgba(255,94,120,0.42);
     }
 
     .empty {
@@ -306,14 +208,12 @@
       margin-top: 18px;
       font-size: 19px;
       line-height: 1.6;
-      position: relative;
-      z-index: 1;
     }
 
-    .modal {
+    .modal, .editor-panel {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.84);
+      background: rgba(0,0,0,0.86);
       display: none;
       align-items: center;
       justify-content: center;
@@ -321,9 +221,7 @@
       padding: 18px;
     }
 
-    .modal.open {
-      display: flex;
-    }
+    .modal.open, .editor-panel.open { display: flex; }
 
     .modal img {
       max-width: 96vw;
@@ -348,6 +246,42 @@
       z-index: 1002;
     }
 
+    .nav-photo {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.92);
+      color: #26334d;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      padding: 0;
+      font-size: 34px;
+      z-index: 1002;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.32);
+    }
+
+    .nav-photo.prev {
+      right: 18px;
+    }
+
+    .nav-photo.next {
+      left: 18px;
+    }
+
+    .photo-counter {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      background: white;
+      color: #26334d;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 1000;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      z-index: 1002;
+    }
+
     .modal-name {
       position: fixed;
       bottom: 18px;
@@ -366,21 +300,6 @@
       box-shadow: 0 8px 22px rgba(0,0,0,0.24);
     }
 
-    .editor-panel {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1200;
-      padding: 16px;
-    }
-
-    .editor-panel.open {
-      display: flex;
-    }
-
     .editor-box {
       width: 100%;
       max-width: 980px;
@@ -396,6 +315,7 @@
     .editor-box h2 {
       margin: 6px 0 14px;
       color: #6c5ce7;
+      font-size: 30px;
     }
 
     #editCanvas {
@@ -422,22 +342,16 @@
       font-weight: 900;
     }
 
-    .tool input[type="range"], .tool input[type="text"] {
+    .tool input[type="range"], .tool input[type="text"], .tool select {
       width: 100%;
       margin-top: 8px;
     }
 
-    .tool input[type="text"] {
+    .tool input[type="text"], .tool select {
       padding: 12px;
       border-radius: 14px;
       border: 2px solid #d7e3ff;
       font-size: 16px;
-    }
-
-    @media (max-width: 650px) {
-      .editor-tools {
-        grid-template-columns: 1fr;
-      }
     }
 
     .toast {
@@ -454,49 +368,28 @@
       z-index: 1100;
     }
 
-    .toast.show {
-      display: block;
-      animation: pop 0.25s ease;
-    }
-
-    @keyframes pop {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+    .toast.show { display: block; }
 
     @media (max-width: 650px) {
-      body {
-        padding: 10px;
+      body { padding: 10px; }
+      .page { padding: 16px; border-radius: 26px; min-height: calc(100vh - 20px); }
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .photo-card img { height: 145px; }
+      .upload-label { width: 100%; font-size: 20px; min-width: 0; }
+      button, .home-btn { width: 100%; text-align: center; }
+      .delete-photo, .edit-photo { width: 42px; height: 42px; }
+      .editor-tools { grid-template-columns: 1fr; }
+      .nav-photo {
+        width: 48px;
+        height: 48px;
+        font-size: 27px;
       }
-
-      .page {
-        padding: 16px;
-        border-radius: 26px;
-        min-height: calc(100vh - 20px);
-      }
-
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-
-      .photo-card img {
-        height: 145px;
-      }
-
-      .upload-label {
-        width: 100%;
-        font-size: 20px;
-        min-width: 0;
-      }
-
-      .upload-title {
-        font-size: 24px;
-      }
-
-      button, .home-btn {
-        width: 100%;
-        text-align: center;
+      .nav-photo.prev { right: 10px; }
+      .nav-photo.next { left: 10px; }
+      .photo-counter {
+        top: 76px;
+        right: 50%;
+        transform: translateX(50%);
       }
     }
   </style>
@@ -506,7 +399,7 @@
     <h1>📸 האלבום של ליאן</h1>
     <div class="family-title">אלבום תמונות משפחתי וצבעוני 💖</div>
     <p class="subtitle">
-      כאן אפשר להעלות תמונות מהמחשב או מהטלפון, כולל אייפון. התמונות מוצגות בגלריה יפה ונשמרות מקומית בדפדפן של אותו מכשיר. למחיקה או עריכת תמונות לחצו על “ניהול תמונות”.
+      אפשר להעלות תמונות מהמחשב או מהאייפון. למחיקה או עריכה לחצו על “ניהול תמונות”.
     </p>
 
     <section class="upload-card">
@@ -515,7 +408,7 @@
       <input id="photoInput" type="file" accept="image/*" multiple />
       <div class="hint">
         במחשב: בוחרים תמונות מהתיקייה.<br>
-        באייפון: אפשר לבחור מהגלריה או לצלם תמונה חדשה, לפי האפשרויות שהטלפון מציג.
+        באייפון: אפשר לבחור מהגלריה או לצלם תמונה חדשה.
       </div>
     </section>
 
@@ -536,8 +429,11 @@
     </div>
   </main>
 
-  <div id="modal" class="modal" onclick="closeModal()">
+  <div id="modal" class="modal">
     <button class="close-modal" onclick="closeModal()">×</button>
+    <button class="nav-photo prev" onclick="event.stopPropagation(); showPrevPhoto()">›</button>
+    <button class="nav-photo next" onclick="event.stopPropagation(); showNextPhoto()">‹</button>
+    <div id="photoCounter" class="photo-counter">1/1</div>
     <img id="modalImage" src="" alt="תמונה מוגדלת">
     <div id="modalName" class="modal-name"></div>
   </div>
@@ -549,27 +445,27 @@
 
       <div class="editor-tools">
         <div class="tool">בהירות
-          <input id="brightnessRange" type="range" min="50" max="150" value="100" oninput="applyEditorPreview()">
+          <input id="brightnessRange" type="range" min="50" max="150" value="100">
         </div>
         <div class="tool">ניגודיות
-          <input id="contrastRange" type="range" min="50" max="150" value="100" oninput="applyEditorPreview()">
+          <input id="contrastRange" type="range" min="50" max="150" value="100">
         </div>
         <div class="tool">פילטר
-          <select id="filterSelect" onchange="applyEditorPreview()">
+          <select id="filterSelect">
             <option value="none">רגיל</option>
             <option value="grayscale">שחור־לבן</option>
             <option value="sepia">ספיה / ישן</option>
           </select>
         </div>
         <div class="tool">כיתוב על התמונה
-          <input id="captionText" type="text" placeholder="לדוגמה: ליאן 💖" oninput="applyEditorPreview()">
+          <input id="captionText" type="text" placeholder="לדוגמה: ליאן 💖">
         </div>
       </div>
 
       <div class="actions">
         <button class="blue-btn" onclick="rotateEditor()">↻ סיבוב</button>
         <button class="green-btn" onclick="saveEditedPhoto()">💾 שמירה כתמונה חדשה</button>
-        <button class="clear-btn" onclick="closeEditor()">ביטול</button>
+        <button class="gray-btn" onclick="closeEditor()">ביטול</button>
       </div>
     </div>
   </div>
@@ -579,6 +475,11 @@
   <script>
     const STORAGE_KEY = "lianFamilyAlbumPhotos";
     let photos = [];
+    let editingPhoto = null;
+    let originalEditImage = null;
+    let rotation = 0;
+    let currentModalIndex = 0;
+    let touchStartX = 0;
 
     const photoInput = document.getElementById("photoInput");
     const gallery = document.getElementById("gallery");
@@ -587,14 +488,22 @@
     const modal = document.getElementById("modal");
     const modalImage = document.getElementById("modalImage");
     const modalName = document.getElementById("modalName");
+    const photoCounter = document.getElementById("photoCounter");
     const toast = document.getElementById("toast");
     const manageBtn = document.getElementById("manageBtn");
     const editorPanel = document.getElementById("editorPanel");
     const editCanvas = document.getElementById("editCanvas");
     const editCtx = editCanvas.getContext("2d");
-    let editingPhoto = null;
-    let originalEditImage = null;
-    let rotation = 0;
+
+    const brightnessRange = document.getElementById("brightnessRange");
+    const contrastRange = document.getElementById("contrastRange");
+    const filterSelect = document.getElementById("filterSelect");
+    const captionText = document.getElementById("captionText");
+
+    brightnessRange.addEventListener("input", applyEditorPreview);
+    contrastRange.addEventListener("input", applyEditorPreview);
+    filterSelect.addEventListener("change", applyEditorPreview);
+    captionText.addEventListener("input", applyEditorPreview);
 
     loadAlbum();
 
@@ -642,10 +551,7 @@
             const canvas = document.createElement("canvas");
             canvas.width = width;
             canvas.height = height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-
+            canvas.getContext("2d").drawImage(img, 0, 0, width, height);
             resolve(canvas.toDataURL("image/jpeg", quality));
           };
 
@@ -690,7 +596,7 @@
         const del = document.createElement("button");
         del.className = "delete-photo";
         del.textContent = "🗑";
-        del.title = "מחיקת תמונה במצב ניהול";
+        del.title = "מחיקת תמונה";
         del.onclick = (event) => {
           event.stopPropagation();
           deletePhoto(photo.id);
@@ -717,6 +623,14 @@
       });
     }
 
+    function toggleManageMode() {
+      document.body.classList.toggle("manage-mode");
+      const isManage = document.body.classList.contains("manage-mode");
+      manageBtn.textContent = isManage ? "✅ סיום ניהול" : "🛠 ניהול תמונות";
+      manageBtn.classList.toggle("active", isManage);
+      showToast(isManage ? "מצב ניהול הופעל - עכשיו אפשר לערוך או למחוק" : "מצב ניהול נסגר");
+    }
+
     function deletePhoto(id) {
       if (!confirm("למחוק את התמונה הזו מהאלבום?")) return;
       photos = photos.filter(photo => photo.id !== id);
@@ -725,24 +639,32 @@
       showToast("התמונה נמחקה");
     }
 
-    function clearAlbum() {
-      if (!photos.length) {
-        showToast("האלבום כבר ריק");
-        return;
-      }
-
-      if (!confirm("למחוק את כל התמונות מהאלבום?")) return;
-
-      photos = [];
-      localStorage.removeItem(STORAGE_KEY);
-      renderAlbum();
-      showToast("האלבום נמחק");
+    function openModal(photo) {
+      if (document.body.classList.contains("manage-mode")) return;
+      const index = photos.findIndex(p => p.id === photo.id);
+      currentModalIndex = index >= 0 ? index : 0;
+      updateModalPhoto();
+      modal.classList.add("open");
     }
 
-    function openModal(photo) {
+    function updateModalPhoto() {
+      if (!photos.length) return;
+      const photo = photos[currentModalIndex];
       modalImage.src = photo.data;
       modalName.textContent = photo.name;
-      modal.classList.add("open");
+      photoCounter.textContent = (currentModalIndex + 1) + "/" + photos.length;
+    }
+
+    function showNextPhoto() {
+      if (!photos.length) return;
+      currentModalIndex = (currentModalIndex + 1) % photos.length;
+      updateModalPhoto();
+    }
+
+    function showPrevPhoto() {
+      if (!photos.length) return;
+      currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
+      updateModalPhoto();
     }
 
     function closeModal() {
@@ -750,28 +672,49 @@
       modalImage.src = "";
     }
 
-    function toggleManageMode() {
-      document.body.classList.toggle("manage-mode");
-      const isManage = document.body.classList.contains("manage-mode");
+    modal.addEventListener("click", function(event) {
+      if (event.target === modal) closeModal();
+    });
 
-      manageBtn.textContent = isManage ? "✅ סיום ניהול" : "🛠 ניהול תמונות";
-      manageBtn.classList.toggle("active", isManage);
+    modal.addEventListener("touchstart", function(event) {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
 
-      showToast(isManage ? "מצב ניהול הופעל - עכשיו אפשר למחוק תמונות" : "מצב ניהול נסגר");
-    }
+    modal.addEventListener("touchend", function(event) {
+      const touchEndX = event.changedTouches[0].screenX;
+      const diff = touchEndX - touchStartX;
+
+      if (Math.abs(diff) > 45) {
+        if (diff > 0) {
+          showPrevPhoto();
+        } else {
+          showNextPhoto();
+        }
+      }
+    }, { passive: true });
+
+    document.addEventListener("keydown", function(event) {
+      if (!modal.classList.contains("open")) return;
+
+      if (event.key === "Escape") closeModal();
+      if (event.key === "ArrowLeft") showNextPhoto();
+      if (event.key === "ArrowRight") showPrevPhoto();
+    });
 
     function openEditor(photo) {
       editingPhoto = photo;
       originalEditImage = new Image();
+
       originalEditImage.onload = function() {
         rotation = 0;
-        document.getElementById("brightnessRange").value = 100;
-        document.getElementById("contrastRange").value = 100;
-        document.getElementById("filterSelect").value = "none";
-        document.getElementById("captionText").value = "";
+        brightnessRange.value = 100;
+        contrastRange.value = 100;
+        filterSelect.value = "none";
+        captionText.value = "";
         editorPanel.classList.add("open");
         applyEditorPreview();
       };
+
       originalEditImage.src = photo.data;
     }
 
@@ -789,10 +732,10 @@
     function applyEditorPreview() {
       if (!originalEditImage) return;
 
-      const brightness = document.getElementById("brightnessRange").value;
-      const contrast = document.getElementById("contrastRange").value;
-      const filter = document.getElementById("filterSelect").value;
-      const caption = document.getElementById("captionText").value.trim();
+      const brightness = brightnessRange.value;
+      const contrast = contrastRange.value;
+      const filter = filterSelect.value;
+      const caption = captionText.value.trim();
 
       const rotated = rotation === 90 || rotation === 270;
       editCanvas.width = rotated ? originalEditImage.height : originalEditImage.width;
@@ -801,7 +744,7 @@
       editCtx.save();
       editCtx.clearRect(0, 0, editCanvas.width, editCanvas.height);
 
-      let filterValue = `brightness(${brightness}%) contrast(${contrast}%)`;
+      let filterValue = "brightness(" + brightness + "%) contrast(" + contrast + "%)";
       if (filter === "grayscale") filterValue += " grayscale(100%)";
       if (filter === "sepia") filterValue += " sepia(80%)";
       editCtx.filter = filterValue;
@@ -815,7 +758,7 @@
 
       if (caption) {
         const fontSize = Math.max(34, Math.round(editCanvas.width * 0.045));
-        editCtx.font = `bold ${fontSize}px Arial`;
+        editCtx.font = "bold " + fontSize + "px Arial";
         editCtx.textAlign = "center";
         editCtx.textBaseline = "bottom";
 
@@ -833,6 +776,7 @@
 
     function saveEditedPhoto() {
       if (!editingPhoto) return;
+
       const data = editCanvas.toDataURL("image/jpeg", 0.88);
 
       photos.unshift({
@@ -846,6 +790,20 @@
       renderAlbum();
       closeEditor();
       showToast("התמונה הערוכה נשמרה כתמונה חדשה 💖");
+    }
+
+    function clearAlbum() {
+      if (!photos.length) {
+        showToast("האלבום כבר ריק");
+        return;
+      }
+
+      if (!confirm("למחוק את כל התמונות מהאלבום?")) return;
+
+      photos = [];
+      localStorage.removeItem(STORAGE_KEY);
+      renderAlbum();
+      showToast("האלבום נמחק");
     }
 
     function downloadAll() {
@@ -872,10 +830,7 @@
     function showToast(message) {
       toast.textContent = message;
       toast.classList.add("show");
-
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2600);
+      setTimeout(() => toast.classList.remove("show"), 2600);
     }
   </script>
 </body>
