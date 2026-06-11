@@ -127,7 +127,6 @@ button:hover{transform:translateY(-2px)}
     <div class="stat">מצב<span id="modeText">יחיד</span></div>
     <div class="stat">שחקן פעיל<span id="activePlayerText">1</span></div>
     <div class="stat">ניקוד<span id="scoreText">0</span></div>
-    <div class="stat">זמן<span id="timerText">00:00</span></div>
     <div class="stat">מהלכים<span id="movesText">0</span></div>
   </div>
   <div class="controls">
@@ -180,7 +179,7 @@ button:hover{transform:translateY(-2px)}
 const suits=["♠","♥","♦","♣"];
 const ranks=["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 const redSuits=["♥","♦"];
-let state, selected=null, dragged=null, timerInterval=null;
+let state, selected=null, dragged=null;
 let players=[makePlayer(1),makePlayer(2)];
 let activePlayer=0;
 let mode="solo";
@@ -193,7 +192,6 @@ function newGame(){
   players=[makePlayer(1),makePlayer(2)];
   activePlayer=0;
   startFreshState();
-  startTimer();
   render();
   msg("משחק חדש התחיל. בהצלחה!");
 }
@@ -219,11 +217,6 @@ function makeDeck(){
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
-function startTimer(){
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{state.elapsed++;renderStats()},1000);
-}
-
 function render(){
   renderTableau();
   renderTop();
@@ -235,7 +228,6 @@ function renderStats(){
   document.getElementById("activePlayerText").textContent=mode==="duel"?activePlayer+1:"1";
   document.getElementById("scoreText").textContent=state.score;
   document.getElementById("movesText").textContent=state.moves;
-  document.getElementById("timerText").textContent=formatTime(state.elapsed);
 }
 
 function renderPlayers(){
@@ -244,7 +236,7 @@ function renderPlayers(){
   bar.innerHTML=players.map((p,i)=>`
     <div class="player ${i===activePlayer?"active":""}">
       ${p.name}<br>
-      <span class="big">${p.lastResult?("ניקוד: "+p.lastResult.score+" · זמן: "+formatTime(p.lastResult.time)):("בתור "+(i+1))}</span>
+      <span class="big">${p.lastResult?("ניקוד: "+p.lastResult.score+" · מהלכים: "+p.lastResult.moves):("בתור "+(i+1))}</span>
     </div>`).join("");
 }
 
@@ -456,8 +448,7 @@ function findMoves(){
 function checkWin(){
   const total=suits.reduce((s,suit)=>s+state.foundations[suit].length,0);
   if(total===52){
-    clearInterval(timerInterval);
-    players[activePlayer].lastResult={score:state.score,moves:state.moves,time:state.elapsed};
+    players[activePlayer].lastResult={score:state.score,moves:state.moves};
     players[activePlayer].completed=true;
     if(mode==="duel" && activePlayer===0){
       document.getElementById("winText").innerHTML=`שחקן 1 סיים! ניקוד: ${state.score}. עכשיו תור שחקן 2.`;
@@ -470,32 +461,25 @@ function checkWin(){
 
 function finishTurn(){
   if(mode==="solo"){newGame();return}
-  players[activePlayer].lastResult={score:state.score,moves:state.moves,time:state.elapsed};
+  players[activePlayer].lastResult={score:state.score,moves:state.moves};
   if(activePlayer===0){
-    activePlayer=1;startFreshState();startTimer();render();msg("עכשיו תור שחקן 2");
+    activePlayer=1;startFreshState();render();msg("עכשיו תור שחקן 2");
   }else{
-    clearInterval(timerInterval);
     document.getElementById("winText").innerHTML=getFinalText();
     document.getElementById("winModal").classList.add("open");
   }
 }
 function getFinalText(){
-  if(mode==="solo")return `סיימתם עם ${state.score} נקודות בזמן ${formatTime(state.elapsed)}.`;
+  if(mode==="solo")return `סיימתם עם ${state.score} נקודות ו-${state.moves} מהלכים.`;
   const a=players[0].lastResult,b=players[1].lastResult;
   if(!a||!b)return "";
   let winner=a.score>b.score?"שחקן 1":b.score>a.score?"שחקן 2":"תיקו";
-  if(a.score===b.score){
-    winner=a.time<b.time?"שחקן 1":b.time<a.time?"שחקן 2":"תיקו מלא";
-  }
   return `<b>המנצח: ${winner}</b><br><br>
-  שחקן 1: ${a.score} נקודות · ${formatTime(a.time)} · ${a.moves} מהלכים<br>
-  שחקן 2: ${b.score} נקודות · ${formatTime(b.time)} · ${b.moves} מהלכים`;
+  שחקן 1: ${a.score} נקודות · ${a.moves} מהלכים<br>
+  שחקן 2: ${b.score} נקודות · ${b.moves} מהלכים`;
 }
 function closeModal(){document.getElementById("winModal").classList.remove("open")}
 function msg(t){document.getElementById("message").textContent=t}
-function formatTime(sec){const m=String(Math.floor(sec/60)).padStart(2,"0");const s=String(sec%60).padStart(2,"0");return m+":"+s}
-
 newGame();
 </script>
 </body>
-</html>
