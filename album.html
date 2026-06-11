@@ -1,3 +1,7 @@
+מוכן ✅
+
+להורדת האלבום עם עריכת תמונות 
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -248,6 +252,26 @@
       background: linear-gradient(90deg, #fff, #f8fbff);
     }
 
+    .edit-photo {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(84, 160, 255, 0.96);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      padding: 0;
+      font-size: 19px;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 5;
+    }
+
+    body.manage-mode .edit-photo {
+      display: block;
+    }
+
     .delete-photo {
       position: absolute;
       top: 8px;
@@ -342,6 +366,80 @@
       box-shadow: 0 8px 22px rgba(0,0,0,0.24);
     }
 
+    .editor-panel {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      padding: 16px;
+    }
+
+    .editor-panel.open {
+      display: flex;
+    }
+
+    .editor-box {
+      width: 100%;
+      max-width: 980px;
+      max-height: 94vh;
+      overflow: auto;
+      background: white;
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: 0 25px 90px rgba(0,0,0,0.45);
+      text-align: center;
+    }
+
+    .editor-box h2 {
+      margin: 6px 0 14px;
+      color: #6c5ce7;
+    }
+
+    #editCanvas {
+      max-width: 100%;
+      max-height: 52vh;
+      border-radius: 18px;
+      background: #f6f7fb;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .editor-tools {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+      text-align: right;
+    }
+
+    .tool {
+      background: #f8fbff;
+      border: 2px solid #e8efff;
+      border-radius: 18px;
+      padding: 12px;
+      font-weight: 900;
+    }
+
+    .tool input[type="range"], .tool input[type="text"] {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .tool input[type="text"] {
+      padding: 12px;
+      border-radius: 14px;
+      border: 2px solid #d7e3ff;
+      font-size: 16px;
+    }
+
+    @media (max-width: 650px) {
+      .editor-tools {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .toast {
       position: fixed;
       bottom: 18px;
@@ -408,7 +506,7 @@
     <h1>📸 האלבום של ליאן</h1>
     <div class="family-title">אלבום תמונות משפחתי וצבעוני 💖</div>
     <p class="subtitle">
-      כאן אפשר להעלות תמונות מהמחשב או מהטלפון, כולל אייפון. התמונות מוצגות בגלריה יפה ונשמרות מקומית בדפדפן של אותו מכשיר. למחיקת תמונות לחצו על “ניהול תמונות”.
+      כאן אפשר להעלות תמונות מהמחשב או מהטלפון, כולל אייפון. התמונות מוצגות בגלריה יפה ונשמרות מקומית בדפדפן של אותו מכשיר. למחיקה או עריכת תמונות לחצו על “ניהול תמונות”.
     </p>
 
     <section class="upload-card">
@@ -444,6 +542,38 @@
     <div id="modalName" class="modal-name"></div>
   </div>
 
+  <div id="editorPanel" class="editor-panel">
+    <div class="editor-box">
+      <h2>🎨 עריכת תמונה</h2>
+      <canvas id="editCanvas"></canvas>
+
+      <div class="editor-tools">
+        <div class="tool">בהירות
+          <input id="brightnessRange" type="range" min="50" max="150" value="100" oninput="applyEditorPreview()">
+        </div>
+        <div class="tool">ניגודיות
+          <input id="contrastRange" type="range" min="50" max="150" value="100" oninput="applyEditorPreview()">
+        </div>
+        <div class="tool">פילטר
+          <select id="filterSelect" onchange="applyEditorPreview()">
+            <option value="none">רגיל</option>
+            <option value="grayscale">שחור־לבן</option>
+            <option value="sepia">ספיה / ישן</option>
+          </select>
+        </div>
+        <div class="tool">כיתוב על התמונה
+          <input id="captionText" type="text" placeholder="לדוגמה: ליאן 💖" oninput="applyEditorPreview()">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="blue-btn" onclick="rotateEditor()">↻ סיבוב</button>
+        <button class="green-btn" onclick="saveEditedPhoto()">💾 שמירה כתמונה חדשה</button>
+        <button class="clear-btn" onclick="closeEditor()">ביטול</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -459,6 +589,12 @@
     const modalName = document.getElementById("modalName");
     const toast = document.getElementById("toast");
     const manageBtn = document.getElementById("manageBtn");
+    const editorPanel = document.getElementById("editorPanel");
+    const editCanvas = document.getElementById("editCanvas");
+    const editCtx = editCanvas.getContext("2d");
+    let editingPhoto = null;
+    let originalEditImage = null;
+    let rotation = 0;
 
     loadAlbum();
 
@@ -560,12 +696,22 @@
           deletePhoto(photo.id);
         };
 
+        const edit = document.createElement("button");
+        edit.className = "edit-photo";
+        edit.textContent = "✏️";
+        edit.title = "עריכת תמונה";
+        edit.onclick = (event) => {
+          event.stopPropagation();
+          openEditor(photo);
+        };
+
         const info = document.createElement("div");
         info.className = "photo-info";
         info.textContent = photo.name + " · " + photo.date;
 
         card.appendChild(img);
         card.appendChild(del);
+        card.appendChild(edit);
         card.appendChild(info);
         gallery.appendChild(card);
       });
@@ -612,6 +758,94 @@
       manageBtn.classList.toggle("active", isManage);
 
       showToast(isManage ? "מצב ניהול הופעל - עכשיו אפשר למחוק תמונות" : "מצב ניהול נסגר");
+    }
+
+    function openEditor(photo) {
+      editingPhoto = photo;
+      originalEditImage = new Image();
+      originalEditImage.onload = function() {
+        rotation = 0;
+        document.getElementById("brightnessRange").value = 100;
+        document.getElementById("contrastRange").value = 100;
+        document.getElementById("filterSelect").value = "none";
+        document.getElementById("captionText").value = "";
+        editorPanel.classList.add("open");
+        applyEditorPreview();
+      };
+      originalEditImage.src = photo.data;
+    }
+
+    function closeEditor() {
+      editorPanel.classList.remove("open");
+      editingPhoto = null;
+      originalEditImage = null;
+    }
+
+    function rotateEditor() {
+      rotation = (rotation + 90) % 360;
+      applyEditorPreview();
+    }
+
+    function applyEditorPreview() {
+      if (!originalEditImage) return;
+
+      const brightness = document.getElementById("brightnessRange").value;
+      const contrast = document.getElementById("contrastRange").value;
+      const filter = document.getElementById("filterSelect").value;
+      const caption = document.getElementById("captionText").value.trim();
+
+      const rotated = rotation === 90 || rotation === 270;
+      editCanvas.width = rotated ? originalEditImage.height : originalEditImage.width;
+      editCanvas.height = rotated ? originalEditImage.width : originalEditImage.height;
+
+      editCtx.save();
+      editCtx.clearRect(0, 0, editCanvas.width, editCanvas.height);
+
+      let filterValue = `brightness(${brightness}%) contrast(${contrast}%)`;
+      if (filter === "grayscale") filterValue += " grayscale(100%)";
+      if (filter === "sepia") filterValue += " sepia(80%)";
+      editCtx.filter = filterValue;
+
+      editCtx.translate(editCanvas.width / 2, editCanvas.height / 2);
+      editCtx.rotate(rotation * Math.PI / 180);
+      editCtx.drawImage(originalEditImage, -originalEditImage.width / 2, -originalEditImage.height / 2);
+
+      editCtx.restore();
+      editCtx.filter = "none";
+
+      if (caption) {
+        const fontSize = Math.max(34, Math.round(editCanvas.width * 0.045));
+        editCtx.font = `bold ${fontSize}px Arial`;
+        editCtx.textAlign = "center";
+        editCtx.textBaseline = "bottom";
+
+        const x = editCanvas.width / 2;
+        const y = editCanvas.height - 32;
+
+        editCtx.lineWidth = Math.max(5, Math.round(fontSize * 0.16));
+        editCtx.strokeStyle = "rgba(0,0,0,0.65)";
+        editCtx.strokeText(caption, x, y);
+
+        editCtx.fillStyle = "white";
+        editCtx.fillText(caption, x, y);
+      }
+    }
+
+    function saveEditedPhoto() {
+      if (!editingPhoto) return;
+      const data = editCanvas.toDataURL("image/jpeg", 0.88);
+
+      photos.unshift({
+        id: Date.now() + "-" + Math.random().toString(16).slice(2),
+        name: "edited-" + editingPhoto.name,
+        date: new Date().toLocaleDateString("he-IL"),
+        data: data
+      });
+
+      saveAlbum();
+      renderAlbum();
+      closeEditor();
+      showToast("התמונה הערוכה נשמרה כתמונה חדשה 💖");
     }
 
     function downloadAll() {
