@@ -166,7 +166,7 @@ footer{color:white;padding:30px;}
     <button onclick="checkPassword()">כניסה</button>
     <p id="errorMsg" class="error"></p>
     <a class="back" href="index.html">⬅ חזרה למסך הבית</a>
-    <p class="small">ברירת מחדל: 1234. אפשר לשנות בקוד בשורה של PASSWORD.</p>
+    <p class="small">הסיסמה: 1234. בכל כניסה לדף צריך להקליד אותה מחדש.</p>
   </div>
 </div>
 
@@ -268,7 +268,6 @@ function checkPassword(){
   const error = document.getElementById("errorMsg");
 
   if(input === PASSWORD){
-    sessionStorage.setItem("budgetUnlocked", "yes");
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("app").style.display = "block";
     startApp();
@@ -278,7 +277,6 @@ function checkPassword(){
 }
 
 function lockBudget(){
-  sessionStorage.removeItem("budgetUnlocked");
   document.getElementById("passwordInput").value = "";
   document.getElementById("errorMsg").innerText = "";
   document.getElementById("app").style.display = "none";
@@ -434,11 +432,6 @@ function render(){
   drawChart(income, expense);
 }
 
-if(sessionStorage.getItem("budgetUnlocked") === "yes"){
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("app").style.display = "block";
-  startApp();
-}
 </script>
 
 </body>
