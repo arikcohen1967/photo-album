@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>סוליטר תחרותי</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,"Segoe UI",sans-serif}
+:root{
+  --green1:#0f8f5a;--green2:#075c3a;--card:#fff;--red:#e63946;--black:#1d2636;
+  --gold:#ffd166;--blue:#54a0ff;--purple:#6c5ce7;--pink:#ff5e78;
+}
+body{
+  margin:0;min-height:100vh;color:#fff;padding:14px;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(255,255,255,.22),transparent 18%),
+    radial-gradient(circle at 88% 12%,rgba(255,209,102,.18),transparent 18%),
+    linear-gradient(135deg,#06351f,#0f8f5a,#064d33);
+}
+.app{max-width:1280px;margin:0 auto}
+header{
+  background:rgba(255,255,255,.13);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.22);border-radius:28px;padding:16px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);margin-bottom:14px
+}
+h1{margin:0;text-align:center;font-size:clamp(30px,5vw,56px);text-shadow:0 3px 0 rgba(0,0,0,.2)}
+.sub{text-align:center;margin:8px 0 0;color:#eafff5;font-weight:800}
+.panel{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.stat,.control{
+  background:rgba(255,255,255,.94);color:#143224;border-radius:18px;padding:11px;text-align:center;
+  font-weight:1000;box-shadow:0 8px 18px rgba(0,0,0,.16)
+}
+.stat span{display:block;font-size:26px;color:var(--purple);direction:ltr}
+button,select,input{
+  border:0;border-radius:15px;padding:12px 14px;font-size:16px;font-weight:1000;cursor:pointer
+}
+button{box-shadow:0 8px 18px rgba(0,0,0,.18);transition:.14s}
+button:hover{transform:translateY(-2px)}
+.btn-purple{background:var(--purple);color:#fff}.btn-blue{background:var(--blue);color:#fff}.btn-gold{background:var(--gold);color:#3a2a00}.btn-red{background:var(--pink);color:#fff}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.board{
+  background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18);border-radius:28px;
+  padding:16px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.05)
+}
+.top-row{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:18px;align-items:start}
+.stock-area{grid-column:1/3;display:flex;gap:12px;direction:ltr}
+.foundation-area{grid-column:4/8;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tableau{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;align-items:start;min-height:420px}
+.pile{
+  min-height:128px;border-radius:18px;border:2px dashed rgba(255,255,255,.38);
+  background:rgba(255,255,255,.08);position:relative;padding:6px
+}
+.foundation,.stock,.waste{
+  height:128px;border-radius:18px;border:2px dashed rgba(255,255,255,.45);
+  background:rgba(255,255,255,.1);position:relative;padding:6px
+}
+.foundation::after,.stock::after,.waste::after{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.62);font-size:15px;font-weight:900;pointer-events:none;text-align:center
+}
+.stock::after{content:"חפיסה"}
+.waste::after{content:"פתוחים"}
+.foundation[data-suit="♠"]::after{content:"♠"}
+.foundation[data-suit="♥"]::after{content:"♥"}
+.foundation[data-suit="♦"]::after{content:"♦"}
+.foundation[data-suit="♣"]::after{content:"♣"}
+.card{
+  width:100%;height:122px;background:var(--card);border-radius:15px;position:absolute;left:6px;right:6px;
+  width:calc(100% - 12px);box-shadow:0 7px 16px rgba(0,0,0,.28);border:1px solid rgba(0,0,0,.12);
+  color:var(--black);cursor:pointer;user-select:none;transition:transform .12s, box-shadow .12s;
+  display:flex;flex-direction:column;justify-content:space-between;padding:9px;direction:ltr
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 11px 22px rgba(0,0,0,.34)}
+.card.red{color:var(--red)}
+.card.back{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.22),transparent 24%),
+    repeating-linear-gradient(45deg,#243bff 0 8px,#1623a8 8px 16px);
+  color:white;border:2px solid rgba(255,255,255,.55)
+}
+.card.back::before{content:"★";font-size:42px;display:flex;align-items:center;justify-content:center;height:100%;opacity:.9}
+.rank{font-size:22px;font-weight:1000}.suit{font-size:36px;text-align:center}.bottom{font-size:22px;font-weight:1000;transform:rotate(180deg);text-align:right}
+.selected{outline:5px solid var(--gold);outline-offset:2px}
+.hint{outline:5px solid #00e6a8!important;outline-offset:2px}
+.message{
+  min-height:38px;text-align:center;font-size:20px;font-weight:1000;color:#fff;margin:12px 0;
+  text-shadow:0 2px 0 rgba(0,0,0,.2)
+}
+.playerbar{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.player{
+  background:rgba(255,255,255,.93);color:#14213d;border-radius:18px;padding:12px;text-align:center;font-weight:1000
+}
+.player.active{outline:4px solid var(--gold);transform:scale(1.01)}
+.player .big{font-size:25px;color:var(--purple)}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;z-index:10;padding:16px
+}
+.modal.open{display:flex}
+.modalbox{background:#fff;color:#14213d;border-radius:28px;padding:24px;max-width:620px;width:100%;text-align:center;box-shadow:0 24px 90px rgba(0,0,0,.45)}
+.modalbox h2{font-size:34px;margin:0 0 12px;color:var(--purple)}
+.home{display:inline-block;text-decoration:none;background:var(--pink);color:white;border-radius:15px;padding:12px 14px;font-weight:1000;box-shadow:0 8px 18px rgba(0,0,0,.18)}
+@media(max-width:900px){
+  .panel{grid-template-columns:repeat(2,1fr)}
+  .top-row,.tableau{gap:7px}
+  .board{padding:10px}
+  .card{height:96px;border-radius:12px;padding:6px}
+  .foundation,.stock,.waste,.pile{min-height:102px;height:102px}
+  .rank,.bottom{font-size:17px}.suit{font-size:27px}
+  .tableau{min-height:360px}
+}
+@media(max-width:640px){
+  body{padding:8px}.top-row,.tableau{gap:5px}
+  .stock-area{gap:5px}.foundation-area{gap:5px}
+  .card{height:76px}.foundation,.stock,.waste,.pile{height:82px;min-height:82px}
+  .rank,.bottom{font-size:14px}.suit{font-size:21px}
+  .panel{grid-template-columns:1fr}.playerbar{grid-template-columns:1fr}
+  button,.home{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>🃏 סוליטר תחרותי</h1>
+  <div class="sub">סוליטר קלאסי צבעוני בסגנון Windows · שחקן יחיד או תחרות מול שחקן נוסף</div>
+  <div class="panel">
+    <div class="stat">מצב<span id="modeText">יחיד</span></div>
+    <div class="stat">שחקן פעיל<span id="activePlayerText">1</span></div>
+    <div class="stat">ניקוד<span id="scoreText">0</span></div>
+    <div class="stat">זמן<span id="timerText">00:00</span></div>
+    <div class="stat">מהלכים<span id="movesText">0</span></div>
+  </div>
+  <div class="controls">
+    <select id="modeSelect">
+      <option value="solo">שחקן יחיד</option>
+      <option value="duel">תחרות מול מתחרה נוסף</option>
+    </select>
+    <button class="btn-purple" onclick="newGame()">משחק חדש</button>
+    <button class="btn-blue" onclick="autoMove()">מהלך אוטומטי ליסודות</button>
+    <button class="btn-gold" onclick="showHint()">רמז</button>
+    <button class="btn-red" onclick="finishTurn()">סיום תור / מעבר שחקן</button>
+    <a class="home" href="index.html">⬅ חזרה לעמוד הבית</a>
+  </div>
+  <div class="playerbar" id="playerbar"></div>
+</header>
+
+<div class="message" id="message">לחצו על קלף פתוח ואז על המקום שאליו רוצים להעביר אותו. אפשר גם לגרור קלפים.</div>
+
+<section class="board">
+  <div class="top-row">
+    <div class="stock-area">
+      <div id="stock" class="stock piletop" onclick="drawFromStock()"></div>
+      <div id="waste" class="waste piletop" ondragover="allowDrop(event)" ondrop="dropOnWaste(event)"></div>
+    </div>
+    <div></div>
+    <div class="foundation-area">
+      <div class="foundation" data-suit="♠" data-foundation="♠" ondragover="allowDrop(event)" ondrop="dropOnFoundation(event,'♠')" onclick="clickFoundation('♠')"></div>
+      <div class="foundation" data-suit="♥" data-foundation="♥" ondragover="allowDrop(event)" ondrop="dropOnFoundation(event,'♥')" onclick="clickFoundation('♥')"></div>
+      <div class="foundation" data-suit="♦" data-foundation="♦" ondragover="allowDrop(event)" ondrop="dropOnFoundation(event,'♦')" onclick="clickFoundation('♦')"></div>
+      <div class="foundation" data-suit="♣" data-foundation="♣" ondragover="allowDrop(event)" ondrop="dropOnFoundation(event,'♣')" onclick="clickFoundation('♣')"></div>
+    </div>
+  </div>
+
+  <div id="tableau" class="tableau"></div>
+</section>
+</div>
+
+<div id="winModal" class="modal">
+  <div class="modalbox">
+    <h2>🏆 כל הכבוד!</h2>
+    <p id="winText"></p>
+    <div class="controls">
+      <button class="btn-purple" onclick="newGame()">משחק חדש</button>
+      <button class="btn-blue" onclick="closeModal()">המשך לראות לוח</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const suits=["♠","♥","♦","♣"];
+const ranks=["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+const redSuits=["♥","♦"];
+let state, selected=null, dragged=null, timerInterval=null;
+let players=[makePlayer(1),makePlayer(2)];
+let activePlayer=0;
+let mode="solo";
+
+function makePlayer(n){return {name:"שחקן "+n,score:0,moves:0,time:0,completed:false,lastResult:null,state:null}}
+
+function newGame(){
+  mode=document.getElementById("modeSelect").value;
+  document.getElementById("modeText").textContent=mode==="solo"?"יחיד":"תחרות";
+  players=[makePlayer(1),makePlayer(2)];
+  activePlayer=0;
+  startFreshState();
+  startTimer();
+  render();
+  msg("משחק חדש התחיל. בהצלחה!");
+}
+
+function startFreshState(){
+  const deck=shuffle(makeDeck());
+  const tableau=[[],[],[],[],[],[],[]];
+  for(let col=0;col<7;col++){
+    for(let i=0;i<=col;i++){
+      const c=deck.pop();
+      c.faceUp=i===col;
+      tableau[col].push(c);
+    }
+  }
+  state={stock:deck,waste:[],foundations:{"♠":[],"♥":[],"♦":[],"♣":[]},tableau,score:0,moves:0,start:Date.now(),elapsed:0};
+}
+
+function cloneState(s){return JSON.parse(JSON.stringify(s))}
+function makeDeck(){
+  const d=[];let id=0;
+  suits.forEach(s=>ranks.forEach((r,i)=>d.push({id:"c"+(++id),suit:s,rank:r,value:i+1,red:redSuits.includes(s),faceUp:false})));
+  return d;
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function startTimer(){
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{state.elapsed++;renderStats()},1000);
+}
+
+function render(){
+  renderTableau();
+  renderTop();
+  renderPlayers();
+  renderStats();
+}
+
+function renderStats(){
+  document.getElementById("activePlayerText").textContent=mode==="duel"?activePlayer+1:"1";
+  document.getElementById("scoreText").textContent=state.score;
+  document.getElementById("movesText").textContent=state.moves;
+  document.getElementById("timerText").textContent=formatTime(state.elapsed);
+}
+
+function renderPlayers(){
+  const bar=document.getElementById("playerbar");
+  if(mode==="solo"){bar.innerHTML="";return}
+  bar.innerHTML=players.map((p,i)=>`
+    <div class="player ${i===activePlayer?"active":""}">
+      ${p.name}<br>
+      <span class="big">${p.lastResult?("ניקוד: "+p.lastResult.score+" · זמן: "+formatTime(p.lastResult.time)):("בתור "+(i+1))}</span>
+    </div>`).join("");
+}
+
+function renderTop(){
+  renderPile(document.getElementById("stock"), state.stock.length? [state.stock[state.stock.length-1]]:[], "stock");
+  renderPile(document.getElementById("waste"), state.waste.length? [state.waste[state.waste.length-1]]:[], "waste");
+  suits.forEach(s=>{
+    const el=document.querySelector(`[data-foundation="${s}"]`);
+    renderPile(el,state.foundations[s].length?[state.foundations[s][state.foundations[s].length-1]]:[],"foundation",s);
+  });
+}
+
+function renderTableau(){
+  const table=document.getElementById("tableau");
+  table.innerHTML="";
+  state.tableau.forEach((pile,idx)=>{
+    const div=document.createElement("div");
+    div.className="pile";
+    div.dataset.tableau=idx;
+    div.ondragover=allowDrop;
+    div.ondrop=(e)=>dropOnTableau(e,idx);
+    div.onclick=(e)=>{if(e.target===div) clickTableau(idx)}
+    pile.forEach((card,i)=>{
+      const el=cardEl(card);
+      el.style.top=(i*28)+"px";
+      el.draggable=card.faceUp;
+      el.dataset.source="tableau";
+      el.dataset.col=idx;
+      el.dataset.index=i;
+      el.onclick=(e)=>{e.stopPropagation();clickCard("tableau",idx,i)};
+      el.ondragstart=(e)=>dragStart(e,"tableau",idx,i);
+      div.appendChild(el);
+    });
+    table.appendChild(div);
+  });
+}
+
+function renderPile(container,cards,type,suit){
+  const old=[...container.querySelectorAll(".card")];old.forEach(x=>x.remove());
+  if(!cards.length)return;
+  const card=cards[0];
+  const el=cardEl(type==="stock"?{...card,faceUp:false}:card);
+  el.style.top="6px";
+  el.style.left="6px";
+  el.style.width="calc(100% - 12px)";
+  if(type==="waste"){
+    el.dataset.source="waste";el.onclick=(e)=>{e.stopPropagation();clickCard("waste")};
+    el.draggable=true;el.ondragstart=(e)=>dragStart(e,"waste");
+  }
+  if(type==="foundation"){
+    el.dataset.source="foundation";el.dataset.suit=suit;
+  }
+  container.appendChild(el);
+}
+
+function cardEl(card){
+  const el=document.createElement("div");
+  el.className="card "+(card.faceUp?"":"back")+" "+(card.red?"red":"");
+  el.dataset.id=card.id;
+  if(card.faceUp){
+    el.innerHTML=`<div class="rank">${card.rank}${card.suit}</div><div class="suit">${card.suit}</div><div class="bottom">${card.rank}${card.suit}</div>`;
+  }
+  return el;
+}
+
+function drawFromStock(){
+  clearSelection();
+  if(state.stock.length){
+    const c=state.stock.pop();c.faceUp=true;state.waste.push(c);state.moves++;state.score+=1;render();return;
+  }
+  if(state.waste.length){
+    state.stock=state.waste.reverse().map(c=>({...c,faceUp:false}));
+    state.waste=[];state.moves++;state.score=Math.max(0,state.score-10);render();msg("החפיסה התהפכה מחדש");
+  }
+}
+
+function clickCard(source,col,index){
+  const moving=getMoving(source,col,index);
+  if(!moving.length)return;
+  select({source,col,index,cards:moving});
+}
+
+function clickTableau(col){
+  if(!selected)return;
+  if(moveToTableau(selected,col)){afterMove()} else msg("מהלך לא חוקי");
+}
+
+function clickFoundation(suit){
+  if(!selected)return;
+  if(moveToFoundation(selected,suit)){afterMove()} else msg("אפשר להניח ביסודות רק לפי סדר מאס עד מלך ובאותו סימן");
+}
+
+function select(sel){
+  clearSelection();
+  selected=sel;
+  const ids=sel.cards.map(c=>c.id);
+  document.querySelectorAll(".card").forEach(el=>{if(ids.includes(el.dataset.id))el.classList.add("selected")});
+}
+
+function clearSelection(){selected=null;document.querySelectorAll(".selected,.hint").forEach(el=>el.classList.remove("selected","hint"))}
+
+function getMoving(source,col,index){
+  if(source==="waste")return state.waste.length?[state.waste[state.waste.length-1]]:[];
+  if(source==="tableau"){
+    const pile=state.tableau[col];
+    if(!pile[index]||!pile[index].faceUp)return[];
+    return pile.slice(index);
+  }
+  return[];
+}
+
+function canPlaceOnTableau(cards,targetPile){
+  const first=cards[0];
+  if(!targetPile.length)return first.value===13;
+  const top=targetPile[targetPile.length-1];
+  return top.faceUp && top.red!==first.red && top.value===first.value+1;
+}
+
+function canPlaceOnFoundation(card,suit){
+  if(card.suit!==suit)return false;
+  const pile=state.foundations[suit];
+  if(!pile.length)return card.value===1;
+  return card.value===pile[pile.length-1].value+1;
+}
+
+function moveToTableau(sel,col){
+  const target=state.tableau[col];
+  if(!canPlaceOnTableau(sel.cards,target))return false;
+  removeSelected(sel);
+  state.tableau[col].push(...sel.cards);
+  flipLast(sel);
+  state.moves++;state.score+=5;
+  return true;
+}
+
+function moveToFoundation(sel,suit){
+  if(sel.cards.length!==1)return false;
+  const card=sel.cards[0];
+  if(!canPlaceOnFoundation(card,suit))return false;
+  removeSelected(sel);
+  state.foundations[suit].push(card);
+  flipLast(sel);
+  state.moves++;state.score+=10;
+  return true;
+}
+
+function removeSelected(sel){
+  if(sel.source==="waste")state.waste.pop();
+  if(sel.source==="tableau")state.tableau[sel.col].splice(sel.index);
+}
+function flipLast(sel){
+  if(sel.source==="tableau"){
+    const pile=state.tableau[sel.col];
+    if(pile.length && !pile[pile.length-1].faceUp){pile[pile.length-1].faceUp=true;state.score+=5}
+  }
+}
+function afterMove(){clearSelection();render();checkWin()}
+
+function allowDrop(e){e.preventDefault()}
+function dragStart(e,source,col,index){dragged={source,col,index,cards:getMoving(source,col,index)};e.dataTransfer.setData("text/plain","card")}
+function dropOnTableau(e,col){e.preventDefault();if(!dragged)return;if(moveToTableau(dragged,col))afterMove();dragged=null}
+function dropOnFoundation(e,suit){e.preventDefault();if(!dragged)return;if(moveToFoundation(dragged,suit))afterMove();dragged=null}
+function dropOnWaste(e){e.preventDefault()}
+
+function autoMove(){
+  let moved=false;
+  const waste=state.waste[state.waste.length-1];
+  if(waste && canPlaceOnFoundation(waste,waste.suit)){
+    select({source:"waste",cards:[waste]});
+    moveToFoundation(selected,waste.suit);moved=true;
+  }else{
+    for(let col=0;col<7&&!moved;col++){
+      const pile=state.tableau[col], card=pile[pile.length-1];
+      if(card&&card.faceUp&&canPlaceOnFoundation(card,card.suit)){
+        select({source:"tableau",col,index:pile.length-1,cards:[card]});
+        moveToFoundation(selected,card.suit);moved=true;
+      }
+    }
+  }
+  if(moved){afterMove();msg("בוצע מהלך אוטומטי")}else msg("אין כרגע מהלך אוטומטי ליסודות");
+}
+
+function showHint(){
+  clearSelection();
+  const moves=findMoves();
+  if(!moves.length){msg("לא נמצא רמז כרגע. נסו לפתוח קלף מהחפיסה.");return}
+  const move=moves[0];
+  document.querySelectorAll(".card").forEach(el=>{if(move.ids.includes(el.dataset.id))el.classList.add("hint")});
+  msg(move.text);
+}
+function findMoves(){
+  const res=[];
+  const waste=state.waste[state.waste.length-1];
+  if(waste){
+    if(canPlaceOnFoundation(waste,waste.suit))res.push({ids:[waste.id],text:"אפשר להעביר את הקלף הפתוח ליסודות"});
+    state.tableau.forEach((p,i)=>{if(canPlaceOnTableau([waste],p))res.push({ids:[waste.id],text:"אפשר להעביר את הקלף הפתוח לאחת העמודות"})});
+  }
+  state.tableau.forEach((p,col)=>{
+    p.forEach((c,i)=>{
+      if(!c.faceUp)return;
+      const cards=p.slice(i);
+      if(cards.length===1&&canPlaceOnFoundation(c,c.suit))res.push({ids:[c.id],text:"אפשר להעביר קלף מהעמודות ליסודות"});
+      state.tableau.forEach((target,tcol)=>{if(tcol!==col&&canPlaceOnTableau(cards,target))res.push({ids:cards.map(x=>x.id),text:"אפשר להעביר סדרת קלפים לעמודה אחרת"})});
+    });
+  });
+  return res;
+}
+
+function checkWin(){
+  const total=suits.reduce((s,suit)=>s+state.foundations[suit].length,0);
+  if(total===52){
+    clearInterval(timerInterval);
+    players[activePlayer].lastResult={score:state.score,moves:state.moves,time:state.elapsed};
+    players[activePlayer].completed=true;
+    if(mode==="duel" && activePlayer===0){
+      document.getElementById("winText").innerHTML=`שחקן 1 סיים! ניקוד: ${state.score}. עכשיו תור שחקן 2.`;
+    }else{
+      document.getElementById("winText").innerHTML=getFinalText();
+    }
+    document.getElementById("winModal").classList.add("open");
+  }
+}
+
+function finishTurn(){
+  if(mode==="solo"){newGame();return}
+  players[activePlayer].lastResult={score:state.score,moves:state.moves,time:state.elapsed};
+  if(activePlayer===0){
+    activePlayer=1;startFreshState();startTimer();render();msg("עכשיו תור שחקן 2");
+  }else{
+    clearInterval(timerInterval);
+    document.getElementById("winText").innerHTML=getFinalText();
+    document.getElementById("winModal").classList.add("open");
+  }
+}
+function getFinalText(){
+  if(mode==="solo")return `סיימתם עם ${state.score} נקודות בזמן ${formatTime(state.elapsed)}.`;
+  const a=players[0].lastResult,b=players[1].lastResult;
+  if(!a||!b)return "";
+  let winner=a.score>b.score?"שחקן 1":b.score>a.score?"שחקן 2":"תיקו";
+  if(a.score===b.score){
+    winner=a.time<b.time?"שחקן 1":b.time<a.time?"שחקן 2":"תיקו מלא";
+  }
+  return `<b>המנצח: ${winner}</b><br><br>
+  שחקן 1: ${a.score} נקודות · ${formatTime(a.time)} · ${a.moves} מהלכים<br>
+  שחקן 2: ${b.score} נקודות · ${formatTime(b.time)} · ${b.moves} מהלכים`;
+}
+function closeModal(){document.getElementById("winModal").classList.remove("open")}
+function msg(t){document.getElementById("message").textContent=t}
+function formatTime(sec){const m=String(Math.floor(sec/60)).padStart(2,"0");const s=String(sec%60).padStart(2,"0");return m+":"+s}
+
+newGame();
+</script>
+</body>
+</html>
+תאפשר למצחרה להתחבר דרך האינטרנט לאתר ולהתחרות בי במשחק
