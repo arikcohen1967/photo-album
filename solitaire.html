@@ -43,7 +43,7 @@ button:hover{transform:translateY(-2px)}
   padding:16px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.05)
 }
 .top-row{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:18px;align-items:start}
-.stock-area{grid-column:1/4;display:flex;gap:12px;direction:ltr}
+.stock-area{grid-column:1/5;display:flex;gap:20px;direction:ltr}
 .foundation-area{grid-column:4/8;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .tableau{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;align-items:start;min-height:420px}
 .pile{
@@ -124,25 +124,102 @@ button:hover{transform:translateY(-2px)}
   touch-action:none;
 }
 
-.stock,.waste{
-  height:180px !important;
-  min-height:180px !important;
+
+
+/* הגדלת שני הקלפים העליונים: חפיסה + קלף פתוח */
+.stock-area{
+  grid-column:1/5 !important;
+  gap:20px !important;
+  align-items:start;
+}
+
+.stock,
+.waste{
+  width:190px !important;
+  min-width:190px !important;
+  max-width:190px !important;
+  height:190px !important;
+  min-height:190px !important;
+  flex:0 0 190px !important;
 }
 
 .stock .card,
 .waste .card{
-  height:170px !important;
+  height:178px !important;
+  width:calc(100% - 12px) !important;
 }
 
+.stock .rank,
+.waste .rank,
+.stock .bottom,
+.waste .bottom{
+  font-size:30px !important;
+}
+
+.stock .suit,
+.waste .suit{
+  font-size:52px !important;
+}
+
+/* באייפון - רחב וברור אבל עדיין נכנס למסך */
 @media(max-width:640px){
-  .stock,.waste{
-    height:130px !important;
-    min-height:130px !important;
+  .top-row{
+    grid-template-columns:repeat(7,1fr) !important;
+    gap:6px !important;
+  }
+
+  .stock-area{
+    grid-column:1/6 !important;
+    gap:10px !important;
+  }
+
+  .stock,
+  .waste{
+    width:118px !important;
+    min-width:118px !important;
+    max-width:118px !important;
+    height:138px !important;
+    min-height:138px !important;
+    flex:0 0 118px !important;
   }
 
   .stock .card,
   .waste .card{
-    height:124px !important;
+    height:128px !important;
+  }
+
+  .stock .rank,
+  .waste .rank,
+  .stock .bottom,
+  .waste .bottom{
+    font-size:22px !important;
+  }
+
+  .stock .suit,
+  .waste .suit{
+    font-size:38px !important;
+  }
+
+  .foundation{
+    height:82px !important;
+    min-height:82px !important;
+  }
+}
+
+@media(max-width:390px){
+  .stock,
+  .waste{
+    width:108px !important;
+    min-width:108px !important;
+    max-width:108px !important;
+    height:130px !important;
+    min-height:130px !important;
+    flex:0 0 108px !important;
+  }
+
+  .stock .card,
+  .waste .card{
+    height:120px !important;
   }
 }
 
