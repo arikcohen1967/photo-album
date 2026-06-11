@@ -118,11 +118,10 @@
     .clear-btn { background: #ff5e78; color: white; }
     .home-btn { background: #ff9f43; color: white; }
     .download-btn { background: #00d084; color: #063d25; }
-    .manage-btn { background: #54a0ff; color: white; }
-    .manage-btn.active { background: #5f27cd; }
     .blue-btn { background: #54a0ff; color: white; }
     .green-btn { background: #00d084; color: #063d25; }
     .gray-btn { background: #8395a7; color: white; }
+    .purple-btn { background: #6c5ce7; color: white; }
 
     .count {
       text-align: center;
@@ -175,29 +174,6 @@
       background: linear-gradient(90deg, #fff, #f8fbff);
     }
 
-    .delete-photo, .edit-photo {
-      position: absolute;
-      top: 8px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      padding: 0;
-      font-size: 20px;
-      box-shadow: 0 5px 14px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 5;
-    }
-
-    .delete-photo { left: 8px; background: rgba(255,94,120,0.96); color: white; }
-    .edit-photo { right: 8px; background: rgba(84,160,255,0.96); color: white; }
-
-    body.manage-mode .delete-photo,
-    body.manage-mode .edit-photo { display: block; }
-
-    body.manage-mode .photo-card {
-      outline: 3px dashed rgba(255,94,120,0.42);
-    }
-
     .empty {
       text-align: center;
       background: linear-gradient(135deg, #f8fbff, #fff1f7);
@@ -213,7 +189,7 @@
     .modal, .editor-panel {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.86);
+      background: rgba(0,0,0,0.88);
       display: none;
       align-items: center;
       justify-content: center;
@@ -223,9 +199,17 @@
 
     .modal.open, .editor-panel.open { display: flex; }
 
-    .modal img {
+    .modal-content {
       max-width: 96vw;
       max-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal img {
+      max-width: 96vw;
+      max-height: 75vh;
       border-radius: 24px;
       box-shadow: 0 20px 90px rgba(0,0,0,0.55);
       background: white;
@@ -236,7 +220,7 @@
       position: fixed;
       top: 16px;
       left: 16px;
-      background: #ff5e78;
+      background: rgba(255,94,120,0.94);
       color: white;
       border-radius: 50%;
       width: 50px;
@@ -250,7 +234,7 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.84);
       color: #26334d;
       border-radius: 50%;
       width: 58px;
@@ -259,38 +243,35 @@
       font-size: 34px;
       z-index: 1002;
       box-shadow: 0 10px 28px rgba(0,0,0,0.32);
+      backdrop-filter: blur(8px);
     }
 
-    .nav-photo.prev {
-      right: 18px;
-    }
-
-    .nav-photo.next {
-      left: 18px;
-    }
+    .nav-photo.prev { right: 18px; }
+    .nav-photo.next { left: 18px; }
 
     .photo-counter {
       position: fixed;
       top: 18px;
       right: 18px;
-      background: white;
+      background: rgba(255,255,255,0.88);
       color: #26334d;
       border-radius: 999px;
       padding: 11px 18px;
       font-weight: 1000;
       box-shadow: 0 8px 22px rgba(0,0,0,0.24);
       z-index: 1002;
+      backdrop-filter: blur(8px);
     }
 
     .modal-name {
       position: fixed;
-      bottom: 18px;
+      bottom: 86px;
       left: 50%;
       transform: translateX(-50%);
-      background: white;
+      background: rgba(255,255,255,0.88);
       color: #26334d;
       border-radius: 999px;
-      padding: 11px 20px;
+      padding: 10px 18px;
       font-weight: 1000;
       max-width: 85vw;
       overflow: hidden;
@@ -298,7 +279,42 @@
       white-space: nowrap;
       direction: ltr;
       box-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      backdrop-filter: blur(8px);
+      z-index: 1002;
     }
+
+    .photo-toolbar {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      padding: 10px;
+      z-index: 1002;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+    }
+
+    .tool-btn {
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-size: 15px;
+      box-shadow: none;
+      background: rgba(255,255,255,0.86);
+      color: #26334d;
+      backdrop-filter: blur(8px);
+    }
+
+    .tool-btn.share { background: rgba(0,208,132,0.9); color: #063d25; }
+    .tool-btn.edit { background: rgba(84,160,255,0.92); color: white; }
+    .tool-btn.delete { background: rgba(255,94,120,0.92); color: white; }
+    .tool-btn.download { background: rgba(255,159,67,0.92); color: white; }
 
     .editor-box {
       width: 100%;
@@ -365,7 +381,7 @@
       font-weight: 900;
       box-shadow: 0 12px 28px rgba(0,0,0,0.25);
       display: none;
-      z-index: 1100;
+      z-index: 1300;
     }
 
     .toast.show { display: block; }
@@ -377,20 +393,25 @@
       .photo-card img { height: 145px; }
       .upload-label { width: 100%; font-size: 20px; min-width: 0; }
       button, .home-btn { width: 100%; text-align: center; }
-      .delete-photo, .edit-photo { width: 42px; height: 42px; }
       .editor-tools { grid-template-columns: 1fr; }
-      .nav-photo {
-        width: 48px;
-        height: 48px;
-        font-size: 27px;
-      }
+      .nav-photo { width: 48px; height: 48px; font-size: 27px; }
       .nav-photo.prev { right: 10px; }
       .nav-photo.next { left: 10px; }
-      .photo-counter {
-        top: 76px;
-        right: 50%;
-        transform: translateX(50%);
+      .photo-counter { top: 76px; right: 50%; transform: translateX(50%); }
+      .modal-name { bottom: 112px; }
+      .photo-toolbar {
+        width: calc(100vw - 18px);
+        border-radius: 24px;
+        bottom: 8px;
+        gap: 7px;
       }
+      .tool-btn {
+        width: auto;
+        flex: 1 1 42%;
+        font-size: 14px;
+        padding: 10px;
+      }
+      .modal img { max-height: 66vh; }
     }
   </style>
 </head>
@@ -399,7 +420,7 @@
     <h1>📸 האלבום של ליאן</h1>
     <div class="family-title">אלבום תמונות משפחתי וצבעוני 💖</div>
     <p class="subtitle">
-      אפשר להעלות תמונות מהמחשב או מהאייפון. למחיקה או עריכה לחצו על “ניהול תמונות”.
+      אפשר להעלות תמונות מהמחשב או מהאייפון. בגלריה רואים תמונות נקיות — עריכה, מחיקה, הורדה ושיתוף מופיעים רק כשפותחים תמונה.
     </p>
 
     <section class="upload-card">
@@ -414,7 +435,6 @@
 
     <div class="actions">
       <a class="home-btn" href="index.html">⬅ חזרה לעמוד הבית</a>
-      <button id="manageBtn" class="manage-btn" onclick="toggleManageMode()">🛠 ניהול תמונות</button>
       <button class="download-btn" onclick="downloadAll()">⬇ שמירת גיבוי</button>
       <button class="clear-btn" onclick="clearAlbum()">🗑 מחיקת כל האלבום</button>
     </div>
@@ -434,8 +454,19 @@
     <button class="nav-photo prev" onclick="event.stopPropagation(); showPrevPhoto()">›</button>
     <button class="nav-photo next" onclick="event.stopPropagation(); showNextPhoto()">‹</button>
     <div id="photoCounter" class="photo-counter">1/1</div>
-    <img id="modalImage" src="" alt="תמונה מוגדלת">
+
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="תמונה מוגדלת">
+    </div>
+
     <div id="modalName" class="modal-name"></div>
+
+    <div class="photo-toolbar">
+      <button class="tool-btn share" onclick="event.stopPropagation(); shareCurrentPhoto()">📤 שיתוף</button>
+      <button class="tool-btn edit" onclick="event.stopPropagation(); editCurrentPhoto()">✏️ עריכה</button>
+      <button class="tool-btn download" onclick="event.stopPropagation(); downloadCurrentPhoto()">⬇ הורדה</button>
+      <button class="tool-btn delete" onclick="event.stopPropagation(); deleteCurrentPhoto()">🗑 מחיקה</button>
+    </div>
   </div>
 
   <div id="editorPanel" class="editor-panel">
@@ -490,7 +521,6 @@
     const modalName = document.getElementById("modalName");
     const photoCounter = document.getElementById("photoCounter");
     const toast = document.getElementById("toast");
-    const manageBtn = document.getElementById("manageBtn");
     const editorPanel = document.getElementById("editorPanel");
     const editCanvas = document.getElementById("editCanvas");
     const editCtx = editCanvas.getContext("2d");
@@ -593,54 +623,17 @@
         img.alt = photo.name;
         img.onclick = () => openModal(photo);
 
-        const del = document.createElement("button");
-        del.className = "delete-photo";
-        del.textContent = "🗑";
-        del.title = "מחיקת תמונה";
-        del.onclick = (event) => {
-          event.stopPropagation();
-          deletePhoto(photo.id);
-        };
-
-        const edit = document.createElement("button");
-        edit.className = "edit-photo";
-        edit.textContent = "✏️";
-        edit.title = "עריכת תמונה";
-        edit.onclick = (event) => {
-          event.stopPropagation();
-          openEditor(photo);
-        };
-
         const info = document.createElement("div");
         info.className = "photo-info";
         info.textContent = photo.name + " · " + photo.date;
 
         card.appendChild(img);
-        card.appendChild(del);
-        card.appendChild(edit);
         card.appendChild(info);
         gallery.appendChild(card);
       });
     }
 
-    function toggleManageMode() {
-      document.body.classList.toggle("manage-mode");
-      const isManage = document.body.classList.contains("manage-mode");
-      manageBtn.textContent = isManage ? "✅ סיום ניהול" : "🛠 ניהול תמונות";
-      manageBtn.classList.toggle("active", isManage);
-      showToast(isManage ? "מצב ניהול הופעל - עכשיו אפשר לערוך או למחוק" : "מצב ניהול נסגר");
-    }
-
-    function deletePhoto(id) {
-      if (!confirm("למחוק את התמונה הזו מהאלבום?")) return;
-      photos = photos.filter(photo => photo.id !== id);
-      saveAlbum();
-      renderAlbum();
-      showToast("התמונה נמחקה");
-    }
-
     function openModal(photo) {
-      if (document.body.classList.contains("manage-mode")) return;
       const index = photos.findIndex(p => p.id === photo.id);
       currentModalIndex = index >= 0 ? index : 0;
       updateModalPhoto();
@@ -648,7 +641,14 @@
     }
 
     function updateModalPhoto() {
-      if (!photos.length) return;
+      if (!photos.length) {
+        closeModal();
+        return;
+      }
+
+      if (currentModalIndex >= photos.length) currentModalIndex = photos.length - 1;
+      if (currentModalIndex < 0) currentModalIndex = 0;
+
       const photo = photos[currentModalIndex];
       modalImage.src = photo.data;
       modalName.textContent = photo.name;
@@ -665,6 +665,10 @@
       if (!photos.length) return;
       currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
       updateModalPhoto();
+    }
+
+    function getCurrentPhoto() {
+      return photos[currentModalIndex] || null;
     }
 
     function closeModal() {
@@ -685,11 +689,8 @@
       const diff = touchEndX - touchStartX;
 
       if (Math.abs(diff) > 45) {
-        if (diff > 0) {
-          showPrevPhoto();
-        } else {
-          showNextPhoto();
-        }
+        if (diff > 0) showPrevPhoto();
+        else showNextPhoto();
       }
     }, { passive: true });
 
@@ -700,6 +701,91 @@
       if (event.key === "ArrowLeft") showNextPhoto();
       if (event.key === "ArrowRight") showPrevPhoto();
     });
+
+    function dataUrlToBlob(dataUrl) {
+      const parts = dataUrl.split(",");
+      const mime = parts[0].match(/:(.*?);/)[1];
+      const binary = atob(parts[1]);
+      const array = new Uint8Array(binary.length);
+
+      for (let i = 0; i < binary.length; i++) {
+        array[i] = binary.charCodeAt(i);
+      }
+
+      return new Blob([array], { type: mime });
+    }
+
+    async function shareCurrentPhoto() {
+      const photo = getCurrentPhoto();
+      if (!photo) return;
+
+      try {
+        const blob = dataUrlToBlob(photo.data);
+        const file = new File([blob], photo.name || "lian-photo.jpg", { type: blob.type });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: "תמונה מהאלבום של ליאן",
+            text: "תמונה מהאלבום של ליאן 💖"
+          });
+          return;
+        }
+
+        if (navigator.share) {
+          await navigator.share({
+            title: "האלבום של ליאן",
+            text: "תמונה מהאלבום של ליאן 💖"
+          });
+          return;
+        }
+
+        showToast("בדפדפן הזה אין שיתוף ישיר. אפשר להשתמש בכפתור הורדה ואז לשלוח בוואטסאפ.");
+      } catch (error) {
+        showToast("השיתוף בוטל או לא נתמך במכשיר הזה");
+      }
+    }
+
+    function downloadCurrentPhoto() {
+      const photo = getCurrentPhoto();
+      if (!photo) return;
+
+      const a = document.createElement("a");
+      a.href = photo.data;
+      a.download = photo.name || "lian-photo.jpg";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      showToast("התמונה נשמרה");
+    }
+
+    function deleteCurrentPhoto() {
+      const photo = getCurrentPhoto();
+      if (!photo) return;
+
+      if (!confirm("למחוק את התמונה הזו מהאלבום?")) return;
+
+      photos.splice(currentModalIndex, 1);
+      saveAlbum();
+      renderAlbum();
+
+      if (!photos.length) {
+        closeModal();
+        showToast("התמונה נמחקה");
+        return;
+      }
+
+      if (currentModalIndex >= photos.length) currentModalIndex = photos.length - 1;
+      updateModalPhoto();
+      showToast("התמונה נמחקה");
+    }
+
+    function editCurrentPhoto() {
+      const photo = getCurrentPhoto();
+      if (!photo) return;
+      openEditor(photo);
+    }
 
     function openEditor(photo) {
       editingPhoto = photo;
@@ -789,6 +875,8 @@
       saveAlbum();
       renderAlbum();
       closeEditor();
+      currentModalIndex = 0;
+      updateModalPhoto();
       showToast("התמונה הערוכה נשמרה כתמונה חדשה 💖");
     }
 
@@ -803,6 +891,7 @@
       photos = [];
       localStorage.removeItem(STORAGE_KEY);
       renderAlbum();
+      closeModal();
       showToast("האלבום נמחק");
     }
 
