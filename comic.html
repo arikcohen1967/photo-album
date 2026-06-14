@@ -1,9 +1,3 @@
-הורד את הקובץ המלא comic-apple-full.html
-
-לפני העלאה ל־GitHub שנה את השם ל־:
-
-comic.html 
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -155,7 +149,7 @@ input:focus,select:focus{
 }
 
 .frame{
-  height:340px;
+  height:360px;
   background:#ffffff;
   border:1px solid #dbe4ee;
   border-radius:28px;
@@ -459,9 +453,81 @@ input:focus,select:focus{
   }
   .color-dot{ width:38px; height:38px; }
   .frames{ grid-template-columns:1fr; gap:18px; }
-  .frame{ height:310px; border-radius:24px; }
+  .frame{ height:330px; border-radius:24px; }
   .image-item{ width:96px; height:96px; }
 }
+
+
+/* Compact emoji area - keeps the Apple look but saves space */
+.toolbar{
+  max-height:none;
+}
+
+.toolbar button:not(.blue):not(.red):not(.small):not(.green):not(.orange):not([onclick="setBg()"]):not([onclick="setSolidColor()"]):not([onclick="addSpeech()"]),
+.toolbar button[onclick^="addItem"]{
+  min-width:50px;
+  width:50px;
+  height:46px;
+  padding:7px;
+  font-size:24px;
+  border-radius:15px;
+  background:rgba(255,255,255,.92);
+  color:#1d1d1f;
+  box-shadow:0 6px 14px rgba(15,23,42,.08);
+  border:1px solid #dbe4ee;
+}
+
+.toolbar button[onclick^="addItem"]:hover{
+  transform:translateY(-2px) scale(1.04);
+  box-shadow:0 10px 18px rgba(15,23,42,.12);
+}
+
+.emoji-strip{
+  width:100%;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:8px 6px 10px;
+  margin-top:4px;
+  border-radius:20px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.75);
+  scrollbar-width:thin;
+  scrollbar-color:#c7d2fe transparent;
+}
+
+.emoji-strip::-webkit-scrollbar{
+  height:8px;
+}
+
+.emoji-strip::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.emoji-strip::-webkit-scrollbar-thumb{
+  background:#c7d2fe;
+  border-radius:999px;
+}
+
+.emoji-strip button{
+  flex:0 0 auto;
+}
+
+@media(max-width:700px){
+  .emoji-strip{
+    padding:8px 4px 10px;
+  }
+
+  .emoji-strip button,
+  .toolbar button[onclick^="addItem"]{
+    width:48px !important;
+    min-width:48px !important;
+    height:44px;
+    font-size:23px;
+  }
+}
+
 </style>
 </head>
 
@@ -511,17 +577,18 @@ input:focus,select:focus{
   <button class="blue" onclick="document.getElementById('phonePhotoInput').click()">📱 תמונה מהטלפון</button>
   <input id="phonePhotoInput" type="file" accept="image/*" style="display:none" onchange="addPhonePhoto(event)">
 
-  <button onclick="addItem('👧')">👧</button>
-  <button onclick="addItem('👦')">👦</button>
-  <button onclick="addItem('🦄')">🦄</button>
-  <button onclick="addItem('🐶')">🐶</button>
-  <button onclick="addItem('🐱')">🐱</button>
-  <button onclick="addItem('🤖')">🤖</button>
-  <button onclick="addItem('👑')">👑</button>
-  <button onclick="addItem('🌈')">🌈</button>
-  <button onclick="addItem('⭐')">⭐</button>
-  <button onclick="addItem('❤️')">❤️</button>
-  <button onclick="addItem('🎈')">🎈</button>
+  <div class="emoji-strip">
+<button onclick="addItem('👧')">👧</button>
+<button onclick="addItem('👦')">👦</button>
+<button onclick="addItem('🦄')">🦄</button>
+<button onclick="addItem('🐶')">🐶</button>
+<button onclick="addItem('🐱')">🐱</button>
+<button onclick="addItem('🤖')">🤖</button>
+<button onclick="addItem('👑')">👑</button>
+<button onclick="addItem('🌈')">🌈</button>
+<button onclick="addItem('⭐')">⭐</button>
+<button onclick="addItem('❤️')">❤️</button>
+<button onclick="addItem('🎈')">🎈</button>
 <button onclick="addItem('🧸')">🧸</button>
 <button onclick="addItem('🐼')">🐼</button>
 <button onclick="addItem('🐵')">🐵</button>
@@ -557,9 +624,6 @@ input:focus,select:focus{
 <button onclick="addItem('🪄')">🪄</button>
 <button onclick="addItem('👻')">👻</button>
 <button onclick="addItem('🐲')">🐲</button>
-
-
-  
 <button onclick="addItem('👸')">👸</button>
 <button onclick="addItem('🤴')">🤴</button>
 <button onclick="addItem('🧜‍♀️')">🧜‍♀️</button>
@@ -586,7 +650,7 @@ input:focus,select:focus{
 <button onclick="addItem('☁️')">☁️</button>
 <button onclick="addItem('🌟')">🌟</button>
 <button onclick="addItem('🏴‍☠️')">🏴‍☠️</button>
-
+  </div>
 
   <input id="speechText" placeholder="מה הדמות אומרת?">
   <button onclick="addSpeech()">💬 בועה</button>
