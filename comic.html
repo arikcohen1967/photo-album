@@ -263,6 +263,65 @@ input,select{ background:#f1f1f1; }
   line-height:1.5;
 }
 
+
+.color-palette{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  background:rgba(255,255,255,.9);
+  padding:12px;
+  margin:0 auto 12px;
+  max-width:1100px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
+.color-palette-title{
+  background:#fff;
+  border-radius:16px;
+  padding:9px 12px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+}
+
+.color-dot{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:3px solid white;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  cursor:pointer;
+  padding:0;
+}
+
+.color-free{
+  background:#fff;
+  border-radius:16px;
+  padding:7px 12px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.image-item.star{
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 56%,79% 91%,50% 70%,21% 91%,32% 56%,2% 35%,39% 35%);
+  border-radius:0;
+}
+
+.image-item.heart{
+  clip-path:path("M 52 92 C 20 65 4 49 4 28 C 4 12 16 2 31 2 C 40 2 47 6 52 14 C 57 6 64 2 73 2 C 88 2 100 12 100 28 C 100 49 84 65 52 92 Z");
+  border-radius:0;
+}
+
+@supports not (clip-path:path("M 0 0")){
+  .image-item.heart{
+    border-radius:45% 45% 55% 55%;
+  }
+}
+
 @media(max-width:700px){
   .frames{ grid-template-columns:1fr; }
   .frame{ height:300px; }
@@ -290,8 +349,8 @@ input,select{ background:#f1f1f1; }
 
   <button onclick="setBg()">שנה רקע</button>
 
-<input type="color" id="frameColor" value="#ffffff">
-<button onclick="setSolidColor()">🎨 צבע פריים</button>
+<input type="color" id="frameColor" value="#ffffff" style="display:none">
+<button onclick="setSolidColor()">🎨 צבע חופשי</button>
 
   <button class="blue" onclick="openAlbumPicker()">🖼️ תמונה מהאלבום של ליאן</button>
   <button class="blue" onclick="document.getElementById('phonePhotoInput').click()">📱 תמונה מהטלפון</button>
@@ -345,6 +404,35 @@ input,select{ background:#f1f1f1; }
 <button onclick="addItem('🐲')">🐲</button>
 
 
+  
+<button onclick="addItem('👸')">👸</button>
+<button onclick="addItem('🤴')">🤴</button>
+<button onclick="addItem('🧜‍♀️')">🧜‍♀️</button>
+<button onclick="addItem('🧞')">🧞</button>
+<button onclick="addItem('🧝‍♀️')">🧝‍♀️</button>
+<button onclick="addItem('🧌')">🧌</button>
+<button onclick="addItem('🦖')">🦖</button>
+<button onclick="addItem('🦕')">🦕</button>
+<button onclick="addItem('🦋')">🦋</button>
+<button onclick="addItem('🐬')">🐬</button>
+<button onclick="addItem('🐳')">🐳</button>
+<button onclick="addItem('🦜')">🦜</button>
+<button onclick="addItem('🍭')">🍭</button>
+<button onclick="addItem('🍫')">🍫</button>
+<button onclick="addItem('🍓')">🍓</button>
+<button onclick="addItem('🍉')">🍉</button>
+<button onclick="addItem('🎤')">🎤</button>
+<button onclick="addItem('🎧')">🎧</button>
+<button onclick="addItem('🎬')">🎬</button>
+<button onclick="addItem('🏆')">🏆</button>
+<button onclick="addItem('💖')">💖</button>
+<button onclick="addItem('✨')">✨</button>
+<button onclick="addItem('💥')">💥</button>
+<button onclick="addItem('☁️')">☁️</button>
+<button onclick="addItem('🌟')">🌟</button>
+<button onclick="addItem('🏴‍☠️')">🏴‍☠️</button>
+
+
   <input id="speechText" placeholder="מה הדמות אומרת?">
   <button onclick="addSpeech()">💬 בועה</button>
 
@@ -353,13 +441,38 @@ input,select{ background:#f1f1f1; }
 </div>
 
 
+
+<div class="color-palette">
+  <span class="color-palette-title">🎨 מניפת צבעים לפריים:</span>
+  <button class="color-dot" style="background:#ffffff" onclick="setFrameColor('#ffffff')" title="לבן"></button>
+  <button class="color-dot" style="background:#ffeaa7" onclick="setFrameColor('#ffeaa7')" title="צהוב בהיר"></button>
+  <button class="color-dot" style="background:#fdcb6e" onclick="setFrameColor('#fdcb6e')" title="צהוב"></button>
+  <button class="color-dot" style="background:#fab1a0" onclick="setFrameColor('#fab1a0')" title="כתום בהיר"></button>
+  <button class="color-dot" style="background:#ff7675" onclick="setFrameColor('#ff7675')" title="אדום"></button>
+  <button class="color-dot" style="background:#fd79a8" onclick="setFrameColor('#fd79a8')" title="ורוד"></button>
+  <button class="color-dot" style="background:#e84393" onclick="setFrameColor('#e84393')" title="פוקסיה"></button>
+  <button class="color-dot" style="background:#a29bfe" onclick="setFrameColor('#a29bfe')" title="סגול"></button>
+  <button class="color-dot" style="background:#6c5ce7" onclick="setFrameColor('#6c5ce7')" title="סגול כהה"></button>
+  <button class="color-dot" style="background:#74b9ff" onclick="setFrameColor('#74b9ff')" title="כחול"></button>
+  <button class="color-dot" style="background:#0984e3" onclick="setFrameColor('#0984e3')" title="כחול כהה"></button>
+  <button class="color-dot" style="background:#81ecec" onclick="setFrameColor('#81ecec')" title="טורקיז"></button>
+  <button class="color-dot" style="background:#55efc4" onclick="setFrameColor('#55efc4')" title="מנטה"></button>
+  <button class="color-dot" style="background:#00b894" onclick="setFrameColor('#00b894')" title="ירוק"></button>
+  <button class="color-dot" style="background:#dfe6e9" onclick="setFrameColor('#dfe6e9')" title="אפור"></button>
+  <button class="color-dot" style="background:#2d3436" onclick="setFrameColor('#2d3436')" title="שחור"></button>
+  <span class="color-free">🌈 צבע חופשי <input type="color" id="frameColor2" value="#ffffff" onchange="setFrameColor(this.value)"></span>
+</div>
+
 <div class="sticker-controls">
   <button class="blue" onclick="makeSelectedBigger()">➕ הגדל תמונה/אימוג׳י</button>
   <button class="blue" onclick="makeSelectedSmaller()">➖ הקטן תמונה/אימוג׳י</button>
   <button class="orange" onclick="rotateSelected()">🔄 סובב נבחר</button>
   <button class="green" onclick="toggleStickerShape()">⭕ עיגול / ריבוע</button>
+  <button class="green" onclick="makeStickerHeart()">❤️ צורת לב</button>
+  <button class="green" onclick="makeStickerStar()">⭐ צורת כוכב</button>
   <button class="small" onclick="bringForward()">⬆️ קדימה</button>
   <button class="small" onclick="sendBackward()">⬇️ אחורה</button>
+  <button class="orange" onclick="duplicateFrame()">📋 שכפל פריים</button>
 </div>
 
 <div class="frames" id="comicArea">
@@ -371,6 +484,10 @@ input,select{ background:#f1f1f1; }
   <div class="frame" style="background:#ffeaa7" onclick="selectFrame(this)"></div>
   <div class="frame" style="background:#a29bfe" onclick="selectFrame(this)"></div>
   <div class="frame" style="background:#81ecec" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#fd79a8" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#55efc4" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#fab1a0" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#dfe6e9" onclick="selectFrame(this)"></div>
 </div>
 
 <div class="footer">
@@ -420,14 +537,22 @@ function selectFrame(frame){
 }
 
 function setBg(){
+  activeFrame.style.background="";
+  activeFrame.style.backgroundImage="";
   activeFrame.className="frame active " + document.getElementById("bgSelect").value;
 }
 
 
-function setSolidColor(){
-  const color=document.getElementById("frameColor").value;
+function setFrameColor(color){
   activeFrame.className="frame active";
   activeFrame.style.background=color;
+  activeFrame.style.backgroundImage="none";
+}
+
+function setSolidColor(){
+  const picker=document.getElementById("frameColor2") || document.getElementById("frameColor");
+  const color=picker ? picker.value : "#ffffff";
+  setFrameColor(color);
 }
 
 function addItem(icon){
@@ -486,6 +611,15 @@ function makeDraggable(el){
     e.stopPropagation();
     el.remove();
   });
+
+  el.addEventListener("wheel",function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    selectedItem=el;
+    const current=parseFloat(el.dataset.scale || "1");
+    el.dataset.scale = e.deltaY < 0 ? Math.min(current + 0.12, 3) : Math.max(current - 0.12, 0.35);
+    applyTransform(el);
+  }, {passive:false});
 }
 
 function deleteSelected(){
@@ -655,10 +789,44 @@ function rotateSelected(){
   applyTransform(selectedItem);
 }
 
+function clearStickerShapes(){
+  if(!selectedItem) return;
+  selectedItem.classList.remove("square","heart","star");
+}
+
 function toggleStickerShape(){
   if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
   if(!selectedItem.classList.contains("image-item")) return alert("עיגול/ריבוע עובד על תמונות");
+  selectedItem.classList.remove("heart","star");
   selectedItem.classList.toggle("square");
+}
+
+function makeStickerHeart(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("צורת לב עובדת על תמונות");
+  selectedItem.classList.remove("square","star");
+  selectedItem.classList.add("heart");
+}
+
+function makeStickerStar(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("צורת כוכב עובדת על תמונות");
+  selectedItem.classList.remove("square","heart");
+  selectedItem.classList.add("star");
+}
+
+function duplicateFrame(){
+  const clone = activeFrame.cloneNode(true);
+  clone.classList.remove("active");
+  clone.onclick = function(){ selectFrame(clone); };
+
+  clone.querySelectorAll(".item,.speech").forEach(el=>{
+    makeDraggable(el);
+    el.style.outline="none";
+  });
+
+  activeFrame.parentNode.insertBefore(clone, activeFrame.nextSibling);
+  selectFrame(clone);
 }
 
 function bringForward(){
@@ -681,7 +849,7 @@ function saveComic(){
     scale: 2
   }).then(canvas=>{
     const link=document.createElement("a");
-    link.download="comic-lian.jpg";
+    link.download="comic-lian.png";
     link.href=canvas.toDataURL("image/png");
     link.click();
   });
