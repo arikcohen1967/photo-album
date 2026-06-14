@@ -458,43 +458,38 @@ input:focus,select:focus{
 }
 
 
-/* Compact emoji area - keeps the Apple look but saves space */
-.toolbar{
-  max-height:none;
+
+
+/* Emoji panel compact layout */
+.emoji-panel{
+  max-width:1160px;
+  margin:10px auto 14px;
+  padding:12px;
+  border-radius:28px;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(255,255,255,.70);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-soft);
 }
 
-.toolbar button:not(.blue):not(.red):not(.small):not(.green):not(.orange):not([onclick="setBg()"]):not([onclick="setSolidColor()"]):not([onclick="addSpeech()"]),
-.toolbar button[onclick^="addItem"]{
-  min-width:50px;
-  width:50px;
-  height:46px;
-  padding:7px;
-  font-size:24px;
-  border-radius:15px;
-  background:rgba(255,255,255,.92);
-  color:#1d1d1f;
-  box-shadow:0 6px 14px rgba(15,23,42,.08);
-  border:1px solid #dbe4ee;
-}
-
-.toolbar button[onclick^="addItem"]:hover{
-  transform:translateY(-2px) scale(1.04);
-  box-shadow:0 10px 18px rgba(15,23,42,.12);
+.emoji-title{
+  text-align:right;
+  color:var(--ios-blue);
+  font-weight:900;
+  font-size:15px;
+  margin:0 6px 8px;
 }
 
 .emoji-strip{
-  width:100%;
   display:flex;
+  flex-wrap:nowrap;
   gap:8px;
   overflow-x:auto;
   overflow-y:hidden;
-  padding:8px 6px 10px;
-  margin-top:4px;
-  border-radius:20px;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.75);
+  padding:6px 4px 10px;
   scrollbar-width:thin;
-  scrollbar-color:#c7d2fe transparent;
+  scrollbar-color:#bcd7ff transparent;
 }
 
 .emoji-strip::-webkit-scrollbar{
@@ -506,25 +501,55 @@ input:focus,select:focus{
 }
 
 .emoji-strip::-webkit-scrollbar-thumb{
-  background:#c7d2fe;
+  background:#bcd7ff;
   border-radius:999px;
 }
 
 .emoji-strip button{
   flex:0 0 auto;
+  width:48px;
+  min-width:48px;
+  height:44px;
+  padding:6px;
+  border-radius:15px;
+  font-size:23px;
+  line-height:1;
+  background:rgba(255,255,255,.96);
+  color:#1d1d1f;
+  border:1px solid #dbe4ee;
+  box-shadow:0 5px 12px rgba(15,23,42,.08);
+}
+
+.emoji-strip button:hover{
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 9px 18px rgba(15,23,42,.12);
+}
+
+.toolbar{
+  margin-bottom:8px;
 }
 
 @media(max-width:700px){
-  .emoji-strip{
-    padding:8px 4px 10px;
+  .emoji-panel{
+    border-radius:24px;
+    padding:10px;
+    margin:8px auto 12px;
   }
 
-  .emoji-strip button,
-  .toolbar button[onclick^="addItem"]{
-    width:48px !important;
-    min-width:48px !important;
-    height:44px;
-    font-size:23px;
+  .emoji-title{
+    font-size:14px;
+    margin-right:4px;
+  }
+
+  .emoji-strip{
+    gap:7px;
+  }
+
+  .emoji-strip button{
+    width:46px !important;
+    min-width:46px !important;
+    height:42px;
+    font-size:22px;
   }
 }
 
@@ -576,7 +601,16 @@ input:focus,select:focus{
   <button class="blue" onclick="openAlbumPicker()">🖼️ תמונה מהאלבום של ליאן</button>
   <button class="blue" onclick="document.getElementById('phonePhotoInput').click()">📱 תמונה מהטלפון</button>
   <input id="phonePhotoInput" type="file" accept="image/*" style="display:none" onchange="addPhonePhoto(event)">
+<input id="speechText" placeholder="מה הדמות אומרת?">
+  <button onclick="addSpeech()">💬 בועה</button>
 
+  <button class="red" onclick="deleteSelected()">מחק נבחר</button>
+  <button class="small" onclick="clearFrame()">נקה פריים</button>
+</div>
+
+
+<section class="emoji-panel">
+  <div class="emoji-title">😀 אימוג׳ים ודמויות</div>
   <div class="emoji-strip">
 <button onclick="addItem('👧')">👧</button>
 <button onclick="addItem('👦')">👦</button>
@@ -651,13 +685,8 @@ input:focus,select:focus{
 <button onclick="addItem('🌟')">🌟</button>
 <button onclick="addItem('🏴‍☠️')">🏴‍☠️</button>
   </div>
+</section>
 
-  <input id="speechText" placeholder="מה הדמות אומרת?">
-  <button onclick="addSpeech()">💬 בועה</button>
-
-  <button class="red" onclick="deleteSelected()">מחק נבחר</button>
-  <button class="small" onclick="clearFrame()">נקה פריים</button>
-</div>
 
 
 
