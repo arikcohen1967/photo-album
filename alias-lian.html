@@ -1,1 +1,536 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אליאס - האתר של ליאן</title>
+<style>
+*{box-sizing:border-box}
 
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(255,255,255,.30),transparent 22%),
+    radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 25%),
+    linear-gradient(135deg,#0f172a,#4c1d95,#be185d,#f97316);
+  color:#fff;
+  text-align:center;
+  padding:16px;
+}
+
+.page{
+  max-width:1050px;
+  margin:0 auto;
+}
+
+header{
+  padding:24px 10px 12px;
+}
+
+h1{
+  margin:0;
+  font-size:44px;
+}
+
+.subtitle{
+  max-width:850px;
+  margin:10px auto 0;
+  color:#f1f5f9;
+  font-size:18px;
+  line-height:1.5;
+}
+
+.panel,.game-card,.rules{
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(12px);
+  border-radius:26px;
+  padding:18px;
+  margin:18px auto;
+  box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  align-items:center;
+}
+
+button,input,select,a{
+  border:0;
+  border-radius:16px;
+  padding:12px 16px;
+  font-size:17px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+button,a{
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+
+button:hover,a:hover{transform:translateY(-2px)}
+button:active{transform:scale(.98)}
+
+input,select{
+  background:#fff;
+  color:#111827;
+  min-width:150px;
+}
+
+.home{
+  background:linear-gradient(135deg,#f59e0b,#ef4444);
+}
+
+.start{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.good{
+  background:linear-gradient(135deg,#22c55e,#15803d);
+}
+
+.skip{
+  background:linear-gradient(135deg,#f97316,#dc2626);
+}
+
+.end{
+  background:linear-gradient(135deg,#64748b,#334155);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+
+.stat{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  padding:12px 8px;
+}
+
+.stat .label{
+  display:block;
+  color:#cbd5e1;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.stat .value{
+  font-size:28px;
+  font-weight:900;
+}
+
+.teams{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:14px;
+}
+
+.team{
+  background:rgba(0,0,0,.22);
+  border:2px solid rgba(255,255,255,.16);
+  border-radius:20px;
+  padding:14px;
+}
+
+.team.active{
+  border-color:#facc15;
+  box-shadow:0 0 0 3px rgba(250,204,21,.25);
+}
+
+.team-name{
+  font-size:22px;
+  font-weight:900;
+}
+
+.team-score{
+  font-size:42px;
+  font-weight:900;
+  margin-top:6px;
+  color:#fef3c7;
+}
+
+.game-card{
+  display:none;
+  max-width:760px;
+}
+
+.turn-title{
+  color:#fef3c7;
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.word-box{
+  background:#fff;
+  color:#111827;
+  border-radius:28px;
+  padding:34px 18px;
+  margin:16px auto;
+  min-height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+}
+
+.word{
+  font-size:52px;
+  font-weight:900;
+  line-height:1.1;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+}
+
+.message{
+  min-height:32px;
+  font-size:20px;
+  font-weight:900;
+  color:#fef3c7;
+  margin-top:12px;
+}
+
+.rules{
+  text-align:right;
+  line-height:1.7;
+  color:#f8fafc;
+  font-size:17px;
+}
+
+.rules h2{
+  margin:0 0 8px;
+  text-align:center;
+}
+
+.win-box{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  z-index:99;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.win-content{
+  background:#fff;
+  color:#111827;
+  max-width:480px;
+  width:100%;
+  border-radius:30px;
+  padding:28px;
+  box-shadow:0 25px 70px rgba(0,0,0,.45);
+}
+
+.win-content h2{
+  margin:0 0 12px;
+  color:#7c3aed;
+  font-size:34px;
+}
+
+@media(max-width:700px){
+  h1{font-size:34px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .teams{grid-template-columns:1fr}
+  .word{font-size:42px}
+  button,input,select,a{width:100%}
+}
+
+@media(max-width:420px){
+  body{padding:10px}
+  .word{font-size:34px}
+  .word-box{min-height:125px;padding:24px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <h1>🎤 משחק אליאס</h1>
+    <p class="subtitle">
+      משחק קבוצות לגילאי 11–17: מסבירים מילים בלי להגיד את המילה עצמה. כמה שיותר מילים נכונות לפני שהזמן נגמר.
+    </p>
+  </header>
+
+  <section class="panel">
+    <div class="controls">
+      <input id="team1Name" value="קבוצה 1" aria-label="שם קבוצה 1">
+      <input id="team2Name" value="קבוצה 2" aria-label="שם קבוצה 2">
+      <select id="roundTime">
+        <option value="45">45 שניות</option>
+        <option value="60" selected>60 שניות</option>
+        <option value="90">90 שניות</option>
+      </select>
+      <select id="targetScore">
+        <option value="20">יעד 20 נקודות</option>
+        <option value="30" selected>יעד 30 נקודות</option>
+        <option value="50">יעד 50 נקודות</option>
+      </select>
+      <button class="start" onclick="startNewGame()">🚀 התחל משחק</button>
+      <a class="home" href="index.html">🏠 חזרה לאתר</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="label">זמן</span><span class="value" id="timeLeft">00</span></div>
+      <div class="stat"><span class="label">תור</span><span class="value" id="turnNumber">0</span></div>
+      <div class="stat"><span class="label">נכון בתור</span><span class="value" id="roundCorrect">0</span></div>
+      <div class="stat"><span class="label">דילוגים בתור</span><span class="value" id="roundSkips">0</span></div>
+    </div>
+
+    <div class="teams">
+      <div id="team1Box" class="team active">
+        <div class="team-name" id="team1Title">קבוצה 1</div>
+        <div class="team-score" id="team1Score">0</div>
+      </div>
+      <div id="team2Box" class="team">
+        <div class="team-name" id="team2Title">קבוצה 2</div>
+        <div class="team-score" id="team2Score">0</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameCard" class="game-card">
+    <div class="turn-title" id="turnTitle">התור של קבוצה 1</div>
+    <div class="word-box">
+      <div class="word" id="currentWord">לחצו התחלה</div>
+    </div>
+    <div class="actions">
+      <button class="good" onclick="markCorrect()">✅ נכון</button>
+      <button class="skip" onclick="skipWord()">⏭️ דילוג</button>
+      <button class="end" onclick="endTurn()">⏹️ סיים תור</button>
+    </div>
+    <div class="message" id="message"></div>
+  </section>
+
+  <section class="rules">
+    <h2>איך משחקים?</h2>
+    מסבירים לחברי הקבוצה את המילה שמופיעה על המסך — בלי להגיד את המילה עצמה או חלק ממנה.
+    אם הקבוצה ניחשה נכון לוחצים “נכון”. אם קשה מדי, לוחצים “דילוג”.
+    בסיום הזמן התור עובר לקבוצה השנייה. הקבוצה הראשונה שמגיעה ליעד הנקודות מנצחת.
+  </section>
+</div>
+
+<div id="winBox" class="win-box">
+  <div class="win-content">
+    <h2>🏆 יש מנצחים!</h2>
+    <p id="winText"></p>
+    <button onclick="closeWin(); startNewGame()">משחק חדש</button>
+  </div>
+</div>
+
+<script>
+const words = [
+  "טלפון","מחשב","אינטרנט","רשת חברתית","אינסטגרם","טיקטוק","יוטיוב","סרטון","מצלמה","אוזניות",
+  "משחק מחשב","קונסולה","שלט","מסך","סיסמה","אימוג׳י","הודעה","קבוצה","צ׳אט","סלפי",
+  "כדורגל","כדורסל","טניס","שחייה","ריצה","אופניים","סקייטבורד","גלישה","שער","מאמן",
+  "מבחן","שיעורי בית","בית ספר","מורה","כיתה","הפסקה","חבר","טיול שנתי","תיק","מחברת",
+  "פיצה","המבורגר","גלידה","שוקולד","פופקורן","סושי","פסטה","עוגה","שתייה","מסעדה",
+  "חלל","כוכב","ירח","שמש","רובוט","דרקון","נסיכה","גיבור על","קסם","אי בודד",
+  "ים","בריכה","חופשה","מטוס","מלון","מזוודה","מפה","מסלול","אוהל","מדורה",
+  "מוזיקה","שיר","זמר","גיטרה","תופים","ריקוד","הופעה","מיקרופון","במה","די-ג׳יי",
+  "כלב","חתול","אריה","דולפין","פנדה","קוף","סוס","ציפור","נחש","כריש",
+  "חדר","מיטה","כרית","חלון","דלת","שולחן","כיסא","מנורה","מקלחת","מראה",
+  "שעון","מפתח","ארנק","משקפיים","נעליים","מעיל","כובע","תיק גב","מטרייה","בקבוק",
+  "חידה","זיכרון","ניצחון","הפסד","אתגר","מהירות","אומץ","מזל","סוד","הפתעה"
+];
+
+let deck = [];
+let currentIndex = 0;
+let currentTeam = 1;
+let team1Score = 0;
+let team2Score = 0;
+let turn = 0;
+let roundCorrect = 0;
+let roundSkips = 0;
+let timeLeft = 60;
+let timer = null;
+let gameStarted = false;
+
+const timeLeftEl = document.getElementById("timeLeft");
+const turnNumberEl = document.getElementById("turnNumber");
+const roundCorrectEl = document.getElementById("roundCorrect");
+const roundSkipsEl = document.getElementById("roundSkips");
+const team1ScoreEl = document.getElementById("team1Score");
+const team2ScoreEl = document.getElementById("team2Score");
+const team1TitleEl = document.getElementById("team1Title");
+const team2TitleEl = document.getElementById("team2Title");
+const team1Box = document.getElementById("team1Box");
+const team2Box = document.getElementById("team2Box");
+const currentWordEl = document.getElementById("currentWord");
+const turnTitleEl = document.getElementById("turnTitle");
+const messageEl = document.getElementById("message");
+
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+function makeDeck(){
+  deck = shuffle([...words]);
+  currentIndex = 0;
+}
+
+function nextWord(){
+  if(currentIndex >= deck.length){
+    makeDeck();
+  }
+  currentWordEl.textContent = deck[currentIndex];
+  currentIndex++;
+}
+
+function updateNames(){
+  const n1 = document.getElementById("team1Name").value.trim() || "קבוצה 1";
+  const n2 = document.getElementById("team2Name").value.trim() || "קבוצה 2";
+  team1TitleEl.textContent = n1;
+  team2TitleEl.textContent = n2;
+}
+
+function updateStats(){
+  timeLeftEl.textContent = String(timeLeft).padStart(2,"0");
+  turnNumberEl.textContent = turn;
+  roundCorrectEl.textContent = roundCorrect;
+  roundSkipsEl.textContent = roundSkips;
+  team1ScoreEl.textContent = team1Score;
+  team2ScoreEl.textContent = team2Score;
+
+  team1Box.classList.toggle("active", currentTeam === 1);
+  team2Box.classList.toggle("active", currentTeam === 2);
+
+  const activeName = currentTeam === 1 ? team1TitleEl.textContent : team2TitleEl.textContent;
+  turnTitleEl.textContent = "התור של " + activeName;
+}
+
+function startNewGame(){
+  closeWin();
+  clearInterval(timer);
+
+  updateNames();
+  makeDeck();
+
+  currentTeam = 1;
+  team1Score = 0;
+  team2Score = 0;
+  turn = 0;
+  gameStarted = true;
+
+  document.getElementById("gameCard").style.display = "block";
+  messageEl.textContent = "המשחק התחיל!";
+
+  startTurn();
+}
+
+function startTurn(){
+  clearInterval(timer);
+
+  turn++;
+  roundCorrect = 0;
+  roundSkips = 0;
+  timeLeft = parseInt(document.getElementById("roundTime").value,10);
+
+  nextWord();
+  updateStats();
+
+  timer = setInterval(()=>{
+    timeLeft--;
+    updateStats();
+
+    if(timeLeft <= 0){
+      endTurn();
+    }
+  },1000);
+}
+
+function markCorrect(){
+  if(!gameStarted || timeLeft <= 0) return;
+
+  roundCorrect++;
+
+  if(currentTeam === 1) team1Score++;
+  else team2Score++;
+
+  messageEl.textContent = "נקודה! ✅";
+  nextWord();
+  updateStats();
+  checkWinner();
+}
+
+function skipWord(){
+  if(!gameStarted || timeLeft <= 0) return;
+
+  roundSkips++;
+  messageEl.textContent = "דילוג ⏭️";
+  nextWord();
+  updateStats();
+}
+
+function endTurn(){
+  if(!gameStarted) return;
+
+  clearInterval(timer);
+  messageEl.textContent = "התור הסתיים. עוברים לקבוצה הבאה.";
+
+  currentTeam = currentTeam === 1 ? 2 : 1;
+  updateStats();
+
+  setTimeout(()=>{
+    if(gameStarted){
+      startTurn();
+    }
+  },1200);
+}
+
+function checkWinner(){
+  const target = parseInt(document.getElementById("targetScore").value,10);
+  const n1 = team1TitleEl.textContent;
+  const n2 = team2TitleEl.textContent;
+
+  if(team1Score >= target || team2Score >= target){
+    gameStarted = false;
+    clearInterval(timer);
+
+    const winner = team1Score >= target ? n1 : n2;
+    document.getElementById("winText").innerHTML =
+      "<b>" + winner + "</b> ניצחה!<br>" +
+      n1 + ": <b>" + team1Score + "</b><br>" +
+      n2 + ": <b>" + team2Score + "</b>";
+
+    document.getElementById("winBox").style.display = "flex";
+    messageEl.textContent = "המשחק הסתיים 🏆";
+  }
+}
+
+function closeWin(){
+  document.getElementById("winBox").style.display = "none";
+}
+
+updateNames();
+makeDeck();
+updateStats();
+currentWordEl.textContent = "לחצו על התחל משחק";
+</script>
+
+</body>
+</html>
