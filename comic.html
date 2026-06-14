@@ -289,6 +289,10 @@ input,select{ background:#f1f1f1; }
   </select>
 
   <button onclick="setBg()">שנה רקע</button>
+
+<input type="color" id="frameColor" value="#ffffff">
+<button onclick="setSolidColor()">🎨 צבע פריים</button>
+
   <button class="blue" onclick="openAlbumPicker()">🖼️ תמונה מהאלבום של ליאן</button>
   <button class="blue" onclick="document.getElementById('phonePhotoInput').click()">📱 תמונה מהטלפון</button>
   <input id="phonePhotoInput" type="file" accept="image/*" style="display:none" onchange="addPhonePhoto(event)">
@@ -363,6 +367,10 @@ input,select{ background:#f1f1f1; }
   <div class="frame bg-sea" onclick="selectFrame(this)"></div>
   <div class="frame bg-room" onclick="selectFrame(this)"></div>
   <div class="frame bg-space" onclick="selectFrame(this)"></div>
+  <div class="frame bg-school" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#ffeaa7" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#a29bfe" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#81ecec" onclick="selectFrame(this)"></div>
 </div>
 
 <div class="footer">
@@ -413,6 +421,13 @@ function selectFrame(frame){
 
 function setBg(){
   activeFrame.className="frame active " + document.getElementById("bgSelect").value;
+}
+
+
+function setSolidColor(){
+  const color=document.getElementById("frameColor").value;
+  activeFrame.className="frame active";
+  activeFrame.style.background=color;
 }
 
 function addItem(icon){
