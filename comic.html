@@ -338,6 +338,27 @@ input,select{ background:#f1f1f1; }
   <p>בחרו פריים, הוסיפו דמויות, בועות ודברים מצחיקים</p>
 </header>
 
+<div class="color-palette">
+  <span class="color-palette-title">🎨 בחר צבע רקע לפריים:</span>
+  <button class="color-dot" style="background:#ffffff" onclick="setFrameColor('#ffffff')" title="לבן"></button>
+  <button class="color-dot" style="background:#ffeaa7" onclick="setFrameColor('#ffeaa7')" title="צהוב בהיר"></button>
+  <button class="color-dot" style="background:#fdcb6e" onclick="setFrameColor('#fdcb6e')" title="צהוב"></button>
+  <button class="color-dot" style="background:#fab1a0" onclick="setFrameColor('#fab1a0')" title="כתום בהיר"></button>
+  <button class="color-dot" style="background:#ff7675" onclick="setFrameColor('#ff7675')" title="אדום"></button>
+  <button class="color-dot" style="background:#fd79a8" onclick="setFrameColor('#fd79a8')" title="ורוד"></button>
+  <button class="color-dot" style="background:#e84393" onclick="setFrameColor('#e84393')" title="פוקסיה"></button>
+  <button class="color-dot" style="background:#a29bfe" onclick="setFrameColor('#a29bfe')" title="סגול"></button>
+  <button class="color-dot" style="background:#6c5ce7" onclick="setFrameColor('#6c5ce7')" title="סגול כהה"></button>
+  <button class="color-dot" style="background:#74b9ff" onclick="setFrameColor('#74b9ff')" title="כחול"></button>
+  <button class="color-dot" style="background:#0984e3" onclick="setFrameColor('#0984e3')" title="כחול כהה"></button>
+  <button class="color-dot" style="background:#81ecec" onclick="setFrameColor('#81ecec')" title="טורקיז"></button>
+  <button class="color-dot" style="background:#55efc4" onclick="setFrameColor('#55efc4')" title="מנטה"></button>
+  <button class="color-dot" style="background:#00b894" onclick="setFrameColor('#00b894')" title="ירוק"></button>
+  <button class="color-dot" style="background:#dfe6e9" onclick="setFrameColor('#dfe6e9')" title="אפור"></button>
+  <button class="color-dot" style="background:#2d3436" onclick="setFrameColor('#2d3436')" title="שחור"></button>
+  <span class="color-free">🌈 צבע חופשי <input type="color" id="frameColor2" value="#ffffff" onchange="setFrameColor(this.value)"></span>
+</div>
+
 <div class="toolbar">
   <select id="bgSelect">
     <option value="bg-park">🌳 פארק</option>
@@ -441,27 +462,6 @@ input,select{ background:#f1f1f1; }
 </div>
 
 
-
-<div class="color-palette">
-  <span class="color-palette-title">🎨 מניפת צבעים לפריים:</span>
-  <button class="color-dot" style="background:#ffffff" onclick="setFrameColor('#ffffff')" title="לבן"></button>
-  <button class="color-dot" style="background:#ffeaa7" onclick="setFrameColor('#ffeaa7')" title="צהוב בהיר"></button>
-  <button class="color-dot" style="background:#fdcb6e" onclick="setFrameColor('#fdcb6e')" title="צהוב"></button>
-  <button class="color-dot" style="background:#fab1a0" onclick="setFrameColor('#fab1a0')" title="כתום בהיר"></button>
-  <button class="color-dot" style="background:#ff7675" onclick="setFrameColor('#ff7675')" title="אדום"></button>
-  <button class="color-dot" style="background:#fd79a8" onclick="setFrameColor('#fd79a8')" title="ורוד"></button>
-  <button class="color-dot" style="background:#e84393" onclick="setFrameColor('#e84393')" title="פוקסיה"></button>
-  <button class="color-dot" style="background:#a29bfe" onclick="setFrameColor('#a29bfe')" title="סגול"></button>
-  <button class="color-dot" style="background:#6c5ce7" onclick="setFrameColor('#6c5ce7')" title="סגול כהה"></button>
-  <button class="color-dot" style="background:#74b9ff" onclick="setFrameColor('#74b9ff')" title="כחול"></button>
-  <button class="color-dot" style="background:#0984e3" onclick="setFrameColor('#0984e3')" title="כחול כהה"></button>
-  <button class="color-dot" style="background:#81ecec" onclick="setFrameColor('#81ecec')" title="טורקיז"></button>
-  <button class="color-dot" style="background:#55efc4" onclick="setFrameColor('#55efc4')" title="מנטה"></button>
-  <button class="color-dot" style="background:#00b894" onclick="setFrameColor('#00b894')" title="ירוק"></button>
-  <button class="color-dot" style="background:#dfe6e9" onclick="setFrameColor('#dfe6e9')" title="אפור"></button>
-  <button class="color-dot" style="background:#2d3436" onclick="setFrameColor('#2d3436')" title="שחור"></button>
-  <span class="color-free">🌈 צבע חופשי <input type="color" id="frameColor2" value="#ffffff" onchange="setFrameColor(this.value)"></span>
-</div>
 
 <div class="sticker-controls">
   <button class="blue" onclick="makeSelectedBigger()">➕ הגדל תמונה/אימוג׳י</button>
