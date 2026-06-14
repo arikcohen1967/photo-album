@@ -12,16 +12,8 @@ body{
   background:linear-gradient(135deg,#ffb6e6,#9fd8ff);
   text-align:center;
 }
-
-header{
-  color:white;
-  padding:25px 10px;
-}
-
-h1{
-  margin:0;
-  font-size:36px;
-}
+header{ color:white; padding:25px 10px; }
+h1{ margin:0; font-size:36px; }
 
 .toolbar{
   background:white;
@@ -48,13 +40,8 @@ button,a.homeBtn{
   font-weight:bold;
 }
 
-button:hover,a.homeBtn:hover{
-  transform:scale(1.05);
-}
-
-input,select{
-  background:#f1f1f1;
-}
+button:hover,a.homeBtn:hover{ transform:scale(1.05); }
+input,select{ background:#f1f1f1; }
 
 .frames{
   display:grid;
@@ -75,9 +62,7 @@ input,select{
   box-shadow:0 8px 20px rgba(0,0,0,.25);
 }
 
-.frame.active{
-  border-color:#ff1493;
-}
+.frame.active{ border-color:#ff1493; }
 
 .item{
   position:absolute;
@@ -111,25 +96,11 @@ input,select{
   border-color:#111 transparent transparent transparent;
 }
 
-.bg-park{
-  background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%);
-}
-
-.bg-sea{
-  background:linear-gradient(#7ed6ff 0 55%,#f9d976 55%);
-}
-
-.bg-space{
-  background:radial-gradient(circle,#333,#050018);
-}
-
-.bg-room{
-  background:linear-gradient(#ffd1e8 0 65%,#caa17a 65%);
-}
-
-.bg-school{
-  background:linear-gradient(#d9f0ff 0 65%,#ddd 65%);
-}
+.bg-park{ background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%); }
+.bg-sea{ background:linear-gradient(#7ed6ff 0 55%,#f9d976 55%); }
+.bg-space{ background:radial-gradient(circle,#333,#050018); }
+.bg-room{ background:linear-gradient(#ffd1e8 0 65%,#caa17a 65%); }
+.bg-school{ background:linear-gradient(#d9f0ff 0 65%,#ddd 65%); }
 
 .footer{
   padding:20px;
@@ -139,38 +110,16 @@ input,select{
   gap:12px;
 }
 
-.small{
-  background:#555;
-}
-
-.green{
-  background:#28a745;
-}
-
-.red{
-  background:#e63946;
-}
-
-.blue{
-  background:#2678ff;
-}
-
-.orange{
-  background:#ff9800;
-}
+.small{ background:#555; }
+.green{ background:#28a745; }
+.red{ background:#e63946; }
+.blue{ background:#2678ff; }
+.orange{ background:#ff9800; }
 
 @media(max-width:700px){
-  .frames{
-    grid-template-columns:1fr;
-  }
-
-  .frame{
-    height:300px;
-  }
-
-  h1{
-    font-size:28px;
-  }
+  .frames{ grid-template-columns:1fr; }
+  .frame{ height:300px; }
+  h1{ font-size:28px; }
 }
 </style>
 </head>
@@ -222,6 +171,7 @@ input,select{
 <div class="footer">
   <button class="green" onclick="saveComic()">📸 שמור כתמונה</button>
   <button class="blue" onclick="saveToLianAlbum()">💾 שמור באלבום של ליאן</button>
+  <a class="homeBtn orange" href="album-lian.html">📸 פתח אלבום</a>
   <a class="homeBtn orange" href="index.html">🏠 חזרה לאתר</a>
 </div>
 
@@ -262,7 +212,6 @@ function addSpeech(){
   el.style.top="80px";
   activeFrame.appendChild(el);
   makeDraggable(el);
-
   document.getElementById("speechText").value="";
 }
 
@@ -332,16 +281,16 @@ function saveToLianAlbum(){
   html2canvas(document.getElementById("comicArea")).then(canvas=>{
     const imageData = canvas.toDataURL("image/png");
 
-    let album = JSON.parse(localStorage.getItem("lianAlbum") || "[]");
+    let album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
 
-    album.push({
-      type: "comic",
-      name: "קומיקס של ליאן",
-      date: new Date().toLocaleString("he-IL"),
-      image: imageData
+    album.unshift({
+      id: Date.now() + "-" + Math.random().toString(16).slice(2),
+      name: "קומיקס של ליאן.png",
+      date: new Date().toLocaleDateString("he-IL"),
+      data: imageData
     });
 
-    localStorage.setItem("lianAlbum", JSON.stringify(album));
+    localStorage.setItem("lianFamilyAlbumPhotos", JSON.stringify(album));
 
     alert("הקומיקס נשמר באלבום של ליאן 🎉");
   });
