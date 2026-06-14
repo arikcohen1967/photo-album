@@ -6,63 +6,171 @@
 <title>יוצר הקומיקס של ליאן</title>
 
 <style>
+*{ box-sizing:border-box; }
+
+:root{
+  --page-bg:#eeeeee;
+  --panel:#ffffff;
+  --ink:#1f2933;
+  --muted:#667085;
+  --line:#d0d5dd;
+  --shadow:0 14px 35px rgba(16,24,40,.14);
+  --shadow-soft:0 8px 22px rgba(16,24,40,.10);
+  --accent:#111827;
+  --accent2:#4b5563;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#f97316;
+  --pink:#db2777;
+}
+
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#ffb6e6,#9fd8ff);
+  font-family:Arial,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,255,255,.95),transparent 24%),
+    radial-gradient(circle at 88% 12%,rgba(255,255,255,.65),transparent 26%),
+    linear-gradient(135deg,#f7f7f7,#e9ecef,#d9dde3);
+  color:var(--ink);
   text-align:center;
+  min-height:100vh;
 }
-header{ color:white; padding:25px 10px; }
-h1{ margin:0; font-size:36px; }
 
-.toolbar{
-  background:white;
-  padding:15px;
+header{
+  color:var(--ink);
+  padding:34px 14px 20px;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+header h1{
+  margin:0;
+  font-size:42px;
+  letter-spacing:.3px;
+  color:#111827;
+}
+
+header p{
+  margin:10px auto 0;
+  color:#4b5563;
+  font-size:19px;
+  line-height:1.5;
+  max-width:760px;
+}
+
+.toolbar,
+.sticker-controls,
+.color-palette{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(17,24,39,.10);
+  backdrop-filter:blur(12px);
+  padding:16px;
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
+  align-items:center;
   gap:10px;
-  box-shadow:0 4px 15px rgba(0,0,0,.15);
+  max-width:1160px;
+  margin:14px auto;
+  border-radius:26px;
+  box-shadow:var(--shadow-soft);
+}
+
+.toolbar{
+  position:relative;
 }
 
 button,input,select,a.homeBtn{
-  border:0;
-  border-radius:14px;
-  padding:12px 14px;
+  border:1px solid rgba(17,24,39,.10);
+  border-radius:16px;
+  padding:12px 15px;
   font-size:16px;
   cursor:pointer;
   text-decoration:none;
+  transition:.18s ease;
+  font-family:inherit;
 }
 
 button,a.homeBtn{
-  background:#ff69b4;
+  background:linear-gradient(135deg,#111827,#374151);
   color:white;
-  font-weight:bold;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(17,24,39,.18);
 }
 
-button:hover,a.homeBtn:hover{ transform:scale(1.05); }
-input,select{ background:#f1f1f1; }
+button:hover,a.homeBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(17,24,39,.22);
+  filter:brightness(1.05);
+}
+
+button:active,a.homeBtn:active{
+  transform:scale(.98);
+}
+
+input,select{
+  background:#f9fafb;
+  color:#111827;
+  border:1px solid #d0d5dd;
+  outline:none;
+}
+
+select{
+  min-width:150px;
+  font-weight:700;
+}
+
+input:focus,select:focus{
+  border-color:#111827;
+  box-shadow:0 0 0 3px rgba(17,24,39,.10);
+}
 
 .frames{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
-  max-width:1100px;
-  margin:25px auto;
-  padding:10px;
+  gap:22px;
+  max-width:1160px;
+  margin:26px auto;
+  padding:12px;
 }
 
 .frame{
-  height:330px;
+  height:340px;
   background:white;
-  border:5px solid white;
-  border-radius:22px;
+  border:7px solid #111827;
+  border-radius:12px;
   position:relative;
   overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  box-shadow:
+    0 18px 35px rgba(16,24,40,.20),
+    inset 0 0 0 3px rgba(255,255,255,.9);
+  transition:.18s ease;
 }
 
-.frame.active{ border-color:#ff1493; }
+.frame:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.18),transparent 38%),
+    radial-gradient(circle at 25% 20%,rgba(255,255,255,.20),transparent 18%);
+  z-index:0;
+}
+
+.frame > *{
+  z-index:1;
+}
+
+.frame.active{
+  border-color:#db2777;
+  box-shadow:
+    0 0 0 5px rgba(219,39,119,.18),
+    0 22px 45px rgba(16,24,40,.24),
+    inset 0 0 0 3px rgba(255,255,255,.9);
+  transform:translateY(-2px);
+}
 
 .item{
   position:absolute;
@@ -70,13 +178,14 @@ input,select{ background:#f1f1f1; }
   cursor:grab;
   user-select:none;
   touch-action:none;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.22));
 }
 
 .speech{
   position:absolute;
-  background:white;
-  border:3px solid #111;
-  border-radius:25px;
+  background:#fff;
+  border:4px solid #111827;
+  border-radius:26px;
   padding:12px 18px;
   font-size:20px;
   min-width:90px;
@@ -84,16 +193,18 @@ input,select{ background:#f1f1f1; }
   cursor:grab;
   user-select:none;
   touch-action:none;
+  color:#111827;
+  box-shadow:0 10px 20px rgba(0,0,0,.18);
 }
 
 .speech:after{
   content:"";
   position:absolute;
-  bottom:-18px;
+  bottom:-19px;
   right:25px;
-  border-width:18px 8px 0 8px;
+  border-width:19px 9px 0 9px;
   border-style:solid;
-  border-color:#111 transparent transparent transparent;
+  border-color:#111827 transparent transparent transparent;
 }
 
 .bg-park{ background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%); }
@@ -103,24 +214,24 @@ input,select{ background:#f1f1f1; }
 .bg-school{ background:linear-gradient(#d9f0ff 0 65%,#ddd 65%); }
 
 .footer{
-  padding:20px;
+  padding:24px 14px 34px;
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   gap:12px;
 }
 
-.small{ background:#555; }
-.green{ background:#28a745; }
-.red{ background:#e63946; }
-.blue{ background:#2678ff; }
-.orange{ background:#ff9800; }
+.small{ background:linear-gradient(135deg,#4b5563,#111827) !important; }
+.green{ background:linear-gradient(135deg,#22c55e,#15803d) !important; }
+.red{ background:linear-gradient(135deg,#ef4444,#b91c1c) !important; }
+.blue{ background:linear-gradient(135deg,#3b82f6,#1d4ed8) !important; }
+.orange{ background:linear-gradient(135deg,#fb923c,#ea580c) !important; }
 
 .success-box{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
+  background:rgba(17,24,39,.66);
   z-index:9999;
   align-items:center;
   justify-content:center;
@@ -128,25 +239,26 @@ input,select{ background:#f1f1f1; }
 }
 
 .success-content{
-  background:white;
-  border-radius:28px;
-  padding:28px;
-  max-width:420px;
+  background:#fff;
+  border-radius:30px;
+  padding:30px;
+  max-width:430px;
   width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  box-shadow:0 24px 70px rgba(0,0,0,.35);
   text-align:center;
   animation:pop .25s ease;
+  border:1px solid rgba(17,24,39,.10);
 }
 
 .success-content h2{
   margin:0 0 12px;
-  color:#ff1493;
-  font-size:28px;
+  color:#111827;
+  font-size:30px;
 }
 
 .success-content p{
   font-size:19px;
-  color:#333;
+  color:#374151;
   line-height:1.5;
 }
 
@@ -167,29 +279,14 @@ input,select{ background:#f1f1f1; }
   to{ transform:scale(1); opacity:1; }
 }
 
-
-
-.sticker-controls{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  background:rgba(255,255,255,.88);
-  padding:12px;
-  margin:0 auto 10px;
-  max-width:1100px;
-  border-radius:20px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-
 .image-item{
-  width:105px;
-  height:105px;
+  width:108px;
+  height:108px;
   font-size:0;
   border-radius:50%;
   overflow:hidden;
-  border:4px solid white;
-  box-shadow:0 8px 18px rgba(0,0,0,.25);
+  border:5px solid white;
+  box-shadow:0 12px 24px rgba(0,0,0,.25);
   background:white;
 }
 
@@ -201,7 +298,7 @@ input,select{ background:#f1f1f1; }
 }
 
 .image-item.square{
-  border-radius:18px;
+  border-radius:20px;
 }
 
 .image-item.heart{
@@ -212,7 +309,7 @@ input,select{ background:#f1f1f1; }
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.65);
+  background:rgba(17,24,39,.72);
   z-index:9998;
   align-items:center;
   justify-content:center;
@@ -226,17 +323,22 @@ input,select{ background:#f1f1f1; }
 .album-box{
   background:white;
   width:100%;
-  max-width:850px;
+  max-width:880px;
   max-height:85vh;
   overflow:auto;
-  border-radius:28px;
-  padding:22px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  border-radius:30px;
+  padding:24px;
+  box-shadow:0 24px 70px rgba(0,0,0,.35);
+  border:1px solid rgba(17,24,39,.10);
 }
 
 .album-box h2{
   margin:0 0 14px;
-  color:#ff1493;
+  color:#111827;
+}
+
+.album-box p{
+  color:#4b5563;
 }
 
 .album-grid{
@@ -250,10 +352,15 @@ input,select{ background:#f1f1f1; }
   width:100%;
   height:105px;
   object-fit:cover;
-  border-radius:16px;
-  border:3px solid #fff;
-  box-shadow:0 6px 14px rgba(0,0,0,.2);
+  border-radius:18px;
+  border:4px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
   cursor:pointer;
+  transition:.18s ease;
+}
+
+.album-thumb:hover{
+  transform:scale(1.04);
 }
 
 .album-empty{
@@ -263,47 +370,41 @@ input,select{ background:#f1f1f1; }
   line-height:1.5;
 }
 
-
-.color-palette{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  background:rgba(255,255,255,.9);
-  padding:12px;
-  margin:0 auto 12px;
-  max-width:1100px;
-  border-radius:20px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-
 .color-palette-title{
-  background:#fff;
+  background:#f3f4f6;
+  border:1px solid #e5e7eb;
   border-radius:16px;
   padding:9px 12px;
-  font-weight:bold;
+  font-weight:900;
   display:flex;
   align-items:center;
+  color:#111827;
 }
 
 .color-dot{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   border-radius:50%;
-  border:3px solid white;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  border:4px solid white;
+  box-shadow:0 5px 12px rgba(0,0,0,.22);
   cursor:pointer;
   padding:0;
 }
 
+.color-dot:hover{
+  transform:translateY(-2px) scale(1.05);
+}
+
 .color-free{
-  background:#fff;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
   border-radius:16px;
   padding:7px 12px;
-  font-weight:bold;
+  font-weight:900;
   display:flex;
   align-items:center;
   gap:8px;
+  color:#111827;
 }
 
 .image-item.star{
@@ -323,10 +424,23 @@ input,select{ background:#f1f1f1; }
 }
 
 @media(max-width:700px){
-  .frames{ grid-template-columns:1fr; }
-  .frame{ height:300px; }
-  .image-item{ width:95px; height:95px; }
-  h1{ font-size:28px; }
+  body{ padding:0 8px; }
+  header{ padding:24px 10px 12px; }
+  header h1{ font-size:30px; }
+  header p{ font-size:16px; }
+  .toolbar,.sticker-controls,.color-palette{
+    border-radius:22px;
+    padding:12px;
+    gap:8px;
+  }
+  button,input,select,a.homeBtn{
+    width:100%;
+    font-size:16px;
+  }
+  .color-dot{ width:38px; height:38px; }
+  .frames{ grid-template-columns:1fr; gap:18px; }
+  .frame{ height:310px; border-width:6px; }
+  .image-item{ width:96px; height:96px; }
 }
 </style>
 </head>
@@ -335,7 +449,7 @@ input,select{ background:#f1f1f1; }
 
 <header>
   <h1>🎨 יוצר הקומיקס של ליאן 🎨</h1>
-  <p>בחרו פריים, הוסיפו דמויות, בועות ודברים מצחיקים</p>
+  <p>בחרו פריים, הוסיפו דמויות, בועות ותמונות — וצרו קומיקס מעוצב משלכם</p>
 </header>
 
 <div class="color-palette">
