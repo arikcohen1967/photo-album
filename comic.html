@@ -168,20 +168,44 @@ input,select{ background:#f1f1f1; }
 }
 
 
+
+.sticker-controls{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  background:rgba(255,255,255,.88);
+  padding:12px;
+  margin:0 auto 10px;
+  max-width:1100px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
 .image-item{
-  width:130px;
-  height:130px;
+  width:105px;
+  height:105px;
   font-size:0;
+  border-radius:50%;
+  overflow:hidden;
+  border:4px solid white;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+  background:white;
 }
 
 .image-item img{
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:18px;
-  border:4px solid white;
-  box-shadow:0 8px 18px rgba(0,0,0,.25);
   pointer-events:none;
+}
+
+.image-item.square{
+  border-radius:18px;
+}
+
+.image-item.heart{
+  border-radius:40% 40% 50% 50%;
 }
 
 .album-picker{
@@ -242,7 +266,7 @@ input,select{ background:#f1f1f1; }
 @media(max-width:700px){
   .frames{ grid-template-columns:1fr; }
   .frame{ height:300px; }
-  .image-item{ width:110px; height:110px; }
+  .image-item{ width:95px; height:95px; }
   h1{ font-size:28px; }
 }
 </style>
@@ -324,6 +348,16 @@ input,select{ background:#f1f1f1; }
   <button class="small" onclick="clearFrame()">נקה פריים</button>
 </div>
 
+
+<div class="sticker-controls">
+  <button class="blue" onclick="makeSelectedBigger()">➕ הגדל תמונה/אימוג׳י</button>
+  <button class="blue" onclick="makeSelectedSmaller()">➖ הקטן תמונה/אימוג׳י</button>
+  <button class="orange" onclick="rotateSelected()">🔄 סובב נבחר</button>
+  <button class="green" onclick="toggleStickerShape()">⭕ עיגול / ריבוע</button>
+  <button class="small" onclick="bringForward()">⬆️ קדימה</button>
+  <button class="small" onclick="sendBackward()">⬇️ אחורה</button>
+</div>
+
 <div class="frames" id="comicArea">
   <div class="frame active bg-park" onclick="selectFrame(this)"></div>
   <div class="frame bg-sea" onclick="selectFrame(this)"></div>
@@ -342,7 +376,7 @@ input,select{ background:#f1f1f1; }
 <div id="albumPicker" class="album-picker">
   <div class="album-box">
     <h2>🖼️ בחרו תמונה מהאלבום של ליאן</h2>
-    <p>לחצו על תמונה והיא תיכנס לפריים הפעיל.</p>
+    <p>לחצו על תמונה והיא תיכנס לפריים הפעיל כמדבקה/אימוג׳י קטן.</p>
     <div class="success-actions">
       <button class="small" onclick="closeAlbumPicker()">סגור</button>
     </div>
@@ -502,13 +536,20 @@ function addImageToFrame(src){
 
   const img=document.createElement("img");
   img.src=src;
-  img.alt="תמונה בקומיקס";
+  img.alt="מדבקת תמונה בקומיקס";
 
   el.appendChild(img);
   el.style.left="100px";
   el.style.top="100px";
+  el.style.zIndex="5";
+  el.dataset.scale="1";
+  el.dataset.rotation="0";
   activeFrame.appendChild(el);
   makeDraggable(el);
+
+  selectedItem=el;
+  document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+  el.style.outline="3px dashed #ff1493";
 }
 
 function addPhonePhoto(event){
@@ -563,6 +604,58 @@ function openAlbumPicker(){
 
 function closeAlbumPicker(){
   document.getElementById("albumPicker").classList.remove("open");
+}
+
+
+function getSelectedScale(){
+  if(!selectedItem) return 1;
+  return parseFloat(selectedItem.dataset.scale || "1");
+}
+
+function applyTransform(el){
+  const rotation = parseFloat(el.dataset.rotation || "0");
+  const scale = parseFloat(el.dataset.scale || "1");
+  el.style.transform = "rotate(" + rotation + "deg) scale(" + scale + ")";
+  el.style.transformOrigin = "center center";
+}
+
+function makeSelectedBigger(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = getSelectedScale();
+  selectedItem.dataset.scale = Math.min(current + 0.15, 2.5);
+  applyTransform(selectedItem);
+}
+
+function makeSelectedSmaller(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = getSelectedScale();
+  selectedItem.dataset.scale = Math.max(current - 0.15, 0.4);
+  applyTransform(selectedItem);
+}
+
+function rotateSelected(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = parseFloat(selectedItem.dataset.rotation || "0");
+  selectedItem.dataset.rotation = current + 15;
+  applyTransform(selectedItem);
+}
+
+function toggleStickerShape(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("עיגול/ריבוע עובד על תמונות");
+  selectedItem.classList.toggle("square");
+}
+
+function bringForward(){
+  if(!selectedItem) return alert("בחר קודם פריט");
+  const z = parseInt(selectedItem.style.zIndex || "1");
+  selectedItem.style.zIndex = z + 1;
+}
+
+function sendBackward(){
+  if(!selectedItem) return alert("בחר קודם פריט");
+  const z = parseInt(selectedItem.style.zIndex || "1");
+  selectedItem.style.zIndex = Math.max(1, z - 1);
 }
 
 function saveComic(){
