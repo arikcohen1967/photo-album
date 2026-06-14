@@ -20,7 +20,7 @@ body{
 }
 
 .page{
-  max-width:1150px;
+  max-width:1200px;
   margin:0 auto;
 }
 
@@ -82,7 +82,7 @@ button:active{transform:scale(.98)}
 select{
   background:#fff;
   color:#111827;
-  min-width:155px;
+  min-width:170px;
 }
 
 .home{
@@ -123,20 +123,35 @@ select{
 
 .board{
   display:grid;
-  gap:12px;
+  gap:10px;
   margin:0 auto;
-  max-width:980px;
+  max-width:1100px;
 }
 
-.board.easy{grid-template-columns:repeat(4,1fr); max-width:650px}
-.board.medium{grid-template-columns:repeat(4,1fr); max-width:750px}
-.board.hard{grid-template-columns:repeat(6,1fr); max-width:980px}
+.board.easy{
+  grid-template-columns:repeat(6,1fr);
+  max-width:900px;
+}
+
+.board.medium{
+  grid-template-columns:repeat(8,1fr);
+  max-width:1050px;
+}
+
+.board.hard{
+  grid-template-columns:repeat(11,1fr);
+  max-width:1150px;
+}
 
 .card{
-  height:120px;
+  height:92px;
   perspective:900px;
   cursor:pointer;
 }
+
+.board.easy .card{height:110px}
+.board.medium .card{height:92px}
+.board.hard .card{height:76px}
 
 .card-inner{
   position:relative;
@@ -154,7 +169,7 @@ select{
 .card-face{
   position:absolute;
   inset:0;
-  border-radius:22px;
+  border-radius:18px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -172,7 +187,7 @@ select{
 
 .front:before{
   content:"?";
-  font-size:48px;
+  font-size:42px;
   font-weight:900;
   color:#e0f2fe;
 }
@@ -183,8 +198,11 @@ select{
   color:#111827;
   border:3px solid rgba(255,255,255,.7);
   box-shadow:0 14px 30px rgba(0,0,0,.28);
-  font-size:48px;
+  font-size:40px;
 }
+
+.board.hard .back{font-size:32px}
+.board.hard .front:before{font-size:32px}
 
 .card.matched .back{
   background:linear-gradient(135deg,#bbf7d0,#22c55e);
@@ -211,7 +229,7 @@ select{
 .win-content{
   background:#fff;
   color:#111827;
-  max-width:460px;
+  max-width:480px;
   width:100%;
   border-radius:28px;
   padding:26px;
@@ -235,22 +253,26 @@ select{
   to{transform:scale(1);opacity:1}
 }
 
-@media(max-width:780px){
+@media(max-width:900px){
   h1{font-size:32px}
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat:last-child{grid-column:1/-1}
-  .board.easy,.board.medium,.board.hard{grid-template-columns:repeat(4,1fr)}
-  .card{height:88px}
-  .back{font-size:36px}
+  .board.easy,.board.medium,.board.hard{
+    grid-template-columns:repeat(4,1fr);
+    max-width:680px;
+  }
+  .card,.board.easy .card,.board.medium .card,.board.hard .card{height:88px}
+  .back,.board.hard .back{font-size:34px}
 }
 
 @media(max-width:420px){
   body{padding:10px}
   .panel{padding:12px;border-radius:20px}
   .board{gap:8px}
-  .card{height:76px}
-  .front:before{font-size:34px}
-  .back{font-size:31px}
+  .board.easy,.board.medium,.board.hard{grid-template-columns:repeat(4,1fr)}
+  .card,.board.easy .card,.board.medium .card,.board.hard .card{height:74px}
+  .front:before,.board.hard .front:before{font-size:31px}
+  .back,.board.hard .back{font-size:29px}
   button,select,a{width:100%;font-size:16px}
 }
 </style>
@@ -268,9 +290,9 @@ select{
   <section class="panel">
     <div class="controls">
       <select id="level">
-        <option value="easy">קל - 8 זוגות</option>
-        <option value="medium" selected>בינוני - 10 זוגות</option>
-        <option value="hard">קשה - 18 זוגות</option>
+        <option value="easy">קל - 12 זוגות</option>
+        <option value="medium" selected>בינוני - 16 זוגות</option>
+        <option value="hard">קשה - 22 זוגות</option>
       </select>
       <button onclick="newGame()">🔄 משחק חדש</button>
       <button onclick="peekCards()">👀 הצצה ל־3 שניות</button>
@@ -305,7 +327,9 @@ select{
 const icons = [
   "🚀","🎮","🎧","🎬","⚽","🏀","🎸","💎","🔥","⚡",
   "🌌","🛸","🤖","🧠","🦾","🕹️","🏆","🎯","🧩","📱",
-  "💻","🎤","🎲","🛼","🦋","🐉","🌟","💥","🪐","🧪"
+  "💻","🎤","🎲","🛼","🦋","🐉","🌟","💥","🪐","🧪",
+  "🏎️","🎹","🎨","📸","🍕","🍦","🧋","🌈","👑","🦄",
+  "🦖","🐬","🦜","🛹","🥇","🧿","🪄","🔮","🎁","✨"
 ];
 
 let firstCard = null;
@@ -313,7 +337,7 @@ let secondCard = null;
 let lockBoard = false;
 let moves = 0;
 let foundPairs = 0;
-let totalPairs = 10;
+let totalPairs = 16;
 let streak = 0;
 let score = 0;
 let seconds = 0;
@@ -329,9 +353,10 @@ const scoreEl = document.getElementById("score");
 const messageEl = document.getElementById("message");
 
 function levelPairs(level){
-  if(level === "easy") return 8;
-  if(level === "hard") return 18;
-  return 10;
+  if(level === "easy") return 12;
+  if(level === "medium") return 16;
+  if(level === "hard") return 22;
+  return 16;
 }
 
 function shuffle(array){
@@ -366,6 +391,27 @@ function updateStats(){
   pairsEl.textContent = foundPairs + "/" + totalPairs;
   streakEl.textContent = streak;
   scoreEl.textContent = score;
+}
+
+function playTone(type){
+  try{
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = type === "good" ? 660 : 180;
+
+    gain.gain.setValueAtTime(0.001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.18);
+  }catch(error){}
 }
 
 function newGame(){
@@ -435,12 +481,13 @@ function flipCard(card){
   if(firstCard.dataset.icon === secondCard.dataset.icon){
     foundPairs++;
     streak++;
-    const bonus = Math.max(0, 20 - Math.floor(seconds / 10));
+    const bonus = Math.max(0, 25 - Math.floor(seconds / 10));
     score += 100 + (streak * 15) + bonus;
 
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
+    playTone("good");
     messageEl.textContent = "יפה! מצאת זוג ✅";
     resetTurn();
 
@@ -450,6 +497,7 @@ function flipCard(card){
   }else{
     streak = 0;
     score = Math.max(0, score - 10);
+    playTone("bad");
     messageEl.textContent = "לא זוג — נסו שוב";
     lockBoard = true;
 
@@ -490,6 +538,14 @@ function peekCards(){
   if(lockBoard) return;
   const cards = [...document.querySelectorAll(".card:not(.matched)")];
   if(!cards.length) return;
+
+  if(!started){
+    started = true;
+    startTimer();
+  }
+
+  score = Math.max(0, score - 30);
+  updateStats();
 
   lockBoard = true;
   cards.forEach(card=>card.classList.add("flipped"));
