@@ -1,1 +1,513 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משחק זיכרון - ליאן</title>
+<style>
+*{box-sizing:border-box}
 
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(255,255,255,.28), transparent 25%),
+    linear-gradient(135deg,#111827,#312e81,#7c3aed,#db2777);
+  color:#fff;
+  text-align:center;
+  padding:16px;
+}
+
+.page{
+  max-width:1150px;
+  margin:0 auto;
+}
+
+header{
+  padding:22px 10px 12px;
+}
+
+h1{
+  margin:0;
+  font-size:42px;
+  letter-spacing:.5px;
+}
+
+.subtitle{
+  margin:10px auto 0;
+  max-width:850px;
+  color:#e5e7eb;
+  font-size:18px;
+  line-height:1.5;
+}
+
+.panel{
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(12px);
+  border-radius:24px;
+  padding:16px;
+  margin:18px auto;
+  box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+}
+
+button,select,a{
+  border:0;
+  border-radius:16px;
+  padding:12px 16px;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+button{
+  color:#fff;
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+
+button:hover,a:hover{transform:translateY(-2px)}
+button:active{transform:scale(.98)}
+
+select{
+  background:#fff;
+  color:#111827;
+  min-width:155px;
+}
+
+.home{
+  background:linear-gradient(135deg,#f59e0b,#ef4444);
+  color:#fff;
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+
+.stat{
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+  padding:12px 8px;
+}
+
+.stat .label{
+  display:block;
+  font-size:13px;
+  color:#cbd5e1;
+  margin-bottom:5px;
+}
+
+.stat .value{
+  font-size:23px;
+  font-weight:900;
+}
+
+.game-wrap{
+  margin:18px auto;
+}
+
+.board{
+  display:grid;
+  gap:12px;
+  margin:0 auto;
+  max-width:980px;
+}
+
+.board.easy{grid-template-columns:repeat(4,1fr); max-width:650px}
+.board.medium{grid-template-columns:repeat(4,1fr); max-width:750px}
+.board.hard{grid-template-columns:repeat(6,1fr); max-width:980px}
+
+.card{
+  height:120px;
+  perspective:900px;
+  cursor:pointer;
+}
+
+.card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transition:transform .42s ease;
+  transform-style:preserve-3d;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner{
+  transform:rotateY(180deg);
+}
+
+.card-face{
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  backface-visibility:hidden;
+  user-select:none;
+}
+
+.front{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.24),rgba(255,255,255,.07)),
+    linear-gradient(135deg,#0f172a,#334155);
+  border:1px solid rgba(255,255,255,.26);
+  box-shadow:0 12px 25px rgba(0,0,0,.28);
+}
+
+.front:before{
+  content:"?";
+  font-size:48px;
+  font-weight:900;
+  color:#e0f2fe;
+}
+
+.back{
+  transform:rotateY(180deg);
+  background:linear-gradient(135deg,#ffffff,#e0f2fe);
+  color:#111827;
+  border:3px solid rgba(255,255,255,.7);
+  box-shadow:0 14px 30px rgba(0,0,0,.28);
+  font-size:48px;
+}
+
+.card.matched .back{
+  background:linear-gradient(135deg,#bbf7d0,#22c55e);
+}
+
+.message{
+  min-height:30px;
+  font-size:20px;
+  font-weight:900;
+  color:#fef3c7;
+}
+
+.win-box{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:99;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.win-content{
+  background:#fff;
+  color:#111827;
+  max-width:460px;
+  width:100%;
+  border-radius:28px;
+  padding:26px;
+  box-shadow:0 25px 70px rgba(0,0,0,.4);
+  animation:pop .22s ease;
+}
+
+.win-content h2{
+  margin:0 0 12px;
+  color:#7c3aed;
+  font-size:34px;
+}
+
+.win-content p{
+  font-size:19px;
+  line-height:1.5;
+}
+
+@keyframes pop{
+  from{transform:scale(.85);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+@media(max-width:780px){
+  h1{font-size:32px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:last-child{grid-column:1/-1}
+  .board.easy,.board.medium,.board.hard{grid-template-columns:repeat(4,1fr)}
+  .card{height:88px}
+  .back{font-size:36px}
+}
+
+@media(max-width:420px){
+  body{padding:10px}
+  .panel{padding:12px;border-radius:20px}
+  .board{gap:8px}
+  .card{height:76px}
+  .front:before{font-size:34px}
+  .back{font-size:31px}
+  button,select,a{width:100%;font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <h1>🧠 משחק הזיכרון של ליאן</h1>
+    <p class="subtitle">
+      משחק זיכרון מהיר ומאתגר לגילאי 11–17. בחרו רמה, מצאו זוגות, נסו לסיים בפחות מהלכים ובזמן הכי קצר.
+    </p>
+  </header>
+
+  <section class="panel">
+    <div class="controls">
+      <select id="level">
+        <option value="easy">קל - 8 זוגות</option>
+        <option value="medium" selected>בינוני - 10 זוגות</option>
+        <option value="hard">קשה - 18 זוגות</option>
+      </select>
+      <button onclick="newGame()">🔄 משחק חדש</button>
+      <button onclick="peekCards()">👀 הצצה ל־3 שניות</button>
+      <a class="home" href="index.html">🏠 חזרה לאתר</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="label">זמן</span><span class="value" id="time">00:00</span></div>
+      <div class="stat"><span class="label">מהלכים</span><span class="value" id="moves">0</span></div>
+      <div class="stat"><span class="label">זוגות נמצאו</span><span class="value" id="pairs">0</span></div>
+      <div class="stat"><span class="label">רצף הצלחות</span><span class="value" id="streak">0</span></div>
+      <div class="stat"><span class="label">ניקוד</span><span class="value" id="score">0</span></div>
+    </div>
+  </section>
+
+  <div class="message" id="message">בחרו זוגות זהים כדי להתחיל 🚀</div>
+
+  <main class="game-wrap">
+    <section id="board" class="board medium"></section>
+  </main>
+</div>
+
+<div id="winBox" class="win-box">
+  <div class="win-content">
+    <h2>🏆 ניצחון!</h2>
+    <p id="winText"></p>
+    <button onclick="closeWin(); newGame()">עוד משחק</button>
+  </div>
+</div>
+
+<script>
+const icons = [
+  "🚀","🎮","🎧","🎬","⚽","🏀","🎸","💎","🔥","⚡",
+  "🌌","🛸","🤖","🧠","🦾","🕹️","🏆","🎯","🧩","📱",
+  "💻","🎤","🎲","🛼","🦋","🐉","🌟","💥","🪐","🧪"
+];
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+let foundPairs = 0;
+let totalPairs = 10;
+let streak = 0;
+let score = 0;
+let seconds = 0;
+let timer = null;
+let started = false;
+
+const board = document.getElementById("board");
+const timeEl = document.getElementById("time");
+const movesEl = document.getElementById("moves");
+const pairsEl = document.getElementById("pairs");
+const streakEl = document.getElementById("streak");
+const scoreEl = document.getElementById("score");
+const messageEl = document.getElementById("message");
+
+function levelPairs(level){
+  if(level === "easy") return 8;
+  if(level === "hard") return 18;
+  return 10;
+}
+
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+function formatTime(num){
+  const m = String(Math.floor(num / 60)).padStart(2,"0");
+  const s = String(num % 60).padStart(2,"0");
+  return m + ":" + s;
+}
+
+function startTimer(){
+  if(timer) return;
+  timer = setInterval(()=>{
+    seconds++;
+    timeEl.textContent = formatTime(seconds);
+  },1000);
+}
+
+function stopTimer(){
+  clearInterval(timer);
+  timer = null;
+}
+
+function updateStats(){
+  movesEl.textContent = moves;
+  pairsEl.textContent = foundPairs + "/" + totalPairs;
+  streakEl.textContent = streak;
+  scoreEl.textContent = score;
+}
+
+function newGame(){
+  closeWin();
+  stopTimer();
+
+  const level = document.getElementById("level").value;
+  totalPairs = levelPairs(level);
+
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  moves = 0;
+  foundPairs = 0;
+  streak = 0;
+  score = 0;
+  seconds = 0;
+  started = false;
+
+  timeEl.textContent = "00:00";
+  messageEl.textContent = "בחרו זוגות זהים כדי להתחיל 🚀";
+  updateStats();
+
+  board.className = "board " + level;
+  board.innerHTML = "";
+
+  const chosen = shuffle([...icons]).slice(0,totalPairs);
+  const cards = shuffle([...chosen, ...chosen]);
+
+  cards.forEach((icon,index)=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.icon = icon;
+    card.dataset.index = index;
+
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face front"></div>
+        <div class="card-face back">${icon}</div>
+      </div>
+    `;
+
+    card.addEventListener("click",()=>flipCard(card));
+    board.appendChild(card);
+  });
+}
+
+function flipCard(card){
+  if(lockBoard) return;
+  if(card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+  if(!started){
+    started = true;
+    startTimer();
+  }
+
+  card.classList.add("flipped");
+
+  if(!firstCard){
+    firstCard = card;
+    return;
+  }
+
+  secondCard = card;
+  moves++;
+
+  if(firstCard.dataset.icon === secondCard.dataset.icon){
+    foundPairs++;
+    streak++;
+    const bonus = Math.max(0, 20 - Math.floor(seconds / 10));
+    score += 100 + (streak * 15) + bonus;
+
+    firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+
+    messageEl.textContent = "יפה! מצאת זוג ✅";
+    resetTurn();
+
+    if(foundPairs === totalPairs){
+      finishGame();
+    }
+  }else{
+    streak = 0;
+    score = Math.max(0, score - 10);
+    messageEl.textContent = "לא זוג — נסו שוב";
+    lockBoard = true;
+
+    setTimeout(()=>{
+      firstCard.classList.remove("flipped");
+      secondCard.classList.remove("flipped");
+      resetTurn();
+    },850);
+  }
+
+  updateStats();
+}
+
+function resetTurn(){
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
+
+function finishGame(){
+  stopTimer();
+
+  const levelName = document.getElementById("level").selectedOptions[0].textContent;
+  document.getElementById("winText").innerHTML =
+    "סיימתם את הרמה: <b>" + levelName + "</b><br>" +
+    "זמן: <b>" + formatTime(seconds) + "</b><br>" +
+    "מהלכים: <b>" + moves + "</b><br>" +
+    "ניקוד: <b>" + score + "</b>";
+
+  document.getElementById("winBox").style.display = "flex";
+  messageEl.textContent = "אלופים! סיימתם את המשחק 🏆";
+}
+
+function closeWin(){
+  document.getElementById("winBox").style.display = "none";
+}
+
+function peekCards(){
+  if(lockBoard) return;
+  const cards = [...document.querySelectorAll(".card:not(.matched)")];
+  if(!cards.length) return;
+
+  lockBoard = true;
+  cards.forEach(card=>card.classList.add("flipped"));
+
+  setTimeout(()=>{
+    cards.forEach(card=>{
+      if(!card.classList.contains("matched")){
+        card.classList.remove("flipped");
+      }
+    });
+    resetTurn();
+    lockBoard = false;
+    messageEl.textContent = "ההצצה נגמרה — עכשיו לזכור 😉";
+  },3000);
+}
+
+newGame();
+</script>
+
+</body>
+</html>
