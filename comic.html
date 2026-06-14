@@ -33,21 +33,22 @@ h1{
   box-shadow:0 4px 15px rgba(0,0,0,.15);
 }
 
-button,input,select{
+button,input,select,a.homeBtn{
   border:0;
   border-radius:14px;
   padding:12px 14px;
   font-size:16px;
   cursor:pointer;
+  text-decoration:none;
 }
 
-button{
+button,a.homeBtn{
   background:#ff69b4;
   color:white;
   font-weight:bold;
 }
 
-button:hover{
+button:hover,a.homeBtn:hover{
   transform:scale(1.05);
 }
 
@@ -132,6 +133,10 @@ input,select{
 
 .footer{
   padding:20px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
 }
 
 .small{
@@ -148,6 +153,10 @@ input,select{
 
 .blue{
   background:#2678ff;
+}
+
+.orange{
+  background:#ff9800;
 }
 
 @media(max-width:700px){
@@ -211,7 +220,9 @@ input,select{
 </div>
 
 <div class="footer">
-  <button class="green" onclick="saveComic()">📸 שמור קומיקס כתמונה</button>
+  <button class="green" onclick="saveComic()">📸 שמור כתמונה</button>
+  <button class="blue" onclick="saveToLianAlbum()">💾 שמור באלבום של ליאן</button>
+  <a class="homeBtn orange" href="index.html">🏠 חזרה לאתר</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -300,14 +311,39 @@ function clearFrame(){
   activeFrame.innerHTML="";
 }
 
-function saveComic(){
+function cleanSelection(){
   document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+}
+
+function saveComic(){
+  cleanSelection();
 
   html2canvas(document.getElementById("comicArea")).then(canvas=>{
     const link=document.createElement("a");
     link.download="comic-lian.png";
-    link.href=canvas.toDataURL();
+    link.href=canvas.toDataURL("image/png");
     link.click();
+  });
+}
+
+function saveToLianAlbum(){
+  cleanSelection();
+
+  html2canvas(document.getElementById("comicArea")).then(canvas=>{
+    const imageData = canvas.toDataURL("image/png");
+
+    let album = JSON.parse(localStorage.getItem("lianAlbum") || "[]");
+
+    album.push({
+      type: "comic",
+      name: "קומיקס של ליאן",
+      date: new Date().toLocaleString("he-IL"),
+      image: imageData
+    });
+
+    localStorage.setItem("lianAlbum", JSON.stringify(album));
+
+    alert("הקומיקס נשמר באלבום של ליאן 🎉");
   });
 }
 </script>
