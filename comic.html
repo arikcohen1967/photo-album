@@ -1,3 +1,9 @@
+הורד את הקובץ המלא comic-apple-full.html
+
+לפני העלאה ל־GitHub שנה את השם ל־:
+
+comic.html 
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -9,20 +15,19 @@
 *{ box-sizing:border-box; }
 
 :root{
-  --page-bg:#eeeeee;
-  --panel:#ffffff;
-  --ink:#1f2933;
-  --muted:#667085;
-  --line:#d0d5dd;
-  --shadow:0 14px 35px rgba(16,24,40,.14);
-  --shadow-soft:0 8px 22px rgba(16,24,40,.10);
-  --accent:#111827;
-  --accent2:#4b5563;
-  --blue:#2563eb;
-  --green:#16a34a;
-  --red:#dc2626;
-  --orange:#f97316;
-  --pink:#db2777;
+  --ios-blue:#007AFF;
+  --ios-cyan:#5AC8FA;
+  --ios-green:#34C759;
+  --ios-red:#FF3B30;
+  --ios-orange:#FF9500;
+  --ios-purple:#AF52DE;
+  --ios-pink:#FF2D55;
+  --ink:#1d1d1f;
+  --muted:#6e6e73;
+  --line:#dbe4ee;
+  --glass:rgba(255,255,255,.78);
+  --shadow:0 12px 32px rgba(15,23,42,.10);
+  --shadow-soft:0 8px 22px rgba(15,23,42,.08);
 }
 
 body{
@@ -30,8 +35,8 @@ body{
   font-family:Arial,"Segoe UI",sans-serif;
   background:
     radial-gradient(circle at 12% 8%,rgba(255,255,255,.95),transparent 24%),
-    radial-gradient(circle at 88% 12%,rgba(255,255,255,.65),transparent 26%),
-    linear-gradient(135deg,#f7f7f7,#e9ecef,#d9dde3);
+    radial-gradient(circle at 88% 14%,rgba(90,200,250,.20),transparent 28%),
+    linear-gradient(180deg,#f8fafc,#eef2f7);
   color:var(--ink);
   text-align:center;
   min-height:100vh;
@@ -44,16 +49,29 @@ header{
   margin:0 auto;
 }
 
+header::before{
+  content:"APPLE STYLE COMIC STUDIO";
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
+  background:rgba(0,122,255,.12);
+  color:var(--ios-blue);
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:15px;
+}
+
 header h1{
   margin:0;
   font-size:42px;
-  letter-spacing:.3px;
-  color:#111827;
+  letter-spacing:.2px;
+  color:#1d1d1f;
 }
 
 header p{
   margin:10px auto 0;
-  color:#4b5563;
+  color:var(--muted);
   font-size:19px;
   line-height:1.5;
   max-width:760px;
@@ -62,9 +80,10 @@ header p{
 .toolbar,
 .sticker-controls,
 .color-palette{
-  background:rgba(255,255,255,.92);
-  border:1px solid rgba(17,24,39,.10);
-  backdrop-filter:blur(12px);
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.70);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
   padding:16px;
   display:flex;
   flex-wrap:wrap;
@@ -73,7 +92,7 @@ header p{
   gap:10px;
   max-width:1160px;
   margin:14px auto;
-  border-radius:26px;
+  border-radius:28px;
   box-shadow:var(--shadow-soft);
 }
 
@@ -82,8 +101,8 @@ header p{
 }
 
 button,input,select,a.homeBtn{
-  border:1px solid rgba(17,24,39,.10);
-  border-radius:16px;
+  border:0;
+  border-radius:18px;
   padding:12px 15px;
   font-size:16px;
   cursor:pointer;
@@ -93,16 +112,16 @@ button,input,select,a.homeBtn{
 }
 
 button,a.homeBtn{
-  background:linear-gradient(135deg,#111827,#374151);
+  background:linear-gradient(135deg,var(--ios-blue),var(--ios-cyan));
   color:white;
   font-weight:800;
-  box-shadow:0 8px 18px rgba(17,24,39,.18);
+  box-shadow:0 8px 20px rgba(0,122,255,.20);
 }
 
 button:hover,a.homeBtn:hover{
   transform:translateY(-2px);
-  box-shadow:0 12px 24px rgba(17,24,39,.22);
-  filter:brightness(1.05);
+  box-shadow:0 12px 26px rgba(0,122,255,.24);
+  filter:brightness(1.03);
 }
 
 button:active,a.homeBtn:active{
@@ -110,9 +129,9 @@ button:active,a.homeBtn:active{
 }
 
 input,select{
-  background:#f9fafb;
-  color:#111827;
-  border:1px solid #d0d5dd;
+  background:rgba(255,255,255,.95);
+  color:#1d1d1f;
+  border:1px solid #dbe4ee;
   outline:none;
 }
 
@@ -122,8 +141,8 @@ select{
 }
 
 input:focus,select:focus{
-  border-color:#111827;
-  box-shadow:0 0 0 3px rgba(17,24,39,.10);
+  border-color:var(--ios-blue);
+  box-shadow:0 0 0 4px rgba(0,122,255,.12);
 }
 
 .frames{
@@ -137,14 +156,12 @@ input:focus,select:focus{
 
 .frame{
   height:340px;
-  background:white;
-  border:7px solid #111827;
-  border-radius:12px;
+  background:#ffffff;
+  border:1px solid #dbe4ee;
+  border-radius:28px;
   position:relative;
   overflow:hidden;
-  box-shadow:
-    0 18px 35px rgba(16,24,40,.20),
-    inset 0 0 0 3px rgba(255,255,255,.9);
+  box-shadow:var(--shadow);
   transition:.18s ease;
 }
 
@@ -154,8 +171,8 @@ input:focus,select:focus{
   inset:0;
   pointer-events:none;
   background:
-    linear-gradient(135deg,rgba(255,255,255,.18),transparent 38%),
-    radial-gradient(circle at 25% 20%,rgba(255,255,255,.20),transparent 18%);
+    linear-gradient(135deg,rgba(255,255,255,.25),transparent 42%),
+    radial-gradient(circle at 20% 15%,rgba(255,255,255,.35),transparent 20%);
   z-index:0;
 }
 
@@ -164,11 +181,10 @@ input:focus,select:focus{
 }
 
 .frame.active{
-  border-color:#db2777;
+  border:2px solid var(--ios-blue);
   box-shadow:
-    0 0 0 5px rgba(219,39,119,.18),
-    0 22px 45px rgba(16,24,40,.24),
-    inset 0 0 0 3px rgba(255,255,255,.9);
+    0 0 0 6px rgba(0,122,255,.12),
+    0 12px 30px rgba(0,122,255,.15);
   transform:translateY(-2px);
 }
 
@@ -178,14 +194,14 @@ input:focus,select:focus{
   cursor:grab;
   user-select:none;
   touch-action:none;
-  filter:drop-shadow(0 8px 10px rgba(0,0,0,.22));
+  filter:drop-shadow(0 8px 10px rgba(15,23,42,.18));
 }
 
 .speech{
   position:absolute;
-  background:#fff;
-  border:4px solid #111827;
-  border-radius:26px;
+  background:white;
+  border:1px solid #dbe4ee;
+  border-radius:24px;
   padding:12px 18px;
   font-size:20px;
   min-width:90px;
@@ -193,25 +209,25 @@ input:focus,select:focus{
   cursor:grab;
   user-select:none;
   touch-action:none;
-  color:#111827;
-  box-shadow:0 10px 20px rgba(0,0,0,.18);
+  color:#1d1d1f;
+  box-shadow:0 10px 25px rgba(15,23,42,.08);
 }
 
 .speech:after{
   content:"";
   position:absolute;
-  bottom:-19px;
+  bottom:-16px;
   right:25px;
-  border-width:19px 9px 0 9px;
+  border-width:16px 8px 0 8px;
   border-style:solid;
-  border-color:#111827 transparent transparent transparent;
+  border-color:#dbe4ee transparent transparent transparent;
 }
 
-.bg-park{ background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%); }
-.bg-sea{ background:linear-gradient(#7ed6ff 0 55%,#f9d976 55%); }
-.bg-space{ background:radial-gradient(circle,#333,#050018); }
-.bg-room{ background:linear-gradient(#ffd1e8 0 65%,#caa17a 65%); }
-.bg-school{ background:linear-gradient(#d9f0ff 0 65%,#ddd 65%); }
+.bg-park{ background:linear-gradient(#dff5ff 0 55%,#d6f7c8 55%); }
+.bg-sea{ background:linear-gradient(#dff6ff 0 55%,#fff5cc 55%); }
+.bg-space{ background:linear-gradient(#1e293b,#0f172a); }
+.bg-room{ background:linear-gradient(#fff0f7 0 65%,#f3dfcf 65%); }
+.bg-school{ background:linear-gradient(#f2faff 0 65%,#f7f8fa 65%); }
 
 .footer{
   padding:24px 14px 34px;
@@ -221,44 +237,46 @@ input:focus,select:focus{
   gap:12px;
 }
 
-.small{ background:linear-gradient(135deg,#4b5563,#111827) !important; }
-.green{ background:linear-gradient(135deg,#22c55e,#15803d) !important; }
-.red{ background:linear-gradient(135deg,#ef4444,#b91c1c) !important; }
-.blue{ background:linear-gradient(135deg,#3b82f6,#1d4ed8) !important; }
-.orange{ background:linear-gradient(135deg,#fb923c,#ea580c) !important; }
+.small{ background:linear-gradient(135deg,#8E8E93,#636366) !important; }
+.green{ background:linear-gradient(135deg,#34C759,#30D158) !important; }
+.red{ background:linear-gradient(135deg,#FF3B30,#FF6B6B) !important; }
+.blue{ background:linear-gradient(135deg,#007AFF,#5AC8FA) !important; }
+.orange{ background:linear-gradient(135deg,#FF9500,#FFCC00) !important; color:#1d1d1f !important; }
 
 .success-box{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(17,24,39,.66);
+  background:rgba(15,23,42,.42);
   z-index:9999;
   align-items:center;
   justify-content:center;
   padding:20px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 }
 
 .success-content{
-  background:#fff;
+  background:white;
   border-radius:30px;
   padding:30px;
   max-width:430px;
   width:100%;
-  box-shadow:0 24px 70px rgba(0,0,0,.35);
+  box-shadow:0 24px 70px rgba(15,23,42,.18);
   text-align:center;
   animation:pop .25s ease;
-  border:1px solid rgba(17,24,39,.10);
+  border:1px solid rgba(255,255,255,.70);
 }
 
 .success-content h2{
   margin:0 0 12px;
-  color:#111827;
+  color:#1d1d1f;
   font-size:30px;
 }
 
 .success-content p{
   font-size:19px;
-  color:#374151;
+  color:#3a3a3c;
   line-height:1.5;
 }
 
@@ -286,7 +304,7 @@ input:focus,select:focus{
   border-radius:50%;
   overflow:hidden;
   border:5px solid white;
-  box-shadow:0 12px 24px rgba(0,0,0,.25);
+  box-shadow:0 12px 24px rgba(15,23,42,.14);
   background:white;
 }
 
@@ -309,11 +327,13 @@ input:focus,select:focus{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(17,24,39,.72);
+  background:rgba(15,23,42,.45);
   z-index:9998;
   align-items:center;
   justify-content:center;
   padding:18px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 }
 
 .album-picker.open{
@@ -328,17 +348,17 @@ input:focus,select:focus{
   overflow:auto;
   border-radius:30px;
   padding:24px;
-  box-shadow:0 24px 70px rgba(0,0,0,.35);
-  border:1px solid rgba(17,24,39,.10);
+  box-shadow:0 24px 70px rgba(15,23,42,.18);
+  border:1px solid rgba(255,255,255,.70);
 }
 
 .album-box h2{
   margin:0 0 14px;
-  color:#111827;
+  color:#1d1d1f;
 }
 
 .album-box p{
-  color:#4b5563;
+  color:#6e6e73;
 }
 
 .album-grid{
@@ -354,7 +374,7 @@ input:focus,select:focus{
   object-fit:cover;
   border-radius:18px;
   border:4px solid #fff;
-  box-shadow:0 8px 18px rgba(0,0,0,.18);
+  box-shadow:0 8px 18px rgba(15,23,42,.10);
   cursor:pointer;
   transition:.18s ease;
 }
@@ -371,14 +391,14 @@ input:focus,select:focus{
 }
 
 .color-palette-title{
-  background:#f3f4f6;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
-  padding:9px 12px;
+  background:rgba(0,122,255,.10);
+  border:1px solid rgba(0,122,255,.12);
+  border-radius:999px;
+  padding:9px 14px;
   font-weight:900;
   display:flex;
   align-items:center;
-  color:#111827;
+  color:var(--ios-blue);
 }
 
 .color-dot{
@@ -386,7 +406,7 @@ input:focus,select:focus{
   height:42px;
   border-radius:50%;
   border:4px solid white;
-  box-shadow:0 5px 12px rgba(0,0,0,.22);
+  box-shadow:0 5px 12px rgba(15,23,42,.12);
   cursor:pointer;
   padding:0;
 }
@@ -396,15 +416,15 @@ input:focus,select:focus{
 }
 
 .color-free{
-  background:#f9fafb;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
+  background:rgba(255,255,255,.95);
+  border:1px solid #dbe4ee;
+  border-radius:999px;
   padding:7px 12px;
   font-weight:900;
   display:flex;
   align-items:center;
   gap:8px;
-  color:#111827;
+  color:#1d1d1f;
 }
 
 .image-item.star{
@@ -429,7 +449,7 @@ input:focus,select:focus{
   header h1{ font-size:30px; }
   header p{ font-size:16px; }
   .toolbar,.sticker-controls,.color-palette{
-    border-radius:22px;
+    border-radius:24px;
     padding:12px;
     gap:8px;
   }
@@ -439,7 +459,7 @@ input:focus,select:focus{
   }
   .color-dot{ width:38px; height:38px; }
   .frames{ grid-template-columns:1fr; gap:18px; }
-  .frame{ height:310px; border-width:6px; }
+  .frame{ height:310px; border-radius:24px; }
   .image-item{ width:96px; height:96px; }
 }
 </style>
@@ -449,7 +469,7 @@ input:focus,select:focus{
 
 <header>
   <h1>🎨 יוצר הקומיקס של ליאן 🎨</h1>
-  <p>בחרו פריים, הוסיפו דמויות, בועות ותמונות — וצרו קומיקס מעוצב משלכם</p>
+  <p>סטודיו קומיקס בסגנון Apple: בהיר, נקי, זכוכיתי וקל לשימוש</p>
 </header>
 
 <div class="color-palette">
