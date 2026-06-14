@@ -267,10 +267,13 @@ function cleanSelection(){
 function saveComic(){
   cleanSelection();
 
-  html2canvas(document.getElementById("comicArea")).then(canvas=>{
+  html2canvas(document.getElementById("comicArea"), {
+    backgroundColor: "#ffffff",
+    scale: 1
+  }).then(canvas=>{
     const link=document.createElement("a");
-    link.download="comic-lian.png";
-    link.href=canvas.toDataURL("image/png");
+    link.download="comic-lian.jpg";
+    link.href=canvas.toDataURL("image/jpeg", 0.85);
     link.click();
   });
 }
@@ -278,21 +281,32 @@ function saveComic(){
 function saveToLianAlbum(){
   cleanSelection();
 
-  html2canvas(document.getElementById("comicArea")).then(canvas=>{
-    const imageData = canvas.toDataURL("image/png");
+  html2canvas(document.getElementById("comicArea"), {
+    backgroundColor: "#ffffff",
+    scale: 1
+  }).then(canvas=>{
+    try{
+      const imageData = canvas.toDataURL("image/jpeg", 0.82);
 
-    let album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
+      let album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
 
-    album.unshift({
-      id: Date.now() + "-" + Math.random().toString(16).slice(2),
-      name: "קומיקס של ליאן.png",
-      date: new Date().toLocaleDateString("he-IL"),
-      data: imageData
-    });
+      album.unshift({
+        id: Date.now() + "-" + Math.random().toString(16).slice(2),
+        name: "קומיקס של ליאן.jpg",
+        date: new Date().toLocaleDateString("he-IL"),
+        data: imageData
+      });
 
-    localStorage.setItem("lianFamilyAlbumPhotos", JSON.stringify(album));
+      localStorage.setItem("lianFamilyAlbumPhotos", JSON.stringify(album));
 
-    alert("הקומיקס נשמר באלבום של ליאן 🎉");
+      if(confirm("הקומיקס נשמר באלבום של ליאן 🎉\nרוצה לפתוח את האלבום עכשיו?")){
+        window.location.href = "album-lian.html";
+      }
+
+    }catch(error){
+      alert("לא הצלחתי לשמור באלבום. כנראה שאין מספיק מקום בדפדפן.");
+      console.log(error);
+    }
   });
 }
 </script>
