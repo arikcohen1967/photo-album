@@ -370,7 +370,7 @@ function openAlbumNow(){
 function saveComic(){
   cleanSelection();
 
-  html2canvas(document.getElementById("comicArea"), {
+  html2canvas(activeFrame, {
     backgroundColor: "#ffffff",
     scale: 1
   }).then(canvas=>{
@@ -384,7 +384,7 @@ function saveComic(){
 function saveToLianAlbum(){
   cleanSelection();
 
-  html2canvas(document.getElementById("comicArea"), {
+  html2canvas(activeFrame, {
     backgroundColor: "#ffffff",
     scale: 1
   }).then(canvas=>{
