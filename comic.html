@@ -1,1 +1,316 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>יוצר הקומיקס של ליאן</title>
 
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffb6e6,#9fd8ff);
+  text-align:center;
+}
+
+header{
+  color:white;
+  padding:25px 10px;
+}
+
+h1{
+  margin:0;
+  font-size:36px;
+}
+
+.toolbar{
+  background:white;
+  padding:15px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+button,input,select{
+  border:0;
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button{
+  background:#ff69b4;
+  color:white;
+  font-weight:bold;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+input,select{
+  background:#f1f1f1;
+}
+
+.frames{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+  max-width:1100px;
+  margin:25px auto;
+  padding:10px;
+}
+
+.frame{
+  height:330px;
+  background:white;
+  border:5px solid white;
+  border-radius:22px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.frame.active{
+  border-color:#ff1493;
+}
+
+.item{
+  position:absolute;
+  font-size:70px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+}
+
+.speech{
+  position:absolute;
+  background:white;
+  border:3px solid #111;
+  border-radius:25px;
+  padding:12px 18px;
+  font-size:20px;
+  min-width:90px;
+  max-width:230px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+}
+
+.speech:after{
+  content:"";
+  position:absolute;
+  bottom:-18px;
+  right:25px;
+  border-width:18px 8px 0 8px;
+  border-style:solid;
+  border-color:#111 transparent transparent transparent;
+}
+
+.bg-park{
+  background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%);
+}
+
+.bg-sea{
+  background:linear-gradient(#7ed6ff 0 55%,#f9d976 55%);
+}
+
+.bg-space{
+  background:radial-gradient(circle,#333,#050018);
+}
+
+.bg-room{
+  background:linear-gradient(#ffd1e8 0 65%,#caa17a 65%);
+}
+
+.bg-school{
+  background:linear-gradient(#d9f0ff 0 65%,#ddd 65%);
+}
+
+.footer{
+  padding:20px;
+}
+
+.small{
+  background:#555;
+}
+
+.green{
+  background:#28a745;
+}
+
+.red{
+  background:#e63946;
+}
+
+.blue{
+  background:#2678ff;
+}
+
+@media(max-width:700px){
+  .frames{
+    grid-template-columns:1fr;
+  }
+
+  .frame{
+    height:300px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎨 יוצר הקומיקס של ליאן 🎨</h1>
+  <p>בחרו פריים, הוסיפו דמויות, בועות ודברים מצחיקים</p>
+</header>
+
+<div class="toolbar">
+  <select id="bgSelect">
+    <option value="bg-park">🌳 פארק</option>
+    <option value="bg-sea">🏖️ ים</option>
+    <option value="bg-space">🚀 חלל</option>
+    <option value="bg-room">🏠 חדר</option>
+    <option value="bg-school">🏫 בית ספר</option>
+  </select>
+
+  <button onclick="setBg()">שנה רקע</button>
+
+  <button onclick="addItem('👧')">👧</button>
+  <button onclick="addItem('👦')">👦</button>
+  <button onclick="addItem('🦄')">🦄</button>
+  <button onclick="addItem('🐶')">🐶</button>
+  <button onclick="addItem('🐱')">🐱</button>
+  <button onclick="addItem('🤖')">🤖</button>
+  <button onclick="addItem('👑')">👑</button>
+  <button onclick="addItem('🌈')">🌈</button>
+  <button onclick="addItem('⭐')">⭐</button>
+  <button onclick="addItem('❤️')">❤️</button>
+  <button onclick="addItem('🎈')">🎈</button>
+
+  <input id="speechText" placeholder="מה הדמות אומרת?">
+  <button onclick="addSpeech()">💬 בועה</button>
+
+  <button class="red" onclick="deleteSelected()">מחק נבחר</button>
+  <button class="small" onclick="clearFrame()">נקה פריים</button>
+</div>
+
+<div class="frames" id="comicArea">
+  <div class="frame active bg-park" onclick="selectFrame(this)"></div>
+  <div class="frame bg-sea" onclick="selectFrame(this)"></div>
+  <div class="frame bg-room" onclick="selectFrame(this)"></div>
+  <div class="frame bg-space" onclick="selectFrame(this)"></div>
+</div>
+
+<div class="footer">
+  <button class="green" onclick="saveComic()">📸 שמור קומיקס כתמונה</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+let activeFrame=document.querySelector(".frame.active");
+let selectedItem=null;
+
+function selectFrame(frame){
+  document.querySelectorAll(".frame").forEach(f=>f.classList.remove("active"));
+  frame.classList.add("active");
+  activeFrame=frame;
+}
+
+function setBg(){
+  activeFrame.className="frame active " + document.getElementById("bgSelect").value;
+}
+
+function addItem(icon){
+  const el=document.createElement("div");
+  el.className="item";
+  el.innerHTML=icon;
+  el.style.left="100px";
+  el.style.top="100px";
+  activeFrame.appendChild(el);
+  makeDraggable(el);
+}
+
+function addSpeech(){
+  const text=document.getElementById("speechText").value.trim();
+  if(!text) return;
+
+  const el=document.createElement("div");
+  el.className="speech";
+  el.innerText=text;
+  el.style.left="90px";
+  el.style.top="80px";
+  activeFrame.appendChild(el);
+  makeDraggable(el);
+
+  document.getElementById("speechText").value="";
+}
+
+function makeDraggable(el){
+  let startX,startY,origX,origY;
+
+  el.addEventListener("pointerdown",function(e){
+    e.stopPropagation();
+    selectedItem=el;
+
+    document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+    el.style.outline="3px dashed #ff1493";
+
+    startX=e.clientX;
+    startY=e.clientY;
+    origX=parseInt(el.style.left);
+    origY=parseInt(el.style.top);
+
+    el.setPointerCapture(e.pointerId);
+  });
+
+  el.addEventListener("pointermove",function(e){
+    if(!el.hasPointerCapture(e.pointerId)) return;
+
+    let newX=origX+(e.clientX-startX);
+    let newY=origY+(e.clientY-startY);
+
+    el.style.left=newX+"px";
+    el.style.top=newY+"px";
+  });
+
+  el.addEventListener("dblclick",function(e){
+    e.stopPropagation();
+    el.remove();
+  });
+}
+
+function deleteSelected(){
+  if(selectedItem){
+    selectedItem.remove();
+    selectedItem=null;
+  }
+}
+
+function clearFrame(){
+  activeFrame.innerHTML="";
+}
+
+function saveComic(){
+  document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+
+  html2canvas(document.getElementById("comicArea")).then(canvas=>{
+    const link=document.createElement("a");
+    link.download="comic-lian.png";
+    link.href=canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+
+</body>
+</html>
