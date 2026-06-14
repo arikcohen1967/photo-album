@@ -678,11 +678,11 @@ function saveComic(){
 
   html2canvas(activeFrame, {
     backgroundColor: "#ffffff",
-    scale: 1
+    scale: 2
   }).then(canvas=>{
     const link=document.createElement("a");
     link.download="comic-lian.jpg";
-    link.href=canvas.toDataURL("image/jpeg", 0.85);
+    link.href=canvas.toDataURL("image/png");
     link.click();
   });
 }
@@ -692,16 +692,16 @@ function saveToLianAlbum(){
 
   html2canvas(activeFrame, {
     backgroundColor: "#ffffff",
-    scale: 1
+    scale: 2
   }).then(canvas=>{
     try{
-      const imageData = canvas.toDataURL("image/jpeg", 0.82);
+      const imageData = canvas.toDataURL("image/png");
 
       let album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
 
       album.unshift({
         id: Date.now() + "-" + Math.random().toString(16).slice(2),
-        name: "קומיקס של ליאן.jpg",
+        name: "קומיקס של ליאן.png",
         date: new Date().toLocaleDateString("he-IL"),
         data: imageData
       });
