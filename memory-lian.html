@@ -4,52 +4,81 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>משחק זיכרון - ליאן</title>
+
 <style>
 *{box-sizing:border-box}
+
+:root{
+  --black:#050505;
+  --dark:#111111;
+  --dark2:#181818;
+  --gray1:#242424;
+  --gray2:#3a3a3a;
+  --gray3:#6b6b6b;
+  --gray4:#bdbdbd;
+  --gray5:#e8e8e8;
+  --white:#ffffff;
+}
 
 body{
   margin:0;
   min-height:100vh;
   font-family:Arial,"Segoe UI",sans-serif;
   background:
-    radial-gradient(circle at top right, rgba(255,255,255,.28), transparent 25%),
-    linear-gradient(135deg,#111827,#312e81,#7c3aed,#db2777);
-  color:#fff;
+    radial-gradient(circle at 12% 8%,rgba(255,255,255,.10),transparent 24%),
+    radial-gradient(circle at 88% 12%,rgba(255,255,255,.07),transparent 27%),
+    linear-gradient(135deg,#000,#121212,#333,#050505);
+  color:var(--white);
   text-align:center;
   padding:16px;
 }
 
 .page{
-  max-width:1200px;
+  max-width:1220px;
   margin:0 auto;
 }
 
 header{
-  padding:22px 10px 12px;
+  padding:26px 10px 12px;
+}
+
+.logo{
+  width:78px;
+  height:78px;
+  margin:0 auto 14px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#fff,#bdbdbd,#333);
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
 }
 
 h1{
   margin:0;
-  font-size:42px;
+  font-size:44px;
   letter-spacing:.5px;
+  color:#fff;
 }
 
 .subtitle{
   margin:10px auto 0;
   max-width:850px;
-  color:#e5e7eb;
+  color:#d4d4d4;
   font-size:18px;
   line-height:1.5;
 }
 
-.panel{
-  background:rgba(255,255,255,.13);
-  border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(12px);
-  border-radius:24px;
-  padding:16px;
-  margin:18px auto;
-  box-shadow:0 18px 45px rgba(0,0,0,.25);
+.panel,.records{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(14px);
+  border-radius:28px;
+  padding:18px;
+  margin:20px auto;
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
 }
 
 .controls{
@@ -61,64 +90,81 @@ h1{
 }
 
 button,select,a{
-  border:0;
-  border-radius:16px;
-  padding:12px 16px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;
+  padding:13px 17px;
   font-size:17px;
-  font-weight:800;
+  font-weight:900;
   cursor:pointer;
   text-decoration:none;
+  transition:.2s;
 }
 
 button{
-  color:#fff;
-  background:linear-gradient(135deg,#06b6d4,#2563eb);
-  box-shadow:0 10px 22px rgba(0,0,0,.22);
+  color:#111;
+  background:linear-gradient(135deg,#fff,#d4d4d4);
+  box-shadow:0 12px 26px rgba(0,0,0,.32);
 }
 
-button:hover,a:hover{transform:translateY(-2px)}
+button:hover,a:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+}
+
 button:active{transform:scale(.98)}
 
 select{
-  background:#fff;
-  color:#111827;
-  min-width:170px;
+  background:#111;
+  color:#fff;
+  border-color:#555;
+  min-width:190px;
 }
 
 .home{
-  background:linear-gradient(135deg,#f59e0b,#ef4444);
+  background:linear-gradient(135deg,#333,#111);
   color:#fff;
-  box-shadow:0 10px 22px rgba(0,0,0,.22);
+  box-shadow:0 12px 26px rgba(0,0,0,.32);
+}
+
+.peek{
+  background:linear-gradient(135deg,#666,#222);
+  color:#fff;
+}
+
+.sound{
+  background:linear-gradient(135deg,#f5f5f5,#9c9c9c);
+  color:#000;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:10px;
-  margin-top:14px;
+  margin-top:15px;
 }
 
 .stat{
-  background:rgba(0,0,0,.24);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:18px;
-  padding:12px 8px;
+  background:rgba(0,0,0,.36);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:20px;
+  padding:13px 8px;
 }
 
 .stat .label{
   display:block;
   font-size:13px;
-  color:#cbd5e1;
-  margin-bottom:5px;
+  color:#bdbdbd;
+  margin-bottom:6px;
 }
 
 .stat .value{
-  font-size:23px;
+  font-size:25px;
   font-weight:900;
+  color:#fff;
 }
 
 .game-wrap{
-  margin:18px auto;
+  margin:20px auto;
 }
 
 .board{
@@ -147,11 +193,17 @@ select{
   height:92px;
   perspective:900px;
   cursor:pointer;
+  animation:cardIn .25s ease both;
 }
 
 .board.easy .card{height:110px}
 .board.medium .card{height:92px}
 .board.hard .card{height:76px}
+
+@keyframes cardIn{
+  from{opacity:0; transform:translateY(10px) scale(.95)}
+  to{opacity:1; transform:translateY(0) scale(1)}
+}
 
 .card-inner{
   position:relative;
@@ -169,7 +221,7 @@ select{
 .card-face{
   position:absolute;
   inset:0;
-  border-radius:18px;
+  border-radius:20px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -179,47 +231,100 @@ select{
 
 .front{
   background:
-    linear-gradient(135deg,rgba(255,255,255,.24),rgba(255,255,255,.07)),
-    linear-gradient(135deg,#0f172a,#334155);
-  border:1px solid rgba(255,255,255,.26);
-  box-shadow:0 12px 25px rgba(0,0,0,.28);
+    linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.02)),
+    linear-gradient(135deg,#070707,#1f1f1f,#3b3b3b);
+  border:1px solid rgba(255,255,255,.20);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 14px 28px rgba(0,0,0,.42);
 }
 
 .front:before{
-  content:"?";
-  font-size:42px;
-  font-weight:900;
-  color:#e0f2fe;
+  content:"";
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:3px solid #e5e5e5;
+  box-shadow:0 0 0 5px rgba(255,255,255,.06);
 }
 
 .back{
   transform:rotateY(180deg);
-  background:linear-gradient(135deg,#ffffff,#e0f2fe);
-  color:#111827;
-  border:3px solid rgba(255,255,255,.7);
-  box-shadow:0 14px 30px rgba(0,0,0,.28);
+  background:linear-gradient(135deg,#ffffff,#d9d9d9,#9c9c9c);
+  color:#050505;
+  border:3px solid rgba(255,255,255,.65);
+  box-shadow:0 16px 35px rgba(0,0,0,.42);
   font-size:40px;
 }
 
-.board.hard .back{font-size:32px}
-.board.hard .front:before{font-size:32px}
+.board.hard .back{font-size:31px}
+.board.hard .front:before{width:27px;height:27px;border-radius:8px}
 
 .card.matched .back{
-  background:linear-gradient(135deg,#bbf7d0,#22c55e);
+  background:linear-gradient(135deg,#f5f5f5,#9e9e9e,#555);
+  color:#000;
+  outline:3px solid rgba(255,255,255,.45);
+}
+
+.card.wrong .front,
+.card.wrong .back{
+  animation:shake .25s ease;
+}
+
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(4px)}
+  50%{transform:translateX(-4px)}
+  75%{transform:translateX(3px)}
 }
 
 .message{
-  min-height:30px;
+  min-height:32px;
   font-size:20px;
   font-weight:900;
-  color:#fef3c7;
+  color:#f5f5f5;
+  margin-top:4px;
+}
+
+.records{
+  max-width:760px;
+}
+
+.records h2{
+  margin:0 0 12px;
+  font-size:26px;
+}
+
+.record-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.record{
+  background:rgba(0,0,0,.32);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;
+  padding:12px;
+}
+
+.record strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:6px;
+}
+
+.record span{
+  display:block;
+  color:#d4d4d4;
+  line-height:1.5;
 }
 
 .win-box{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.65);
+  background:rgba(0,0,0,.76);
   z-index:99;
   align-items:center;
   justify-content:center;
@@ -227,25 +332,25 @@ select{
 }
 
 .win-content{
-  background:#fff;
-  color:#111827;
-  max-width:480px;
+  background:linear-gradient(135deg,#fff,#d4d4d4);
+  color:#111;
+  max-width:500px;
   width:100%;
-  border-radius:28px;
-  padding:26px;
-  box-shadow:0 25px 70px rgba(0,0,0,.4);
+  border-radius:30px;
+  padding:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.65);
   animation:pop .22s ease;
 }
 
 .win-content h2{
   margin:0 0 12px;
-  color:#7c3aed;
+  color:#111;
   font-size:34px;
 }
 
-.win-content p{
-  font-size:19px;
-  line-height:1.5;
+.win-content button{
+  background:linear-gradient(135deg,#111,#333);
+  color:#fff;
 }
 
 @keyframes pop{
@@ -254,9 +359,10 @@ select{
 }
 
 @media(max-width:900px){
-  h1{font-size:32px}
+  h1{font-size:34px}
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat:last-child{grid-column:1/-1}
+  .record-grid{grid-template-columns:1fr}
   .board.easy,.board.medium,.board.hard{
     grid-template-columns:repeat(4,1fr);
     max-width:680px;
@@ -267,11 +373,12 @@ select{
 
 @media(max-width:420px){
   body{padding:10px}
-  .panel{padding:12px;border-radius:20px}
+  .logo{width:62px;height:62px;font-size:34px;border-radius:20px}
+  .panel{padding:12px;border-radius:22px}
   .board{gap:8px}
   .board.easy,.board.medium,.board.hard{grid-template-columns:repeat(4,1fr)}
   .card,.board.easy .card,.board.medium .card,.board.hard .card{height:74px}
-  .front:before,.board.hard .front:before{font-size:31px}
+  .front:before,.board.hard .front:before{width:24px;height:24px}
   .back,.board.hard .back{font-size:29px}
   button,select,a{width:100%;font-size:16px}
 }
@@ -281,21 +388,23 @@ select{
 
 <div class="page">
   <header>
-    <h1>🧠 משחק הזיכרון של ליאן</h1>
+    <div class="logo">🧠</div>
+    <h1>משחק הזיכרון של ליאן</h1>
     <p class="subtitle">
-      משחק זיכרון מהיר ומאתגר לגילאי 11–17. בחרו רמה, מצאו זוגות, נסו לסיים בפחות מהלכים ובזמן הכי קצר.
+      עיצוב שחור־לבן־אפור, שיאים שנשמרים במכשיר, צלילים, ניקוד ורמות קושי לגילאי 11–17.
     </p>
   </header>
 
   <section class="panel">
     <div class="controls">
-      <select id="level">
+      <select id="level" onchange="newGame()">
         <option value="easy">קל - 12 זוגות</option>
         <option value="medium" selected>בינוני - 16 זוגות</option>
         <option value="hard">קשה - 22 זוגות</option>
       </select>
       <button onclick="newGame()">🔄 משחק חדש</button>
-      <button onclick="peekCards()">👀 הצצה ל־3 שניות</button>
+      <button class="peek" onclick="peekCards()">👀 הצצה ל־3 שניות</button>
+      <button class="sound" onclick="toggleSound()" id="soundBtn">🔊 צליל פעיל</button>
       <a class="home" href="index.html">🏠 חזרה לאתר</a>
     </div>
 
@@ -308,11 +417,20 @@ select{
     </div>
   </section>
 
-  <div class="message" id="message">בחרו זוגות זהים כדי להתחיל 🚀</div>
+  <div class="message" id="message">בחרו זוגות זהים כדי להתחיל</div>
 
   <main class="game-wrap">
     <section id="board" class="board medium"></section>
   </main>
+
+  <section class="records">
+    <h2>🏆 שיאים במכשיר הזה</h2>
+    <div class="record-grid">
+      <div class="record"><strong>קל</strong><span id="recordEasy">אין שיא עדיין</span></div>
+      <div class="record"><strong>בינוני</strong><span id="recordMedium">אין שיא עדיין</span></div>
+      <div class="record"><strong>קשה</strong><span id="recordHard">אין שיא עדיין</span></div>
+    </div>
+  </section>
 </div>
 
 <div id="winBox" class="win-box">
@@ -343,6 +461,7 @@ let score = 0;
 let seconds = 0;
 let timer = null;
 let started = false;
+let soundOn = true;
 
 const board = document.getElementById("board");
 const timeEl = document.getElementById("time");
@@ -357,6 +476,13 @@ function levelPairs(level){
   if(level === "medium") return 16;
   if(level === "hard") return 22;
   return 16;
+}
+
+function levelHebrew(level){
+  if(level === "easy") return "קל";
+  if(level === "medium") return "בינוני";
+  if(level === "hard") return "קשה";
+  return level;
 }
 
 function shuffle(array){
@@ -394,24 +520,36 @@ function updateStats(){
 }
 
 function playTone(type){
+  if(!soundOn) return;
   try{
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
 
-    osc.type = "sine";
-    osc.frequency.value = type === "good" ? 660 : 180;
+    const notes = type === "win" ? [523,659,784,1046] : [type === "good" ? 660 : 170];
 
-    gain.gain.setValueAtTime(0.001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+    notes.forEach((freq,i)=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.18);
+      osc.type = "sine";
+      osc.frequency.value = freq;
+
+      const start = ctx.currentTime + i * 0.10;
+      gain.gain.setValueAtTime(0.001, start);
+      gain.gain.exponentialRampToValueAtTime(type === "win" ? 0.15 : 0.10, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.16);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.18);
+    });
   }catch(error){}
+}
+
+function toggleSound(){
+  soundOn = !soundOn;
+  document.getElementById("soundBtn").textContent = soundOn ? "🔊 צליל פעיל" : "🔇 צליל כבוי";
 }
 
 function newGame(){
@@ -432,7 +570,7 @@ function newGame(){
   started = false;
 
   timeEl.textContent = "00:00";
-  messageEl.textContent = "בחרו זוגות זהים כדי להתחיל 🚀";
+  messageEl.textContent = "בחרו זוגות זהים כדי להתחיל";
   updateStats();
 
   board.className = "board " + level;
@@ -446,6 +584,7 @@ function newGame(){
     card.className = "card";
     card.dataset.icon = icon;
     card.dataset.index = index;
+    card.style.animationDelay = (index * 12) + "ms";
 
     card.innerHTML = `
       <div class="card-inner">
@@ -457,6 +596,8 @@ function newGame(){
     card.addEventListener("click",()=>flipCard(card));
     board.appendChild(card);
   });
+
+  renderRecords();
 }
 
 function flipCard(card){
@@ -481,14 +622,16 @@ function flipCard(card){
   if(firstCard.dataset.icon === secondCard.dataset.icon){
     foundPairs++;
     streak++;
-    const bonus = Math.max(0, 25 - Math.floor(seconds / 10));
-    score += 100 + (streak * 15) + bonus;
+
+    const speedBonus = Math.max(0, 30 - Math.floor(seconds / 8));
+    const streakBonus = streak * 15;
+    score += 100 + streakBonus + speedBonus;
 
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
     playTone("good");
-    messageEl.textContent = "יפה! מצאת זוג ✅";
+    messageEl.textContent = "יפה. מצאת זוג";
     resetTurn();
 
     if(foundPairs === totalPairs){
@@ -498,12 +641,15 @@ function flipCard(card){
     streak = 0;
     score = Math.max(0, score - 10);
     playTone("bad");
-    messageEl.textContent = "לא זוג — נסו שוב";
+    messageEl.textContent = "לא זוג. נסו שוב";
     lockBoard = true;
 
+    firstCard.classList.add("wrong");
+    secondCard.classList.add("wrong");
+
     setTimeout(()=>{
-      firstCard.classList.remove("flipped");
-      secondCard.classList.remove("flipped");
+      firstCard.classList.remove("flipped","wrong");
+      secondCard.classList.remove("flipped","wrong");
       resetTurn();
     },850);
   }
@@ -516,18 +662,80 @@ function resetTurn(){
   lockBoard = false;
 }
 
+function getRecords(){
+  try{
+    return JSON.parse(localStorage.getItem("lianMemoryRecords") || "{}");
+  }catch(error){
+    return {};
+  }
+}
+
+function saveRecord(level){
+  const records = getRecords();
+  const current = records[level];
+
+  const result = {
+    score: score,
+    moves: moves,
+    seconds: seconds,
+    date: new Date().toLocaleDateString("he-IL")
+  };
+
+  const isBetter =
+    !current ||
+    score > current.score ||
+    (score === current.score && seconds < current.seconds) ||
+    (score === current.score && seconds === current.seconds && moves < current.moves);
+
+  if(isBetter){
+    records[level] = result;
+    localStorage.setItem("lianMemoryRecords", JSON.stringify(records));
+    return true;
+  }
+
+  return false;
+}
+
+function renderRecords(){
+  const records = getRecords();
+  const map = {
+    easy: document.getElementById("recordEasy"),
+    medium: document.getElementById("recordMedium"),
+    hard: document.getElementById("recordHard")
+  };
+
+  ["easy","medium","hard"].forEach(level=>{
+    const rec = records[level];
+    if(!rec){
+      map[level].innerHTML = "אין שיא עדיין";
+    }else{
+      map[level].innerHTML =
+        "ניקוד: <b>" + rec.score + "</b><br>" +
+        "זמן: " + formatTime(rec.seconds) + "<br>" +
+        "מהלכים: " + rec.moves + "<br>" +
+        rec.date;
+    }
+  });
+}
+
 function finishGame(){
   stopTimer();
+  playTone("win");
 
-  const levelName = document.getElementById("level").selectedOptions[0].textContent;
+  const level = document.getElementById("level").value;
+  const levelName = levelHebrew(level);
+  const newRecord = saveRecord(level);
+  renderRecords();
+
   document.getElementById("winText").innerHTML =
     "סיימתם את הרמה: <b>" + levelName + "</b><br>" +
     "זמן: <b>" + formatTime(seconds) + "</b><br>" +
     "מהלכים: <b>" + moves + "</b><br>" +
-    "ניקוד: <b>" + score + "</b>";
+    "ניקוד: <b>" + score + "</b><br><br>" +
+    (newRecord ? "🎉 שיא חדש במכשיר הזה!" : "נסו לשבור את השיא בפעם הבאה.");
 
   document.getElementById("winBox").style.display = "flex";
-  messageEl.textContent = "אלופים! סיימתם את המשחק 🏆";
+  messageEl.textContent = newRecord ? "שיא חדש!" : "סיימתם את המשחק";
 }
 
 function closeWin(){
@@ -558,7 +766,7 @@ function peekCards(){
     });
     resetTurn();
     lockBoard = false;
-    messageEl.textContent = "ההצצה נגמרה — עכשיו לזכור 😉";
+    messageEl.textContent = "ההצצה נגמרה. עכשיו לזכור";
   },3000);
 }
 
@@ -566,4 +774,3 @@ newGame();
 </script>
 
 </body>
-</html>
