@@ -1,926 +1,893 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>האלבום של ליאן</title>
-  <style>
-    * { box-sizing: border-box; font-family: Arial, "Segoe UI", sans-serif; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>יוצר הקומיקס של ליאן</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.55), transparent 18%),
-        radial-gradient(circle at 90% 15%, rgba(255,255,255,0.35), transparent 16%),
-        linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2ffd8);
-      color: #26334d;
-      padding: 18px;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffb6e6,#9fd8ff);
+  text-align:center;
+}
+header{ color:white; padding:25px 10px; }
+h1{ margin:0; font-size:36px; }
 
-    .page {
-      max-width: 1150px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.94);
-      border-radius: 36px;
-      padding: 24px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.23);
-      min-height: calc(100vh - 36px);
-      border: 4px solid rgba(255,255,255,0.7);
-    }
+.toolbar{
+  background:white;
+  padding:15px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
 
-    h1 {
-      text-align: center;
-      font-size: clamp(36px, 7vw, 66px);
-      color: #ff5e78;
-      margin: 12px 0 4px;
-      text-shadow: 0 3px 0 #fff;
-    }
+button,input,select,a.homeBtn{
+  border:0;
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:16px;
+  cursor:pointer;
+  text-decoration:none;
+}
 
-    .family-title {
-      text-align: center;
-      font-size: 23px;
-      font-weight: 900;
-      color: #6c5ce7;
-      margin-bottom: 8px;
-    }
+button,a.homeBtn{
+  background:#ff69b4;
+  color:white;
+  font-weight:bold;
+}
 
-    .subtitle {
-      text-align: center;
-      font-size: 18px;
-      margin: 0 auto 20px;
-      color: #52667a;
-      line-height: 1.55;
-      max-width: 780px;
-    }
+button:hover,a.homeBtn:hover{ transform:scale(1.05); }
+input,select{ background:#f1f1f1; }
 
-    .upload-card {
-      background: linear-gradient(135deg, #fff1a8, #ffd6e8, #d7fff1);
-      border: 4px dashed #ff7aa2;
-      border-radius: 30px;
-      padding: 26px;
-      text-align: center;
-      margin: 20px 0;
-    }
+.frames{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+  max-width:1100px;
+  margin:25px auto;
+  padding:10px;
+}
 
-    .upload-title {
-      font-size: 28px;
-      font-weight: 1000;
-      color: #ff5e78;
-      margin-bottom: 12px;
-    }
+.frame{
+  height:330px;
+  background:white;
+  border:5px solid white;
+  border-radius:22px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
 
-    .upload-label {
-      display: inline-block;
-      background: linear-gradient(135deg, #6c5ce7, #00d2d3);
-      color: white;
-      padding: 18px 34px;
-      border-radius: 25px;
-      font-size: 23px;
-      font-weight: 1000;
-      cursor: pointer;
-      box-shadow: 0 12px 24px rgba(108,92,231,0.32);
-      min-width: 270px;
-    }
+.frame.active{ border-color:#ff1493; }
 
-    input[type="file"] { display: none; }
+.item{
+  position:absolute;
+  font-size:70px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+}
 
-    .hint {
-      margin-top: 14px;
-      color: #52667a;
-      font-size: 15px;
-      line-height: 1.5;
-    }
+.speech{
+  position:absolute;
+  background:white;
+  border:3px solid #111;
+  border-radius:25px;
+  padding:12px 18px;
+  font-size:20px;
+  min-width:90px;
+  max-width:230px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+}
 
-    .actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 18px 0;
-    }
+.speech:after{
+  content:"";
+  position:absolute;
+  bottom:-18px;
+  right:25px;
+  border-width:18px 8px 0 8px;
+  border-style:solid;
+  border-color:#111 transparent transparent transparent;
+}
 
-    button, .home-btn {
-      border: none;
-      border-radius: 19px;
-      padding: 13px 18px;
-      font-size: 17px;
-      font-weight: 1000;
-      cursor: pointer;
-      text-decoration: none;
-      transition: 0.15s;
-      display: inline-block;
-      box-shadow: 0 9px 18px rgba(0,0,0,0.13);
-    }
+.bg-park{ background:linear-gradient(#8fd3ff 0 55%,#78d66b 55%); }
+.bg-sea{ background:linear-gradient(#7ed6ff 0 55%,#f9d976 55%); }
+.bg-space{ background:radial-gradient(circle,#333,#050018); }
+.bg-room{ background:linear-gradient(#ffd1e8 0 65%,#caa17a 65%); }
+.bg-school{ background:linear-gradient(#d9f0ff 0 65%,#ddd 65%); }
 
-    button:hover, .home-btn:hover { transform: translateY(-2px); }
+.footer{
+  padding:20px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+}
 
-    .clear-btn { background: #ff5e78; color: white; }
-    .home-btn { background: #ff9f43; color: white; }
-    .download-btn { background: #00d084; color: #063d25; }
-    .blue-btn { background: #54a0ff; color: white; }
-    .green-btn { background: #00d084; color: #063d25; }
-    .gray-btn { background: #8395a7; color: white; }
-    .purple-btn { background: #6c5ce7; color: white; }
+.small{ background:#555; }
+.green{ background:#28a745; }
+.red{ background:#e63946; }
+.blue{ background:#2678ff; }
+.orange{ background:#ff9800; }
 
-    .count {
-      text-align: center;
-      font-weight: 1000;
-      color: #5f27cd;
-      margin: 12px 0;
-      font-size: 19px;
-    }
+.success-box{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
+.success-content{
+  background:white;
+  border-radius:28px;
+  padding:28px;
+  max-width:420px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  text-align:center;
+  animation:pop .25s ease;
+}
 
-    .photo-card {
-      background: white;
-      border-radius: 25px;
-      overflow: hidden;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.15);
-      position: relative;
-      border: 4px solid #fff;
-      transition: 0.16s;
-    }
+.success-content h2{
+  margin:0 0 12px;
+  color:#ff1493;
+  font-size:28px;
+}
 
-    .photo-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 18px 34px rgba(0,0,0,0.2);
-    }
+.success-content p{
+  font-size:19px;
+  color:#333;
+  line-height:1.5;
+}
 
-    .photo-card img {
-      width: 100%;
-      height: 185px;
-      object-fit: cover;
-      display: block;
-      cursor: pointer;
-      background: #f6f7fb;
-    }
+.success-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
 
-    .photo-info {
-      padding: 11px;
-      font-size: 13px;
-      color: #52667a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      direction: ltr;
-      text-align: center;
-      background: linear-gradient(90deg, #fff, #f8fbff);
-    }
+.success-actions button{
+  min-width:140px;
+}
 
-    .empty {
-      text-align: center;
-      background: linear-gradient(135deg, #f8fbff, #fff1f7);
-      border: 3px solid #e8efff;
-      border-radius: 26px;
-      padding: 34px;
-      color: #52667a;
-      margin-top: 18px;
-      font-size: 19px;
-      line-height: 1.6;
-    }
+@keyframes pop{
+  from{ transform:scale(.8); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
+}
 
-    .modal, .editor-panel {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 18px;
-    }
 
-    .modal.open, .editor-panel.open { display: flex; }
 
-    .modal-content {
-      max-width: 96vw;
-      max-height: 82vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.sticker-controls{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  background:rgba(255,255,255,.88);
+  padding:12px;
+  margin:0 auto 10px;
+  max-width:1100px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
 
-    .modal img {
-      max-width: 96vw;
-      max-height: 75vh;
-      border-radius: 24px;
-      box-shadow: 0 20px 90px rgba(0,0,0,0.55);
-      background: white;
-      border: 5px solid white;
-    }
+.image-item{
+  width:105px;
+  height:105px;
+  font-size:0;
+  border-radius:50%;
+  overflow:hidden;
+  border:4px solid white;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+  background:white;
+}
 
-    .close-modal {
-      position: fixed;
-      top: 16px;
-      left: 16px;
-      background: rgba(255,94,120,0.94);
-      color: white;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      padding: 0;
-      font-size: 27px;
-      z-index: 1002;
-    }
+.image-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  pointer-events:none;
+}
 
-    .nav-photo {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.84);
-      color: #26334d;
-      border-radius: 50%;
-      width: 58px;
-      height: 58px;
-      padding: 0;
-      font-size: 34px;
-      z-index: 1002;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.32);
-      backdrop-filter: blur(8px);
-    }
+.image-item.square{
+  border-radius:18px;
+}
 
-    .nav-photo.prev { right: 18px; }
-    .nav-photo.next { left: 18px; }
+.image-item.heart{
+  border-radius:40% 40% 50% 50%;
+}
 
-    .photo-counter {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      background: rgba(255,255,255,0.88);
-      color: #26334d;
-      border-radius: 999px;
-      padding: 11px 18px;
-      font-weight: 1000;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
-      z-index: 1002;
-      backdrop-filter: blur(8px);
-    }
+.album-picker{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:9998;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
 
-    .modal-name {
-      position: fixed;
-      bottom: 86px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.88);
-      color: #26334d;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-weight: 1000;
-      max-width: 85vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      direction: ltr;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
-      backdrop-filter: blur(8px);
-      z-index: 1002;
-    }
+.album-picker.open{
+  display:flex;
+}
 
-    .photo-toolbar {
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 999px;
-      padding: 10px;
-      z-index: 1002;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-    }
+.album-box{
+  background:white;
+  width:100%;
+  max-width:850px;
+  max-height:85vh;
+  overflow:auto;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
 
-    .tool-btn {
-      border-radius: 999px;
-      padding: 11px 14px;
-      font-size: 15px;
-      box-shadow: none;
-      background: rgba(255,255,255,0.86);
-      color: #26334d;
-      backdrop-filter: blur(8px);
-    }
+.album-box h2{
+  margin:0 0 14px;
+  color:#ff1493;
+}
 
-    .tool-btn.share { background: rgba(0,208,132,0.9); color: #063d25; }
-    .tool-btn.edit { background: rgba(84,160,255,0.92); color: white; }
-    .tool-btn.delete { background: rgba(255,94,120,0.92); color: white; }
-    .tool-btn.download { background: rgba(255,159,67,0.92); color: white; }
+.album-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:12px;
+  margin-top:15px;
+}
 
-    .editor-box {
-      width: 100%;
-      max-width: 980px;
-      max-height: 94vh;
-      overflow: auto;
-      background: white;
-      border-radius: 28px;
-      padding: 18px;
-      box-shadow: 0 25px 90px rgba(0,0,0,0.45);
-      text-align: center;
-    }
+.album-thumb{
+  width:100%;
+  height:105px;
+  object-fit:cover;
+  border-radius:16px;
+  border:3px solid #fff;
+  box-shadow:0 6px 14px rgba(0,0,0,.2);
+  cursor:pointer;
+}
 
-    .editor-box h2 {
-      margin: 6px 0 14px;
-      color: #6c5ce7;
-      font-size: 30px;
-    }
+.album-empty{
+  padding:25px;
+  color:#555;
+  font-size:18px;
+  line-height:1.5;
+}
 
-    #editCanvas {
-      max-width: 100%;
-      max-height: 52vh;
-      border-radius: 18px;
-      background: #f6f7fb;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
 
-    .editor-tools {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin: 16px 0;
-      text-align: right;
-    }
+.color-palette{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  background:rgba(255,255,255,.9);
+  padding:12px;
+  margin:0 auto 12px;
+  max-width:1100px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
 
-    .tool {
-      background: #f8fbff;
-      border: 2px solid #e8efff;
-      border-radius: 18px;
-      padding: 12px;
-      font-weight: 900;
-    }
+.color-palette-title{
+  background:#fff;
+  border-radius:16px;
+  padding:9px 12px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+}
 
-    .tool input[type="range"], .tool input[type="text"], .tool select {
-      width: 100%;
-      margin-top: 8px;
-    }
+.color-dot{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:3px solid white;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  cursor:pointer;
+  padding:0;
+}
 
-    .tool input[type="text"], .tool select {
-      padding: 12px;
-      border-radius: 14px;
-      border: 2px solid #d7e3ff;
-      font-size: 16px;
-    }
+.color-free{
+  background:#fff;
+  border-radius:16px;
+  padding:7px 12px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    .toast {
-      position: fixed;
-      bottom: 18px;
-      right: 18px;
-      background: #6c5ce7;
-      color: white;
-      padding: 13px 18px;
-      border-radius: 18px;
-      font-weight: 900;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
-      display: none;
-      z-index: 1300;
-    }
+.image-item.star{
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 56%,79% 91%,50% 70%,21% 91%,32% 56%,2% 35%,39% 35%);
+  border-radius:0;
+}
 
-    .toast.show { display: block; }
+.image-item.heart{
+  clip-path:path("M 52 92 C 20 65 4 49 4 28 C 4 12 16 2 31 2 C 40 2 47 6 52 14 C 57 6 64 2 73 2 C 88 2 100 12 100 28 C 100 49 84 65 52 92 Z");
+  border-radius:0;
+}
 
-    @media (max-width: 650px) {
-      body { padding: 10px; }
-      .page { padding: 16px; border-radius: 26px; min-height: calc(100vh - 20px); }
-      .gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .photo-card img { height: 145px; }
-      .upload-label { width: 100%; font-size: 20px; min-width: 0; }
-      button, .home-btn { width: 100%; text-align: center; }
-      .editor-tools { grid-template-columns: 1fr; }
-      .nav-photo { width: 48px; height: 48px; font-size: 27px; }
-      .nav-photo.prev { right: 10px; }
-      .nav-photo.next { left: 10px; }
-      .photo-counter { top: 76px; right: 50%; transform: translateX(50%); }
-      .modal-name { bottom: 112px; }
-      .photo-toolbar {
-        width: calc(100vw - 18px);
-        border-radius: 24px;
-        bottom: 8px;
-        gap: 7px;
-      }
-      .tool-btn {
-        width: auto;
-        flex: 1 1 42%;
-        font-size: 14px;
-        padding: 10px;
-      }
-      .modal img { max-height: 66vh; }
-    }
-  </style>
+@supports not (clip-path:path("M 0 0")){
+  .image-item.heart{
+    border-radius:45% 45% 55% 55%;
+  }
+}
+
+@media(max-width:700px){
+  .frames{ grid-template-columns:1fr; }
+  .frame{ height:300px; }
+  .image-item{ width:95px; height:95px; }
+  h1{ font-size:28px; }
+}
+</style>
 </head>
+
 <body>
-  <main class="page">
-    <h1>📸 האלבום של ליאן</h1>
-    <div class="family-title">אלבום תמונות משפחתי וצבעוני 💖</div>
-    <p class="subtitle">
-      אפשר להעלות תמונות מהמחשב או מהאייפון. בגלריה רואים תמונות נקיות — עריכה, מחיקה, הורדה ושיתוף מופיעים רק כשפותחים תמונה.
-    </p>
 
-    <section class="upload-card">
-      <div class="upload-title">העלאת תמונות לאלבום</div>
-      <label class="upload-label" for="photoInput">➕ בחרו תמונות</label>
-      <input id="photoInput" type="file" accept="image/*" multiple />
-      <div class="hint">
-        במחשב: בוחרים תמונות מהתיקייה.<br>
-        באייפון: אפשר לבחור מהגלריה או לצלם תמונה חדשה.
-      </div>
-    </section>
+<header>
+  <h1>🎨 יוצר הקומיקס של ליאן 🎨</h1>
+  <p>בחרו פריים, הוסיפו דמויות, בועות ודברים מצחיקים</p>
+</header>
 
-    <div class="actions">
-      <a class="home-btn" href="index.html">⬅ חזרה לעמוד הבית</a>
-      <button class="download-btn" onclick="downloadAll()">⬇ שמירת גיבוי</button>
-      <button class="clear-btn" onclick="clearAlbum()">🗑 מחיקת כל האלבום</button>
+<div class="toolbar">
+  <select id="bgSelect">
+    <option value="bg-park">🌳 פארק</option>
+    <option value="bg-sea">🏖️ ים</option>
+    <option value="bg-space">🚀 חלל</option>
+    <option value="bg-room">🏠 חדר</option>
+    <option value="bg-school">🏫 בית ספר</option>
+  </select>
+
+  <button onclick="setBg()">שנה רקע</button>
+
+<input type="color" id="frameColor" value="#ffffff" style="display:none">
+<button onclick="setSolidColor()">🎨 צבע חופשי</button>
+
+  <button class="blue" onclick="openAlbumPicker()">🖼️ תמונה מהאלבום של ליאן</button>
+  <button class="blue" onclick="document.getElementById('phonePhotoInput').click()">📱 תמונה מהטלפון</button>
+  <input id="phonePhotoInput" type="file" accept="image/*" style="display:none" onchange="addPhonePhoto(event)">
+
+  <button onclick="addItem('👧')">👧</button>
+  <button onclick="addItem('👦')">👦</button>
+  <button onclick="addItem('🦄')">🦄</button>
+  <button onclick="addItem('🐶')">🐶</button>
+  <button onclick="addItem('🐱')">🐱</button>
+  <button onclick="addItem('🤖')">🤖</button>
+  <button onclick="addItem('👑')">👑</button>
+  <button onclick="addItem('🌈')">🌈</button>
+  <button onclick="addItem('⭐')">⭐</button>
+  <button onclick="addItem('❤️')">❤️</button>
+  <button onclick="addItem('🎈')">🎈</button>
+<button onclick="addItem('🧸')">🧸</button>
+<button onclick="addItem('🐼')">🐼</button>
+<button onclick="addItem('🐵')">🐵</button>
+<button onclick="addItem('🦁')">🦁</button>
+<button onclick="addItem('🐸')">🐸</button>
+<button onclick="addItem('🐰')">🐰</button>
+<button onclick="addItem('🚗')">🚗</button>
+<button onclick="addItem('🚀')">🚀</button>
+<button onclick="addItem('✈️')">✈️</button>
+<button onclick="addItem('🚒')">🚒</button>
+<button onclick="addItem('🚜')">🚜</button>
+<button onclick="addItem('🏰')">🏰</button>
+<button onclick="addItem('🌋')">🌋</button>
+<button onclick="addItem('🌴')">🌴</button>
+<button onclick="addItem('☀️')">☀️</button>
+<button onclick="addItem('🌙')">🌙</button>
+<button onclick="addItem('⚡')">⚡</button>
+<button onclick="addItem('🧙')">🧙</button>
+<button onclick="addItem('🧚')">🧚</button>
+<button onclick="addItem('🦸')">🦸</button>
+<button onclick="addItem('🧛')">🧛</button>
+<button onclick="addItem('🍕')">🍕</button>
+<button onclick="addItem('🍦')">🍦</button>
+<button onclick="addItem('🍩')">🍩</button>
+<button onclick="addItem('🎂')">🎂</button>
+<button onclick="addItem('⚽')">⚽</button>
+<button onclick="addItem('🏀')">🏀</button>
+<button onclick="addItem('🎸')">🎸</button>
+<button onclick="addItem('🎮')">🎮</button>
+<button onclick="addItem('💎')">💎</button>
+<button onclick="addItem('🔥')">🔥</button>
+<button onclick="addItem('🎁')">🎁</button>
+<button onclick="addItem('🪄')">🪄</button>
+<button onclick="addItem('👻')">👻</button>
+<button onclick="addItem('🐲')">🐲</button>
+
+
+  
+<button onclick="addItem('👸')">👸</button>
+<button onclick="addItem('🤴')">🤴</button>
+<button onclick="addItem('🧜‍♀️')">🧜‍♀️</button>
+<button onclick="addItem('🧞')">🧞</button>
+<button onclick="addItem('🧝‍♀️')">🧝‍♀️</button>
+<button onclick="addItem('🧌')">🧌</button>
+<button onclick="addItem('🦖')">🦖</button>
+<button onclick="addItem('🦕')">🦕</button>
+<button onclick="addItem('🦋')">🦋</button>
+<button onclick="addItem('🐬')">🐬</button>
+<button onclick="addItem('🐳')">🐳</button>
+<button onclick="addItem('🦜')">🦜</button>
+<button onclick="addItem('🍭')">🍭</button>
+<button onclick="addItem('🍫')">🍫</button>
+<button onclick="addItem('🍓')">🍓</button>
+<button onclick="addItem('🍉')">🍉</button>
+<button onclick="addItem('🎤')">🎤</button>
+<button onclick="addItem('🎧')">🎧</button>
+<button onclick="addItem('🎬')">🎬</button>
+<button onclick="addItem('🏆')">🏆</button>
+<button onclick="addItem('💖')">💖</button>
+<button onclick="addItem('✨')">✨</button>
+<button onclick="addItem('💥')">💥</button>
+<button onclick="addItem('☁️')">☁️</button>
+<button onclick="addItem('🌟')">🌟</button>
+<button onclick="addItem('🏴‍☠️')">🏴‍☠️</button>
+
+
+  <input id="speechText" placeholder="מה הדמות אומרת?">
+  <button onclick="addSpeech()">💬 בועה</button>
+
+  <button class="red" onclick="deleteSelected()">מחק נבחר</button>
+  <button class="small" onclick="clearFrame()">נקה פריים</button>
+</div>
+
+
+
+<div class="color-palette">
+  <span class="color-palette-title">🎨 מניפת צבעים לפריים:</span>
+  <button class="color-dot" style="background:#ffffff" onclick="setFrameColor('#ffffff')" title="לבן"></button>
+  <button class="color-dot" style="background:#ffeaa7" onclick="setFrameColor('#ffeaa7')" title="צהוב בהיר"></button>
+  <button class="color-dot" style="background:#fdcb6e" onclick="setFrameColor('#fdcb6e')" title="צהוב"></button>
+  <button class="color-dot" style="background:#fab1a0" onclick="setFrameColor('#fab1a0')" title="כתום בהיר"></button>
+  <button class="color-dot" style="background:#ff7675" onclick="setFrameColor('#ff7675')" title="אדום"></button>
+  <button class="color-dot" style="background:#fd79a8" onclick="setFrameColor('#fd79a8')" title="ורוד"></button>
+  <button class="color-dot" style="background:#e84393" onclick="setFrameColor('#e84393')" title="פוקסיה"></button>
+  <button class="color-dot" style="background:#a29bfe" onclick="setFrameColor('#a29bfe')" title="סגול"></button>
+  <button class="color-dot" style="background:#6c5ce7" onclick="setFrameColor('#6c5ce7')" title="סגול כהה"></button>
+  <button class="color-dot" style="background:#74b9ff" onclick="setFrameColor('#74b9ff')" title="כחול"></button>
+  <button class="color-dot" style="background:#0984e3" onclick="setFrameColor('#0984e3')" title="כחול כהה"></button>
+  <button class="color-dot" style="background:#81ecec" onclick="setFrameColor('#81ecec')" title="טורקיז"></button>
+  <button class="color-dot" style="background:#55efc4" onclick="setFrameColor('#55efc4')" title="מנטה"></button>
+  <button class="color-dot" style="background:#00b894" onclick="setFrameColor('#00b894')" title="ירוק"></button>
+  <button class="color-dot" style="background:#dfe6e9" onclick="setFrameColor('#dfe6e9')" title="אפור"></button>
+  <button class="color-dot" style="background:#2d3436" onclick="setFrameColor('#2d3436')" title="שחור"></button>
+  <span class="color-free">🌈 צבע חופשי <input type="color" id="frameColor2" value="#ffffff" onchange="setFrameColor(this.value)"></span>
+</div>
+
+<div class="sticker-controls">
+  <button class="blue" onclick="makeSelectedBigger()">➕ הגדל תמונה/אימוג׳י</button>
+  <button class="blue" onclick="makeSelectedSmaller()">➖ הקטן תמונה/אימוג׳י</button>
+  <button class="orange" onclick="rotateSelected()">🔄 סובב נבחר</button>
+  <button class="green" onclick="toggleStickerShape()">⭕ עיגול / ריבוע</button>
+  <button class="green" onclick="makeStickerHeart()">❤️ צורת לב</button>
+  <button class="green" onclick="makeStickerStar()">⭐ צורת כוכב</button>
+  <button class="small" onclick="bringForward()">⬆️ קדימה</button>
+  <button class="small" onclick="sendBackward()">⬇️ אחורה</button>
+  <button class="orange" onclick="duplicateFrame()">📋 שכפל פריים</button>
+</div>
+
+<div class="frames" id="comicArea">
+  <div class="frame active bg-park" onclick="selectFrame(this)"></div>
+  <div class="frame bg-sea" onclick="selectFrame(this)"></div>
+  <div class="frame bg-room" onclick="selectFrame(this)"></div>
+  <div class="frame bg-space" onclick="selectFrame(this)"></div>
+  <div class="frame bg-school" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#ffeaa7" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#a29bfe" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#81ecec" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#fd79a8" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#55efc4" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#fab1a0" onclick="selectFrame(this)"></div>
+  <div class="frame" style="background:#dfe6e9" onclick="selectFrame(this)"></div>
+</div>
+
+<div class="footer">
+  <button class="green" onclick="saveComic()">📸 שמור כתמונה</button>
+  <button class="blue" onclick="saveToLianAlbum()">💾 שמור באלבום של ליאן</button>
+  <a class="homeBtn orange" href="album-lian.html">📸 פתח אלבום</a>
+  <a class="homeBtn orange" href="index.html">🏠 חזרה לאתר</a>
+</div>
+
+
+<div id="albumPicker" class="album-picker">
+  <div class="album-box">
+    <h2>🖼️ בחרו תמונה מהאלבום של ליאן</h2>
+    <p>לחצו על תמונה והיא תיכנס לפריים הפעיל כמדבקה/אימוג׳י קטן.</p>
+    <div class="success-actions">
+      <button class="small" onclick="closeAlbumPicker()">סגור</button>
     </div>
-
-    <div class="count">מספר תמונות באלבום: <span id="photoCount">0</span></div>
-
-    <section id="gallery" class="gallery"></section>
-
-    <div id="empty" class="empty">
-      עדיין אין תמונות באלבום 🌈<br>
-      לחצו על “בחרו תמונות” והעלו תמונות משפחתיות של ליאן.
-    </div>
-  </main>
-
-  <div id="modal" class="modal">
-    <button class="close-modal" onclick="closeModal()">×</button>
-    <button class="nav-photo prev" onclick="event.stopPropagation(); showPrevPhoto()">›</button>
-    <button class="nav-photo next" onclick="event.stopPropagation(); showNextPhoto()">‹</button>
-    <div id="photoCounter" class="photo-counter">1/1</div>
-
-    <div class="modal-content">
-      <img id="modalImage" src="" alt="תמונה מוגדלת">
-    </div>
-
-    <div id="modalName" class="modal-name"></div>
-
-    <div class="photo-toolbar">
-      <button class="tool-btn share" onclick="event.stopPropagation(); shareCurrentPhoto()">📤 שיתוף</button>
-      <button class="tool-btn edit" onclick="event.stopPropagation(); editCurrentPhoto()">✏️ עריכה</button>
-      <button class="tool-btn download" onclick="event.stopPropagation(); downloadCurrentPhoto()">⬇ הורדה</button>
-      <button class="tool-btn delete" onclick="event.stopPropagation(); deleteCurrentPhoto()">🗑 מחיקה</button>
+    <div id="albumGrid" class="album-grid"></div>
+    <div id="albumEmpty" class="album-empty" style="display:none;">
+      עדיין אין תמונות באלבום של ליאן.<br>
+      אפשר להעלות תמונות באלבום או להשתמש בכפתור 📱 תמונה מהטלפון.
     </div>
   </div>
+</div>
 
-  <div id="editorPanel" class="editor-panel">
-    <div class="editor-box">
-      <h2>🎨 עריכת תמונה</h2>
-      <canvas id="editCanvas"></canvas>
-
-      <div class="editor-tools">
-        <div class="tool">בהירות
-          <input id="brightnessRange" type="range" min="50" max="150" value="100">
-        </div>
-        <div class="tool">ניגודיות
-          <input id="contrastRange" type="range" min="50" max="150" value="100">
-        </div>
-        <div class="tool">פילטר
-          <select id="filterSelect">
-            <option value="none">רגיל</option>
-            <option value="grayscale">שחור־לבן</option>
-            <option value="sepia">ספיה / ישן</option>
-          </select>
-        </div>
-        <div class="tool">כיתוב על התמונה
-          <input id="captionText" type="text" placeholder="לדוגמה: ליאן 💖">
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="blue-btn" onclick="rotateEditor()">↻ סיבוב</button>
-        <button class="green-btn" onclick="saveEditedPhoto()">💾 שמירה כתמונה חדשה</button>
-        <button class="gray-btn" onclick="closeEditor()">ביטול</button>
-      </div>
+<div id="successBox" class="success-box">
+  <div class="success-content">
+    <h2>🎉 נשמר בהצלחה!</h2>
+    <p>הקומיקס נשמר באלבום של ליאן.<br>רוצה לפתוח את האלבום עכשיו?</p>
+    <div class="success-actions">
+      <button class="blue" onclick="openAlbumNow()">📸 פתח אלבום</button>
+      <button class="small" onclick="closeSuccessBox()">להישאר כאן</button>
     </div>
   </div>
+</div>
 
-  <div id="toast" class="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <script>
-    const STORAGE_KEY = "lianFamilyAlbumPhotos";
-    let photos = [];
-    let editingPhoto = null;
-    let originalEditImage = null;
-    let rotation = 0;
-    let currentModalIndex = 0;
-    let touchStartX = 0;
+<script>
+let activeFrame=document.querySelector(".frame.active");
+let selectedItem=null;
 
-    const photoInput = document.getElementById("photoInput");
-    const gallery = document.getElementById("gallery");
-    const empty = document.getElementById("empty");
-    const photoCount = document.getElementById("photoCount");
-    const modal = document.getElementById("modal");
-    const modalImage = document.getElementById("modalImage");
-    const modalName = document.getElementById("modalName");
-    const photoCounter = document.getElementById("photoCounter");
-    const toast = document.getElementById("toast");
-    const editorPanel = document.getElementById("editorPanel");
-    const editCanvas = document.getElementById("editCanvas");
-    const editCtx = editCanvas.getContext("2d");
+function selectFrame(frame){
+  document.querySelectorAll(".frame").forEach(f=>f.classList.remove("active"));
+  frame.classList.add("active");
+  activeFrame=frame;
+}
 
-    const brightnessRange = document.getElementById("brightnessRange");
-    const contrastRange = document.getElementById("contrastRange");
-    const filterSelect = document.getElementById("filterSelect");
-    const captionText = document.getElementById("captionText");
+function setBg(){
+  activeFrame.style.background="";
+  activeFrame.style.backgroundImage="";
+  activeFrame.className="frame active " + document.getElementById("bgSelect").value;
+}
 
-    brightnessRange.addEventListener("input", applyEditorPreview);
-    contrastRange.addEventListener("input", applyEditorPreview);
-    filterSelect.addEventListener("change", applyEditorPreview);
-    captionText.addEventListener("input", applyEditorPreview);
 
-    loadAlbum();
+function setFrameColor(color){
+  activeFrame.className="frame active";
+  activeFrame.style.background=color;
+  activeFrame.style.backgroundImage="none";
+}
 
-    photoInput.addEventListener("change", async function(event) {
-      const files = Array.from(event.target.files || []);
-      if (!files.length) return;
+function setSolidColor(){
+  const picker=document.getElementById("frameColor2") || document.getElementById("frameColor");
+  const color=picker ? picker.value : "#ffffff";
+  setFrameColor(color);
+}
 
-      for (const file of files) {
-        if (!file.type.startsWith("image/")) continue;
+function addItem(icon){
+  const el=document.createElement("div");
+  el.className="item";
+  el.innerHTML=icon;
+  el.style.left="100px";
+  el.style.top="100px";
+  activeFrame.appendChild(el);
+  makeDraggable(el);
+}
 
-        const resizedDataUrl = await resizeImage(file, 1400, 0.82);
-        photos.unshift({
-          id: Date.now() + "-" + Math.random().toString(16).slice(2),
-          name: file.name || "photo.jpg",
-          date: new Date().toLocaleDateString("he-IL"),
-          data: resizedDataUrl
-        });
-      }
+function addSpeech(){
+  const text=document.getElementById("speechText").value.trim();
+  if(!text) return;
 
-      saveAlbum();
-      renderAlbum();
-      photoInput.value = "";
-      showToast("התמונות נוספו לאלבום 💖");
+  const el=document.createElement("div");
+  el.className="speech";
+  el.innerText=text;
+  el.style.left="90px";
+  el.style.top="80px";
+  activeFrame.appendChild(el);
+  makeDraggable(el);
+  document.getElementById("speechText").value="";
+}
+
+function makeDraggable(el){
+  let startX,startY,origX,origY;
+
+  el.addEventListener("pointerdown",function(e){
+    e.stopPropagation();
+    selectedItem=el;
+
+    document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+    el.style.outline="3px dashed #ff1493";
+
+    startX=e.clientX;
+    startY=e.clientY;
+    origX=parseInt(el.style.left);
+    origY=parseInt(el.style.top);
+
+    el.setPointerCapture(e.pointerId);
+  });
+
+  el.addEventListener("pointermove",function(e){
+    if(!el.hasPointerCapture(e.pointerId)) return;
+
+    let newX=origX+(e.clientX-startX);
+    let newY=origY+(e.clientY-startY);
+
+    el.style.left=newX+"px";
+    el.style.top=newY+"px";
+  });
+
+  el.addEventListener("dblclick",function(e){
+    e.stopPropagation();
+    el.remove();
+  });
+
+  el.addEventListener("wheel",function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    selectedItem=el;
+    const current=parseFloat(el.dataset.scale || "1");
+    el.dataset.scale = e.deltaY < 0 ? Math.min(current + 0.12, 3) : Math.max(current - 0.12, 0.35);
+    applyTransform(el);
+  }, {passive:false});
+}
+
+function deleteSelected(){
+  if(selectedItem){
+    selectedItem.remove();
+    selectedItem=null;
+  }
+}
+
+function clearFrame(){
+  activeFrame.innerHTML="";
+}
+
+function cleanSelection(){
+  document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+}
+
+function playSuccessSound(){
+  try{
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+
+    const notes = [523.25, 659.25, 783.99];
+    notes.forEach((freq, i)=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.value = freq;
+
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + i * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + i * 0.12 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.18);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.2);
     });
+  }catch(error){
+    console.log("Sound not supported", error);
+  }
+}
 
-    function resizeImage(file, maxSize, quality) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
+function showSuccessBox(){
+  playSuccessSound();
+  document.getElementById("successBox").style.display="flex";
+}
 
-        reader.onload = function(e) {
-          const img = new Image();
+function closeSuccessBox(){
+  document.getElementById("successBox").style.display="none";
+}
 
-          img.onload = function() {
-            let width = img.width;
-            let height = img.height;
+function openAlbumNow(){
+  window.location.href="album-lian.html";
+}
 
-            if (width > height && width > maxSize) {
-              height = Math.round(height * (maxSize / width));
-              width = maxSize;
-            } else if (height > maxSize) {
-              width = Math.round(width * (maxSize / height));
-              height = maxSize;
-            }
 
-            const canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", quality));
-          };
+function addImageToFrame(src){
+  const el=document.createElement("div");
+  el.className="item image-item";
 
-          img.src = e.target.result;
-        };
+  const img=document.createElement("img");
+  img.src=src;
+  img.alt="מדבקת תמונה בקומיקס";
 
-        reader.readAsDataURL(file);
-      });
-    }
+  el.appendChild(img);
+  el.style.left="100px";
+  el.style.top="100px";
+  el.style.zIndex="5";
+  el.dataset.scale="1";
+  el.dataset.rotation="0";
+  activeFrame.appendChild(el);
+  makeDraggable(el);
 
-    function saveAlbum() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
-      } catch (error) {
-        showToast("אין מספיק מקום לשמור עוד תמונות במכשיר");
-      }
-    }
+  selectedItem=el;
+  document.querySelectorAll(".item,.speech").forEach(x=>x.style.outline="none");
+  el.style.outline="3px dashed #ff1493";
+}
 
-    function loadAlbum() {
-      try {
-        photos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      } catch (error) {
-        photos = [];
-      }
-      renderAlbum();
-    }
+function addPhonePhoto(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
 
-    function renderAlbum() {
-      gallery.innerHTML = "";
-      photoCount.textContent = photos.length;
-      empty.style.display = photos.length ? "none" : "block";
+  const reader = new FileReader();
+  reader.onload = function(e){
+    addImageToFrame(e.target.result);
+  };
+  reader.readAsDataURL(file);
+  event.target.value="";
+}
 
-      photos.forEach((photo) => {
-        const card = document.createElement("div");
-        card.className = "photo-card";
+function openAlbumPicker(){
+  const albumPicker=document.getElementById("albumPicker");
+  const albumGrid=document.getElementById("albumGrid");
+  const albumEmpty=document.getElementById("albumEmpty");
 
-        const img = document.createElement("img");
-        img.src = photo.data;
-        img.alt = photo.name;
-        img.onclick = () => openModal(photo);
+  albumGrid.innerHTML="";
 
-        const info = document.createElement("div");
-        info.className = "photo-info";
-        info.textContent = photo.name + " · " + photo.date;
+  let album=[];
+  try{
+    album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
+  }catch(error){
+    album=[];
+  }
 
-        card.appendChild(img);
-        card.appendChild(info);
-        gallery.appendChild(card);
-      });
-    }
+  if(!album.length){
+    albumEmpty.style.display="block";
+  }else{
+    albumEmpty.style.display="none";
 
-    function openModal(photo) {
-      const index = photos.findIndex(p => p.id === photo.id);
-      currentModalIndex = index >= 0 ? index : 0;
-      updateModalPhoto();
-      modal.classList.add("open");
-    }
+    album.forEach(photo=>{
+      if(!photo || !photo.data) return;
 
-    function updateModalPhoto() {
-      if (!photos.length) {
-        closeModal();
-        return;
-      }
-
-      if (currentModalIndex >= photos.length) currentModalIndex = photos.length - 1;
-      if (currentModalIndex < 0) currentModalIndex = 0;
-
-      const photo = photos[currentModalIndex];
-      modalImage.src = photo.data;
-      modalName.textContent = photo.name;
-      photoCounter.textContent = (currentModalIndex + 1) + "/" + photos.length;
-    }
-
-    function showNextPhoto() {
-      if (!photos.length) return;
-      currentModalIndex = (currentModalIndex + 1) % photos.length;
-      updateModalPhoto();
-    }
-
-    function showPrevPhoto() {
-      if (!photos.length) return;
-      currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
-      updateModalPhoto();
-    }
-
-    function getCurrentPhoto() {
-      return photos[currentModalIndex] || null;
-    }
-
-    function closeModal() {
-      modal.classList.remove("open");
-      modalImage.src = "";
-    }
-
-    modal.addEventListener("click", function(event) {
-      if (event.target === modal) closeModal();
-    });
-
-    modal.addEventListener("touchstart", function(event) {
-      touchStartX = event.changedTouches[0].screenX;
-    }, { passive: true });
-
-    modal.addEventListener("touchend", function(event) {
-      const touchEndX = event.changedTouches[0].screenX;
-      const diff = touchEndX - touchStartX;
-
-      if (Math.abs(diff) > 45) {
-        if (diff > 0) showPrevPhoto();
-        else showNextPhoto();
-      }
-    }, { passive: true });
-
-    document.addEventListener("keydown", function(event) {
-      if (!modal.classList.contains("open")) return;
-
-      if (event.key === "Escape") closeModal();
-      if (event.key === "ArrowLeft") showNextPhoto();
-      if (event.key === "ArrowRight") showPrevPhoto();
-    });
-
-    function dataUrlToBlob(dataUrl) {
-      const parts = dataUrl.split(",");
-      const mime = parts[0].match(/:(.*?);/)[1];
-      const binary = atob(parts[1]);
-      const array = new Uint8Array(binary.length);
-
-      for (let i = 0; i < binary.length; i++) {
-        array[i] = binary.charCodeAt(i);
-      }
-
-      return new Blob([array], { type: mime });
-    }
-
-    async function shareCurrentPhoto() {
-      const photo = getCurrentPhoto();
-      if (!photo) return;
-
-      try {
-        const blob = dataUrlToBlob(photo.data);
-        const file = new File([blob], photo.name || "lian-photo.jpg", { type: blob.type });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: "תמונה מהאלבום של ליאן",
-            text: "תמונה מהאלבום של ליאן 💖"
-          });
-          return;
-        }
-
-        if (navigator.share) {
-          await navigator.share({
-            title: "האלבום של ליאן",
-            text: "תמונה מהאלבום של ליאן 💖"
-          });
-          return;
-        }
-
-        showToast("בדפדפן הזה אין שיתוף ישיר. אפשר להשתמש בכפתור הורדה ואז לשלוח בוואטסאפ.");
-      } catch (error) {
-        showToast("השיתוף בוטל או לא נתמך במכשיר הזה");
-      }
-    }
-
-    function downloadCurrentPhoto() {
-      const photo = getCurrentPhoto();
-      if (!photo) return;
-
-      const a = document.createElement("a");
-      a.href = photo.data;
-      a.download = photo.name || "lian-photo.jpg";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      showToast("התמונה נשמרה");
-    }
-
-    function deleteCurrentPhoto() {
-      const photo = getCurrentPhoto();
-      if (!photo) return;
-
-      if (!confirm("למחוק את התמונה הזו מהאלבום?")) return;
-
-      photos.splice(currentModalIndex, 1);
-      saveAlbum();
-      renderAlbum();
-
-      if (!photos.length) {
-        closeModal();
-        showToast("התמונה נמחקה");
-        return;
-      }
-
-      if (currentModalIndex >= photos.length) currentModalIndex = photos.length - 1;
-      updateModalPhoto();
-      showToast("התמונה נמחקה");
-    }
-
-    function editCurrentPhoto() {
-      const photo = getCurrentPhoto();
-      if (!photo) return;
-      openEditor(photo);
-    }
-
-    function openEditor(photo) {
-      editingPhoto = photo;
-      originalEditImage = new Image();
-
-      originalEditImage.onload = function() {
-        rotation = 0;
-        brightnessRange.value = 100;
-        contrastRange.value = 100;
-        filterSelect.value = "none";
-        captionText.value = "";
-        editorPanel.classList.add("open");
-        applyEditorPreview();
+      const img=document.createElement("img");
+      img.className="album-thumb";
+      img.src=photo.data;
+      img.alt=photo.name || "תמונה מהאלבום";
+      img.onclick=function(){
+        addImageToFrame(photo.data);
+        closeAlbumPicker();
       };
 
-      originalEditImage.src = photo.data;
-    }
+      albumGrid.appendChild(img);
+    });
+  }
 
-    function closeEditor() {
-      editorPanel.classList.remove("open");
-      editingPhoto = null;
-      originalEditImage = null;
-    }
+  albumPicker.classList.add("open");
+}
 
-    function rotateEditor() {
-      rotation = (rotation + 90) % 360;
-      applyEditorPreview();
-    }
+function closeAlbumPicker(){
+  document.getElementById("albumPicker").classList.remove("open");
+}
 
-    function applyEditorPreview() {
-      if (!originalEditImage) return;
 
-      const brightness = brightnessRange.value;
-      const contrast = contrastRange.value;
-      const filter = filterSelect.value;
-      const caption = captionText.value.trim();
+function getSelectedScale(){
+  if(!selectedItem) return 1;
+  return parseFloat(selectedItem.dataset.scale || "1");
+}
 
-      const rotated = rotation === 90 || rotation === 270;
-      editCanvas.width = rotated ? originalEditImage.height : originalEditImage.width;
-      editCanvas.height = rotated ? originalEditImage.width : originalEditImage.height;
+function applyTransform(el){
+  const rotation = parseFloat(el.dataset.rotation || "0");
+  const scale = parseFloat(el.dataset.scale || "1");
+  el.style.transform = "rotate(" + rotation + "deg) scale(" + scale + ")";
+  el.style.transformOrigin = "center center";
+}
 
-      editCtx.save();
-      editCtx.clearRect(0, 0, editCanvas.width, editCanvas.height);
+function makeSelectedBigger(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = getSelectedScale();
+  selectedItem.dataset.scale = Math.min(current + 0.15, 2.5);
+  applyTransform(selectedItem);
+}
 
-      let filterValue = "brightness(" + brightness + "%) contrast(" + contrast + "%)";
-      if (filter === "grayscale") filterValue += " grayscale(100%)";
-      if (filter === "sepia") filterValue += " sepia(80%)";
-      editCtx.filter = filterValue;
+function makeSelectedSmaller(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = getSelectedScale();
+  selectedItem.dataset.scale = Math.max(current - 0.15, 0.4);
+  applyTransform(selectedItem);
+}
 
-      editCtx.translate(editCanvas.width / 2, editCanvas.height / 2);
-      editCtx.rotate(rotation * Math.PI / 180);
-      editCtx.drawImage(originalEditImage, -originalEditImage.width / 2, -originalEditImage.height / 2);
+function rotateSelected(){
+  if(!selectedItem) return alert("בחר קודם תמונה או אימוג׳י");
+  const current = parseFloat(selectedItem.dataset.rotation || "0");
+  selectedItem.dataset.rotation = current + 15;
+  applyTransform(selectedItem);
+}
 
-      editCtx.restore();
-      editCtx.filter = "none";
+function clearStickerShapes(){
+  if(!selectedItem) return;
+  selectedItem.classList.remove("square","heart","star");
+}
 
-      if (caption) {
-        const fontSize = Math.max(34, Math.round(editCanvas.width * 0.045));
-        editCtx.font = "bold " + fontSize + "px Arial";
-        editCtx.textAlign = "center";
-        editCtx.textBaseline = "bottom";
+function toggleStickerShape(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("עיגול/ריבוע עובד על תמונות");
+  selectedItem.classList.remove("heart","star");
+  selectedItem.classList.toggle("square");
+}
 
-        const x = editCanvas.width / 2;
-        const y = editCanvas.height - 32;
+function makeStickerHeart(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("צורת לב עובדת על תמונות");
+  selectedItem.classList.remove("square","star");
+  selectedItem.classList.add("heart");
+}
 
-        editCtx.lineWidth = Math.max(5, Math.round(fontSize * 0.16));
-        editCtx.strokeStyle = "rgba(0,0,0,0.65)";
-        editCtx.strokeText(caption, x, y);
+function makeStickerStar(){
+  if(!selectedItem) return alert("בחר קודם תמונה מהאלבום או מהטלפון");
+  if(!selectedItem.classList.contains("image-item")) return alert("צורת כוכב עובדת על תמונות");
+  selectedItem.classList.remove("square","heart");
+  selectedItem.classList.add("star");
+}
 
-        editCtx.fillStyle = "white";
-        editCtx.fillText(caption, x, y);
-      }
-    }
+function duplicateFrame(){
+  const clone = activeFrame.cloneNode(true);
+  clone.classList.remove("active");
+  clone.onclick = function(){ selectFrame(clone); };
 
-    function saveEditedPhoto() {
-      if (!editingPhoto) return;
+  clone.querySelectorAll(".item,.speech").forEach(el=>{
+    makeDraggable(el);
+    el.style.outline="none";
+  });
 
-      const data = editCanvas.toDataURL("image/jpeg", 0.88);
+  activeFrame.parentNode.insertBefore(clone, activeFrame.nextSibling);
+  selectFrame(clone);
+}
 
-      photos.unshift({
+function bringForward(){
+  if(!selectedItem) return alert("בחר קודם פריט");
+  const z = parseInt(selectedItem.style.zIndex || "1");
+  selectedItem.style.zIndex = z + 1;
+}
+
+function sendBackward(){
+  if(!selectedItem) return alert("בחר קודם פריט");
+  const z = parseInt(selectedItem.style.zIndex || "1");
+  selectedItem.style.zIndex = Math.max(1, z - 1);
+}
+
+function saveComic(){
+  cleanSelection();
+
+  html2canvas(activeFrame, {
+    backgroundColor: "#ffffff",
+    scale: 2
+  }).then(canvas=>{
+    const link=document.createElement("a");
+    link.download="comic-lian.png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function saveToLianAlbum(){
+  cleanSelection();
+
+  html2canvas(activeFrame, {
+    backgroundColor: "#ffffff",
+    scale: 2
+  }).then(canvas=>{
+    try{
+      const imageData = canvas.toDataURL("image/png");
+
+      let album = JSON.parse(localStorage.getItem("lianFamilyAlbumPhotos") || "[]");
+
+      album.unshift({
         id: Date.now() + "-" + Math.random().toString(16).slice(2),
-        name: "edited-" + editingPhoto.name,
+        name: "קומיקס של ליאן.png",
         date: new Date().toLocaleDateString("he-IL"),
-        data: data
+        data: imageData
       });
 
-      saveAlbum();
-      renderAlbum();
-      closeEditor();
-      currentModalIndex = 0;
-      updateModalPhoto();
-      showToast("התמונה הערוכה נשמרה כתמונה חדשה 💖");
+      localStorage.setItem("lianFamilyAlbumPhotos", JSON.stringify(album));
+
+      showSuccessBox();
+
+    }catch(error){
+      alert("לא הצלחתי לשמור באלבום. כנראה שאין מספיק מקום בדפדפן.");
+      console.log(error);
     }
+  }).catch(error=>{
+    alert("לא הצלחתי ליצור את תמונת הקומיקס. בדוק שהאינטרנט פתוח ונסה שוב.");
+    console.log(error);
+  });
+}
+</script>
 
-    function clearAlbum() {
-      if (!photos.length) {
-        showToast("האלבום כבר ריק");
-        return;
-      }
-
-      if (!confirm("למחוק את כל התמונות מהאלבום?")) return;
-
-      photos = [];
-      localStorage.removeItem(STORAGE_KEY);
-      renderAlbum();
-      closeModal();
-      showToast("האלבום נמחק");
-    }
-
-    function downloadAll() {
-      if (!photos.length) {
-        showToast("אין תמונות לגיבוי");
-        return;
-      }
-
-      const data = JSON.stringify(photos);
-      const blob = new Blob([data], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-
-      a.href = url;
-      a.download = "lian-family-album-backup.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      URL.revokeObjectURL(url);
-      showToast("קובץ גיבוי נשמר");
-    }
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2600);
-    }
-  </script>
 </body>
 </html>
