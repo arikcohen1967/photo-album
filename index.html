@@ -12,7 +12,7 @@
   --bg:#07080b;
   --bg2:#12151c;
   --ink:#f8fafc;
-  --muted:rgba(248,250,252,.68);
+  --muted:rgba(248,250,252,.66);
   --glass:rgba(255,255,255,.075);
   --glass2:rgba(255,255,255,.12);
   --line:rgba(255,255,255,.14);
@@ -49,7 +49,7 @@ body:before{
 }
 
 .app{
-  width:min(1240px,100%);
+  width:min(1180px,100%);
   margin:0 auto;
   padding:34px 18px 28px;
   position:relative;
@@ -114,7 +114,7 @@ header > *{
 
 h1{
   margin:18px 0 8px;
-  font-size:clamp(38px,5vw,62px);
+  font-size:clamp(36px,5vw,60px);
   letter-spacing:-.8px;
   text-shadow:0 14px 34px rgba(0,0,0,.38);
 }
@@ -129,95 +129,111 @@ header p{
 
 .menu{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
   margin:26px auto 10px;
 }
 
 .card{
   position:relative;
   overflow:hidden;
-  min-height:176px;
-  padding:25px 18px;
-  border-radius:30px;
-  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.055));
+  min-height:132px;
+  padding:22px 22px 22px 56px;
+  border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.055));
   border:1px solid var(--line);
   color:var(--ink);
   text-decoration:none;
-  font-size:23px;
+  font-size:22px;
   font-weight:900;
   box-shadow:var(--soft);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(30px) saturate(145%);
+  -webkit-backdrop-filter:blur(30px) saturate(145%);
   transition:.22s ease;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  text-align:right;
 }
 
 .card:before{
   content:"";
   position:absolute;
   inset:0;
-  border-radius:30px;
+  border-radius:26px;
   background:
     radial-gradient(circle at 50% 0%,rgba(255,255,255,.14),transparent 48%),
     linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.02));
   pointer-events:none;
 }
 
-.card:after{
-  content:"";
-  position:absolute;
-  inset:auto 22px 16px 22px;
-  height:3px;
-  border-radius:999px;
-  background:#ffffff;
-  opacity:.22;
-  transition:.22s ease;
-}
-
 .card:hover{
-  transform:translateY(-7px);
+  transform:translateY(-5px);
   background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.075));
-  border-color:rgba(255,255,255,.24);
+  border-color:rgba(255,255,255,.26);
   box-shadow:0 30px 70px rgba(0,0,0,.42);
-}
-
-.card:hover:after{
-  opacity:.8;
-  inset-inline:38px;
 }
 
 .icon{
   position:relative;
   z-index:1;
-  width:70px;
-  height:70px;
-  margin:0 auto 16px;
-  border-radius:23px;
+  flex:0 0 auto;
+  width:58px;
+  height:58px;
+  border-radius:20px;
   display:grid;
   place-items:center;
-  font-size:36px;
+  font-size:30px;
   background:linear-gradient(145deg,#ffffff,#d1d5db);
   color:#07080b;
   border:1px solid rgba(255,255,255,.45);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 14px 30px rgba(0,0,0,.24);
 }
 
-.card-title{
+.card-text{
   position:relative;
   z-index:1;
+  flex:1;
+  min-width:0;
+}
+
+.card-title{
   display:block;
   color:#f8fafc;
 }
 
 .card small{
-  position:relative;
-  z-index:1;
   display:block;
-  margin-top:8px;
+  margin-top:7px;
   color:var(--muted);
   font-size:14px;
   font-weight:800;
   line-height:1.4;
+}
+
+.arrow{
+  position:absolute;
+  z-index:2;
+  left:22px;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:rgba(248,250,252,.62);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  font-size:25px;
+  line-height:1;
+  transition:.22s ease;
+}
+
+.card:hover .arrow{
+  left:17px;
+  color:#07080b;
+  background:#ffffff;
 }
 
 footer{
@@ -230,8 +246,10 @@ footer{
   .app{padding:18px 10px 20px}
   header{border-radius:28px;padding:34px 18px 28px}
   .menu{grid-template-columns:1fr;gap:14px;margin-top:18px}
-  .card{min-height:145px;border-radius:24px;font-size:22px;padding:22px 16px}
-  .icon{width:58px;height:58px;font-size:32px;border-radius:20px;margin-bottom:12px}
+  .card{min-height:112px;border-radius:24px;font-size:21px;padding:19px 16px 19px 52px}
+  .icon{width:52px;height:52px;font-size:28px;border-radius:18px}
+  .arrow{left:17px}
+  .card:hover .arrow{left:14px}
 }
 </style>
 </head>
@@ -240,53 +258,74 @@ footer{
 <div class="app">
 
 <header>
-  <div class="badge">LIAN FAMILY APP · PREMIUM GLASS</div>
-  <h1>האתר של ליאן</h1>
-  <p>מרכז משפחתי נקי ומסודר למשחקים, תמונות, יצירה, תקציב וכושר.</p>
+  <div class="badge">LIAN FAMILY APP · PREMIUM HUB</div>
+  <h1>LIAN FAMILY HUB</h1>
+  <p>תמונות · משחקים · קומיקס · תקציב · אימונים</p>
 </header>
 
 <div class="menu">
 
   <a class="card" href="album-lian.html">
     <span class="icon">📸</span>
-    <span class="card-title">אלבום תמונות</span>
-    <small>תמונות, עריכה ושיתוף</small>
+    <span class="card-text">
+      <span class="card-title">אלבום תמונות</span>
+      <small>תמונות, עריכה ושיתוף</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="trivia.html">
     <span class="icon">🧠</span>
-    <span class="card-title">משחק טריוויה</span>
-    <small>שאלות ואתגרים לילדים</small>
+    <span class="card-text">
+      <span class="card-title">משחק טריוויה</span>
+      <small>שאלות ואתגרים לילדים</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="memory-lian.html">
     <span class="icon">🎯</span>
-    <span class="card-title">משחק זיכרון</span>
-    <small>זיכרון, ריכוז וכיף</small>
+    <span class="card-text">
+      <span class="card-title">משחק זיכרון</span>
+      <small>זיכרון, ריכוז וכיף</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="alias-lian.html">
     <span class="icon">🎤</span>
-    <span class="card-title">משחק אליאס</span>
-    <small>מילים, תיאור וניחושים</small>
+    <span class="card-text">
+      <span class="card-title">משחק אליאס</span>
+      <small>מילים, תיאור וניחושים</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="budget.html">
     <span class="icon">💰</span>
-    <span class="card-title">ניהול תקציב</span>
-    <small>מעקב משפחתי חכם</small>
+    <span class="card-text">
+      <span class="card-title">ניהול תקציב</span>
+      <small>מעקב משפחתי חכם</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="gym-pro-ultra.html">
     <span class="icon">🏋️</span>
-    <span class="card-title">Gym Pro Ultra</span>
-    <small>אימונים, משקלים וגרפים</small>
+    <span class="card-text">
+      <span class="card-title">Gym Pro Ultra</span>
+      <small>אימונים, משקלים וגרפים</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
   <a class="card" href="comic.html">
     <span class="icon">📖</span>
-    <span class="card-title">יוצר קומיקס</span>
-    <small>סטודיו קומיקס אישי</small>
+    <span class="card-text">
+      <span class="card-title">יוצר קומיקס</span>
+      <small>סטודיו קומיקס אישי</small>
+    </span>
+    <span class="arrow">›</span>
   </a>
 
 </div>
