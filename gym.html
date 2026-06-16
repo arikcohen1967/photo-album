@@ -26,6 +26,13 @@ button,a.btn{border:0;border-radius:18px;padding:13px 17px;font-size:16px;font-w
 .footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0}.hidden{display:none!important}
 @media(max-width:900px){.stats,.cards,.aerobic-list,.tools{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero h1{font-size:34px}}
 @media(max-width:620px){body{padding:10px}.hero{border-radius:28px;padding:26px 18px}.stats,.cards,.aerobic-list,.tools,.inputRow{grid-template-columns:1fr}.tab{min-width:100%;}.hero-actions button,.hero-actions .btn{width:100%}.stat strong{font-size:28px}}
+
+
+/* ===== Gym Pro V2 additions ===== */
+.pro-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}.kpi{border-radius:26px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.62));border:1px solid rgba(255,255,255,.8);box-shadow:var(--soft);text-align:right}.kpi b{font-size:28px;display:block}.mini{font-size:12px;color:var(--muted);font-weight:900}.timerBox{display:grid;place-items:center;gap:12px}.timerCircle{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--blue) var(--timer,0%),#e5e7eb 0);box-shadow:inset 0 0 0 14px rgba(255,255,255,.9),var(--soft)}.timerTime{font-size:42px;font-weight:900}.quickBtns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.quickBtns button{padding:10px 12px;border-radius:999px}.chartWrap{height:260px;background:#fff;border-radius:24px;padding:12px;border:1px solid #eef2f7}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{aspect-ratio:1;border-radius:16px;background:#fff;border:1px solid #eef2f7;display:grid;place-items:center;font-weight:900;color:#64748b}.day.done{background:linear-gradient(135deg,var(--green),#30d158);color:white;box-shadow:0 10px 22px rgba(52,199,89,.20)}.day.today{outline:3px solid rgba(0,122,255,.22)}.prGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.pr{background:#fff;border:1px solid #eef2f7;border-radius:20px;padding:12px}.pr b{display:block;font-size:22px}.muscleHero{height:180px;border-radius:28px;background:linear-gradient(135deg,rgba(17,24,39,.75),rgba(0,122,255,.35)),url('https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80') center/cover;box-shadow:var(--soft);margin-bottom:16px}.nutritionRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.aiTip{border-radius:22px;background:linear-gradient(135deg,rgba(175,82,222,.10),rgba(0,122,255,.10));border:1px solid rgba(0,122,255,.12);padding:14px;line-height:1.55}.badgeSoft{display:inline-flex;border-radius:999px;padding:7px 10px;background:#f1f5f9;color:#334155;font-weight:900;font-size:12px;margin:3px}
+@media(max-width:900px){.pro-kpis{grid-template-columns:1fr 1fr}.nutritionRow{grid-template-columns:1fr}.prGrid{grid-template-columns:1fr}}
+@media(max-width:620px){.pro-kpis{grid-template-columns:1fr}.timerCircle{width:165px;height:165px}.timerTime{font-size:34px}}
+
 </style>
 </head>
 <body>
@@ -54,6 +61,7 @@ button,a.btn{border:0;border-radius:18px;padding:13px 17px;font-size:16px;font-w
     <button class="tab" onclick="showSection('aerobic',this)">🏃 אירובי</button>
     <button class="tab" onclick="showSection('tracker',this)">📊 מעקב</button>
     <button class="tab" onclick="showSection('dashboard',this)">📱 דאשבורד</button>
+    <button class="tab" onclick="showSection('pro',this)">🚀 Pro V2</button>
   </nav>
 
   <section id="strength" class="section active">
@@ -96,9 +104,61 @@ button,a.btn{border:0;border-radius:18px;padding:13px 17px;font-size:16px;font-w
     </div>
   </section>
 
+
+
+  <section id="pro" class="section">
+    <div class="pro-kpis">
+      <div class="kpi"><span class="mini">PR לחיצת חזה</span><b id="prBench">0 ק״ג</b></div>
+      <div class="kpi"><span class="mini">PR סקוואט / לג פרס</span><b id="prSquat">0 ק״ג</b></div>
+      <div class="kpi"><span class="mini">משקל גוף אחרון</span><b id="bodyWeightNow">—</b></div>
+      <div class="kpi"><span class="mini">חלבון יומי</span><b id="proteinNow">0 גר׳</b></div>
+    </div>
+    <div class="grid">
+      <div>
+        <div class="muscleHero"></div>
+        <div class="card">
+          <h2>📈 גרף התקדמות כוח</h2>
+          <p>הגרף מציג את נפח האימון לפי הרשומות ששמרת.</p>
+          <div class="chartWrap"><canvas id="volumeChart"></canvas></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h2>📅 לוח אימונים חודשי</h2>
+          <p>ימים שבהם סימנת אימון יופיעו בירוק.</p>
+          <div id="calendar" class="calendar"></div>
+        </div>
+      </div>
+      <div class="ios-panel">
+        <h2>⏱️ טיימר מנוחה</h2>
+        <div class="timerBox">
+          <div class="timerCircle" id="timerCircle"><div class="timerTime" id="timerText">00:00</div></div>
+          <div class="quickBtns">
+            <button onclick="startTimer(60)">60 שנ׳</button>
+            <button onclick="startTimer(90)">90 שנ׳</button>
+            <button onclick="startTimer(120)">120 שנ׳</button>
+            <button onclick="startTimer(180)">180 שנ׳</button>
+            <button class="red" onclick="stopTimer()">עצור</button>
+          </div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+        <h2>🍎 תזונה והתאוששות</h2>
+        <div class="nutritionRow">
+          <input id="bodyWeightInput" type="number" placeholder="משקל גוף">
+          <input id="proteinInput" type="number" placeholder="חלבון גר׳">
+          <input id="waterInput" type="number" placeholder="מים כוסות">
+        </div>
+        <button class="green" style="margin-top:10px" onclick="saveNutrition()">שמור מדדים</button>
+        <div class="aiTip" id="aiTip" style="margin-top:14px">🤖 טיפ מאמן: שמור כמה סטים, ואז אחשב לך המלצה להעלאת משקל או התאוששות.</div>
+        <h3>🏆 שיאים אישיים</h3>
+        <div class="prGrid" id="prGrid"></div>
+      </div>
+    </div>
+  </section>
+
   <div class="footer"><button onclick="exportData()">⬇️ ייצוא נתונים</button><button class="green" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️ למעלה</button></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+let timerInterval=null,totalTimer=0,leftTimer=0,volumeChart=null;
 const workouts=[
  {title:'יום 1 · חזה + יד אחורית',emoji:'💥',items:[['לחיצת חזה במוט','4 סטים · 6-8 חזרות'],['לחיצת חזה בשיפוע דאמבלים','3 סטים · 8-10'],['פרפר בכבלים','3 סטים · 10-12'],['מקבילים / פשיטת מרפקים','3 סטים · 8-12'],['יד אחורית חבל','3 סטים · 12-15']]},
  {title:'יום 2 · גב + יד קדמית',emoji:'🦍',items:[['מתח / פולי עליון','4 סטים · 6-10'],['חתירה במוט / מכונה','4 סטים · 8-10'],['חתירה יד אחת','3 סטים · 10'],['פייס פול','3 סטים · 12-15'],['כפיפת מרפקים דאמבלים','3 סטים · 10-12']]},
@@ -108,7 +168,7 @@ const workouts=[
 function renderWorkouts(){const box=document.getElementById('workoutCards');box.innerHTML='';workouts.forEach(w=>{const div=document.createElement('div');div.className='card workout';div.innerHTML=`<h2>${w.emoji} ${w.title}</h2><span class="pill">כוח</span><span class="pill">60-75 דק׳</span>`+w.items.map(x=>`<div class="exercise"><span><b>${x[0]}</b><small>${x[1]}</small></span><span class="sets">${x[1].split('·')[0]}</span></div>`).join('');box.appendChild(div)})}
 function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active')}
 function data(){return JSON.parse(localStorage.getItem('gymIosData')||'{"logs":[],"cardio":[],"notes":[],"done":[]}')}
-function save(d){localStorage.setItem('gymIosData',JSON.stringify(d));renderHistory();updateStats()}
+function save(d){localStorage.setItem('gymIosData',JSON.stringify(d));renderHistory();updateStats();updatePro()}
 function today(){return new Date().toLocaleDateString('he-IL')}
 function markWorkout(){const d=data();d.done.unshift({date:today(),type:'אימון כוח'});save(d);alert('האימון סומן בהצלחה 💪')}
 function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();d.logs.unshift({date:today(),name,weight,reps,sets,volume:weight*reps*sets});save(d);exName.value=exWeight.value=exReps.value=exSets.value=''}
@@ -118,7 +178,17 @@ function renderHistory(){const d=data();let rows=[];d.logs.forEach(x=>rows.push(
 function updateStats(){const d=data();const done=d.done.length;weekCount.textContent=Math.min(done,4)+'/4';weekBar.style.width=Math.min(done/4*100,100)+'%';const vol=d.logs.reduce((s,x)=>s+x.volume,0);volumeText.textContent=vol.toLocaleString('he-IL')+' ק״ג';const car=d.cardio.reduce((s,x)=>s+x.min,0);cardioText.textContent=car+' דק׳';streakText.textContent='🔥 '+done}
 function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymIosData');renderHistory();updateStats()}}
 function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-ios-data.json';a.click()}
-renderWorkouts();renderHistory();updateStats();
+
+function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.001,c.currentTime);g.gain.exponentialRampToValueAtTime(.25,c.currentTime+.02);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.35);o.start();o.stop(c.currentTime+.38)}catch(e){}}
+function startTimer(sec){stopTimer();totalTimer=sec;leftTimer=sec;tickTimer();timerInterval=setInterval(()=>{leftTimer--;tickTimer();if(leftTimer<=0){stopTimer();beep();alert('המנוחה הסתיימה 💪')}} ,1000)}
+function stopTimer(){if(timerInterval)clearInterval(timerInterval);timerInterval=null}
+function tickTimer(){const m=String(Math.floor(leftTimer/60)).padStart(2,'0'), ss=String(leftTimer%60).padStart(2,'0');timerText.textContent=m+':'+ss;const pct=totalTimer?((totalTimer-leftTimer)/totalTimer*100):0;timerCircle.style.setProperty('--timer',pct+'%')}
+function saveNutrition(){const d=data();d.nutrition=d.nutrition||[];d.nutrition.unshift({date:today(),weight:+bodyWeightInput.value||0,protein:+proteinInput.value||0,water:+waterInput.value||0});save(d);bodyWeightInput.value=proteinInput.value=waterInput.value=''}
+function buildCalendar(){const cal=document.getElementById('calendar');if(!cal)return;const d=data();const now=new Date();const days=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();const doneDates=new Set(d.done.map(x=>x.date));cal.innerHTML='';for(let i=1;i<=days;i++){const dt=new Date(now.getFullYear(),now.getMonth(),i).toLocaleDateString('he-IL');const el=document.createElement('div');el.className='day'+(doneDates.has(dt)?' done':'')+(i===now.getDate()?' today':'');el.textContent=i;cal.appendChild(el)}}
+function updatePro(){const d=data();const logs=d.logs||[];const prs={bench:0,squat:0,dead:0,shoulder:0};logs.forEach(x=>{const n=x.name.toLowerCase();if(n.includes('bench')||n.includes('חזה')||n.includes('בנץ'))prs.bench=Math.max(prs.bench,x.weight);if(n.includes('squat')||n.includes('סקוואט')||n.includes('לג'))prs.squat=Math.max(prs.squat,x.weight);if(n.includes('dead')||n.includes('דדליפט'))prs.dead=Math.max(prs.dead,x.weight);if(n.includes('shoulder')||n.includes('כתף'))prs.shoulder=Math.max(prs.shoulder,x.weight)});if(document.getElementById('prBench')){prBench.textContent=prs.bench+' ק״ג';prSquat.textContent=prs.squat+' ק״ג';const nut=(d.nutrition||[])[0];bodyWeightNow.textContent=nut&&nut.weight?nut.weight+' ק״ג':'—';proteinNow.textContent=nut&&nut.protein?nut.protein+' גר׳':'0 גר׳';prGrid.innerHTML=`<div class="pr"><span class="mini">Bench</span><b>${prs.bench} ק״ג</b></div><div class="pr"><span class="mini">Squat/Leg</span><b>${prs.squat} ק״ג</b></div><div class="pr"><span class="mini">Deadlift</span><b>${prs.dead} ק״ג</b></div><div class="pr"><span class="mini">Shoulders</span><b>${prs.shoulder} ק״ג</b></div>`;aiTip.textContent=logs.length>=4?'🤖 טיפ מאמן: יש מספיק נתונים. אם באימון האחרון עמדת בכל החזרות בלי קושי חריג — תעלה 2.5–5 ק״ג בתרגיל המרכזי.':'🤖 טיפ מאמן: שמור לפחות 4 סטים כדי לקבל המלצה מדויקת יותר.'}buildCalendar();drawChart()}
+function drawChart(){const canvas=document.getElementById('volumeChart');if(!canvas||!window.Chart)return;const d=data();const rows=(d.logs||[]).slice(0,12).reverse();const labels=rows.map((x,i)=>x.name.slice(0,10)||('אימון '+(i+1)));const vals=rows.map(x=>x.volume);if(volumeChart)volumeChart.destroy();volumeChart=new Chart(canvas,{type:'line',data:{labels,datasets:[{label:'נפח ק״ג',data:vals,tension:.35,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}})}
+
+renderWorkouts();renderHistory();updateStats();updatePro();
 </script>
 </body>
 </html>
