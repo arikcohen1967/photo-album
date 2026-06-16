@@ -573,7 +573,8 @@ function openExercise(name,prescription,wi,xi){
  modalReps.value=last?last.reps:'';
  modalSets.value=last?last.sets:'';
  const q=encodeURIComponent((details.video||name)+' exercise technique');
- modalVideoBox.innerHTML=`<div><div style="font-size:42px">🎬</div><p>אפשר לפתוח סרטון הדגמה לתרגיל הזה.</p><a target="_blank" href="https://www.youtube.com/results?search_query=${q}">פתח חיפוש סרטוני טכניקה ביוטיוב</a></div>`;
+ const youtubeUrl='https://www.youtube.com/results?search_query='+q;
+ modalVideoBox.innerHTML=`<div><div style="font-size:42px">🎬</div><p>אפשר לפתוח סרטון הדגמה לתרגיל הזה.</p><button class="dark" type="button" onclick="window.open('${youtubeUrl}','_blank')">▶️ פתח סרטון הדגמה ביוטיוב</button></div>`;
  modalExerciseHistory.innerHTML=logs.length?logs.slice(0,8).map(x=>`<div class="log"><b>${x.weight} ק״ג · ${x.reps} חזרות · ${x.sets} סטים</b><small>${x.date} · נפח ${x.volume} ק״ג · 1RM ${x.oneRm||'-'} ק״ג</small></div>`).join(''):'<p style="color:#6d7280">עדיין אין היסטוריה לתרגיל הזה. שמור סט ראשון.</p>';
  renderExerciseGoalAndChart(name);
  document.getElementById('exerciseModal').classList.add('open');
