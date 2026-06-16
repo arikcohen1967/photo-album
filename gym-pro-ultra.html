@@ -25,6 +25,9 @@ button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-w
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}.stat{padding:20px;text-align:right;overflow:hidden;position:relative}.stat:after{content:"";position:absolute;left:-38px;bottom:-48px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,165,.22),transparent 68%)}.stat span{font-size:13px;color:var(--muted);font-weight:900}.stat strong{display:block;font-size:33px;margin-top:8px}.progress{height:10px;background:rgba(141,108,255,.12);border-radius:999px;overflow:hidden;margin-top:13px}.bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--hot),var(--purple),var(--blue),var(--cyan));width:0%}
 .tabs{display:flex;gap:10px;flex-wrap:wrap;padding:10px;border-radius:999px;margin:18px 0}.tab{flex:1;min-width:122px;background:transparent;color:var(--ink);box-shadow:none;border-radius:999px;border:1px solid transparent}.tab.active{background:linear-gradient(135deg,var(--hot),var(--purple),var(--blue));color:white;box-shadow:0 14px 28px rgba(141,108,255,.22)}.section{display:none;animation:fade .22s ease}.section.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{padding:20px;text-align:right;overflow:hidden}.card h2,.card h3{margin:0 0 10px}.card p{color:var(--muted);line-height:1.58}.workout{min-height:270px;padding-top:152px;position:relative}.workout .photo{position:absolute;inset:0 0 auto 0;height:138px;background-size:cover;background-position:center;border-bottom:1px solid var(--line)}.workout .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,.92),rgba(255,255,255,.12))}.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(141,108,255,.12);color:#5540c8;border:1px solid rgba(141,108,255,.16);border-radius:999px;padding:7px 11px;font-weight:900;font-size:13px;margin:3px}.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}.exercise:first-of-type{border-top:0}.exercise b{display:block}.exercise small{color:var(--muted)}.sets{direction:ltr;background:rgba(141,108,255,.10);border-radius:14px;padding:8px 10px;font-weight:900;color:#5843d6;white-space:nowrap}.sidePanel{padding:22px}.aerobic-list,.tools,.charts,.healthGrid,.badgesGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.aero{min-height:245px;position:relative;background-size:cover;background-position:center;overflow:hidden;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff}.aero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(21,25,52,.86),rgba(255,90,165,.12))}.aero>*{position:relative}.aero .big{font-size:42px}.inputRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}input,select,textarea{width:100%;border:1px solid rgba(141,108,255,.18);border-radius:16px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;background:rgba(255,255,255,.82);color:var(--ink)}textarea{min-height:90px}input::placeholder,textarea::placeholder{color:#858a98}.history{max-height:340px;overflow:auto}.log{padding:12px;border:1px solid var(--line);border-radius:18px;margin:8px 0;background:rgba(255,255,255,.72)}.log b{display:block}.log small{color:var(--muted)}
+
+.exercise.openable{cursor:pointer;border-radius:18px;padding:12px 10px;transition:.18s;background:rgba(255,255,255,.34)}.exercise.openable:hover{transform:translateY(-2px);background:rgba(141,108,255,.10);box-shadow:0 12px 26px rgba(141,108,255,.12)}.exercise .openHint{display:inline-block;margin-top:5px;color:#8d6cff;font-weight:900;font-size:12px}.exercise .lastWeight{display:block;margin-top:5px;color:#ff2d72;font-weight:900;font-size:12px}.exerciseModal{position:fixed;inset:0;background:rgba(23,32,51,.54);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}.exerciseModal.open{display:flex}.exercisePage{width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:36px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.82));border:1px solid rgba(255,255,255,.92);box-shadow:0 35px 95px rgba(23,32,51,.34);text-align:right}.exerciseHero{min-height:260px;background-size:cover;background-position:center;position:relative;color:white;display:flex;align-items:flex-end;padding:24px;border-radius:36px 36px 0 0;overflow:hidden}.exerciseHero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(23,32,51,.88),rgba(141,108,255,.18),transparent)}.exerciseHero>*{position:relative}.exerciseHero h2{font-size:34px;margin:0 0 8px}.exerciseContent{padding:22px}.exerciseInfoGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.infoBox{background:rgba(255,255,255,.70);border:1px solid rgba(141,108,255,.14);border-radius:22px;padding:16px}.infoBox h3{margin:0 0 8px}.exerciseActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.miniHistory{max-height:210px;overflow:auto}.videoBox{aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,rgba(255,90,165,.20),rgba(72,167,255,.18));display:grid;place-items:center;text-align:center;padding:18px;color:#172033;border:1px solid rgba(141,108,255,.18)}.videoBox a{color:#5540c8;font-weight:900;text-decoration:none}.exerciseClose{position:sticky;top:10px;float:left;margin:10px;z-index:3;background:linear-gradient(135deg,#ff4b6e,#ff2d72)!important}.exerciseDetailInputs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:700px){.exerciseInfoGrid,.exerciseDetailInputs{grid-template-columns:1fr}.exerciseHero{min-height:220px}.exerciseHero h2{font-size:28px}}
+
 .timerBox{text-align:center}.timer{font-size:58px;font-weight:900;letter-spacing:2px;margin:14px 0;background:linear-gradient(135deg,var(--hot),var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}.quickTimes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.ringWrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.activityRing{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--pink) 0 65%,rgba(141,108,255,.12) 65%);box-shadow:inset 0 0 30px rgba(141,108,255,.12)}.activityRing span{width:70%;height:70%;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:900;font-size:13px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{aspect-ratio:1;border-radius:15px;background:rgba(141,108,255,.10);display:grid;place-items:center;color:var(--muted);font-weight:900}.day.done{background:linear-gradient(135deg,var(--yellow),var(--pink),var(--purple));color:white;box-shadow:0 12px 24px rgba(141,108,255,.24)}canvas{max-height:275px}.coachBox{font-size:18px;line-height:1.7}.badgeCard{padding:18px;text-align:center}.badgeCard .big{font-size:44px}.badgeCard.locked{filter:grayscale(1);opacity:.55}.footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0}.toast{position:fixed;bottom:18px;right:18px;background:rgba(255,255,255,.92);border:1px solid rgba(141,108,255,.22);box-shadow:var(--soft);border-radius:18px;padding:14px 18px;color:var(--ink);z-index:20;display:none}.toast.show{display:block;animation:fade .2s ease}
 @media(max-width:980px){.stats,.cards,.aerobic-list,.tools,.charts,.healthGrid,.badgesGrid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero h1{font-size:40px}}
 @media(max-width:650px){body{padding:10px}.hero{border-radius:28px;padding:26px 18px;min-height:370px}.stats,.cards,.aerobic-list,.tools,.inputRow,.charts,.ringWrap,.healthGrid,.badgesGrid{grid-template-columns:1fr}.tab{min-width:100%}.hero-actions button,.hero-actions .btn{width:100%}.stat strong{font-size:28px}.timer{font-size:46px}}
@@ -67,19 +70,143 @@ button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-w
   <section id="dashboard" class="section"><div class="grid"><div class="glass card"><h2>📱 Apple Watch Style</h2><div class="ringWrap"><div class="activityRing" id="ring1"><span>כוח<br><b id="ringStrength">0%</b></span></div><div class="activityRing" id="ring2"><span>אירובי<br><b id="ringCardio">0%</b></span></div><div class="activityRing" id="ring3"><span>נפח<br><b id="ringVolume">0%</b></span></div></div></div><div class="glass card"><h2>📤 ייצוא ושיתוף</h2><p>אפשר לשלוח סיכום אימון ל־WhatsApp או לשמור תמונת סיכום.</p><button class="green" onclick="shareWhatsApp()">📱 שלח ל־WhatsApp</button><button class="purple" onclick="captureSummary()">📸 שמור כתמונה</button></div></div></section>
 
   <div class="footer"><button onclick="exportData()">⬇️ ייצוא JSON</button><button class="green" onclick="shareWhatsApp()">📱 WhatsApp</button><button class="purple" onclick="captureSummary()">📸 תמונת סיכום</button><button class="ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️ למעלה</button></div>
-</div><div id="toast" class="toast"></div>
+</div>
+<div id="exerciseModal" class="exerciseModal" onclick="closeExerciseModal(event)">
+  <div class="exercisePage" onclick="event.stopPropagation()">
+    <button class="exerciseClose" onclick="closeExerciseModal()">✕ סגור</button>
+    <div id="exerciseHero" class="exerciseHero">
+      <div>
+        <div class="badge">🏋️ עמוד תרגיל אישי</div>
+        <h2 id="modalExerciseTitle">שם התרגיל</h2>
+        <p id="modalExerciseSubtitle">שריר · חזרות · סטים</p>
+      </div>
+    </div>
+    <div class="exerciseContent">
+      <div class="exerciseInfoGrid">
+        <div class="infoBox">
+          <h3>🎯 מה עושים?</h3>
+          <p id="modalExerciseHow"></p>
+        </div>
+        <div class="infoBox">
+          <h3>✅ דגשים לטכניקה</h3>
+          <p id="modalExerciseTips"></p>
+        </div>
+        <div class="infoBox">
+          <h3>📊 עדכון משקלים לתרגיל</h3>
+          <div class="exerciseDetailInputs">
+            <input id="modalWeight" type="number" placeholder="משקל ק״ג">
+            <input id="modalReps" type="number" placeholder="חזרות">
+            <input id="modalSets" type="number" placeholder="סטים">
+          </div>
+          <div class="exerciseActions">
+            <button class="green" onclick="saveExerciseFromModal()">💾 שמור לתרגיל</button>
+            <button class="orange" onclick="startTimerFromModal()">⏱️ התחל מנוחה</button>
+          </div>
+        </div>
+        <div class="infoBox">
+          <h3>🎬 סרטון / הדגמה</h3>
+          <div class="videoBox" id="modalVideoBox"></div>
+        </div>
+      </div>
+      <div class="infoBox">
+        <h3>📚 היסטוריה לתרגיל הזה</h3>
+        <div id="modalExerciseHistory" class="miniHistory"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
 <script>
 function beep(freq=520,dur=.08,type='sine',vol=.045){try{const AC=window.AudioContext||window.webkitAudioContext;const ctx=new AC();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=vol;o.connect(g);g.connect(ctx.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);o.stop(ctx.currentTime+dur+.02)}catch(e){}}
 function playClick(){beep(700,.045,'triangle',.035)}function playSuccess(){beep(523,.08,'sine',.055);setTimeout(()=>beep(659,.08,'sine',.055),90);setTimeout(()=>beep(784,.1,'sine',.055),180)}function playFinish(){beep(880,.12,'square',.04);setTimeout(()=>beep(1175,.15,'square',.04),140)}document.addEventListener('click',e=>{if(e.target.closest('button,a.btn')) playClick()});function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400)}
+const exerciseDetails={
+ 'לחיצת חזה במוט':{muscle:'חזה · יד אחורית · כתף קדמית',image:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80',how:'שכב על הספסל, אחיזה מעט רחבה מרוחב כתפיים, הורד את המוט בשליטה אל מרכז החזה ודחוף למעלה בקו יציב.',tips:'שכמות אסופות לאחור, רגליים יציבות ברצפה, לא להקפיץ את המוט מהחזה, נשימה עמוקה לפני כל חזרה.',video:'Bench Press technique'},
+ 'לחיצה בשיפוע דאמבלים':{muscle:'חזה עליון · כתף קדמית',image:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1200&q=80',how:'כוון ספסל לשיפוע 25–35 מעלות, הורד דאמבלים לצדי החזה העליון ודחוף למעלה בלי לנעול באגרסיביות.',tips:'מרפקים בזווית טבעית, שליטה בירידה, לא להרים כתפיים לאוזניים.',video:'Incline dumbbell press technique'},
+ 'פרפר בכבלים':{muscle:'חזה · כיווץ וסיום תנועה',image:'https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?auto=format&fit=crop&w=1200&q=80',how:'עמוד בין הכבלים, צעד קטן קדימה, הבא את הידיים אחת אל השנייה מול החזה בתנועה קשתית.',tips:'מרפקים מעט כפופים, בלי תנופה, לחשוב על קירוב המרפקים ולא רק הידיים.',video:'Cable fly technique'},
+ 'מקבילים / פשיטת מרפקים':{muscle:'יד אחורית · חזה תחתון',image:'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?auto=format&fit=crop&w=1200&q=80',how:'במקבילים רד בשליטה עד עומק נוח ודחוף למעלה. בפשיטת מרפקים שמור מרפקים צמודים לגוף.',tips:'לא ליפול לכתפיים, גוף יציב, תנועה מלאה ונקייה.',video:'Dips triceps technique'},
+ 'יד אחורית חבל':{muscle:'יד אחורית',image:'https://images.unsplash.com/photo-1571019613914-85f342c1d651?auto=format&fit=crop&w=1200&q=80',how:'עמוד מול פולי עליון, מרפקים צמודים, פתח את החבל בסוף התנועה וכיווץ מלא.',tips:'רק האמות זזות, כתפיים יציבות, עצירה קצרה למטה.',video:'Triceps rope pushdown technique'},
+ 'מתח / פולי עליון':{muscle:'גב רחב · יד קדמית',image:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1200&q=80',how:'משוך את המוט לכיוון החזה העליון תוך הורדת שכמות. במתח — חזה עולה אל המוט.',tips:'לא למשוך מהידיים בלבד, להוביל עם המרפקים, שליטה בעלייה.',video:'Lat pulldown pull up technique'},
+ 'חתירה במוט / מכונה':{muscle:'גב אמצעי · רחב גבי',image:'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1200&q=80',how:'משוך את הידית/מוט לכיוון הבטן, שכמות מתקרבות, גב ניטרלי.',tips:'לא לעגל גב, לא למשוך עם תנופה, עצירה קצרה בסוף.',video:'Row exercise technique'},
+ 'חתירה יד אחת':{muscle:'גב · איזון צדדים',image:'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1200&q=80',how:'תמוך ביד וברך/ספסל, משוך דאמבל לכיוון המותן כשהמרפק נע אחורה.',tips:'אגן יציב, גב ישר, לא לסובב את הגוף.',video:'One arm dumbbell row technique'},
+ 'פייס פול':{muscle:'כתף אחורית · שכמות',image:'https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=1200&q=80',how:'משוך חבל לכיוון הפנים כשהמרפקים גבוהים, פתח החבל בסוף התנועה.',tips:'תנועה איטית, כיווץ שכמות, לא להקשית גב.',video:'Face pull technique'},
+ 'כפיפת מרפקים':{muscle:'יד קדמית',image:'https://images.unsplash.com/photo-1584863231364-2edc166de576?auto=format&fit=crop&w=1200&q=80',how:'הרם את המשקל בכפיפת מרפקים בלי להזיז את המרפקים קדימה.',tips:'בלי תנופה מהגב, שליטה בירידה, כיווץ מלא למעלה.',video:'Biceps curl technique'},
+ 'סקוואט / לג פרס':{muscle:'רגליים · ארבע ראשי · ישבן',image:'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=1200&q=80',how:'בסקוואט שמור גב ניטרלי וברכיים בכיוון האצבעות. בלג פרס הורד בשליטה ודחוף דרך כל כף הרגל.',tips:'לא לקרוס ברכיים פנימה, עומק לפי יכולת, בטן אסופה.',video:'Squat leg press technique'},
+ 'דדליפט רומני':{muscle:'המסטרינג · ישבן · גב תחתון',image:'https://images.unsplash.com/photo-1598266663439-2056e6900339?auto=format&fit=crop&w=1200&q=80',how:'החזק מוט/דאמבלים, קח אגן אחורה, ירידה עם גב ניטרלי עד מתיחה בהמסטרינג, חזרה דרך הישבן.',tips:'ברכיים מעט כפופות, המוט קרוב לגוף, לא לעגל גב.',video:'Romanian deadlift technique'},
+ 'לאנג׳ים':{muscle:'רגליים · ישבן · יציבות',image:'https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=1200&q=80',how:'צעד קדימה/אחורה, רד בשליטה ודחוף חזרה דרך העקב.',tips:'ברך קדמית בכיוון האצבעות, גוף גבוה, שליטה בשיווי משקל.',video:'Lunges technique'},
+ 'כפיפת ברך':{muscle:'המסטרינג',image:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80',how:'במכונת כפיפת ברך, כופף את הברכיים עד כיווץ מלא וחזור לאט.',tips:'לא להרים אגן, טווח תנועה מלא, ירידה איטית.',video:'Leg curl technique'},
+ 'בטן: פלאנק + כפיפות':{muscle:'בטן · ליבה',image:'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=1200&q=80',how:'בפלאנק שמור גוף בקו ישר. בכפיפות עלה בשליטה בלי למשוך צוואר.',tips:'בטן אסופה, נשימה, איכות לפני כמות.',video:'Plank crunch technique'},
+ 'לחיצת כתפיים':{muscle:'כתפיים · יד אחורית',image:'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=1200&q=80',how:'דחוף מוט/דאמבלים מעל הראש בקו יציב, הורד עד גובה נוח.',tips:'בטן חזקה, לא להקשית גב, מרפקים מעט קדימה.',video:'Shoulder press technique'},
+ 'הרחקות לצדדים':{muscle:'כתף צדדית',image:'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1200&q=80',how:'הרם דאמבלים לצדדים עד גובה כתף, מרפקים מעט כפופים.',tips:'משקל קל יחסית, בלי תנופה, שליטה בירידה.',video:'Lateral raise technique'},
+ 'הרחקות אחוריות':{muscle:'כתף אחורית',image:'https://images.unsplash.com/photo-1581009137042-c552e485697a?auto=format&fit=crop&w=1200&q=80',how:'הישען קדימה או השתמש במכונה, פתח ידיים לצדדים עד כיווץ כתף אחורית.',tips:'לא למשוך עם טרפזים, תנועה איטית, שכמות בשליטה.',video:'Rear delt fly technique'},
+ 'טרפזים':{muscle:'טרפזים',image:'https://images.unsplash.com/photo-1584466977773-e625c37cdd50?auto=format&fit=crop&w=1200&q=80',how:'הרם כתפיים כלפי מעלה עם דאמבלים/מוט, עצירה קצרה למעלה וירידה איטית.',tips:'לא לסובב כתפיים, צוואר רגוע, טווח מלא.',video:'Shrugs technique'},
+ 'בטן / ידיים':{muscle:'בטן · ידיים · השלמות',image:'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80',how:'בחר תרגיל חלש לשיפור: כפיפות בטן, פלאנק, יד קדמית או יד אחורית.',tips:'עבודה נקייה, לא להגיע לכשל בכל סט, לשמור התאוששות.',video:'Core arms workout technique'}
+};
 const workouts=[
  {title:'יום 1 · חזה + יד אחורית',emoji:'💥',photo:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=80',items:[['לחיצת חזה במוט','4 סטים · 6-8'],['לחיצה בשיפוע דאמבלים','3 סטים · 8-10'],['פרפר בכבלים','3 סטים · 10-12'],['מקבילים / פשיטת מרפקים','3 סטים · 8-12'],['יד אחורית חבל','3 סטים · 12-15']]},
  {title:'יום 2 · גב + יד קדמית',emoji:'🦍',photo:'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=900&q=80',items:[['מתח / פולי עליון','4 סטים · 6-10'],['חתירה במוט / מכונה','4 סטים · 8-10'],['חתירה יד אחת','3 סטים · 10'],['פייס פול','3 סטים · 12-15'],['כפיפת מרפקים','3 סטים · 10-12']]},
  {title:'יום 3 · רגליים + בטן',emoji:'🦵',photo:'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=900&q=80',items:[['סקוואט / לג פרס','4 סטים · 6-10'],['דדליפט רומני','3 סטים · 8-10'],['לאנג׳ים','3 סטים · 10 לכל רגל'],['כפיפת ברך','3 סטים · 10-12'],['בטן: פלאנק + כפיפות','3 סבבים']]},
  {title:'יום 4 · כתפיים + בטן',emoji:'👑',photo:'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=900&q=80',items:[['לחיצת כתפיים','4 סטים · 6-8'],['הרחקות לצדדים','4 סטים · 12-15'],['הרחקות אחוריות','3 סטים · 12-15'],['טרפזים','3 סטים · 10-12'],['בטן / ידיים','3-4 סטים']]}
 ];
-function renderWorkouts(){const box=document.getElementById('workoutCards');box.innerHTML='';workouts.forEach(w=>{const div=document.createElement('div');div.className='glass card workout';div.innerHTML=`<div class="photo" style="background-image:url('${w.photo}')"></div><h2>${w.emoji} ${w.title}</h2><span class="pill">כוח</span><span class="pill">60-75 דק׳</span>`+w.items.map(x=>`<div class="exercise"><span><b>${x[0]}</b><small>${x[1]}</small></span><span class="sets">${x[1].split('·')[0]}</span></div>`).join('');box.appendChild(div)})}
+function renderWorkouts(){
+ const box=document.getElementById('workoutCards');
+ box.innerHTML='';
+ const d=data();
+ workouts.forEach((w,wi)=>{
+  const div=document.createElement('div');
+  div.className='glass card workout';
+  div.innerHTML=`<div class="photo" style="background-image:url('${w.photo}')"></div><h2>${w.emoji} ${w.title}</h2><span class="pill">כוח</span><span class="pill">60-75 דק׳</span>`+
+  w.items.map((x,xi)=>{
+    const last=(d.logs||[]).find(l=>l.name===x[0]);
+    const lastTxt=last?`<span class="lastWeight">משקל אחרון: ${last.weight} ק״ג · ${last.reps}×${last.sets}</span>`:'';
+    return `<div class="exercise openable" onclick="openExercise('${x[0].replace(/'/g,"\\'")}', '${x[1].replace(/'/g,"\\'")}', ${wi}, ${xi})"><span><b>${x[0]}</b><small>${x[1]}</small><span class="openHint">לחץ לפתיחת עמוד התרגיל ← תמונה · מידע · עדכון משקל</span>${lastTxt}</span><span class="sets">פתח</span></div>`;
+  }).join('');
+  box.appendChild(div);
+ })
+}
+let currentExerciseName='';
+let currentExercisePrescription='';
+function openExercise(name,prescription,wi,xi){
+ currentExerciseName=name;
+ currentExercisePrescription=prescription;
+ const details=exerciseDetails[name]||{};
+ const d=data();
+ const logs=(d.logs||[]).filter(x=>x.name===name);
+ const last=logs[0];
+ modalExerciseTitle.textContent=name;
+ modalExerciseSubtitle.textContent=(details.muscle||'תרגיל כוח')+' · '+prescription;
+ modalExerciseHow.textContent=details.how||'בצע את התרגיל בשליטה, עם טווח תנועה נקי וללא תנופה.';
+ modalExerciseTips.textContent=details.tips||'שמור על טכניקה, נשימה נכונה ומנוחה מספקת בין הסטים.';
+ exerciseHero.style.backgroundImage=`url('${details.image||workouts[wi].photo}')`;
+ modalWeight.value=last?last.weight:'';
+ modalReps.value=last?last.reps:'';
+ modalSets.value=last?last.sets:'';
+ const q=encodeURIComponent((details.video||name)+' exercise technique');
+ modalVideoBox.innerHTML=`<div><div style="font-size:42px">🎬</div><p>אפשר לפתוח סרטון הדגמה לתרגיל הזה.</p><a target="_blank" href="https://www.youtube.com/results?search_query=${q}">פתח חיפוש סרטוני טכניקה ביוטיוב</a></div>`;
+ modalExerciseHistory.innerHTML=logs.length?logs.slice(0,8).map(x=>`<div class="log"><b>${x.weight} ק״ג · ${x.reps} חזרות · ${x.sets} סטים</b><small>${x.date} · נפח ${x.volume} ק״ג · 1RM ${x.oneRm||'-'} ק״ג</small></div>`).join(''):'<p style="color:#6d7280">עדיין אין היסטוריה לתרגיל הזה. שמור סט ראשון.</p>';
+ document.getElementById('exerciseModal').classList.add('open');
+}
+function closeExerciseModal(e){
+ if(e && e.target && e.target.id!=='exerciseModal') return;
+ document.getElementById('exerciseModal').classList.remove('open');
+}
+function saveExerciseFromModal(){
+ const weight=+modalWeight.value,reps=+modalReps.value,sets=+modalSets.value;
+ if(!currentExerciseName||!weight||!reps||!sets) return alert('מלא משקל, חזרות וסטים');
+ const d=data();
+ const oneRm=Math.round(weight*(1+reps/30));
+ d.logs.unshift({date:today(),iso:isoToday(),name:currentExerciseName,weight,reps,sets,volume:weight*reps*sets,oneRm,prescription:currentExercisePrescription});
+ save(d);
+ openExercise(currentExerciseName,currentExercisePrescription,0,0);
+ playSuccess();
+ toast('נשמר לתרגיל · 1RM משוער: '+oneRm+' ק״ג');
+}
+function startTimerFromModal(){
+ setTimer(90);
+ startTimer();
+ toast('טיימר מנוחה התחיל · 90 שניות');
+}
 function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active')}
-function data(){return JSON.parse(localStorage.getItem('gymUltraData')||'{"logs":[],"cardio":[],"prs":[],"done":[],"health":{}}')}function save(d){localStorage.setItem('gymUltraData',JSON.stringify(d));renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges()}function today(){return new Date().toLocaleDateString('he-IL')}function isoToday(){return new Date().toISOString().slice(0,10)}
+function data(){return JSON.parse(localStorage.getItem('gymUltraData')||'{"logs":[],"cardio":[],"prs":[],"done":[],"health":{}}')}function save(d){localStorage.setItem('gymUltraData',JSON.stringify(d));renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}function today(){return new Date().toLocaleDateString('he-IL')}function isoToday(){return new Date().toISOString().slice(0,10)}
 function markWorkout(){const d=data();if(!d.done.some(x=>x.iso===isoToday())) d.done.unshift({date:today(),iso:isoToday(),type:'אימון כוח'});save(d);playSuccess();toast('האימון סומן בהצלחה 💪')}
 function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});save(d);exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
 function addCardio(){const min=+cardioMinutes.value;if(!min)return alert('כתוב כמה דקות אירובי');const d=data();d.cardio.unshift({date:today(),iso:isoToday(),type:cardioType.value,min});save(d);cardioMinutes.value='';playSuccess();toast('אירובי נשמר')}
@@ -94,8 +221,8 @@ function renderHealth(){const h=data().health||{};healthSummary.innerHTML=`<b>ת
 function renderBadges(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);const achievements=[['אימון ראשון','💪',d.done.length>=1],['4 אימונים','🔥',d.done.length>=4],['10 סטים','🏋️',d.logs.length>=10],['100 דקות אירובי','🏃',d.cardio.reduce((s,x)=>s+x.min,0)>=100],['שיא ראשון','🏆',d.prs.length>=1],['נפח 20,000','🚀',vol>=20000]];badgesGrid.innerHTML=achievements.map(a=>`<div class="glass badgeCard ${a[2]?'':'locked'}"><div class="big">${a[1]}</div><h3>${a[0]}</h3><p>${a[2]?'נפתח':'עדיין נעול'}</p></div>`).join('')}
 let timerSeconds=90,timerLeft=90,timerInt=null;function setTimer(s){timerSeconds=s;timerLeft=s;drawTimer()}function drawTimer(){timerText.textContent=String(Math.floor(timerLeft/60)).padStart(2,'0')+':'+String(timerLeft%60).padStart(2,'0')}function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{timerLeft--;drawTimer();if(timerLeft<=0){clearInterval(timerInt);playFinish();toast('נגמרה המנוחה — חוזרים לסט!')}} ,1000)}function pauseTimer(){clearInterval(timerInt)}function resetTimer(){clearInterval(timerInt);timerLeft=timerSeconds;drawTimer()}
 function shareWhatsApp(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);const car=d.cardio.reduce((s,x)=>s+x.min,0);const last=d.logs.slice(0,5).map(x=>`• ${x.name}: ${x.weight} ק״ג × ${x.reps} × ${x.sets}`).join('\n')||'אין סטים עדיין';const msg=`🏋️ Gym Pro Ultra - סיכום אימון\nתאריך: ${today()}\n\n${last}\n\nנפח כוח: ${vol.toLocaleString('he-IL')} ק״ג\nאירובי: ${car} דקות\nשיאים אישיים: ${d.prs.length}\n\n💪 ממשיכים להתקדם!`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}
-function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-pro-ultra-data.json';a.click()}function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymUltraData');renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges()}}function captureSummary(){html2canvas(document.getElementById('summaryArea'),{backgroundColor:'#fff7fb',scale:1.5}).then(canvas=>{const a=document.createElement('a');a.download='gym-pro-ultra-summary.png';a.href=canvas.toDataURL('image/png');a.click();toast('תמונת סיכום נשמרה')})}
-renderWorkouts();renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();drawTimer();
+function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-pro-ultra-data.json';a.click()}function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymUltraData');renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}}function captureSummary(){html2canvas(document.getElementById('summaryArea'),{backgroundColor:'#fff7fb',scale:1.5}).then(canvas=>{const a=document.createElement('a');a.download='gym-pro-ultra-summary.png';a.href=canvas.toDataURL('image/png');a.click();toast('תמונת סיכום נשמרה')})}
+renderWorkouts();renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts();drawTimer();
 </script>
 </body>
 </html>
