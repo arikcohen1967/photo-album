@@ -1,3 +1,14 @@
+מראה Apple נקי.
+קומפקטי מאוד במובייל.
+הרבה יותר יפה מהרשימה הארוכה שיש עכשיו.
+כן.תן לי קובץ אחד מעודכן
+Thought for 55s
+
+מוכן.
+הכנתי לך קובץ אחד מלא ומעודכן:
+
+להורדת הקובץ המעודכן
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -657,6 +668,65 @@ input::placeholder,textarea::placeholder{color:#9ca3af!important;}
   .exercise.openable:after{width:30px;height:30px;font-size:26px;}
 }
 
+
+/* ===== Compact Apple Menu Panel ===== */
+.menu-panel{
+  background:#ffffff!important;
+  border:1px solid #e5e7eb!important;
+  border-radius:30px!important;
+  padding:20px!important;
+  margin:18px 0!important;
+  box-shadow:0 16px 38px rgba(15,23,42,.08)!important;
+}
+.menu-panel h2{
+  margin:0 0 16px!important;
+  text-align:center!important;
+  color:#111827!important;
+  font-size:22px!important;
+}
+.menu-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,1fr)!important;
+  gap:12px!important;
+}
+.menu-tile{
+  height:98px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  border-radius:24px!important;
+  border:1px solid #e5e7eb!important;
+  background:#f8fafc!important;
+  color:#111827!important;
+  box-shadow:0 8px 18px rgba(15,23,42,.05)!important;
+  cursor:pointer!important;
+  transition:.18s ease!important;
+  padding:12px!important;
+}
+.menu-tile:hover{
+  transform:translateY(-3px)!important;
+  background:#ffffff!important;
+  box-shadow:0 16px 30px rgba(15,23,42,.10)!important;
+}
+.menu-tile:active{transform:scale(.97)!important;}
+.menu-tile span{font-size:30px!important;line-height:1!important;}
+.menu-tile b{font-size:15px!important;color:inherit!important;}
+.menu-tile.active{
+  background:#111827!important;
+  color:#ffffff!important;
+  border-color:#111827!important;
+  box-shadow:0 16px 34px rgba(17,24,39,.18)!important;
+}
+.wide-tile{grid-column:1 / -1!important;}
+@media(max-width:650px){
+  .menu-panel{border-radius:26px!important;padding:16px!important;margin:14px 0!important;}
+  .menu-grid{grid-template-columns:repeat(2,1fr)!important;gap:10px!important;}
+  .menu-tile{height:88px!important;border-radius:21px!important;}
+  .menu-tile span{font-size:28px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -677,8 +747,31 @@ input::placeholder,textarea::placeholder{color:#9ca3af!important;}
     <div class="glass stat"><span>שיאים אישיים</span><strong id="prText">0 🏆</strong><div class="progress"><div class="bar" id="prBar"></div></div></div>
   </section>
 
-  <nav class="glass tabs">
-    <button class="tab active" onclick="showSection('strength',this)">🏋️ כוח</button><button class="tab" onclick="showSection('aerobic',this)">🏃 אירובי</button><button class="tab" onclick="showSection('tracker',this)">📊 מעקב</button><button class="tab" onclick="showSection('timer',this)">⏱️ טיימר</button><button class="tab" onclick="showSection('health',this)">🍎 בריאות</button><button class="tab" onclick="showSection('achievements',this)">🏆 הישגים</button><button class="tab" onclick="showSection('dashboard',this)">📱 דאשבורד</button>
+  <nav class="menu-panel" aria-label="תפריט ראשי">
+    <h2>🏋️ תפריט ראשי</h2>
+    <div class="menu-grid">
+      <button class="menu-tile active" data-section="strength" onclick="showSection('strength',this)">
+        <span>🏋️</span><b>כוח</b>
+      </button>
+      <button class="menu-tile" data-section="aerobic" onclick="showSection('aerobic',this)">
+        <span>🏃</span><b>אירובי</b>
+      </button>
+      <button class="menu-tile" data-section="tracker" onclick="showSection('tracker',this)">
+        <span>📊</span><b>מעקב</b>
+      </button>
+      <button class="menu-tile" data-section="timer" onclick="showSection('timer',this)">
+        <span>⏱️</span><b>טיימר</b>
+      </button>
+      <button class="menu-tile" data-section="health" onclick="showSection('health',this)">
+        <span>🍎</span><b>בריאות</b>
+      </button>
+      <button class="menu-tile" data-section="achievements" onclick="showSection('achievements',this)">
+        <span>🏆</span><b>הישגים</b>
+      </button>
+      <button class="menu-tile wide-tile" data-section="dashboard" onclick="showSection('dashboard',this)">
+        <span>📱</span><b>דאשבורד</b>
+      </button>
+    </div>
   </nav>
 
   <section id="strength" class="section active"><div class="grid"><div class="cards" id="workoutCards"></div><aside class="glass sidePanel"><h2>🎯 תוכנית כוח 4 ימים</h2><p>התוכנית בנויה סביב מה שאתה אוהב: אימוני כוח, התקדמות במשקלים וטכניקה נקייה. בכל פעם שכל הסטים מצליחים — העלאה קטנה במשקל באימון הבא.</p><span class="pill">RPE 7-9</span><span class="pill">מנוחה 90-180 שנ׳</span><span class="pill">Progressive Overload</span><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3>🤖 המלצת מאמן</h3><div id="coach" class="coachBox">עוד אין מספיק נתונים. סמן אימון ראשון והוסף סטים כדי לקבל המלצות.</div><br><button class="green wide" onclick="markWorkout()">✅ סמן אימון שבוצע היום</button></aside></div></section>
@@ -897,7 +990,7 @@ function startTimerFromModal(){
  startTimer();
  toast('טיימר מנוחה התחיל · 90 שניות');
 }
-function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active')}
+function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab,.menu-tile').forEach(t=>t.classList.remove('active'));if(btn){btn.classList.add('active')}else{const tile=document.querySelector(`.menu-tile[data-section=\"${id}\"]`);if(tile)tile.classList.add('active')}}
 function data(){return JSON.parse(localStorage.getItem('gymUltraData')||'{"logs":[],"cardio":[],"prs":[],"done":[],"health":{}}')}function save(d){localStorage.setItem('gymUltraData',JSON.stringify(d));renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}function today(){return new Date().toLocaleDateString('he-IL')}function isoToday(){return new Date().toISOString().slice(0,10)}
 function markWorkout(){const d=data();if(!d.done.some(x=>x.iso===isoToday())) d.done.unshift({date:today(),iso:isoToday(),type:'אימון כוח'});save(d);playSuccess();toast('האימון סומן בהצלחה 💪')}
 function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});maybeAutoPR(name,weight);save(data());exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
