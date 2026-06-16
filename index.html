@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>האתר של ליאן</title>
+
 <style>
 body{
   margin:0;
@@ -12,17 +13,21 @@ body{
   min-height:100vh;
   text-align:center;
 }
+
 header{
   padding:50px 20px 25px;
   color:white;
 }
+
 h1{
   font-size:44px;
   margin:0;
 }
+
 p{
   font-size:22px;
 }
+
 .menu{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
@@ -31,6 +36,7 @@ p{
   margin:40px auto;
   padding:20px;
 }
+
 .card{
   background:white;
   border-radius:25px;
@@ -42,20 +48,42 @@ p{
   font-weight:bold;
   transition:.25s;
 }
+
 .card:hover{
   transform:scale(1.06);
 }
+
 .icon{
   font-size:60px;
   display:block;
   margin-bottom:15px;
 }
+
 footer{
   color:white;
   padding:30px;
 }
+
+@media(max-width:700px){
+  h1{
+    font-size:34px;
+  }
+
+  p{
+    font-size:18px;
+  }
+
+  .card{
+    font-size:22px;
+  }
+
+  .icon{
+    font-size:50px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -95,6 +123,11 @@ footer{
     ניהול תקציב משפחתי
   </a>
 
+  <a class="card" href="gym-ios-manager.html">
+    <span class="icon">🏋️</span>
+    ניהול אימונים
+  </a>
+
   <a class="card" href="drawing.html">
     <span class="icon">🎨</span>
     ציור וצביעה
@@ -113,4 +146,3 @@ footer{
 
 </body>
 </html>
-
