@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>מנהל האימונים שלי</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#f5f7fb;--card:rgba(255,255,255,.78);--ink:#111827;--muted:#6b7280;--line:rgba(148,163,184,.28);
+  --blue:#007aff;--cyan:#5ac8fa;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--purple:#af52de;--pink:#ff2d55;
+  --shadow:0 22px 60px rgba(15,23,42,.12);--soft:0 12px 30px rgba(15,23,42,.08);--r:28px
+}
+body{margin:0;font-family:Arial,"Segoe UI",sans-serif;background:
+ radial-gradient(circle at 15% 5%,rgba(255,45,85,.18),transparent 28%),
+ radial-gradient(circle at 85% 8%,rgba(0,122,255,.20),transparent 30%),
+ radial-gradient(circle at 50% 95%,rgba(52,199,89,.12),transparent 34%),var(--bg);color:var(--ink);min-height:100vh;padding:18px}
+.app{max-width:1220px;margin:auto}
+.hero{position:relative;overflow:hidden;border-radius:36px;padding:34px 26px;background:linear-gradient(135deg,rgba(17,24,39,.94),rgba(31,41,55,.88)),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=80') center/cover;box-shadow:var(--shadow);color:#fff;text-align:right}
+.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.16),transparent 26%),linear-gradient(90deg,rgba(255,45,85,.22),rgba(0,122,255,.16));pointer-events:none}
+.hero>*{position:relative;z-index:1}.badge{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(18px);padding:9px 15px;border-radius:999px;font-weight:900;font-size:13px}.hero h1{font-size:46px;margin:18px 0 8px}.hero p{font-size:20px;max-width:700px;line-height:1.55;color:rgba(255,255,255,.86);margin:0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+button,a.btn{border:0;border-radius:18px;padding:13px 17px;font-size:16px;font-weight:900;cursor:pointer;text-decoration:none;color:white;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 12px 25px rgba(0,122,255,.22);transition:.18s;font-family:inherit}button:hover,a.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}button:active{transform:scale(.98)}.ghost{background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.24)!important}.green{background:linear-gradient(135deg,var(--green),#30d158)!important}.orange{background:linear-gradient(135deg,var(--orange),#ffcc00)!important;color:#1d1d1f!important}.red{background:linear-gradient(135deg,var(--red),#ff6b6b)!important}.dark{background:linear-gradient(135deg,#374151,#111827)!important}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}.stat{background:var(--card);border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(22px);border-radius:var(--r);padding:20px;box-shadow:var(--soft);text-align:right}.stat span{font-size:13px;color:var(--muted);font-weight:800}.stat strong{display:block;font-size:32px;margin-top:8px}.progress{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:12px}.bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue));width:65%}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(20px);padding:10px;border-radius:999px;margin:18px 0;box-shadow:var(--soft)}.tab{flex:1;min-width:140px;background:transparent;color:var(--ink);box-shadow:none;border-radius:999px}.tab.active{background:linear-gradient(135deg,#111827,#374151);color:white;box-shadow:0 12px 25px rgba(17,24,39,.18)}
+.section{display:none}.section.active{display:block}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{background:var(--card);border:1px solid rgba(255,255,255,.78);backdrop-filter:blur(22px);border-radius:var(--r);box-shadow:var(--soft);padding:20px;text-align:right;overflow:hidden}.card h2,.card h3{margin:0 0 10px}.card p{color:var(--muted);line-height:1.55}.workout{position:relative;min-height:210px}.workout:before{content:"";position:absolute;inset:0 0 auto 0;height:7px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue))}.pill{display:inline-flex;align-items:center;gap:7px;background:#eef2ff;color:#3730a3;border-radius:999px;padding:7px 11px;font-weight:900;font-size:13px;margin:3px}.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}.exercise:first-of-type{border-top:0}.exercise b{display:block}.exercise small{color:var(--muted)}.sets{direction:ltr;background:#f3f4f6;border-radius:14px;padding:8px 10px;font-weight:900;color:#111827;white-space:nowrap}.ios-panel{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.62));border:1px solid rgba(255,255,255,.8);border-radius:32px;box-shadow:var(--shadow);padding:22px}.phone{margin:auto;width:min(330px,100%);border-radius:42px;padding:14px;background:#111827;box-shadow:0 28px 70px rgba(17,24,39,.25)}.screen{border-radius:32px;overflow:hidden;background:#fff;min-height:520px}.screenTop{height:210px;background:linear-gradient(135deg,var(--pink),var(--purple),var(--blue));color:#fff;padding:26px 18px;text-align:right}.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}.ring{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(from 180deg,var(--green) 0 75%,rgba(255,255,255,.25) 75%);font-weight:900}.feed{padding:16px}.feedRow{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eef2f7;padding:12px 0}.feedRow:last-child{border:0}.icon{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;background:#f3f4f6;font-size:22px}.aerobic-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.aero{min-height:180px;background:#fff;border-radius:28px;padding:18px;box-shadow:var(--soft);border:1px solid #eef2f7;position:relative;overflow:hidden}.aero:after{content:"";position:absolute;left:-40px;bottom:-50px;width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,rgba(0,122,255,.18),rgba(90,200,250,.16))}.aero .big{font-size:44px}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.inputRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}input,select,textarea{width:100%;border:1px solid #dbe4ee;border-radius:16px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;background:rgba(255,255,255,.92)}textarea{min-height:90px}.history{max-height:280px;overflow:auto}.log{padding:12px;border:1px solid #eef2f7;border-radius:18px;margin:8px 0;background:#fff}.log b{display:block}.log small{color:var(--muted)}
+.footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0}.hidden{display:none!important}
+@media(max-width:900px){.stats,.cards,.aerobic-list,.tools{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero h1{font-size:34px}}
+@media(max-width:620px){body{padding:10px}.hero{border-radius:28px;padding:26px 18px}.stats,.cards,.aerobic-list,.tools,.inputRow{grid-template-columns:1fr}.tab{min-width:100%;}.hero-actions button,.hero-actions .btn{width:100%}.stat strong{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="badge">💪 iOS GYM STUDIO · כוח / אירובי / מעקב</div>
+    <h1>מנהל האימונים שלי</h1>
+    <p>אפליקציה אישית לניהול חדר כושר: תוכנית כוח ל־4 ימים בשבוע, אירובי בנפרד, מעקב משקלים, נפח אימון, מטרות והיסטוריה — בעיצוב iOS נקי וחדשני.</p>
+    <div class="hero-actions">
+      <button onclick="showSection('strength')">🏋️ אימוני כוח</button>
+      <button class="ghost" onclick="showSection('aerobic')">🔥 אירובי</button>
+      <button class="ghost" onclick="showSection('tracker')">📈 מעקב</button>
+      <a class="btn ghost" href="index.html">🏠 חזרה לאתר</a>
+    </div>
+  </section>
 
+  <section class="stats">
+    <div class="stat"><span>אימונים השבוע</span><strong id="weekCount">0/4</strong><div class="progress"><div class="bar" id="weekBar"></div></div></div>
+    <div class="stat"><span>נפח כוח משוער</span><strong id="volumeText">0 ק״ג</strong><div class="progress"><div class="bar" style="width:50%"></div></div></div>
+    <div class="stat"><span>אירובי השבוע</span><strong id="cardioText">0 דק׳</strong><div class="progress"><div class="bar" style="width:25%"></div></div></div>
+    <div class="stat"><span>סטריק</span><strong id="streakText">🔥 0</strong><div class="progress"><div class="bar" style="width:35%"></div></div></div>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" onclick="showSection('strength',this)">🏋️ כוח</button>
+    <button class="tab" onclick="showSection('aerobic',this)">🏃 אירובי</button>
+    <button class="tab" onclick="showSection('tracker',this)">📊 מעקב</button>
+    <button class="tab" onclick="showSection('dashboard',this)">📱 דאשבורד</button>
+  </nav>
+
+  <section id="strength" class="section active">
+    <div class="grid">
+      <div class="cards" id="workoutCards"></div>
+      <aside class="ios-panel">
+        <h2>🎯 עקרונות לתוכנית כוח</h2>
+        <p>4 ימים בשבוע, דגש על כוח, עלייה הדרגתית במשקלים וטכניקה נקייה. בכל תרגיל: כשכל הסטים מרגישים טוב — להעלות מעט משקל באימון הבא.</p>
+        <span class="pill">RPE 7-9</span><span class="pill">מנוחה 90-180 שנ׳</span><span class="pill">חימום לפני כבד</span>
+        <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+        <h3>⚡ חלוקה מומלצת</h3>
+        <p><b>יום 1:</b> חזה + יד אחורית<br><b>יום 2:</b> גב + יד קדמית<br><b>יום 3:</b> רגליים + בטן<br><b>יום 4:</b> כתפיים + השלמות</p>
+        <button class="green" onclick="markWorkout()">✅ סמן אימון שבוצע היום</button>
+      </aside>
+    </div>
+  </section>
+
+  <section id="aerobic" class="section">
+    <div class="card"><h2>🔥 אימונים אירוביים — בנפרד מהכוח</h2><p>אירובי משמש לשיפור סיבולת, בריאות לב ושריפת קלוריות. בגלל שאתה אוהב כוח — האירובי קצר, חכם ולא מפריע להתקדמות במשקלים.</p></div>
+    <div class="aerobic-list">
+      <div class="aero"><div class="big">🚶</div><h3>הליכה בשיפוע</h3><p>20–30 דקות, שיפוע 5–10, קצב בינוני. מצוין אחרי כוח או ביום נפרד.</p></div>
+      <div class="aero"><div class="big">🚴</div><h3>אופניים</h3><p>15–25 דקות, עומס בינוני. עדין יותר לרגליים ומתאים לשמירה על התאוששות.</p></div>
+      <div class="aero"><div class="big">⚡</div><h3>אינטרוולים</h3><p>10–14 דקות בלבד: 30 שנ׳ חזק / 60 שנ׳ קל. לא ביום רגליים כבד.</p></div>
+    </div>
+  </section>
+
+  <section id="tracker" class="section">
+    <div class="tools">
+      <div class="card"><h2>➕ הוסף סט</h2><div class="inputRow"><input id="exName" placeholder="תרגיל למשל Bench Press"><input id="exWeight" type="number" placeholder="משקל ק״ג"></div><div class="inputRow"><input id="exReps" type="number" placeholder="חזרות"><input id="exSets" type="number" placeholder="סטים"></div><button onclick="addLog()">שמור סט</button></div>
+      <div class="card"><h2>🏃 הוסף אירובי</h2><div class="inputRow"><select id="cardioType"><option>הליכה</option><option>אופניים</option><option>אליפטי</option><option>אינטרוולים</option></select><input id="cardioMinutes" type="number" placeholder="דקות"></div><button class="orange" onclick="addCardio()">שמור אירובי</button></div>
+      <div class="card"><h2>📝 הערות אימון</h2><textarea id="noteText" placeholder="איך הרגשת? כאבים? שיא חדש? אנרגיה?"></textarea><button class="dark" onclick="saveNote()">שמור הערה</button></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h2>📚 היסטוריית אימונים</h2><div id="history" class="history"></div><button class="red" onclick="clearData()">נקה נתונים</button></div>
+  </section>
+
+  <section id="dashboard" class="section">
+    <div class="grid">
+      <div class="phone"><div class="screen"><div class="screenTop"><h2>Fitness Today</h2><p>כוח, אירובי והתאוששות</p><div class="rings"><div class="ring">כוח</div><div class="ring" style="background:conic-gradient(var(--orange) 0 52%,rgba(255,255,255,.25) 52%)">דופק</div><div class="ring" style="background:conic-gradient(var(--pink) 0 68%,rgba(255,255,255,.25) 68%)">נפח</div></div></div><div class="feed"><div class="feedRow"><span><b>אימון הבא</b><small>חזה + יד אחורית</small></span><span class="icon">🏋️</span></div><div class="feedRow"><span><b>אירובי מומלץ</b><small>20 דק׳ הליכה בשיפוע</small></span><span class="icon">🔥</span></div><div class="feedRow"><span><b>מטרה</b><small>התקדמות במשקלים</small></span><span class="icon">🎯</span></div></div></div></div>
+      <div class="ios-panel"><h2>📱 מראה iOS מתקדם</h2><p>התצוגה בנויה כמו אפליקציה: כרטיסי זכוכית, טבעות פעילות, גרדיאנטים, צללים רכים ומעקב מקומי בדפדפן.</p><p>הנתונים נשמרים ב־LocalStorage במכשיר שבו עובדים.</p><button onclick="window.print()">🖨️ הדפס תוכנית</button></div>
+    </div>
+  </section>
+
+  <div class="footer"><button onclick="exportData()">⬇️ ייצוא נתונים</button><button class="green" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️ למעלה</button></div>
+</div>
+<script>
+const workouts=[
+ {title:'יום 1 · חזה + יד אחורית',emoji:'💥',items:[['לחיצת חזה במוט','4 סטים · 6-8 חזרות'],['לחיצת חזה בשיפוע דאמבלים','3 סטים · 8-10'],['פרפר בכבלים','3 סטים · 10-12'],['מקבילים / פשיטת מרפקים','3 סטים · 8-12'],['יד אחורית חבל','3 סטים · 12-15']]},
+ {title:'יום 2 · גב + יד קדמית',emoji:'🦍',items:[['מתח / פולי עליון','4 סטים · 6-10'],['חתירה במוט / מכונה','4 סטים · 8-10'],['חתירה יד אחת','3 סטים · 10'],['פייס פול','3 סטים · 12-15'],['כפיפת מרפקים דאמבלים','3 סטים · 10-12']]},
+ {title:'יום 3 · רגליים + בטן',emoji:'🦵',items:[['סקוואט / לג פרס','4 סטים · 6-10'],['דדליפט רומני','3 סטים · 8-10'],['לאנג׳ים','3 סטים · 10 לכל רגל'],['כפיפת ברך','3 סטים · 10-12'],['בטן: פלאנק + כפיפות','3 סבבים']]},
+ {title:'יום 4 · כתפיים + השלמות',emoji:'👑',items:[['לחיצת כתפיים','4 סטים · 6-8'],['הרחקות לצדדים','4 סטים · 12-15'],['הרחקות אחוריות','3 סטים · 12-15'],['טרפזים','3 סטים · 10-12'],['ידיים/חולשה אישית','3-4 סטים']]}
+];
+function renderWorkouts(){const box=document.getElementById('workoutCards');box.innerHTML='';workouts.forEach(w=>{const div=document.createElement('div');div.className='card workout';div.innerHTML=`<h2>${w.emoji} ${w.title}</h2><span class="pill">כוח</span><span class="pill">60-75 דק׳</span>`+w.items.map(x=>`<div class="exercise"><span><b>${x[0]}</b><small>${x[1]}</small></span><span class="sets">${x[1].split('·')[0]}</span></div>`).join('');box.appendChild(div)})}
+function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active')}
+function data(){return JSON.parse(localStorage.getItem('gymIosData')||'{"logs":[],"cardio":[],"notes":[],"done":[]}')}
+function save(d){localStorage.setItem('gymIosData',JSON.stringify(d));renderHistory();updateStats()}
+function today(){return new Date().toLocaleDateString('he-IL')}
+function markWorkout(){const d=data();d.done.unshift({date:today(),type:'אימון כוח'});save(d);alert('האימון סומן בהצלחה 💪')}
+function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();d.logs.unshift({date:today(),name,weight,reps,sets,volume:weight*reps*sets});save(d);exName.value=exWeight.value=exReps.value=exSets.value=''}
+function addCardio(){const min=+cardioMinutes.value;if(!min)return alert('כתוב כמה דקות אירובי');const d=data();d.cardio.unshift({date:today(),type:cardioType.value,min});save(d);cardioMinutes.value=''}
+function saveNote(){const text=noteText.value.trim();if(!text)return;const d=data();d.notes.unshift({date:today(),text});save(d);noteText.value=''}
+function renderHistory(){const d=data();let rows=[];d.logs.forEach(x=>rows.push(`<div class="log"><b>🏋️ ${x.name}</b><small>${x.date} · ${x.sets} סטים · ${x.reps} חזרות · ${x.weight} ק״ג · נפח ${x.volume} ק״ג</small></div>`));d.cardio.forEach(x=>rows.push(`<div class="log"><b>🔥 ${x.type}</b><small>${x.date} · ${x.min} דקות</small></div>`));d.notes.forEach(x=>rows.push(`<div class="log"><b>📝 הערה</b><small>${x.date}</small><p>${x.text}</p></div>`));history.innerHTML=rows.join('')||'<p style="color:#6b7280">עדיין אין נתונים. הוסף אימון ראשון.</p>'}
+function updateStats(){const d=data();const done=d.done.length;weekCount.textContent=Math.min(done,4)+'/4';weekBar.style.width=Math.min(done/4*100,100)+'%';const vol=d.logs.reduce((s,x)=>s+x.volume,0);volumeText.textContent=vol.toLocaleString('he-IL')+' ק״ג';const car=d.cardio.reduce((s,x)=>s+x.min,0);cardioText.textContent=car+' דק׳';streakText.textContent='🔥 '+done}
+function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymIosData');renderHistory();updateStats()}}
+function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-ios-data.json';a.click()}
+renderWorkouts();renderHistory();updateStats();
+</script>
+</body>
+</html>
