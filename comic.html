@@ -621,6 +621,204 @@ input:focus,select:focus{
     font-size:22px;
   }
 }
+
+
+/* ===== Instagram Pro additions ===== */
+.pro-panel{
+  max-width:1160px;
+  margin:14px auto;
+  padding:16px;
+  border-radius:30px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:var(--shadow-soft);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+.pro-title{
+  font-weight:900;
+  color:#833ab4;
+  margin-bottom:12px;
+  font-size:18px;
+}
+.pro-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+}
+.pro-actions input,.pro-actions select{
+  min-width:180px;
+}
+.story-phone{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.story-phone.open{ display:flex; }
+.story-shell{
+  width:min(390px,94vw);
+  height:min(720px,88vh);
+  background:#000;
+  border-radius:42px;
+  padding:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+  position:relative;
+  border:2px solid rgba(255,255,255,.18);
+}
+.story-screen{
+  height:100%;
+  border-radius:32px;
+  overflow:hidden;
+  background:#fff;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.story-bars{
+  position:absolute;
+  top:12px;
+  right:12px;
+  left:12px;
+  display:flex;
+  gap:5px;
+  z-index:3;
+}
+.story-bars span{
+  height:4px;
+  border-radius:99px;
+  background:rgba(255,255,255,.45);
+  flex:1;
+  overflow:hidden;
+}
+.story-bars span.active::after{
+  content:"";
+  display:block;
+  height:100%;
+  width:100%;
+  background:#fff;
+  animation:storyFill 3s linear forwards;
+}
+@keyframes storyFill{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.story-close{
+  position:absolute;
+  top:-10px;
+  left:-10px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  z-index:5;
+}
+.story-content{ width:100%; height:100%; position:relative; }
+.story-content .frame{
+  width:100%;
+  height:100%;
+  border-radius:32px;
+  margin:0;
+  box-shadow:none;
+  border:0;
+}
+.story-nav{
+  position:absolute;
+  bottom:12px;
+  right:12px;
+  left:12px;
+  display:flex;
+  gap:8px;
+  z-index:4;
+}
+.story-nav button{ flex:1; }
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+.gallery-card{
+  background:white;
+  border-radius:18px;
+  padding:8px;
+  box-shadow:0 8px 18px rgba(17,24,39,.10);
+}
+.gallery-card img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+}
+.gallery-card a{
+  display:block;
+  margin-top:7px;
+  font-weight:900;
+  color:#833ab4;
+  text-decoration:none;
+}
+.ig-meta{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  right:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  z-index:8;
+  pointer-events:none;
+}
+.ig-icons{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:17px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+.ig-comment{
+  flex:1;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:13px;
+  color:#111827;
+  text-align:right;
+  box-shadow:0 8px 20px rgba(0,0,0,.10);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.filter-clarendon{ filter:contrast(1.15) saturate(1.35) brightness(1.05); }
+.filter-valencia{ filter:sepia(.18) saturate(1.18) brightness(1.08); }
+.filter-juno{ filter:contrast(1.12) saturate(1.45) hue-rotate(-8deg); }
+.filter-mono{ filter:grayscale(1) contrast(1.08); }
+.reel-mode .frame{
+  animation:reelPop .55s ease both;
+}
+@keyframes reelPop{from{opacity:0; transform:translateY(18px) scale(.96)}to{opacity:1; transform:translateY(0) scale(1)}}
+.confetti-piece{
+  position:fixed;
+  top:-20px;
+  z-index:20000;
+  pointer-events:none;
+  animation:confettiFall 1.8s linear forwards;
+  font-size:22px;
+}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(540deg); opacity:0}}
+@media(max-width:700px){
+  .pro-actions input,.pro-actions select{ width:100%; min-width:0; }
+  .gallery-card img{ height:110px; }
+}
+
 </style>
 </head>
 
@@ -758,6 +956,29 @@ input:focus,select:focus{
 
 
 
+
+
+<div class="pro-panel">
+  <div class="pro-title">✨ Instagram Pro — סטוריז, לייקים, תגובות, פילטרים וגלריית קומיקסים</div>
+  <div class="pro-actions">
+    <button class="blue" onclick="addInstagramMeta()">❤️ הוסף לייקים ותגובה לפריים</button>
+    <input id="igCommentText" placeholder="תגובה לפריים, למשל: איזה קומיקס מושלם!">
+    <select id="filterSelect">
+      <option value="">ללא פילטר</option>
+      <option value="filter-clarendon">Clarendon ✨</option>
+      <option value="filter-valencia">Valencia 🌅</option>
+      <option value="filter-juno">Juno 🌈</option>
+      <option value="filter-mono">שחור לבן 🖤</option>
+    </select>
+    <button class="orange" onclick="applyFrameFilter()">🌈 החל פילטר</button>
+    <button class="green" onclick="autoCreateStory()">🪄 צור סיפור אוטומטי</button>
+    <button class="blue" onclick="openStoryMode()">📱 מצב Story</button>
+    <button class="green" onclick="saveToComicGallery()">👑 שמור בגלריית קומיקסים</button>
+    <button class="orange" onclick="openComicGallery()">🖼️ פתח גלריית קומיקסים</button>
+    <button class="small" onclick="toggleMusic()">🎵 מוזיקה</button>
+  </div>
+</div>
+
 <div class="sticker-controls">
   <button class="blue" onclick="makeSelectedBigger()">➕ הגדל תמונה/אימוג׳י</button>
   <button class="blue" onclick="makeSelectedSmaller()">➖ הקטן תמונה/אימוג׳י</button>
@@ -819,7 +1040,204 @@ input:focus,select:focus{
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+<div id="storyPhone" class="story-phone">
+  <div class="story-shell">
+    <button class="story-close red" onclick="closeStoryMode()">×</button>
+    <div class="story-screen">
+      <div id="storyBars" class="story-bars"></div>
+      <div id="storyContent" class="story-content"></div>
+      <div class="story-nav">
+        <button class="small" onclick="prevStoryFrame()">הקודם</button>
+        <button class="blue" onclick="nextStoryFrame()">הבא</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="comicGalleryBox" class="album-picker">
+  <div class="album-box">
+    <h2>👑 גלריית הקומיקסים של ליאן</h2>
+    <p>כאן נשמרים קומיקסים נפרדים מהאלבום הרגיל.</p>
+    <div class="success-actions"><button class="small" onclick="closeComicGallery()">סגור</button></div>
+    <div id="comicGalleryGrid" class="gallery-grid"></div>
+    <div id="comicGalleryEmpty" class="album-empty" style="display:none;">עוד אין קומיקסים בגלריה. שמור קומיקס ראשון עם הכפתור 👑.</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+
+/* ===== Instagram Pro functions ===== */
+let storyIndex=0;
+let storyTimer=null;
+let musicOn=false;
+let musicCtx=null;
+let musicOsc=null;
+
+function getFramesArray(){
+  return Array.from(document.querySelectorAll("#comicArea .frame"));
+}
+
+function addInstagramMeta(){
+  const old=activeFrame.querySelector(".ig-meta");
+  if(old) old.remove();
+  const text=(document.getElementById("igCommentText").value || "ליאן יצרה קומיקס מושלם ✨").trim();
+  const likes=Math.floor(Math.random()*800)+120;
+  const meta=document.createElement("div");
+  meta.className="ig-meta";
+  meta.innerHTML='<div class="ig-comment">💬 '+text+'</div><div class="ig-icons">❤️ '+likes+' · 💬 · 📤</div>';
+  activeFrame.appendChild(meta);
+}
+
+function applyFrameFilter(){
+  const value=document.getElementById("filterSelect").value;
+  activeFrame.classList.remove("filter-clarendon","filter-valencia","filter-juno","filter-mono");
+  if(value) activeFrame.classList.add(value);
+}
+
+function autoCreateStory(){
+  const frames=getFramesArray();
+  const lines=[
+    "היום התחיל כמו יום רגיל... עד שקרה משהו קסום! ✨",
+    "ליאן והחברים מצאו סימן מסתורי בדרך 🧭",
+    "פתאום הופיע גיבור חדש עם כוח מיוחד 🦸‍♀️",
+    "כולם צחקו, עזרו אחד לשני והמשיכו להרפתקה 🌈",
+    "ובסוף? זה היה הקומיקס הכי יפה בעולם! 👑"
+  ];
+  frames.forEach((frame,i)=>{
+    if(frame.children.length===0){
+      selectFrame(frame);
+      addItem(i%2===0 ? "👧" : "🦄");
+      addItem(["✨","🌈","⭐","❤️","🎬"][i%5]);
+    }
+    selectFrame(frame);
+    document.getElementById("speechText").value=lines[i%lines.length];
+    addSpeech();
+    document.getElementById("igCommentText").value="פרק " + (i+1) + " מתוך הקומיקס של ליאן";
+    addInstagramMeta();
+  });
+  document.body.classList.add("reel-mode");
+  launchConfetti();
+}
+
+function openStoryMode(){
+  storyIndex=0;
+  document.getElementById("storyPhone").classList.add("open");
+  renderStoryFrame();
+}
+
+function closeStoryMode(){
+  document.getElementById("storyPhone").classList.remove("open");
+  if(storyTimer) clearTimeout(storyTimer);
+}
+
+function renderStoryFrame(){
+  const frames=getFramesArray();
+  const content=document.getElementById("storyContent");
+  const bars=document.getElementById("storyBars");
+  if(storyTimer) clearTimeout(storyTimer);
+  content.innerHTML="";
+  bars.innerHTML="";
+  frames.forEach((_,i)=>{
+    const b=document.createElement("span");
+    if(i===storyIndex) b.className="active";
+    bars.appendChild(b);
+  });
+  const clone=frames[storyIndex].cloneNode(true);
+  clone.classList.remove("active");
+  content.appendChild(clone);
+  storyTimer=setTimeout(nextStoryFrame,3000);
+}
+
+function nextStoryFrame(){
+  const frames=getFramesArray();
+  storyIndex=(storyIndex+1)%frames.length;
+  renderStoryFrame();
+}
+
+function prevStoryFrame(){
+  const frames=getFramesArray();
+  storyIndex=(storyIndex-1+frames.length)%frames.length;
+  renderStoryFrame();
+}
+
+function saveToComicGallery(){
+  cleanSelection();
+  html2canvas(activeFrame,{backgroundColor:"#ffffff",scale:2}).then(canvas=>{
+    const imageData=canvas.toDataURL("image/png");
+    let gallery=[];
+    try{ gallery=JSON.parse(localStorage.getItem("lianComicGallery") || "[]"); }catch(e){ gallery=[]; }
+    gallery.unshift({id:Date.now()+"",date:new Date().toLocaleDateString("he-IL"),data:imageData});
+    localStorage.setItem("lianComicGallery",JSON.stringify(gallery));
+    launchConfetti();
+    alert("הקומיקס נשמר בגלריית הקומיקסים 👑");
+  });
+}
+
+function openComicGallery(){
+  const box=document.getElementById("comicGalleryBox");
+  const grid=document.getElementById("comicGalleryGrid");
+  const empty=document.getElementById("comicGalleryEmpty");
+  let gallery=[];
+  try{ gallery=JSON.parse(localStorage.getItem("lianComicGallery") || "[]"); }catch(e){ gallery=[]; }
+  grid.innerHTML="";
+  empty.style.display=gallery.length?"none":"block";
+  gallery.forEach((item,i)=>{
+    const card=document.createElement("div");
+    card.className="gallery-card";
+    card.innerHTML='<img src="'+item.data+'" alt="קומיקס שמור"><a download="comic-lian-'+(i+1)+'.png" href="'+item.data+'">⬇️ הורדה</a>';
+    grid.appendChild(card);
+  });
+  box.classList.add("open");
+}
+
+function closeComicGallery(){
+  document.getElementById("comicGalleryBox").classList.remove("open");
+}
+
+function toggleMusic(){
+  try{
+    if(musicOn){
+      if(musicOsc) musicOsc.stop();
+      if(musicCtx) musicCtx.close();
+      musicOn=false;
+      return;
+    }
+    const AudioContext=window.AudioContext || window.webkitAudioContext;
+    musicCtx=new AudioContext();
+    musicOsc=musicCtx.createOscillator();
+    const gain=musicCtx.createGain();
+    musicOsc.type="triangle";
+    musicOsc.frequency.value=220;
+    gain.gain.value=.035;
+    musicOsc.connect(gain);
+    gain.connect(musicCtx.destination);
+    musicOsc.start();
+    musicOn=true;
+  }catch(e){ alert("הדפדפן לא מאפשר מוזיקה אוטומטית כרגע"); }
+}
+
+function launchConfetti(){
+  const icons=["💖","✨","🌈","⭐","🎉","🧡"];
+  for(let i=0;i<34;i++){
+    const c=document.createElement("div");
+    c.className="confetti-piece";
+    c.textContent=icons[i%icons.length];
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDelay=(Math.random()*0.45)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2400);
+  }
+}
+
+const originalShowSuccessBox = showSuccessBox;
+showSuccessBox=function(){
+  launchConfetti();
+  originalShowSuccessBox();
+};
+
+</script>
 
 <script>
 let activeFrame=document.querySelector(".frame.active");
@@ -1182,6 +1600,177 @@ function saveToLianAlbum(){
     console.log(error);
   });
 }
+
+
+/* ===== Instagram Pro functions ===== */
+let storyIndex=0;
+let storyTimer=null;
+let musicOn=false;
+let musicCtx=null;
+let musicOsc=null;
+
+function getFramesArray(){
+  return Array.from(document.querySelectorAll("#comicArea .frame"));
+}
+
+function addInstagramMeta(){
+  const old=activeFrame.querySelector(".ig-meta");
+  if(old) old.remove();
+  const text=(document.getElementById("igCommentText").value || "ליאן יצרה קומיקס מושלם ✨").trim();
+  const likes=Math.floor(Math.random()*800)+120;
+  const meta=document.createElement("div");
+  meta.className="ig-meta";
+  meta.innerHTML='<div class="ig-comment">💬 '+text+'</div><div class="ig-icons">❤️ '+likes+' · 💬 · 📤</div>';
+  activeFrame.appendChild(meta);
+}
+
+function applyFrameFilter(){
+  const value=document.getElementById("filterSelect").value;
+  activeFrame.classList.remove("filter-clarendon","filter-valencia","filter-juno","filter-mono");
+  if(value) activeFrame.classList.add(value);
+}
+
+function autoCreateStory(){
+  const frames=getFramesArray();
+  const lines=[
+    "היום התחיל כמו יום רגיל... עד שקרה משהו קסום! ✨",
+    "ליאן והחברים מצאו סימן מסתורי בדרך 🧭",
+    "פתאום הופיע גיבור חדש עם כוח מיוחד 🦸‍♀️",
+    "כולם צחקו, עזרו אחד לשני והמשיכו להרפתקה 🌈",
+    "ובסוף? זה היה הקומיקס הכי יפה בעולם! 👑"
+  ];
+  frames.forEach((frame,i)=>{
+    if(frame.children.length===0){
+      selectFrame(frame);
+      addItem(i%2===0 ? "👧" : "🦄");
+      addItem(["✨","🌈","⭐","❤️","🎬"][i%5]);
+    }
+    selectFrame(frame);
+    document.getElementById("speechText").value=lines[i%lines.length];
+    addSpeech();
+    document.getElementById("igCommentText").value="פרק " + (i+1) + " מתוך הקומיקס של ליאן";
+    addInstagramMeta();
+  });
+  document.body.classList.add("reel-mode");
+  launchConfetti();
+}
+
+function openStoryMode(){
+  storyIndex=0;
+  document.getElementById("storyPhone").classList.add("open");
+  renderStoryFrame();
+}
+
+function closeStoryMode(){
+  document.getElementById("storyPhone").classList.remove("open");
+  if(storyTimer) clearTimeout(storyTimer);
+}
+
+function renderStoryFrame(){
+  const frames=getFramesArray();
+  const content=document.getElementById("storyContent");
+  const bars=document.getElementById("storyBars");
+  if(storyTimer) clearTimeout(storyTimer);
+  content.innerHTML="";
+  bars.innerHTML="";
+  frames.forEach((_,i)=>{
+    const b=document.createElement("span");
+    if(i===storyIndex) b.className="active";
+    bars.appendChild(b);
+  });
+  const clone=frames[storyIndex].cloneNode(true);
+  clone.classList.remove("active");
+  content.appendChild(clone);
+  storyTimer=setTimeout(nextStoryFrame,3000);
+}
+
+function nextStoryFrame(){
+  const frames=getFramesArray();
+  storyIndex=(storyIndex+1)%frames.length;
+  renderStoryFrame();
+}
+
+function prevStoryFrame(){
+  const frames=getFramesArray();
+  storyIndex=(storyIndex-1+frames.length)%frames.length;
+  renderStoryFrame();
+}
+
+function saveToComicGallery(){
+  cleanSelection();
+  html2canvas(activeFrame,{backgroundColor:"#ffffff",scale:2}).then(canvas=>{
+    const imageData=canvas.toDataURL("image/png");
+    let gallery=[];
+    try{ gallery=JSON.parse(localStorage.getItem("lianComicGallery") || "[]"); }catch(e){ gallery=[]; }
+    gallery.unshift({id:Date.now()+"",date:new Date().toLocaleDateString("he-IL"),data:imageData});
+    localStorage.setItem("lianComicGallery",JSON.stringify(gallery));
+    launchConfetti();
+    alert("הקומיקס נשמר בגלריית הקומיקסים 👑");
+  });
+}
+
+function openComicGallery(){
+  const box=document.getElementById("comicGalleryBox");
+  const grid=document.getElementById("comicGalleryGrid");
+  const empty=document.getElementById("comicGalleryEmpty");
+  let gallery=[];
+  try{ gallery=JSON.parse(localStorage.getItem("lianComicGallery") || "[]"); }catch(e){ gallery=[]; }
+  grid.innerHTML="";
+  empty.style.display=gallery.length?"none":"block";
+  gallery.forEach((item,i)=>{
+    const card=document.createElement("div");
+    card.className="gallery-card";
+    card.innerHTML='<img src="'+item.data+'" alt="קומיקס שמור"><a download="comic-lian-'+(i+1)+'.png" href="'+item.data+'">⬇️ הורדה</a>';
+    grid.appendChild(card);
+  });
+  box.classList.add("open");
+}
+
+function closeComicGallery(){
+  document.getElementById("comicGalleryBox").classList.remove("open");
+}
+
+function toggleMusic(){
+  try{
+    if(musicOn){
+      if(musicOsc) musicOsc.stop();
+      if(musicCtx) musicCtx.close();
+      musicOn=false;
+      return;
+    }
+    const AudioContext=window.AudioContext || window.webkitAudioContext;
+    musicCtx=new AudioContext();
+    musicOsc=musicCtx.createOscillator();
+    const gain=musicCtx.createGain();
+    musicOsc.type="triangle";
+    musicOsc.frequency.value=220;
+    gain.gain.value=.035;
+    musicOsc.connect(gain);
+    gain.connect(musicCtx.destination);
+    musicOsc.start();
+    musicOn=true;
+  }catch(e){ alert("הדפדפן לא מאפשר מוזיקה אוטומטית כרגע"); }
+}
+
+function launchConfetti(){
+  const icons=["💖","✨","🌈","⭐","🎉","🧡"];
+  for(let i=0;i<34;i++){
+    const c=document.createElement("div");
+    c.className="confetti-piece";
+    c.textContent=icons[i%icons.length];
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDelay=(Math.random()*0.45)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2400);
+  }
+}
+
+const originalShowSuccessBox = showSuccessBox;
+showSuccessBox=function(){
+  launchConfetti();
+  originalShowSuccessBox();
+};
+
 </script>
 
 </body>
