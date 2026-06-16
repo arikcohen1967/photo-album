@@ -21,25 +21,213 @@ body{margin:0;font-family:Arial,"Segoe UI",sans-serif;background:
 body:before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(141,108,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(141,108,255,.07) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;mask-image:linear-gradient(to bottom,black,transparent 82%)}
 .app{max-width:1320px;margin:auto;position:relative;z-index:1}.glass{background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.58));border:1px solid rgba(255,255,255,.84);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow);border-radius:var(--r)}
 .hero{position:relative;overflow:hidden;border-radius:42px;padding:38px 28px;min-height:410px;display:flex;align-items:flex-end;text-align:right;color:#fff;box-shadow:var(--shadow);background:linear-gradient(135deg,rgba(255,45,114,.55),rgba(141,108,255,.58),rgba(72,167,255,.48)),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80') center/cover}.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(255,255,255,.28),transparent 24%),linear-gradient(to top,rgba(21,25,52,.72),transparent 65%)}.hero>*{position:relative;z-index:1}.heroContent{max-width:890px}.badge{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(18px);font-weight:900;font-size:13px}.hero h1{font-size:56px;margin:18px 0 8px;letter-spacing:-1px;text-shadow:0 12px 30px rgba(0,0,0,.24)}.hero p{font-size:20px;line-height:1.62;color:rgba(255,255,255,.92);margin:0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-weight:900;cursor:pointer;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--hot),var(--purple),var(--blue));box-shadow:0 14px 30px rgba(141,108,255,.25);transition:.18s;font-family:inherit}button:hover,a.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}button:active{transform:scale(.98)}.ghost{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:none!important}.green{background:linear-gradient(135deg,var(--mint),#1cc88a)!important;color:#073b2d!important}.orange{background:linear-gradient(135deg,var(--yellow),var(--orange))!important;color:#3a2600!important}.red{background:linear-gradient(135deg,#ff4b6e,#ff2d72)!important}.blue{background:linear-gradient(135deg,var(--blue),var(--cyan))!important;color:#06233a!important}.purple{background:linear-gradient(135deg,var(--purple),var(--pink))!important}.dark{background:linear-gradient(135deg,#25304a,#111827)!important}.wide{width:100%}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}.stat{padding:20px;text-align:right;overflow:hidden;position:relative}.stat:after{content:"";position:absolute;left:-38px;bottom:-48px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,165,.22),transparent 68%)}.stat span{font-size:13px;color:var(--muted);font-weight:900}.stat strong{display:block;font-size:33px;margin-top:8px}.progress{height:10px;background:rgba(141,108,255,.12);border-radius:999px;overflow:hidden;margin-top:13px}.bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--hot),var(--purple),var(--blue),var(--cyan));width:0%}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;padding:10px;border-radius:999px;margin:18px 0}.tab{flex:1;min-width:122px;background:transparent;color:var(--ink);box-shadow:none;border-radius:999px;border:1px solid transparent}.tab.active{background:linear-gradient(135deg,var(--hot),var(--purple),var(--blue));color:white;box-shadow:0 14px 28px rgba(141,108,255,.22)}.section{display:none;animation:fade .22s ease}.section.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{padding:20px;text-align:right;overflow:hidden}.card h2,.card h3{margin:0 0 10px}.card p{color:var(--muted);line-height:1.58}.workout{min-height:270px;padding-top:152px;position:relative}.workout .photo{position:absolute;inset:0 0 auto 0;height:138px;background-size:cover;background-position:center;border-bottom:1px solid var(--line)}.workout .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,.92),rgba(255,255,255,.12))}.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(141,108,255,.12);color:#5540c8;border:1px solid rgba(141,108,255,.16);border-radius:999px;padding:7px 11px;font-weight:900;font-size:13px;margin:3px}.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}.exercise:first-of-type{border-top:0}.exercise b{display:block}.exercise small{color:var(--muted)}.sets{direction:ltr;background:rgba(141,108,255,.10);border-radius:14px;padding:8px 10px;font-weight:900;color:#5843d6;white-space:nowrap}.sidePanel{padding:22px}.aerobic-list,.tools,.charts,.healthGrid,.badgesGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.aero{min-height:245px;position:relative;background-size:cover;background-position:center;overflow:hidden;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff}.aero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(21,25,52,.86),rgba(255,90,165,.12))}.aero>*{position:relative}.aero .big{font-size:42px}.inputRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}input,select,textarea{width:100%;border:1px solid rgba(141,108,255,.18);border-radius:16px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;background:rgba(255,255,255,.82);color:var(--ink)}textarea{min-height:90px}input::placeholder,textarea::placeholder{color:#858a98}.history{max-height:340px;overflow:auto}.log{padding:12px;border:1px solid var(--line);border-radius:18px;margin:8px 0;background:rgba(255,255,255,.72)}.log b{display:block}.log small{color:var(--muted)}
+button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-weight:900;cursor:pointer;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--hot),var(--purple),#94a3b8);box-shadow:0 14px 30px rgba(141,108,255,.25);transition:.18s;font-family:inherit}button:hover,a.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}button:active{transform:scale(.98)}.ghost{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:none!important}.green{background:linear-gradient(135deg,var(--mint),#1cc88a)!important;color:#073b2d!important}.orange{background:linear-gradient(135deg,var(--yellow),#cbd5e1)!important;color:#3a2600!important}.red{background:linear-gradient(135deg,#ff4b6e,#ff2d72)!important}.blue{background:linear-gradient(135deg,#94a3b8,var(--cyan))!important;color:#06233a!important}.purple{background:linear-gradient(135deg,var(--purple),#ffffff)!important}.dark{background:linear-gradient(135deg,#25304a,#111827)!important}.wide{width:100%}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}.stat{padding:20px;text-align:right;overflow:hidden;position:relative}.stat:after{content:"";position:absolute;left:-38px;bottom:-48px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,165,.22),transparent 68%)}.stat span{font-size:13px;color:var(--muted);font-weight:900}.stat strong{display:block;font-size:33px;margin-top:8px}.progress{height:10px;background:rgba(255,255,255,.10);border-radius:999px;overflow:hidden;margin-top:13px}.bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--hot),var(--purple),#94a3b8,var(--cyan));width:0%}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;padding:10px;border-radius:999px;margin:18px 0}.tab{flex:1;min-width:122px;background:transparent;color:var(--ink);box-shadow:none;border-radius:999px;border:1px solid transparent}.tab.active{background:linear-gradient(135deg,var(--hot),var(--purple),#94a3b8);color:white;box-shadow:0 14px 28px rgba(141,108,255,.22)}.section{display:none;animation:fade .22s ease}.section.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{padding:20px;text-align:right;overflow:hidden}.card h2,.card h3{margin:0 0 10px}.card p{color:var(--muted);line-height:1.58}.workout{min-height:270px;padding-top:152px;position:relative}.workout .photo{position:absolute;inset:0 0 auto 0;height:138px;background-size:cover;background-position:center;border-bottom:1px solid var(--line)}.workout .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,.92),rgba(255,255,255,.12))}.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.10);color:#5540c8;border:1px solid rgba(141,108,255,.16);border-radius:999px;padding:7px 11px;font-weight:900;font-size:13px;margin:3px}.exercise{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}.exercise:first-of-type{border-top:0}.exercise b{display:block}.exercise small{color:var(--muted)}.sets{direction:ltr;background:rgba(141,108,255,.10);border-radius:14px;padding:8px 10px;font-weight:900;color:#5843d6;white-space:nowrap}.sidePanel{padding:22px}.aerobic-list,.tools,.charts,.healthGrid,.badgesGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.aero{min-height:245px;position:relative;background-size:cover;background-position:center;overflow:hidden;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff}.aero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(21,25,52,.86),rgba(255,90,165,.12))}.aero>*{position:relative}.aero .big{font-size:42px}.inputRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}input,select,textarea{width:100%;border:1px solid rgba(141,108,255,.18);border-radius:16px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;background:rgba(255,255,255,.82);color:var(--ink)}textarea{min-height:90px}input::placeholder,textarea::placeholder{color:#858a98}.history{max-height:340px;overflow:auto}.log{padding:12px;border:1px solid var(--line);border-radius:18px;margin:8px 0;background:rgba(255,255,255,.72)}.log b{display:block}.log small{color:var(--muted)}
 
-.exercise.openable{cursor:pointer;border-radius:18px;padding:12px 10px;transition:.18s;background:rgba(255,255,255,.34)}.exercise.openable:hover{transform:translateY(-2px);background:rgba(141,108,255,.10);box-shadow:0 12px 26px rgba(141,108,255,.12)}.exercise .openHint{display:inline-block;margin-top:5px;color:#8d6cff;font-weight:900;font-size:12px}.exercise .lastWeight{display:block;margin-top:5px;color:#ff2d72;font-weight:900;font-size:12px}.exerciseModal{position:fixed;inset:0;background:rgba(23,32,51,.54);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}.exerciseModal.open{display:flex}.exercisePage{width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:36px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.82));border:1px solid rgba(255,255,255,.92);box-shadow:0 35px 95px rgba(23,32,51,.34);text-align:right}.exerciseHero{min-height:260px;background-size:cover;background-position:center;position:relative;color:white;display:flex;align-items:flex-end;padding:24px;border-radius:36px 36px 0 0;overflow:hidden}.exerciseHero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(23,32,51,.88),rgba(141,108,255,.18),transparent)}.exerciseHero>*{position:relative}.exerciseHero h2{font-size:34px;margin:0 0 8px}.exerciseContent{padding:22px}.exerciseInfoGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.infoBox{background:rgba(255,255,255,.70);border:1px solid rgba(141,108,255,.14);border-radius:22px;padding:16px}.infoBox h3{margin:0 0 8px}.exerciseActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.miniHistory{max-height:210px;overflow:auto}.videoBox{aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,rgba(255,90,165,.20),rgba(72,167,255,.18));display:grid;place-items:center;text-align:center;padding:18px;color:#172033;border:1px solid rgba(141,108,255,.18)}.videoBox a{color:#5540c8;font-weight:900;text-decoration:none}.exerciseClose{position:sticky;top:10px;float:left;margin:10px;z-index:3;background:linear-gradient(135deg,#ff4b6e,#ff2d72)!important}.exerciseDetailInputs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:700px){.exerciseInfoGrid,.exerciseDetailInputs{grid-template-columns:1fr}.exerciseHero{min-height:220px}.exerciseHero h2{font-size:28px}}
+.exercise.openable{cursor:pointer;border-radius:18px;padding:12px 10px;transition:.18s;background:rgba(255,255,255,.34)}.exercise.openable:hover{transform:translateY(-2px);background:rgba(141,108,255,.10);box-shadow:0 12px 26px rgba(255,255,255,.10)}.exercise .openHint{display:inline-block;margin-top:5px;color:#8d6cff;font-weight:900;font-size:12px}.exercise .lastWeight{display:block;margin-top:5px;color:#ff2d72;font-weight:900;font-size:12px}.exerciseModal{position:fixed;inset:0;background:rgba(23,32,51,.54);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}.exerciseModal.open{display:flex}.exercisePage{width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:36px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.82));border:1px solid rgba(255,255,255,.92);box-shadow:0 35px 95px rgba(23,32,51,.34);text-align:right}.exerciseHero{min-height:260px;background-size:cover;background-position:center;position:relative;color:white;display:flex;align-items:flex-end;padding:24px;border-radius:36px 36px 0 0;overflow:hidden}.exerciseHero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(23,32,51,.88),rgba(141,108,255,.18),transparent)}.exerciseHero>*{position:relative}.exerciseHero h2{font-size:34px;margin:0 0 8px}.exerciseContent{padding:22px}.exerciseInfoGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.infoBox{background:rgba(255,255,255,.70);border:1px solid rgba(141,108,255,.14);border-radius:22px;padding:16px}.infoBox h3{margin:0 0 8px}.exerciseActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.miniHistory{max-height:210px;overflow:auto}.videoBox{aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,rgba(255,90,165,.20),rgba(72,167,255,.18));display:grid;place-items:center;text-align:center;padding:18px;color:#172033;border:1px solid rgba(141,108,255,.18)}.videoBox a{color:#5540c8;font-weight:900;text-decoration:none}.exerciseClose{position:sticky;top:10px;float:left;margin:10px;z-index:3;background:linear-gradient(135deg,#ff4b6e,#ff2d72)!important}.exerciseDetailInputs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:700px){.exerciseInfoGrid,.exerciseDetailInputs{grid-template-columns:1fr}.exerciseHero{min-height:220px}.exerciseHero h2{font-size:28px}}
 
-.timerBox{text-align:center}.timer{font-size:58px;font-weight:900;letter-spacing:2px;margin:14px 0;background:linear-gradient(135deg,var(--hot),var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}.quickTimes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.ringWrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.activityRing{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--pink) 0 65%,rgba(141,108,255,.12) 65%);box-shadow:inset 0 0 30px rgba(141,108,255,.12)}.activityRing span{width:70%;height:70%;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:900;font-size:13px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{aspect-ratio:1;border-radius:15px;background:rgba(141,108,255,.10);display:grid;place-items:center;color:var(--muted);font-weight:900}.day.done{background:linear-gradient(135deg,var(--yellow),var(--pink),var(--purple));color:white;box-shadow:0 12px 24px rgba(141,108,255,.24)}canvas{max-height:275px}.coachBox{font-size:18px;line-height:1.7}.badgeCard{padding:18px;text-align:center}.badgeCard .big{font-size:44px}.badgeCard.locked{filter:grayscale(1);opacity:.55}.footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0}.toast{position:fixed;bottom:18px;right:18px;background:rgba(255,255,255,.92);border:1px solid rgba(141,108,255,.22);box-shadow:var(--soft);border-radius:18px;padding:14px 18px;color:var(--ink);z-index:20;display:none}.toast.show{display:block;animation:fade .2s ease}
+.goalBox{background:linear-gradient(135deg,rgba(255,90,165,.13),rgba(72,167,255,.12));border:1px solid rgba(141,108,255,.18);border-radius:22px;padding:16px;margin:14px 0}.goalTop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.goalTop b{font-size:22px}.goalTop span{color:var(--muted);font-weight:900}.goalBar{height:14px;background:rgba(255,255,255,.10);border-radius:999px;overflow:hidden;margin-top:12px}.goalFill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--hot),var(--purple),#94a3b8,var(--cyan));width:0%}.goalNote{margin-top:10px;color:var(--muted);font-weight:800}.miniChartBox{background:rgba(255,255,255,.70);border:1px solid rgba(141,108,255,.14);border-radius:22px;padding:16px;margin-top:14px}.modalPr{font-size:28px;font-weight:900;background:linear-gradient(135deg,var(--hot),var(--purple),#94a3b8);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.timerBox{text-align:center}.timer{font-size:58px;font-weight:900;letter-spacing:2px;margin:14px 0;background:linear-gradient(135deg,var(--hot),var(--purple),#94a3b8);-webkit-background-clip:text;background-clip:text;color:transparent}.quickTimes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.ringWrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.activityRing{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#ffffff 0 65%,rgba(255,255,255,.10) 65%);box-shadow:inset 0 0 30px rgba(255,255,255,.10)}.activityRing span{width:70%;height:70%;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:900;font-size:13px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{aspect-ratio:1;border-radius:15px;background:rgba(141,108,255,.10);display:grid;place-items:center;color:var(--muted);font-weight:900}.day.done{background:linear-gradient(135deg,var(--yellow),#ffffff,var(--purple));color:white;box-shadow:0 12px 24px rgba(141,108,255,.24)}canvas{max-height:275px}.coachBox{font-size:18px;line-height:1.7}.badgeCard{padding:18px;text-align:center}.badgeCard .big{font-size:44px}.badgeCard.locked{filter:grayscale(1);opacity:.55}.footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0}.toast{position:fixed;bottom:18px;right:18px;background:rgba(255,255,255,.92);border:1px solid rgba(141,108,255,.22);box-shadow:var(--soft);border-radius:18px;padding:14px 18px;color:var(--ink);z-index:20;display:none}.toast.show{display:block;animation:fade .2s ease}
 @media(max-width:980px){.stats,.cards,.aerobic-list,.tools,.charts,.healthGrid,.badgesGrid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero h1{font-size:40px}}
 @media(max-width:650px){body{padding:10px}.hero{border-radius:28px;padding:26px 18px;min-height:370px}.stats,.cards,.aerobic-list,.tools,.inputRow,.charts,.ringWrap,.healthGrid,.badgesGrid{grid-template-columns:1fr}.tab{min-width:100%}.hero-actions button,.hero-actions .btn{width:100%}.stat strong{font-size:28px}.timer{font-size:46px}}
+
+
+/* ===== Premium Black / White / Gray Theme Override ===== */
+:root{
+  --bg1:#07080b;
+  --bg2:#151820;
+  --ink:#f8fafc;
+  --muted:#a3aab7;
+  --line:rgba(255,255,255,.13);
+  --pink:#f8fafc;
+  --hot:#ffffff;
+  --purple:#cbd5e1;
+  --blue:#94a3b8;
+  --cyan:#e5e7eb;
+  --mint:#f8fafc;
+  --yellow:#e5e7eb;
+  --orange:#cbd5e1;
+  --card:rgba(255,255,255,.075);
+  --shadow:0 28px 80px rgba(0,0,0,.42);
+  --soft:0 14px 34px rgba(0,0,0,.30);
+}
+html{background:#07080b;}
+body{
+  color:#f8fafc;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,255,255,.10),transparent 26%),
+    radial-gradient(circle at 88% 10%,rgba(148,163,184,.16),transparent 30%),
+    radial-gradient(circle at 50% 96%,rgba(255,255,255,.07),transparent 32%),
+    linear-gradient(135deg,#050608,#0d1016 45%,#171b23);
+}
+body:before{
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+}
+.glass,
+.card,
+.stat,
+.infoBox{
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.055)) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  color:#f8fafc;
+  box-shadow:0 22px 55px rgba(0,0,0,.32);
+}
+.hero{
+  background:
+    linear-gradient(135deg,rgba(0,0,0,.72),rgba(15,17,21,.78),rgba(45,52,64,.50)),
+    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80') center/cover !important;
+  border:1px solid rgba(255,255,255,.16);
+}
+.hero:after{
+  background:
+    radial-gradient(circle at 18% 22%,rgba(255,255,255,.16),transparent 24%),
+    linear-gradient(to top,rgba(0,0,0,.84),rgba(0,0,0,.18) 65%,transparent) !important;
+}
+.badge{
+  color:#f8fafc;
+  background:rgba(255,255,255,.09) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+}
+.hero h1{
+  color:#fff;
+  letter-spacing:.5px;
+}
+.hero p,
+.card p,
+.exercise small,
+.log small,
+.stat span,
+small{
+  color:rgba(248,250,252,.70) !important;
+}
+button,a.btn{
+  background:linear-gradient(135deg,#ffffff,#cbd5e1) !important;
+  color:#080a0f !important;
+  box-shadow:0 14px 34px rgba(255,255,255,.12) !important;
+}
+button:hover,a.btn:hover{
+  filter:none;
+  box-shadow:0 20px 44px rgba(255,255,255,.17) !important;
+}
+.ghost{
+  color:#f8fafc !important;
+  background:rgba(255,255,255,.07) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  box-shadow:none !important;
+}
+.green,.orange,.red,.blue,.purple,.dark{
+  background:linear-gradient(135deg,#ffffff,#d1d5db) !important;
+  color:#07080b !important;
+}
+.tabs{
+  background:rgba(255,255,255,.055) !important;
+}
+.tab{
+  color:#dbe2ec !important;
+  background:transparent !important;
+}
+.tab.active{
+  background:linear-gradient(135deg,#ffffff,#cbd5e1) !important;
+  color:#07080b !important;
+  box-shadow:0 14px 30px rgba(255,255,255,.12) !important;
+}
+.progress{
+  background:rgba(255,255,255,.10) !important;
+}
+.bar{
+  background:linear-gradient(90deg,#ffffff,#d1d5db,#94a3b8) !important;
+}
+.pill,.sets{
+  background:rgba(255,255,255,.09) !important;
+  border-color:rgba(255,255,255,.14) !important;
+  color:#f8fafc !important;
+}
+.workout .photo:after{
+  background:linear-gradient(to top,rgba(7,8,11,.82),rgba(7,8,11,.15)) !important;
+}
+.exercise.openable{
+  background:rgba(255,255,255,.055) !important;
+}
+.exercise.openable:hover{
+  background:rgba(255,255,255,.11) !important;
+  box-shadow:0 14px 34px rgba(0,0,0,.28) !important;
+}
+.exercise .openHint,
+.exercise .lastWeight,
+.videoBox a{
+  color:#ffffff !important;
+}
+input,select,textarea{
+  color:#f8fafc !important;
+  background:rgba(255,255,255,.075) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(248,250,252,.48) !important;
+}
+.log{
+  background:rgba(255,255,255,.065) !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+.exerciseModal{
+  background:rgba(0,0,0,.68) !important;
+}
+.exercisePage{
+  background:linear-gradient(180deg,rgba(17,19,24,.96),rgba(8,10,14,.94)) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  color:#f8fafc;
+}
+.exerciseHero:before{
+  background:linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.28),transparent) !important;
+}
+.videoBox{
+  background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.04)) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  color:#f8fafc !important;
+}
+.timer{
+  background:linear-gradient(135deg,#ffffff,#cbd5e1,#64748b) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  color:transparent !important;
+}
+.activityRing{
+  background:conic-gradient(#ffffff 0 65%,rgba(255,255,255,.10) 65%) !important;
+}
+.activityRing span{
+  background:#0b0d12 !important;
+  color:#f8fafc !important;
+}
+.day{
+  background:rgba(255,255,255,.075) !important;
+  color:rgba(248,250,252,.66) !important;
+}
+.day.done{
+  background:linear-gradient(135deg,#ffffff,#94a3b8) !important;
+  color:#07080b !important;
+}
+.badgeCard.locked{opacity:.38;}
+.toast{
+  background:rgba(20,22,28,.94) !important;
+  color:#f8fafc !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+}
+footer,.footer{color:rgba(248,250,252,.68) !important;}
+
 </style>
 </head>
 <body>
 <div class="app" id="summaryArea">
   <section class="hero">
     <div class="heroContent">
-      <div class="badge">🎯 GYM PRO ULTRA · Memory Colors Edition</div>
+      <div class="badge">⚫ GYM PRO ULTRA · Premium Glass Edition</div>
       <h1>מנהל האימונים של אריק</h1>
-      <p>אפליקציית אימונים מלאה: כוח 4 ימים בשבוע, אירובי, גרפים, טיימר מנוחה, שיאים אישיים, הישגים, בריאות, מאמן אישי וייצוא ל־WhatsApp.</p>
+      <p>מערכת אימונים אישית בעיצוב שחור־לבן נקי: כוח 4 ימים בשבוע, אירובי, גרפים, טיימר מנוחה, שיאים אישיים, עמוד תרגיל וייצוא ל־WhatsApp. כולל יעד לחיצת חזה עד 120 ק״ג.</p>
       <div class="hero-actions"><button onclick="showSection('strength')">🏋️ כוח</button><button class="ghost" onclick="showSection('tracker')">📈 מעקב</button><button class="ghost" onclick="showSection('timer')">⏱️ טיימר</button><button class="green" onclick="shareWhatsApp()">📱 WhatsApp</button><a class="btn ghost" href="index.html">🏠 חזרה לאתר</a></div>
     </div>
   </section>
@@ -112,6 +300,18 @@ button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-w
         <h3>📚 היסטוריה לתרגיל הזה</h3>
         <div id="modalExerciseHistory" class="miniHistory"></div>
       </div>
+      <div class="goalBox">
+        <div class="goalTop">
+          <span>🎯 יעד אישי לתרגיל</span>
+          <b id="modalGoalText">יעד: -</b>
+        </div>
+        <div class="goalBar"><div id="modalGoalFill" class="goalFill"></div></div>
+        <div id="modalGoalNote" class="goalNote">שמור משקל כדי לראות התקדמות.</div>
+      </div>
+      <div class="miniChartBox">
+        <h3>📈 גרף התקדמות לתרגיל</h3>
+        <canvas id="exerciseProgressChart"></canvas>
+      </div>
     </div>
   </div>
 </div>
@@ -119,6 +319,58 @@ button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-w
 <script>
 function beep(freq=520,dur=.08,type='sine',vol=.045){try{const AC=window.AudioContext||window.webkitAudioContext;const ctx=new AC();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=vol;o.connect(g);g.connect(ctx.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);o.stop(ctx.currentTime+dur+.02)}catch(e){}}
 function playClick(){beep(700,.045,'triangle',.035)}function playSuccess(){beep(523,.08,'sine',.055);setTimeout(()=>beep(659,.08,'sine',.055),90);setTimeout(()=>beep(784,.1,'sine',.055),180)}function playFinish(){beep(880,.12,'square',.04);setTimeout(()=>beep(1175,.15,'square',.04),140)}document.addEventListener('click',e=>{if(e.target.closest('button,a.btn')) playClick()});function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400)}
+
+const exerciseGoals={
+ 'לחיצת חזה במוט':120,
+ 'לחיצה בשיפוע דאמבלים':45,
+ 'פרפר בכבלים':35,
+ 'מקבילים / פשיטת מרפקים':40,
+ 'יד אחורית חבל':45,
+ 'מתח / פולי עליון':90,
+ 'חתירה במוט / מכונה':110,
+ 'חתירה יד אחת':50,
+ 'פייס פול':35,
+ 'כפיפת מרפקים':25,
+ 'סקוואט / לג פרס':160,
+ 'דדליפט רומני':140,
+ 'לאנג׳ים':40,
+ 'כפיפת ברך':80,
+ 'בטן: פלאנק + כפיפות':0,
+ 'לחיצת כתפיים':80,
+ 'הרחקות לצדדים':18,
+ 'הרחקות אחוריות':18,
+ 'טרפזים':120,
+ 'בטן / ידיים':0
+};
+let exerciseChart=null;
+function exerciseGoal(name){return exerciseGoals[name]||0}
+function bestWeightForExercise(name){const d=data();const logs=(d.logs||[]).filter(x=>x.name===name);return logs.length?Math.max(...logs.map(x=>+x.weight||0)):0}
+function renderExerciseGoalAndChart(name){
+ const goal=exerciseGoal(name);
+ const best=bestWeightForExercise(name);
+ const percent=goal?Math.min(Math.round(best/goal*100),100):0;
+ if(document.getElementById('modalGoalText')) modalGoalText.textContent=goal?`יעד: ${goal} ק״ג`:'יעד: לא הוגדר';
+ if(document.getElementById('modalGoalFill')) modalGoalFill.style.width=percent+'%';
+ if(document.getElementById('modalGoalNote')) modalGoalNote.textContent=goal?`השיא הנוכחי שלך: ${best||0} ק״ג · התקדמות: ${percent}% · נותרו ${Math.max(goal-best,0)} ק״ג עד היעד`:'אפשר להגדיר יעד לתרגיל הזה בקוד.';
+ const d=data();
+ const logs=(d.logs||[]).filter(x=>x.name===name).slice(0,10).reverse();
+ if(exerciseChart){exerciseChart.destroy(); exerciseChart=null}
+ const canvas=document.getElementById('exerciseProgressChart');
+ if(canvas){
+   exerciseChart=new Chart(canvas,{type:'line',data:{labels:logs.map(x=>x.date),datasets:[{data:logs.map(x=>x.weight),borderColor:'#f8fafc',backgroundColor:'rgba(255,255,255,.14)',fill:true,tension:.35}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}}}}});
+ }
+}
+function maybeAutoPR(name,weight){
+ const d=data();
+ const prev=(d.prs||[]).filter(x=>x.name===name).map(x=>+x.weight||0);
+ const bestPrev=prev.length?Math.max(...prev):0;
+ if(weight>bestPrev){
+   d.prs.unshift({date:today(),iso:isoToday(),name,weight,auto:true});
+   localStorage.setItem('gymUltraData',JSON.stringify(d));
+   setTimeout(()=>{playSuccess();toast('🏆 שיא אישי חדש ב'+name+' · '+weight+' ק״ג')},120);
+ }
+}
+
 const exerciseDetails={
  'לחיצת חזה במוט':{muscle:'חזה · יד אחורית · כתף קדמית',image:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80',how:'שכב על הספסל, אחיזה מעט רחבה מרוחב כתפיים, הורד את המוט בשליטה אל מרכז החזה ודחוף למעלה בקו יציב.',tips:'שכמות אסופות לאחור, רגליים יציבות ברצפה, לא להקפיץ את המוט מהחזה, נשימה עמוקה לפני כל חזרה.',video:'Bench Press technique'},
  'לחיצה בשיפוע דאמבלים':{muscle:'חזה עליון · כתף קדמית',image:'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1200&q=80',how:'כוון ספסל לשיפוע 25–35 מעלות, הורד דאמבלים לצדי החזה העליון ודחוף למעלה בלי לנעול באגרסיביות.',tips:'מרפקים בזווית טבעית, שליטה בירידה, לא להרים כתפיים לאוזניים.',video:'Incline dumbbell press technique'},
@@ -183,6 +435,7 @@ function openExercise(name,prescription,wi,xi){
  const q=encodeURIComponent((details.video||name)+' exercise technique');
  modalVideoBox.innerHTML=`<div><div style="font-size:42px">🎬</div><p>אפשר לפתוח סרטון הדגמה לתרגיל הזה.</p><a target="_blank" href="https://www.youtube.com/results?search_query=${q}">פתח חיפוש סרטוני טכניקה ביוטיוב</a></div>`;
  modalExerciseHistory.innerHTML=logs.length?logs.slice(0,8).map(x=>`<div class="log"><b>${x.weight} ק״ג · ${x.reps} חזרות · ${x.sets} סטים</b><small>${x.date} · נפח ${x.volume} ק״ג · 1RM ${x.oneRm||'-'} ק״ג</small></div>`).join(''):'<p style="color:#6d7280">עדיין אין היסטוריה לתרגיל הזה. שמור סט ראשון.</p>';
+ renderExerciseGoalAndChart(name);
  document.getElementById('exerciseModal').classList.add('open');
 }
 function closeExerciseModal(e){
@@ -195,7 +448,8 @@ function saveExerciseFromModal(){
  const d=data();
  const oneRm=Math.round(weight*(1+reps/30));
  d.logs.unshift({date:today(),iso:isoToday(),name:currentExerciseName,weight,reps,sets,volume:weight*reps*sets,oneRm,prescription:currentExercisePrescription});
- save(d);
+ maybeAutoPR(currentExerciseName,weight);
+ save(data());
  openExercise(currentExerciseName,currentExercisePrescription,0,0);
  playSuccess();
  toast('נשמר לתרגיל · 1RM משוער: '+oneRm+' ק״ג');
@@ -208,13 +462,13 @@ function startTimerFromModal(){
 function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active')}
 function data(){return JSON.parse(localStorage.getItem('gymUltraData')||'{"logs":[],"cardio":[],"prs":[],"done":[],"health":{}}')}function save(d){localStorage.setItem('gymUltraData',JSON.stringify(d));renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}function today(){return new Date().toLocaleDateString('he-IL')}function isoToday(){return new Date().toISOString().slice(0,10)}
 function markWorkout(){const d=data();if(!d.done.some(x=>x.iso===isoToday())) d.done.unshift({date:today(),iso:isoToday(),type:'אימון כוח'});save(d);playSuccess();toast('האימון סומן בהצלחה 💪')}
-function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});save(d);exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
+function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});maybeAutoPR(name,weight);save(data());exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
 function addCardio(){const min=+cardioMinutes.value;if(!min)return alert('כתוב כמה דקות אירובי');const d=data();d.cardio.unshift({date:today(),iso:isoToday(),type:cardioType.value,min});save(d);cardioMinutes.value='';playSuccess();toast('אירובי נשמר')}
 function savePR(){const name=prName.value.trim(),weight=+prWeight.value;if(!name||!weight)return alert('מלא שם תרגיל ושיא');const d=data();d.prs.unshift({date:today(),iso:isoToday(),name,weight});save(d);prName.value=prWeight.value='';playSuccess();toast('שיא אישי חדש 🏆')}
 function saveHealth(){const d=data();d.health={bodyWeight:bodyWeight.value||d.health.bodyWeight||'',fatPercent:fatPercent.value||d.health.fatPercent||'',proteinGoal:proteinGoal.value||d.health.proteinGoal||'',proteinToday:proteinToday.value||d.health.proteinToday||'',waterToday:waterToday.value||d.health.waterToday||'',sleepHours:sleepHours.value||d.health.sleepHours||'',date:today()};save(d);playSuccess();toast('מדדי בריאות נשמרו')}
 function renderHistory(){const d=data();let rows=[];d.logs.forEach(x=>rows.push(`<div class="log"><b>🏋️ ${x.name}</b><small>${x.date} · ${x.sets} סטים · ${x.reps} חזרות · ${x.weight} ק״ג · נפח ${x.volume} ק״ג · 1RM ${x.oneRm||'-'} ק״ג</small></div>`));d.cardio.forEach(x=>rows.push(`<div class="log"><b>🔥 ${x.type}</b><small>${x.date} · ${x.min} דקות</small></div>`));d.prs.forEach(x=>rows.push(`<div class="log"><b>🏆 ${x.name}</b><small>${x.date} · ${x.weight} ק״ג</small></div>`));history.innerHTML=rows.join('')||'<p style="color:#6d7280">עדיין אין נתונים. הוסף אימון ראשון.</p>'}
-function updateStats(){const d=data();const done=d.done.length;weekCount.textContent=Math.min(done,4)+'/4';weekBar.style.width=Math.min(done/4*100,100)+'%';const vol=d.logs.reduce((s,x)=>s+x.volume,0);volumeText.textContent=vol.toLocaleString('he-IL')+' ק״ג';volBar.style.width=Math.min(vol/20000*100,100)+'%';const car=d.cardio.reduce((s,x)=>s+x.min,0);cardioText.textContent=car+' דק׳';cardioBar.style.width=Math.min(car/120*100,100)+'%';prText.textContent=d.prs.length+' 🏆';prBar.style.width=Math.min(d.prs.length/8*100,100)+'%';ringStrength.textContent=Math.round(Math.min(done/4*100,100))+'%';ringCardio.textContent=Math.round(Math.min(car/120*100,100))+'%';ringVolume.textContent=Math.round(Math.min(vol/20000*100,100))+'%';ring1.style.background=`conic-gradient(var(--pink) 0 ${Math.min(done/4*100,100)}%,rgba(141,108,255,.12) 0)`;ring2.style.background=`conic-gradient(var(--orange) 0 ${Math.min(car/120*100,100)}%,rgba(141,108,255,.12) 0)`;ring3.style.background=`conic-gradient(var(--blue) 0 ${Math.min(vol/20000*100,100)}%,rgba(141,108,255,.12) 0)`}
-let charts=[];function renderCharts(){charts.forEach(c=>c.destroy());charts=[];const d=data();const labels=[...new Set([...d.logs.map(x=>x.date),...d.cardio.map(x=>x.date)])].slice(0,8).reverse();const vols=labels.map(l=>d.logs.filter(x=>x.date==l).reduce((s,x)=>s+x.volume,0));const cars=labels.map(l=>d.cardio.filter(x=>x.date==l).reduce((s,x)=>s+x.min,0));const prLabels=d.prs.slice(0,6).reverse().map(x=>x.name);const prVals=d.prs.slice(0,6).reverse().map(x=>x.weight);const opts={plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(141,108,255,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(141,108,255,.08)'}}}};charts.push(new Chart(volumeChart,{type:'line',data:{labels,datasets:[{data:vols,borderColor:'#8d6cff',backgroundColor:'rgba(141,108,255,.16)',fill:true,tension:.35}]},options:opts}));charts.push(new Chart(cardioChart,{type:'bar',data:{labels,datasets:[{data:cars,backgroundColor:'rgba(255,159,67,.72)'}]},options:opts}));charts.push(new Chart(prChart,{type:'bar',data:{labels:prLabels,datasets:[{data:prVals,backgroundColor:'rgba(255,90,165,.72)'}]},options:opts}))}
+function updateStats(){const d=data();const done=d.done.length;weekCount.textContent=Math.min(done,4)+'/4';weekBar.style.width=Math.min(done/4*100,100)+'%';const vol=d.logs.reduce((s,x)=>s+x.volume,0);volumeText.textContent=vol.toLocaleString('he-IL')+' ק״ג';volBar.style.width=Math.min(vol/20000*100,100)+'%';const car=d.cardio.reduce((s,x)=>s+x.min,0);cardioText.textContent=car+' דק׳';cardioBar.style.width=Math.min(car/120*100,100)+'%';prText.textContent=d.prs.length+' 🏆';prBar.style.width=Math.min(d.prs.length/8*100,100)+'%';ringStrength.textContent=Math.round(Math.min(done/4*100,100))+'%';ringCardio.textContent=Math.round(Math.min(car/120*100,100))+'%';ringVolume.textContent=Math.round(Math.min(vol/20000*100,100))+'%';ring1.style.background=`conic-gradient(#ffffff 0 ${Math.min(done/4*100,100)}%,rgba(255,255,255,.10) 0)`;ring2.style.background=`conic-gradient(#cbd5e1 0 ${Math.min(car/120*100,100)}%,rgba(255,255,255,.10) 0)`;ring3.style.background=`conic-gradient(#94a3b8 0 ${Math.min(vol/20000*100,100)}%,rgba(255,255,255,.10) 0)`}
+let charts=[];function renderCharts(){charts.forEach(c=>c.destroy());charts=[];const d=data();const labels=[...new Set([...d.logs.map(x=>x.date),...d.cardio.map(x=>x.date)])].slice(0,8).reverse();const vols=labels.map(l=>d.logs.filter(x=>x.date==l).reduce((s,x)=>s+x.volume,0));const cars=labels.map(l=>d.cardio.filter(x=>x.date==l).reduce((s,x)=>s+x.min,0));const prLabels=d.prs.slice(0,6).reverse().map(x=>x.name);const prVals=d.prs.slice(0,6).reverse().map(x=>x.weight);const opts={plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}}}};charts.push(new Chart(volumeChart,{type:'line',data:{labels,datasets:[{data:vols,borderColor:'#f8fafc',backgroundColor:'rgba(255,255,255,.14)',fill:true,tension:.35}]},options:opts}));charts.push(new Chart(cardioChart,{type:'bar',data:{labels,datasets:[{data:cars,backgroundColor:'rgba(203,213,225,.72)'}]},options:opts}));charts.push(new Chart(prChart,{type:'bar',data:{labels:prLabels,datasets:[{data:prVals,backgroundColor:'rgba(148,163,184,.78)'}]},options:opts}))}
 function renderCalendar(){const d=data();const doneSet=new Set(d.done.map(x=>x.iso));const cal=document.getElementById('calendar');cal.innerHTML='';for(let i=29;i>=0;i--){const dt=new Date();dt.setDate(dt.getDate()-i);const iso=dt.toISOString().slice(0,10);const el=document.createElement('div');el.className='day '+(doneSet.has(iso)?'done':'');el.textContent=dt.getDate();cal.appendChild(el)}}
 function renderCoach(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);let msg='עוד אין מספיק נתונים. הוסף כמה סטים כדי שאוכל לתת המלצה.';if(d.done.length>=4) msg='שבוע חזק מאוד. אם הטכניקה טובה — אפשר להעלות 2.5 ק״ג בתרגילים המרכזיים.';else if(vol>12000) msg='נפח יפה. שמור על מנוחות וטכניקה. אל תעמיס אירובי כבד אחרי רגליים.';else if(d.logs.length>0) msg='התחלה טובה. באימון הבא נסה לשפר חזרה אחת או 2.5 ק״ג בתרגיל אחד בלבד.';coach.textContent=msg}
 function renderHealth(){const h=data().health||{};healthSummary.innerHTML=`<b>תאריך:</b> ${h.date||'-'}<br><b>משקל:</b> ${h.bodyWeight||'-'} ק״ג · <b>שומן:</b> ${h.fatPercent||'-'}%<br><b>חלבון:</b> ${h.proteinToday||'-'} / ${h.proteinGoal||'-'} גרם<br><b>מים:</b> ${h.waterToday||'-'} כוסות · <b>שינה:</b> ${h.sleepHours||'-'} שעות`}
