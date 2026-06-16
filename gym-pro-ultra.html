@@ -35,369 +35,6 @@ button,a.btn{border:0;border-radius:19px;padding:13px 17px;font-size:16px;font-w
 @media(max-width:650px){body{padding:10px}.hero{border-radius:28px;padding:26px 18px;min-height:370px}.stats,.cards,.aerobic-list,.tools,.inputRow,.charts,.ringWrap,.healthGrid,.badgesGrid{grid-template-columns:1fr}.tab{min-width:100%}.hero-actions button,.hero-actions .btn{width:100%}.stat strong{font-size:28px}.timer{font-size:46px}}
 
 
-/* ===== Premium Black / White / Gray Theme Override ===== */
-:root{
-  --bg1:#07080b;
-  --bg2:#151820;
-  --ink:#f8fafc;
-  --muted:#a3aab7;
-  --line:rgba(255,255,255,.13);
-  --pink:#f8fafc;
-  --hot:#ffffff;
-  --purple:#cbd5e1;
-  --blue:#94a3b8;
-  --cyan:#e5e7eb;
-  --mint:#f8fafc;
-  --yellow:#e5e7eb;
-  --orange:#cbd5e1;
-  --card:rgba(255,255,255,.075);
-  --shadow:0 28px 80px rgba(0,0,0,.42);
-  --soft:0 14px 34px rgba(0,0,0,.30);
-}
-html{background:#07080b;}
-body{
-  color:#f8fafc;
-  background:
-    radial-gradient(circle at 12% 8%,rgba(255,255,255,.10),transparent 26%),
-    radial-gradient(circle at 88% 10%,rgba(148,163,184,.16),transparent 30%),
-    radial-gradient(circle at 50% 96%,rgba(255,255,255,.07),transparent 32%),
-    linear-gradient(135deg,#050608,#0d1016 45%,#171b23);
-}
-body:before{
-  background-image:
-    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-}
-.glass,
-.card,
-.stat,
-.infoBox{
-  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.055)) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-  color:#f8fafc;
-  box-shadow:0 22px 55px rgba(0,0,0,.32);
-}
-.hero{
-  background:
-    linear-gradient(135deg,rgba(0,0,0,.72),rgba(15,17,21,.78),rgba(45,52,64,.50)),
-    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80') center/cover !important;
-  border:1px solid rgba(255,255,255,.16);
-}
-.hero:after{
-  background:
-    radial-gradient(circle at 18% 22%,rgba(255,255,255,.16),transparent 24%),
-    linear-gradient(to top,rgba(0,0,0,.84),rgba(0,0,0,.18) 65%,transparent) !important;
-}
-.badge{
-  color:#f8fafc;
-  background:rgba(255,255,255,.09) !important;
-  border:1px solid rgba(255,255,255,.20) !important;
-}
-.hero h1{
-  color:#fff;
-  letter-spacing:.5px;
-}
-.hero p,
-.card p,
-.exercise small,
-.log small,
-.stat span,
-small{
-  color:rgba(248,250,252,.70) !important;
-}
-button,a.btn{
-  background:linear-gradient(135deg,#ffffff,#cbd5e1) !important;
-  color:#080a0f !important;
-  box-shadow:0 14px 34px rgba(255,255,255,.12) !important;
-}
-button:hover,a.btn:hover{
-  filter:none;
-  box-shadow:0 20px 44px rgba(255,255,255,.17) !important;
-}
-.ghost{
-  color:#f8fafc !important;
-  background:rgba(255,255,255,.07) !important;
-  border:1px solid rgba(255,255,255,.18) !important;
-  box-shadow:none !important;
-}
-.green,.orange,.red,.blue,.purple,.dark{
-  background:linear-gradient(135deg,#ffffff,#d1d5db) !important;
-  color:#07080b !important;
-}
-.tabs{
-  background:rgba(255,255,255,.055) !important;
-}
-.tab{
-  color:#dbe2ec !important;
-  background:transparent !important;
-}
-.tab.active{
-  background:linear-gradient(135deg,#ffffff,#cbd5e1) !important;
-  color:#07080b !important;
-  box-shadow:0 14px 30px rgba(255,255,255,.12) !important;
-}
-.progress{
-  background:rgba(255,255,255,.10) !important;
-}
-.bar{
-  background:linear-gradient(90deg,#ffffff,#d1d5db,#94a3b8) !important;
-}
-.pill,.sets{
-  background:rgba(255,255,255,.09) !important;
-  border-color:rgba(255,255,255,.14) !important;
-  color:#f8fafc !important;
-}
-.workout .photo:after{
-  background:linear-gradient(to top,rgba(7,8,11,.82),rgba(7,8,11,.15)) !important;
-}
-.exercise.openable{
-  background:rgba(255,255,255,.055) !important;
-}
-.exercise.openable:hover{
-  background:rgba(255,255,255,.11) !important;
-  box-shadow:0 14px 34px rgba(0,0,0,.28) !important;
-}
-.exercise .openHint,
-.exercise .lastWeight,
-.videoBox a{
-  color:#ffffff !important;
-}
-input,select,textarea{
-  color:#f8fafc !important;
-  background:rgba(255,255,255,.075) !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-}
-input::placeholder,textarea::placeholder{
-  color:rgba(248,250,252,.48) !important;
-}
-.log{
-  background:rgba(255,255,255,.065) !important;
-  border-color:rgba(255,255,255,.12) !important;
-}
-.exerciseModal{
-  background:rgba(0,0,0,.68) !important;
-}
-.exercisePage{
-  background:linear-gradient(180deg,rgba(17,19,24,.96),rgba(8,10,14,.94)) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-  color:#f8fafc;
-}
-.exerciseHero:before{
-  background:linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.28),transparent) !important;
-}
-.videoBox{
-  background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.04)) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-  color:#f8fafc !important;
-}
-.timer{
-  background:linear-gradient(135deg,#ffffff,#cbd5e1,#64748b) !important;
-  -webkit-background-clip:text !important;
-  background-clip:text !important;
-  color:transparent !important;
-}
-.activityRing{
-  background:conic-gradient(#ffffff 0 65%,rgba(255,255,255,.10) 65%) !important;
-}
-.activityRing span{
-  background:#0b0d12 !important;
-  color:#f8fafc !important;
-}
-.day{
-  background:rgba(255,255,255,.075) !important;
-  color:rgba(248,250,252,.66) !important;
-}
-.day.done{
-  background:linear-gradient(135deg,#ffffff,#94a3b8) !important;
-  color:#07080b !important;
-}
-.badgeCard.locked{opacity:.38;}
-.toast{
-  background:rgba(20,22,28,.94) !important;
-  color:#f8fafc !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-}
-footer,.footer{color:rgba(248,250,252,.68) !important;}
-
-
-/* ===== Final Premium Glass System - Black / White / Gray ===== */
-:root{
-  --bg1:#050608;
-  --bg2:#151820;
-  --ink:#f8fafc;
-  --muted:#b6bdc9;
-  --line:rgba(255,255,255,.14);
-  --pink:#ffffff;
-  --hot:#ffffff;
-  --purple:#d1d5db;
-  --blue:#a1a1aa;
-  --cyan:#f3f4f6;
-  --mint:#ffffff;
-  --yellow:#e5e7eb;
-  --orange:#d1d5db;
-  --card:rgba(255,255,255,.075);
-  --shadow:0 30px 90px rgba(0,0,0,.50);
-  --soft:0 18px 45px rgba(0,0,0,.35);
-}
-
-html{background:#050608;}
-
-body{
-  color:#f8fafc !important;
-  background:
-    radial-gradient(circle at 12% 8%,rgba(255,255,255,.13),transparent 28%),
-    radial-gradient(circle at 85% 12%,rgba(180,190,205,.14),transparent 32%),
-    radial-gradient(circle at 52% 96%,rgba(255,255,255,.07),transparent 34%),
-    linear-gradient(135deg,#050608,#0b0d12 46%,#171a22) !important;
-}
-
-body:before{
-  background-image:
-    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) !important;
-}
-
-.glass,.card,.stat,.sidePanel,.infoBox,.goalBox,.miniChartBox,.tabs,.log,.badgeCard,.timerBox{
-  background:linear-gradient(180deg,rgba(255,255,255,.115),rgba(255,255,255,.055)) !important;
-  border:1px solid rgba(255,255,255,.15) !important;
-  color:#f8fafc !important;
-  box-shadow:0 24px 70px rgba(0,0,0,.34) !important;
-  backdrop-filter:blur(26px) saturate(150%) !important;
-  -webkit-backdrop-filter:blur(26px) saturate(150%) !important;
-}
-
-.hero{
-  background:
-    linear-gradient(135deg,rgba(0,0,0,.74),rgba(13,16,22,.76),rgba(70,78,92,.44)),
-    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80') center/cover !important;
-  border:1px solid rgba(255,255,255,.18) !important;
-  box-shadow:0 35px 95px rgba(0,0,0,.48) !important;
-}
-
-.hero:after{
-  background:
-    radial-gradient(circle at 18% 22%,rgba(255,255,255,.17),transparent 26%),
-    linear-gradient(to top,rgba(0,0,0,.87),rgba(0,0,0,.25) 62%,transparent) !important;
-}
-
-.hero h1,h1,h2,h3,.exercise b,.stat strong{color:#ffffff !important;}
-
-.hero p,.card p,.exercise small,.log small,.stat span,.goalTop span,.goalNote,small{
-  color:rgba(248,250,252,.72) !important;
-}
-
-.badge,.pill,.sets{
-  background:rgba(255,255,255,.09) !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  color:#f8fafc !important;
-  backdrop-filter:blur(18px) !important;
-  -webkit-backdrop-filter:blur(18px) !important;
-}
-
-/* all buttons white */
-button,a.btn,.green,.orange,.red,.blue,.purple,.dark,.ghost,.exerciseClose,.tab,.tab.active{
-  background:linear-gradient(135deg,#ffffff,#e5e7eb) !important;
-  color:#06070a !important;
-  border:1px solid rgba(255,255,255,.88) !important;
-  box-shadow:0 14px 34px rgba(255,255,255,.12),0 10px 24px rgba(0,0,0,.22) !important;
-}
-
-button:hover,a.btn:hover{
-  filter:none !important;
-  transform:translateY(-2px) !important;
-  box-shadow:0 20px 48px rgba(255,255,255,.18),0 16px 35px rgba(0,0,0,.28) !important;
-}
-
-button:active,a.btn:active{transform:scale(.98) !important;}
-
-.tabs{gap:10px !important;padding:12px !important;border-radius:28px !important;}
-.tab{opacity:.84;}
-.tab.active{opacity:1;}
-
-.progress,.goalBar{background:rgba(255,255,255,.11) !important;}
-.bar,.goalFill{background:linear-gradient(90deg,#ffffff,#d1d5db,#8f98a6) !important;}
-
-.workout .photo:after{background:linear-gradient(to top,rgba(5,6,8,.90),rgba(5,6,8,.18)) !important;}
-
-.exercise.openable{
-  background:rgba(255,255,255,.062) !important;
-  border:1px solid rgba(255,255,255,.08) !important;
-}
-.exercise.openable:hover{
-  background:rgba(255,255,255,.12) !important;
-  box-shadow:0 16px 38px rgba(0,0,0,.32) !important;
-}
-
-.exercise .openHint,.exercise .lastWeight,.videoBox a{color:#ffffff !important;}
-
-input,select,textarea{
-  color:#f8fafc !important;
-  background:rgba(255,255,255,.075) !important;
-  border:1px solid rgba(255,255,255,.17) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05) !important;
-}
-input::placeholder,textarea::placeholder{color:rgba(248,250,252,.50) !important;}
-
-.exerciseModal{background:rgba(0,0,0,.72) !important;}
-
-.exercisePage{
-  background:linear-gradient(180deg,rgba(22,25,32,.94),rgba(7,8,11,.95)) !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  color:#f8fafc !important;
-  box-shadow:0 45px 120px rgba(0,0,0,.62) !important;
-  backdrop-filter:blur(28px) saturate(155%) !important;
-  -webkit-backdrop-filter:blur(28px) saturate(155%) !important;
-}
-
-.exerciseHero:before{background:linear-gradient(to top,rgba(0,0,0,.90),rgba(0,0,0,.30),transparent) !important;}
-
-.videoBox{
-  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045)) !important;
-  border:1px solid rgba(255,255,255,.15) !important;
-  color:#f8fafc !important;
-}
-
-.timer,.modalPr{
-  background:linear-gradient(135deg,#ffffff,#cbd5e1,#64748b) !important;
-  -webkit-background-clip:text !important;
-  background-clip:text !important;
-  color:transparent !important;
-}
-
-.activityRing{background:conic-gradient(#ffffff 0 65%,rgba(255,255,255,.10) 65%) !important;}
-.activityRing span{
-  background:rgba(7,8,11,.92) !important;
-  color:#f8fafc !important;
-  border:1px solid rgba(255,255,255,.10);
-}
-
-.day{
-  background:rgba(255,255,255,.075) !important;
-  color:rgba(248,250,252,.68) !important;
-  border:1px solid rgba(255,255,255,.08);
-}
-.day.done{
-  background:linear-gradient(135deg,#ffffff,#9ca3af) !important;
-  color:#050608 !important;
-}
-
-.aero:before{background:linear-gradient(to top,rgba(0,0,0,.86),rgba(0,0,0,.22)) !important;}
-canvas{filter:drop-shadow(0 10px 20px rgba(0,0,0,.20));}
-.badgeCard.locked{opacity:.42 !important;}
-.toast{
-  background:rgba(15,17,23,.94) !important;
-  color:#f8fafc !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  box-shadow:0 20px 55px rgba(0,0,0,.38) !important;
-}
-footer,.footer{color:rgba(248,250,252,.68) !important;}
-
-@media(max-width:650px){
-  .tabs{border-radius:24px !important;}
-}
-
-
-
 /* ===== LIAN CLEAN APP EDITION - White Cards / Gray Background ===== */
 :root{
   --clean-bg:#f3f4f6;
@@ -877,16 +514,15 @@ function renderExerciseGoalAndChart(name){
  if(exerciseChart){exerciseChart.destroy(); exerciseChart=null}
  const canvas=document.getElementById('exerciseProgressChart');
  if(canvas){
-   exerciseChart=new Chart(canvas,{type:'line',data:{labels:logs.map(x=>x.date),datasets:[{data:logs.map(x=>x.weight),borderColor:'#f8fafc',backgroundColor:'rgba(255,255,255,.14)',fill:true,tension:.35}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}}}}});
+   exerciseChart=new Chart(canvas,{type:'line',data:{labels:logs.map(x=>x.date),datasets:[{data:logs.map(x=>x.weight),borderColor:'#111318',backgroundColor:'rgba(17,19,24,.10)',fill:true,tension:.35}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(17,24,39,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(17,24,39,.08)'}}}}});
  }
 }
-function maybeAutoPR(name,weight){
- const d=data();
+function maybeAutoPR(name,weight,d){
+ d=d||data();
  const prev=(d.prs||[]).filter(x=>x.name===name).map(x=>+x.weight||0);
  const bestPrev=prev.length?Math.max(...prev):0;
  if(weight>bestPrev){
    d.prs.unshift({date:today(),iso:isoToday(),name,weight,auto:true});
-   localStorage.setItem('gymUltraData',JSON.stringify(d));
    setTimeout(()=>{playSuccess();toast('🏆 שיא אישי חדש ב'+name+' · '+weight+' ק״ג')},120);
  }
 }
@@ -919,22 +555,6 @@ const workouts=[
  {title:'יום 3 · רגליים + בטן',emoji:'🦵',photo:'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=900&q=80',items:[['סקוואט / לג פרס','4 סטים · 6-10'],['דדליפט רומני','3 סטים · 8-10'],['לאנג׳ים','3 סטים · 10 לכל רגל'],['כפיפת ברך','3 סטים · 10-12'],['בטן: פלאנק + כפיפות','3 סבבים']]},
  {title:'יום 4 · כתפיים + בטן',emoji:'👑',photo:'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=900&q=80',items:[['לחיצת כתפיים','4 סטים · 6-8'],['הרחקות לצדדים','4 סטים · 12-15'],['הרחקות אחוריות','3 סטים · 12-15'],['טרפזים','3 סטים · 10-12'],['בטן / ידיים','3-4 סטים']]}
 ];
-function renderWorkouts(){
- const box=document.getElementById('workoutCards');
- box.innerHTML='';
- const d=data();
- workouts.forEach((w,wi)=>{
-  const div=document.createElement('div');
-  div.className='glass card workout';
-  div.innerHTML=`<div class="photo" style="background-image:url('${w.photo}')"></div><h2>${w.emoji} ${w.title}</h2><span class="pill">כוח</span><span class="pill">60-75 דק׳</span>`+
-  w.items.map((x,xi)=>{
-    const last=(d.logs||[]).find(l=>l.name===x[0]);
-    const lastTxt=last?`<span class="lastWeight">משקל אחרון: ${last.weight} ק״ג · ${last.reps}×${last.sets}</span>`:'';
-    return `<div class="exercise openable" onclick="openExercise('${x[0].replace(/'/g,"\\'")}', '${x[1].replace(/'/g,"\\'")}', ${wi}, ${xi})"><span><b>${x[0]}</b><small>${x[1]}</small><span class="openHint">לחץ לפתיחת עמוד התרגיל ← תמונה · מידע · עדכון משקל</span>${lastTxt}</span><span class="sets">פתח</span></div>`;
-  }).join('');
-  box.appendChild(div);
- })
-}
 let currentExerciseName='';
 let currentExercisePrescription='';
 function openExercise(name,prescription,wi,xi){
@@ -968,8 +588,8 @@ function saveExerciseFromModal(){
  const d=data();
  const oneRm=Math.round(weight*(1+reps/30));
  d.logs.unshift({date:today(),iso:isoToday(),name:currentExerciseName,weight,reps,sets,volume:weight*reps*sets,oneRm,prescription:currentExercisePrescription});
- maybeAutoPR(currentExerciseName,weight);
- save(data());
+ maybeAutoPR(currentExerciseName,weight,d);
+ save(d);
  openExercise(currentExerciseName,currentExercisePrescription,0,0);
  playSuccess();
  toast('נשמר לתרגיל · 1RM משוער: '+oneRm+' ק״ג');
@@ -982,20 +602,20 @@ function startTimerFromModal(){
 function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab,.menu-tile').forEach(t=>t.classList.remove('active'));if(btn){btn.classList.add('active')}else{const tile=document.querySelector(`.menu-tile[data-section=\"${id}\"]`);if(tile)tile.classList.add('active')}}
 function data(){return JSON.parse(localStorage.getItem('gymUltraData')||'{"logs":[],"cardio":[],"prs":[],"done":[],"health":{}}')}function save(d){localStorage.setItem('gymUltraData',JSON.stringify(d));renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}function today(){return new Date().toLocaleDateString('he-IL')}function isoToday(){return new Date().toISOString().slice(0,10)}
 function markWorkout(){const d=data();if(!d.done.some(x=>x.iso===isoToday())) d.done.unshift({date:today(),iso:isoToday(),type:'אימון כוח'});save(d);playSuccess();toast('האימון סומן בהצלחה 💪')}
-function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});maybeAutoPR(name,weight);save(data());exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
+function addLog(){const name=exName.value.trim(),weight=+exWeight.value,reps=+exReps.value,sets=+exSets.value;if(!name||!weight||!reps||!sets)return alert('מלא תרגיל, משקל, חזרות וסטים');const d=data();const oneRm=Math.round(weight*(1+reps/30));d.logs.unshift({date:today(),iso:isoToday(),name,weight,reps,sets,volume:weight*reps*sets,oneRm});maybeAutoPR(name,weight,d);save(d);exName.value=exWeight.value=exReps.value=exSets.value='';playSuccess();toast('הסט נשמר · 1RM משוער: '+oneRm+' ק״ג')}
 function addCardio(){const min=+cardioMinutes.value;if(!min)return alert('כתוב כמה דקות אירובי');const d=data();d.cardio.unshift({date:today(),iso:isoToday(),type:cardioType.value,min});save(d);cardioMinutes.value='';playSuccess();toast('אירובי נשמר')}
 function savePR(){const name=prName.value.trim(),weight=+prWeight.value;if(!name||!weight)return alert('מלא שם תרגיל ושיא');const d=data();d.prs.unshift({date:today(),iso:isoToday(),name,weight});save(d);prName.value=prWeight.value='';playSuccess();toast('שיא אישי חדש 🏆')}
 function saveHealth(){const d=data();d.health={bodyWeight:bodyWeight.value||d.health.bodyWeight||'',fatPercent:fatPercent.value||d.health.fatPercent||'',proteinGoal:proteinGoal.value||d.health.proteinGoal||'',proteinToday:proteinToday.value||d.health.proteinToday||'',waterToday:waterToday.value||d.health.waterToday||'',sleepHours:sleepHours.value||d.health.sleepHours||'',date:today()};save(d);playSuccess();toast('מדדי בריאות נשמרו')}
 function renderHistory(){const d=data();let rows=[];d.logs.forEach(x=>rows.push(`<div class="log"><b>🏋️ ${x.name}</b><small>${x.date} · ${x.sets} סטים · ${x.reps} חזרות · ${x.weight} ק״ג · נפח ${x.volume} ק״ג · 1RM ${x.oneRm||'-'} ק״ג</small></div>`));d.cardio.forEach(x=>rows.push(`<div class="log"><b>🔥 ${x.type}</b><small>${x.date} · ${x.min} דקות</small></div>`));d.prs.forEach(x=>rows.push(`<div class="log"><b>🏆 ${x.name}</b><small>${x.date} · ${x.weight} ק״ג</small></div>`));history.innerHTML=rows.join('')||'<p style="color:#6d7280">עדיין אין נתונים. הוסף אימון ראשון.</p>'}
 function updateStats(){const d=data();const done=d.done.length;weekCount.textContent=Math.min(done,4)+'/4';weekBar.style.width=Math.min(done/4*100,100)+'%';const vol=d.logs.reduce((s,x)=>s+x.volume,0);volumeText.textContent=vol.toLocaleString('he-IL')+' ק״ג';volBar.style.width=Math.min(vol/20000*100,100)+'%';const car=d.cardio.reduce((s,x)=>s+x.min,0);cardioText.textContent=car+' דק׳';cardioBar.style.width=Math.min(car/120*100,100)+'%';prText.textContent=d.prs.length+' 🏆';prBar.style.width=Math.min(d.prs.length/8*100,100)+'%';ringStrength.textContent=Math.round(Math.min(done/4*100,100))+'%';ringCardio.textContent=Math.round(Math.min(car/120*100,100))+'%';ringVolume.textContent=Math.round(Math.min(vol/20000*100,100))+'%';ring1.style.background=`conic-gradient(#ffffff 0 ${Math.min(done/4*100,100)}%,rgba(255,255,255,.10) 0)`;ring2.style.background=`conic-gradient(#cbd5e1 0 ${Math.min(car/120*100,100)}%,rgba(255,255,255,.10) 0)`;ring3.style.background=`conic-gradient(#94a3b8 0 ${Math.min(vol/20000*100,100)}%,rgba(255,255,255,.10) 0)`}
-let charts=[];function renderCharts(){charts.forEach(c=>c.destroy());charts=[];const d=data();const labels=[...new Set([...d.logs.map(x=>x.date),...d.cardio.map(x=>x.date)])].slice(0,8).reverse();const vols=labels.map(l=>d.logs.filter(x=>x.date==l).reduce((s,x)=>s+x.volume,0));const cars=labels.map(l=>d.cardio.filter(x=>x.date==l).reduce((s,x)=>s+x.min,0));const prLabels=d.prs.slice(0,6).reverse().map(x=>x.name);const prVals=d.prs.slice(0,6).reverse().map(x=>x.weight);const opts={plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(255,255,255,.08)'}}}};charts.push(new Chart(volumeChart,{type:'line',data:{labels,datasets:[{data:vols,borderColor:'#f8fafc',backgroundColor:'rgba(255,255,255,.14)',fill:true,tension:.35}]},options:opts}));charts.push(new Chart(cardioChart,{type:'bar',data:{labels,datasets:[{data:cars,backgroundColor:'rgba(203,213,225,.72)'}]},options:opts}));charts.push(new Chart(prChart,{type:'bar',data:{labels:prLabels,datasets:[{data:prVals,backgroundColor:'rgba(148,163,184,.78)'}]},options:opts}))}
+let charts=[];function renderCharts(){charts.forEach(c=>c.destroy());charts=[];const d=data();const labels=[...new Set([...d.logs.map(x=>x.date),...d.cardio.map(x=>x.date)])].slice(0,8).reverse();const vols=labels.map(l=>d.logs.filter(x=>x.date==l).reduce((s,x)=>s+x.volume,0));const cars=labels.map(l=>d.cardio.filter(x=>x.date==l).reduce((s,x)=>s+x.min,0));const prLabels=d.prs.slice(0,6).reverse().map(x=>x.name);const prVals=d.prs.slice(0,6).reverse().map(x=>x.weight);const opts={plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6d7280'},grid:{color:'rgba(17,24,39,.08)'}},y:{ticks:{color:'#6d7280'},grid:{color:'rgba(17,24,39,.08)'}}}};charts.push(new Chart(volumeChart,{type:'line',data:{labels,datasets:[{data:vols,borderColor:'#111318',backgroundColor:'rgba(17,19,24,.10)',fill:true,tension:.35}]},options:opts}));charts.push(new Chart(cardioChart,{type:'bar',data:{labels,datasets:[{data:cars,backgroundColor:'rgba(107,114,128,.35)'}]},options:opts}));charts.push(new Chart(prChart,{type:'bar',data:{labels:prLabels,datasets:[{data:prVals,backgroundColor:'rgba(17,19,24,.35)'}]},options:opts}))}
 function renderCalendar(){const d=data();const doneSet=new Set(d.done.map(x=>x.iso));const cal=document.getElementById('calendar');cal.innerHTML='';for(let i=29;i>=0;i--){const dt=new Date();dt.setDate(dt.getDate()-i);const iso=dt.toISOString().slice(0,10);const el=document.createElement('div');el.className='day '+(doneSet.has(iso)?'done':'');el.textContent=dt.getDate();cal.appendChild(el)}}
 function renderCoach(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);let msg='עוד אין מספיק נתונים. הוסף כמה סטים כדי שאוכל לתת המלצה.';if(d.done.length>=4) msg='שבוע חזק מאוד. אם הטכניקה טובה — אפשר להעלות 2.5 ק״ג בתרגילים המרכזיים.';else if(vol>12000) msg='נפח יפה. שמור על מנוחות וטכניקה. אל תעמיס אירובי כבד אחרי רגליים.';else if(d.logs.length>0) msg='התחלה טובה. באימון הבא נסה לשפר חזרה אחת או 2.5 ק״ג בתרגיל אחד בלבד.';coach.textContent=msg}
 function renderHealth(){const h=data().health||{};healthSummary.innerHTML=`<b>תאריך:</b> ${h.date||'-'}<br><b>משקל:</b> ${h.bodyWeight||'-'} ק״ג · <b>שומן:</b> ${h.fatPercent||'-'}%<br><b>חלבון:</b> ${h.proteinToday||'-'} / ${h.proteinGoal||'-'} גרם<br><b>מים:</b> ${h.waterToday||'-'} כוסות · <b>שינה:</b> ${h.sleepHours||'-'} שעות`}
 function renderBadges(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);const achievements=[['אימון ראשון','💪',d.done.length>=1],['4 אימונים','🔥',d.done.length>=4],['10 סטים','🏋️',d.logs.length>=10],['100 דקות אירובי','🏃',d.cardio.reduce((s,x)=>s+x.min,0)>=100],['שיא ראשון','🏆',d.prs.length>=1],['נפח 20,000','🚀',vol>=20000]];badgesGrid.innerHTML=achievements.map(a=>`<div class="glass badgeCard ${a[2]?'':'locked'}"><div class="big">${a[1]}</div><h3>${a[0]}</h3><p>${a[2]?'נפתח':'עדיין נעול'}</p></div>`).join('')}
 let timerSeconds=90,timerLeft=90,timerInt=null;function setTimer(s){timerSeconds=s;timerLeft=s;drawTimer()}function drawTimer(){timerText.textContent=String(Math.floor(timerLeft/60)).padStart(2,'0')+':'+String(timerLeft%60).padStart(2,'0')}function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{timerLeft--;drawTimer();if(timerLeft<=0){clearInterval(timerInt);playFinish();toast('נגמרה המנוחה — חוזרים לסט!')}} ,1000)}function pauseTimer(){clearInterval(timerInt)}function resetTimer(){clearInterval(timerInt);timerLeft=timerSeconds;drawTimer()}
 function shareWhatsApp(){const d=data();const vol=d.logs.reduce((s,x)=>s+x.volume,0);const car=d.cardio.reduce((s,x)=>s+x.min,0);const last=d.logs.slice(0,5).map(x=>`• ${x.name}: ${x.weight} ק״ג × ${x.reps} × ${x.sets}`).join('\n')||'אין סטים עדיין';const msg=`🏋️ Gym Pro Ultra - סיכום אימון\nתאריך: ${today()}\n\n${last}\n\nנפח כוח: ${vol.toLocaleString('he-IL')} ק״ג\nאירובי: ${car} דקות\nשיאים אישיים: ${d.prs.length}\n\n💪 ממשיכים להתקדם!`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}
-function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-pro-ultra-data.json';a.click()}function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymUltraData');renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}}function captureSummary(){html2canvas(document.getElementById('summaryArea'),{backgroundColor:'#07080b',scale:1.5}).then(canvas=>{const a=document.createElement('a');a.download='gym-pro-ultra-summary.png';a.href=canvas.toDataURL('image/png');a.click();toast('תמונת סיכום נשמרה')})}
+function exportData(){const blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gym-pro-ultra-data.json';a.click()}function clearData(){if(confirm('למחוק את כל הנתונים?')){localStorage.removeItem('gymUltraData');renderHistory();updateStats();renderCharts();renderCalendar();renderCoach();renderHealth();renderBadges();renderWorkouts()}}function captureSummary(){html2canvas(document.getElementById('summaryArea'),{backgroundColor:'#f3f4f6',scale:1.5}).then(canvas=>{const a=document.createElement('a');a.download='gym-pro-ultra-summary.png';a.href=canvas.toDataURL('image/png');a.click();toast('תמונת סיכום נשמרה')})}
 
 
 /* ===== Clean card renderer override ===== */
