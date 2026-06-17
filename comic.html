@@ -1,3 +1,5 @@
+להורדת הקובץ המעודכן
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -157,6 +159,74 @@ body:before{
 .filter-mono{filter:grayscale(1) contrast(1.1) !important}
 @media(max-width:820px){.topbar{padding:10px}.section{background:rgba(255,255,255,.58) !important}}
 
+
+
+/* ===== Compact one-screen background buttons ===== */
+#backgroundSection{
+  padding-top:20px !important;
+  padding-bottom:18px !important;
+}
+#backgroundSection h2{
+  font-size:20px !important;
+  margin-bottom:12px !important;
+}
+.bg-picker-wrap{
+  display:block !important;
+  max-width:620px !important;
+  margin:0 auto !important;
+}
+.bg-picker-wrap .round-nav{
+  display:none !important;
+}
+.bg-strip{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(50px,1fr)) !important;
+  gap:10px !important;
+  overflow:visible !important;
+  padding:4px !important;
+  justify-content:center !important;
+  align-items:center !important;
+}
+.bg-thumb{
+  width:100% !important;
+  aspect-ratio:1/1 !important;
+  height:auto !important;
+  min-height:0 !important;
+  border-radius:14px !important;
+  border:1px solid rgba(0,0,0,.10) !important;
+  box-shadow:0 6px 14px rgba(0,0,0,.06) !important;
+  outline-offset:2px !important;
+}
+.bg-thumb:hover{
+  transform:translateY(-1px) scale(1.03) !important;
+}
+.bg-thumb.active{
+  outline:3px solid #080808 !important;
+}
+.bg-thumb.active:after{
+  top:4px !important;
+  right:4px !important;
+  width:20px !important;
+  height:20px !important;
+  font-size:14px !important;
+  border-width:2px !important;
+}
+.no-bg{
+  font-size:11px !important;
+  font-weight:800 !important;
+  line-height:1.15 !important;
+  padding:3px !important;
+}
+@media(max-width:820px){
+  #backgroundSection{padding:16px 10px !important}
+  .bg-picker-wrap{max-width:100% !important}
+  .bg-strip{
+    grid-template-columns:repeat(5,1fr) !important;
+    gap:8px !important;
+  }
+  .bg-thumb{border-radius:12px !important}
+}
+
 </style>
 </head>
 <body>
@@ -206,7 +276,7 @@ body:before{
 </div>
 
 <section class="section" id="backgroundSection">
-  <h2>בחר רקע</h2>
+  <h2>בחר רקע קטן — בלחיצה הוא נפתח בפריים</h2>
   <div class="bg-picker-wrap">
     <button class="round-nav" onclick="scrollBg(-1)">‹</button>
     <div class="bg-strip" id="bgStrip">
