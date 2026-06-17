@@ -1,3 +1,5 @@
+להורדת הקובץ המעודכן
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -225,6 +227,31 @@ body:before{
   .bg-thumb{border-radius:12px !important}
 }
 
+
+/* ===== SINGLE FRAME MODE: keep only frame 1 ===== */
+.frames.single-frame{
+  display:block !important;
+  max-width:980px !important;
+  margin:20px auto 42px !important;
+}
+.frames.single-frame .frame{
+  width:100% !important;
+  height:min(68vh,620px) !important;
+  min-height:430px !important;
+}
+.frames.single-frame .frame-num{
+  background:#080808 !important;
+}
+@media(max-width:820px){
+  .frames.single-frame{
+    margin:14px auto 28px !important;
+  }
+  .frames.single-frame .frame{
+    height:460px !important;
+    min-height:360px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -262,14 +289,11 @@ body:before{
   <div id="textPanel" class="control-panel"><div class="control-row"><input id="plainText" placeholder="כתוב טקסט רגיל"><button class="nav-btn dark-dot" onclick="addPlainText()">הוסף טקסט</button><input type="color" id="textColor" value="#111827"></div></div>
   <div id="photoPanel" class="control-panel"><div class="control-row"><button class="nav-btn" onclick="openAlbumPicker()">תמונה מהאלבום</button><button class="nav-btn" onclick="document.getElementById('phonePhotoInput').click()">תמונה מהטלפון</button><input id="phonePhotoInput" type="file" accept="image/*" style="display:none" onchange="addPhonePhoto(event)"><button class="nav-btn" onclick="toggleStickerShape()">עיגול / ריבוע</button><button class="nav-btn" onclick="makeStickerHeart()">לב</button><button class="nav-btn" onclick="makeStickerStar()">כוכב</button></div></div>
   <div id="filterPanel" class="control-panel"><div class="control-row"><select id="filterSelect"><option value="">ללא פילטר</option><option value="filter-clarendon">Clarendon</option><option value="filter-valencia">Valencia</option><option value="filter-juno">Juno</option><option value="filter-mono">שחור לבן</option></select><button class="nav-btn dark-dot" onclick="applyFrameFilter()">החל פילטר</button><input id="igCommentText" placeholder="תגובה לפריים"><button class="nav-btn" onclick="addInstagramMeta()">הוסף לייקים ותגובה</button></div></div>
-  <div id="editPanel" class="control-panel"><div class="control-row"><button class="nav-btn" onclick="makeSelectedBigger()">הגדל</button><button class="nav-btn" onclick="makeSelectedSmaller()">הקטן</button><button class="nav-btn" onclick="rotateSelected()">סובב</button><button class="nav-btn" onclick="bringForward()">קדימה</button><button class="nav-btn" onclick="sendBackward()">אחורה</button><button class="nav-btn" onclick="duplicateFrame()">שכפל פריים</button></div></div>
+  <div id="editPanel" class="control-panel"><div class="control-row"><button class="nav-btn" onclick="makeSelectedBigger()">הגדל</button><button class="nav-btn" onclick="makeSelectedSmaller()">הקטן</button><button class="nav-btn" onclick="rotateSelected()">סובב</button><button class="nav-btn" onclick="bringForward()">קדימה</button><button class="nav-btn" onclick="sendBackward()">אחורה</button><button class="nav-btn" onclick="duplicateFrame()">פריים יחיד</button></div></div>
   <div id="emojiPanel" class="control-panel"><div class="control-row"><span class="mobile-title">בחר אימוג׳י מהאזור למטה</span><button class="nav-btn" onclick="scrollToStickers()">פתח מדבקות</button></div></div>
 
-  <div class="frames" id="comicArea">
+  <div class="frames single-frame" id="comicArea">
     <div class="frame active bg-park" onclick="selectFrame(this)"><span class="frame-num">1</span></div>
-    <div class="frame" onclick="selectFrame(this)"><span class="frame-num">2</span></div>
-    <div class="frame" onclick="selectFrame(this)"><span class="frame-num">3</span></div>
-    <div class="frame" onclick="selectFrame(this)"><span class="frame-num">4</span></div>
   </div>
 </div>
 
@@ -349,7 +373,7 @@ function sendBackward(){if(!selectedItem)return alert('בחר קודם פריט'
 function toggleStickerShape(){if(!selectedItem||!selectedItem.classList.contains('image-item'))return alert('בחר קודם תמונה');selectedItem.classList.remove('heart','star');selectedItem.classList.toggle('square')}
 function makeStickerHeart(){if(!selectedItem||!selectedItem.classList.contains('image-item'))return alert('בחר קודם תמונה');selectedItem.classList.remove('square','star');selectedItem.classList.add('heart')}
 function makeStickerStar(){if(!selectedItem||!selectedItem.classList.contains('image-item'))return alert('בחר קודם תמונה');selectedItem.classList.remove('square','heart');selectedItem.classList.add('star')}
-function duplicateFrame(){const clone=activeFrame.cloneNode(true);clone.classList.remove('active');clone.onclick=function(){selectFrame(clone)};clone.querySelectorAll('.item,.speech').forEach(makeDraggable);activeFrame.parentNode.insertBefore(clone,activeFrame.nextSibling);renumberFrames();selectFrame(clone)}
+function duplicateFrame(){alert('במצב הנוכחי יש רק פריים אחד. אפשר לשכפל פריטים בתוך הפריים, אבל לא לפתוח פריים נוסף.')}
 function renumberFrames(){document.querySelectorAll('.frame').forEach((f,i)=>{let n=f.querySelector('.frame-num');if(!n){n=document.createElement('span');n.className='frame-num';f.prepend(n)}n.textContent=i+1})}
 function addImageToFrame(src){const el=document.createElement('div');el.className='item image-item';el.innerHTML='<img src="'+src+'" alt="תמונה">';el.style.left='100px';el.style.top='100px';el.style.zIndex='5';el.dataset.scale='1';el.dataset.rotation='0';activeFrame.appendChild(el);makeDraggable(el);selectItem(el)}
 function addPhonePhoto(event){const file=event.target.files&&event.target.files[0];if(!file)return;const r=new FileReader();r.onload=e=>addImageToFrame(e.target.result);r.readAsDataURL(file);event.target.value=''}
