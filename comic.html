@@ -814,7 +814,12 @@ function renderGalleryInto(grid,empty){
   list.forEach((item,i)=>{
     const card=document.createElement('div');
     card.className='gallery-card';
-    card.innerHTML='<img src="'+item.data+'" alt="קומיקס"><a download="comic-lian-'+(i+1)+'.png" href="'+item.data+'">הורדה</a>'+(item.sample?'<span class="sample-badge">דוגמה</span>':'');
+    card.innerHTML='<img src="'+item.data+'" alt="קומיקס">'+
+'<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px">'+
+'<a download="comic-lian-'+(i+1)+'.png" href="'+item.data+'">📥 הורדה</a>'+
+(item.sample?'':'<a href="#" onclick="shareComic('+i+');return false;">📲 שיתוף</a>')+
+(item.sample?'':'<a href="#" onclick="deleteComic('+i+');return false;">🗑️ מחיקה</a>')+
+'</div>'+(item.sample?'<span class="sample-badge">דוגמה</span>':'');
     grid.appendChild(card)
   });
 }
@@ -952,6 +957,39 @@ function toggleMovieVoice(){
   movieVoiceOn=!movieVoiceOn;
   if(!movieVoiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
   alert(movieVoiceOn ? 'הקריינות פועלת 🎤' : 'הקריינות כבויה 🔇');
+}
+
+
+function deleteComic(index){
+  let gallery=[];
+  try{gallery=JSON.parse(localStorage.getItem('lianComicGallery')||'[]')}catch(e){}
+  if(!confirm('למחוק את הקומיקס?')) return;
+  gallery.splice(index,1);
+  localStorage.setItem('lianComicGallery',JSON.stringify(gallery));
+  renderInlineComicGallery();
+  const grid=document.getElementById('comicGalleryGrid');
+  if(grid && document.getElementById('comicGalleryBox').classList.contains('open')){
+    renderGalleryInto(grid,document.getElementById('comicGalleryEmpty'));
+  }
+}
+
+async function shareComic(index){
+  let gallery=[];
+  try{gallery=JSON.parse(localStorage.getItem('lianComicGallery')||'[]')}catch(e){}
+  const item=gallery[index];
+  if(!item) return;
+
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title:'הקומיקס של ליאן',
+        text:'תראו את הקומיקס שלי!'
+      });
+      return;
+    }catch(e){}
+  }
+
+  window.open('https://wa.me/?text='+encodeURIComponent('תראו את הקומיקס שלי! קודם הורידו את התמונה ואז צרפו אותה לוואטסאפ 📸'),'_blank');
 }
 
 renderCategories();renumberFrames();renderInlineComicGallery();
