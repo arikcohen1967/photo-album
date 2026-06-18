@@ -151,9 +151,9 @@ body:before{
 .modal{background:rgba(0,0,0,.34) !important;backdrop-filter:blur(18px) !important;-webkit-backdrop-filter:blur(18px) !important}
 .gallery-card{background:rgba(255,255,255,.58) !important;border-color:rgba(0,0,0,.08) !important;backdrop-filter:blur(16px) !important;-webkit-backdrop-filter:blur(16px) !important}
 .album-thumb,.gallery-card img{filter:none !important;-webkit-filter:none !important}
-.filter-clarendon{filter:grayscale(1) contrast(1.16) brightness(1.05) !important}
-.filter-valencia{filter:grayscale(1) sepia(.05) contrast(1.06) brightness(1.04) !important}
-.filter-juno{filter:grayscale(1) contrast(1.18) brightness(1.02) !important}
+.filter-clarendon{filter:contrast(1.16) saturate(1.28) brightness(1.05) !important}
+.filter-valencia{filter:sepia(.12) saturate(1.20) contrast(1.04) brightness(1.06) !important}
+.filter-juno{filter:contrast(1.15) saturate(1.38) brightness(1.03) hue-rotate(-6deg) !important}
 .filter-mono{filter:grayscale(1) contrast(1.1) !important}
 @media(max-width:820px){.topbar{padding:10px}.section{background:rgba(255,255,255,.58) !important}}
 
@@ -568,8 +568,38 @@ function addPhonePhoto(event){const file=event.target.files&&event.target.files[
 function openAlbumPicker(){const grid=document.getElementById('albumGrid'),empty=document.getElementById('albumEmpty');grid.innerHTML='';let album=[];try{album=JSON.parse(localStorage.getItem('lianFamilyAlbumPhotos')||'[]')}catch(e){}empty.style.display=album.length?'none':'block';album.forEach(photo=>{if(!photo||!photo.data)return;const img=document.createElement('img');img.className='album-thumb';img.src=photo.data;img.onclick=()=>{addImageToFrame(photo.data);closeAlbumPicker()};grid.appendChild(img)});document.getElementById('albumPicker').classList.add('open')}
 function closeAlbumPicker(){document.getElementById('albumPicker').classList.remove('open')}
 function cleanSelection(){document.querySelectorAll('.item,.speech').forEach(x=>x.classList.remove('selected'))}
-function saveComic(){cleanSelection();html2canvas(activeFrame,{backgroundColor:'#ffffff',scale:2}).then(canvas=>{const a=document.createElement('a');a.download='comic-lian.png';a.href=canvas.toDataURL('image/png');a.click()})}
-function saveToLianAlbum(){cleanSelection();html2canvas(activeFrame,{backgroundColor:'#ffffff',scale:2}).then(canvas=>{try{const imageData=canvas.toDataURL('image/png');let album=JSON.parse(localStorage.getItem('lianFamilyAlbumPhotos')||'[]');album.unshift({id:Date.now()+'',name:'קומיקס של ליאן.png',date:new Date().toLocaleDateString('he-IL'),data:imageData});localStorage.setItem('lianFamilyAlbumPhotos',JSON.stringify(album));showSuccessBox();launchConfetti()}catch(e){alert('לא הצלחתי לשמור. כנראה שאין מספיק מקום בדפדפן.')}})}
+
+function captureActiveFrameColor(callback){
+  cleanSelection();
+
+  const savedClasses = filters.filter(cls => cls && activeFrame.classList.contains(cls));
+  savedClasses.forEach(cls => activeFrame.classList.remove(cls));
+
+  const oldFilter = activeFrame.style.filter;
+  const oldWebkitFilter = activeFrame.style.webkitFilter;
+  activeFrame.style.setProperty('filter','none','important');
+  activeFrame.style.setProperty('-webkit-filter','none','important');
+
+  return html2canvas(activeFrame,{
+    backgroundColor:'#ffffff',
+    scale:2,
+    useCORS:true,
+    allowTaint:true
+  }).then(canvas=>{
+    activeFrame.style.filter = oldFilter;
+    activeFrame.style.webkitFilter = oldWebkitFilter;
+    savedClasses.forEach(cls => activeFrame.classList.add(cls));
+    return callback(canvas);
+  }).catch(err=>{
+    activeFrame.style.filter = oldFilter;
+    activeFrame.style.webkitFilter = oldWebkitFilter;
+    savedClasses.forEach(cls => activeFrame.classList.add(cls));
+    throw err;
+  });
+}
+
+function saveComic(){captureActiveFrameColor(canvas=>{const a=document.createElement('a');a.download='comic-lian.png';a.href=canvas.toDataURL('image/png');a.click()})}
+function saveToLianAlbum(){captureActiveFrameColor(canvas=>{try{const imageData=canvas.toDataURL('image/png');let album=JSON.parse(localStorage.getItem('lianFamilyAlbumPhotos')||'[]');album.unshift({id:Date.now()+'',name:'קומיקס של ליאן.png',date:new Date().toLocaleDateString('he-IL'),data:imageData});localStorage.setItem('lianFamilyAlbumPhotos',JSON.stringify(album));showSuccessBox();launchConfetti()}catch(e){alert('לא הצלחתי לשמור. כנראה שאין מספיק מקום בדפדפן.')}})}
 function showSuccessBox(){document.getElementById('successBox').classList.add('open')}function closeSuccessBox(){document.getElementById('successBox').classList.remove('open')}function openAlbumNow(){window.location.href='album-lian.html'}
 function getFramesArray(){return Array.from(document.querySelectorAll('#comicArea .frame'))}
 function applyFrameFilter(){const value=document.getElementById('filterSelect').value;activeFrame.classList.remove('filter-clarendon','filter-valencia','filter-juno','filter-mono');if(value)activeFrame.classList.add(value)}
@@ -577,7 +607,7 @@ function applyQuickFilter(){filterIndex=(filterIndex+1)%filters.length;document.
 function addInstagramMeta(){const old=activeFrame.querySelector('.ig-meta');if(old)old.remove();const text=(document.getElementById('igCommentText').value||'ליאן יצרה קומיקס מושלם ✨').trim();const likes=Math.floor(Math.random()*800)+120;const meta=document.createElement('div');meta.className='ig-meta';meta.innerHTML='<div class="ig-comment">💬 '+text+'</div><div class="ig-icons">❤️ '+likes+'</div>';activeFrame.appendChild(meta)}
 function autoCreateStory(){const lines=['היום התחיל כמו יום רגיל... עד שקרה משהו קסום! ✨','ליאן והחברים מצאו סימן מסתורי בדרך 🧭','פתאום הופיע גיבור חדש עם כוח מיוחד 🦸‍♀️','ובסוף? זה היה הקומיקס הכי יפה בעולם! 👑'];getFramesArray().forEach((frame,i)=>{selectFrame(frame);if(frame.querySelectorAll('.item,.speech').length===0){addItem(i%2===0?'👧':'🦄');addItem(['✨','🌈','⭐','❤️'][i%4])}document.getElementById('speechText').value=lines[i%lines.length];addSpeech()});launchConfetti()}
 function openStoryMode(){storyIndex=0;document.getElementById('storyPhone').classList.add('open');renderStoryFrame()}function closeStoryMode(){document.getElementById('storyPhone').classList.remove('open')}function renderStoryFrame(){const content=document.getElementById('storyContent');content.innerHTML='';const clone=getFramesArray()[storyIndex].cloneNode(true);clone.classList.remove('active');content.appendChild(clone)}function nextStoryFrame(){storyIndex=(storyIndex+1)%getFramesArray().length;renderStoryFrame()}function prevStoryFrame(){storyIndex=(storyIndex-1+getFramesArray().length)%getFramesArray().length;renderStoryFrame()}
-function saveToComicGallery(){cleanSelection();html2canvas(activeFrame,{backgroundColor:'#ffffff',scale:2}).then(canvas=>{let gallery=[];try{gallery=JSON.parse(localStorage.getItem('lianComicGallery')||'[]')}catch(e){}gallery.unshift({id:Date.now()+'',date:new Date().toLocaleDateString('he-IL'),data:canvas.toDataURL('image/png')});localStorage.setItem('lianComicGallery',JSON.stringify(gallery));renderInlineComicGallery();launchConfetti();alert('הקומיקס נשמר בגלריית הקומיקסים 👑')})}
+function saveToComicGallery(){captureActiveFrameColor(canvas=>{let gallery=[];try{gallery=JSON.parse(localStorage.getItem('lianComicGallery')||'[]')}catch(e){}gallery.unshift({id:Date.now()+'',date:new Date().toLocaleDateString('he-IL'),data:canvas.toDataURL('image/png')});localStorage.setItem('lianComicGallery',JSON.stringify(gallery));renderInlineComicGallery();launchConfetti();alert('הקומיקס נשמר בגלריית הקומיקסים 👑')})}
 function sampleComicData(title,bg,accent){
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300">
     <rect width="420" height="300" rx="34" fill="${bg}"/>
