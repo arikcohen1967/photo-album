@@ -45,6 +45,7 @@ body:before{
     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
   background-size:44px 44px;
   pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,black,transparent 78%);
   mask-image:linear-gradient(to bottom,black,transparent 78%);
 }
 
@@ -100,6 +101,7 @@ header > *{
 .badge{
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
   padding:9px 16px;
   border-radius:999px;
@@ -154,6 +156,7 @@ header p{
   align-items:center;
   gap:16px;
   text-align:right;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .card:before{
@@ -172,6 +175,10 @@ header p{
   background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.075));
   border-color:rgba(255,255,255,.26);
   box-shadow:0 30px 70px rgba(0,0,0,.42);
+}
+
+.card:active{
+  transform:scale(.985);
 }
 
 .icon{
@@ -263,7 +270,7 @@ footer{
   <p>תמונות · משחקים · קומיקס · חיית מחמד · תקציב · אימונים</p>
 </header>
 
-<div class="menu">
+<main class="menu">
 
   <a class="card" href="album-lian.html">
     <span class="icon">📸</span>
@@ -337,7 +344,7 @@ footer{
     <span class="arrow">›</span>
   </a>
 
-</div>
+</main>
 
 <footer>
   © 2026 משפחת כהן
@@ -346,21 +353,28 @@ footer{
 </div>
 
 <script>
+let audioCtx = null;
+
 function playClickSound(){
   try{
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    audioCtx = audioCtx || new AudioContext();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
     osc.type = "sine";
     osc.frequency.value = 420;
-    gain.gain.setValueAtTime(0.001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.07, ctx.currentTime + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
+
+    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.07, audioCtx.currentTime + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.09);
+
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(audioCtx.destination);
+
     osc.start();
-    osc.stop(ctx.currentTime + 0.1);
+    osc.stop(audioCtx.currentTime + 0.1);
   }catch(e){}
 }
 
