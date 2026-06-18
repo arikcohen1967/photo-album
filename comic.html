@@ -456,7 +456,7 @@ body:before{
 <section class="section" id="backgroundSection">
   <h2>מניפת צבעים לרקע</h2>
   <div class="color-fan-wrap" id="colorFan">
-    <button class="color-swatch active" style="background:#ffffff" title="לבן" onclick="setColorSwatch(this,'#ffffff')"></button>
+    <button class="color-swatch" style="background:#ffffff" title="לבן" onclick="setColorSwatch(this,'#ffffff')"></button>
     <button class="color-swatch" style="background:#fff4c7" title="שמנת" onclick="setColorSwatch(this,'#fff4c7')"></button>
     <button class="color-swatch" style="background:#ffe066" title="צהוב" onclick="setColorSwatch(this,'#ffe066')"></button>
     <button class="color-swatch" style="background:#ff922b" title="כתום" onclick="setColorSwatch(this,'#ff922b')"></button>
@@ -473,7 +473,7 @@ body:before{
 
   <h2 style="margin-top:24px">רקעים מוכנים</h2>
   <div class="preset-bg-wrap" id="bgStrip">
-    <button class="bg-thumb bg-park" title="פארק" onclick="setBgThumb(this,'bg-park')"></button>
+    <button class="bg-thumb bg-park active" title="פארק" onclick="setBgThumb(this,'bg-park')"></button>
     <button class="bg-thumb bg-sea" title="ים" onclick="setBgThumb(this,'bg-sea')"></button>
     <button class="bg-thumb bg-city" title="עיר" onclick="setBgThumb(this,'bg-city')"></button>
     <button class="bg-thumb bg-class" title="בית ספר" onclick="setBgThumb(this,'bg-class')"></button>
@@ -528,7 +528,7 @@ function clearFrame(){activeFrame.querySelectorAll('.item,.speech,.ig-meta').for
 function clearAllFrames(){if(confirm('לנקות את כל הפריימים?'))document.querySelectorAll('.frame').forEach(f=>f.querySelectorAll('.item,.speech,.ig-meta').forEach(x=>x.remove()))}
 function setBgThumb(btn,cls){setFrameBgClass(cls);document.querySelectorAll('.bg-thumb,.color-swatch').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 function setFrameBgClass(cls){bgClasses.forEach(c=>activeFrame.classList.remove(c));activeFrame.style.background='';activeFrame.classList.add(cls)}
-function setSolidColor(color){bgClasses.forEach(c=>activeFrame.classList.remove(c));activeFrame.style.background=color;document.querySelectorAll('.bg-thumb,.color-swatch').forEach(b=>b.classList.remove('active'))}
+function setSolidColor(color){bgClasses.forEach(c=>activeFrame.classList.remove(c));activeFrame.style.setProperty('background',color,'important');document.querySelectorAll('.bg-thumb,.color-swatch').forEach(b=>b.classList.remove('active'))}
 function setColorSwatch(btn,color){setSolidColor(color);btn.classList.add('active')}
 function scrollBg(dir){const el=document.getElementById('bgStrip'); if(el && el.scrollBy) el.scrollBy({left:dir*260,behavior:'smooth'})}
 function scrollToBackgrounds(){document.getElementById('backgroundSection').scrollIntoView({behavior:'smooth'})}
