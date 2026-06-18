@@ -150,7 +150,7 @@ body:before{
 .confetti-piece{filter:none !important;-webkit-filter:none !important}
 .modal{background:rgba(0,0,0,.34) !important;backdrop-filter:blur(18px) !important;-webkit-backdrop-filter:blur(18px) !important}
 .gallery-card{background:rgba(255,255,255,.58) !important;border-color:rgba(0,0,0,.08) !important;backdrop-filter:blur(16px) !important;-webkit-backdrop-filter:blur(16px) !important}
-.album-thumb,.gallery-card img{filter:grayscale(1)}
+.album-thumb,.gallery-card img{filter:none !important;-webkit-filter:none !important}
 .filter-clarendon{filter:grayscale(1) contrast(1.16) brightness(1.05) !important}
 .filter-valencia{filter:grayscale(1) sepia(.05) contrast(1.06) brightness(1.04) !important}
 .filter-juno{filter:grayscale(1) contrast(1.18) brightness(1.02) !important}
@@ -397,6 +397,17 @@ body:before{
   text-shadow:0 8px 10px rgba(17,24,39,.16) !important;
 }
 .confetti-piece{
+  filter:none !important;
+  -webkit-filter:none !important;
+}
+
+
+/* ===== FINAL FIX: colorful comic gallery thumbnails ===== */
+.album-thumb,
+.gallery-card img,
+.inline-gallery .gallery-card img,
+#comicGalleryGrid .gallery-card img,
+#inlineComicGallery .gallery-card img{
   filter:none !important;
   -webkit-filter:none !important;
 }
