@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>חיית המחמד של ליאן V2</title>
+<title>חיית המחמד של ליאן V3 · LIAN WORLD</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -31,9 +31,10 @@ h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted)
 <div class="app">
   <div class="hero">
     <h1>🐾 חיית המחמד של ליאן</h1>
-    <p>מטפלים, אוספים מטבעות, פותחים חיות חדשות, מקבלים הישגים ובונוס יומי</p>
+    <p>LIAN WORLD EDITION · מטפלים, אוספים מטבעות משותפים, פותחים חיות, הישגים וגלגל מזל</p>
     <div class="top-actions">
       <a class="btn dark" href="index.html">⌂ דף הבית</a>
+      <a class="btn" href="achievements.html">🏆 הישגים</a>
       <button class="btn gold" onclick="claimDaily()">🎁 בונוס יומי</button>
       <button class="btn" onclick="resetGame()">איפוס משחק</button>
     </div>
@@ -45,12 +46,14 @@ h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted)
         <div class="pill">💰 <span id="coins">0</span></div>
         <div class="pill">⭐ שלב <span id="level">1</span></div>
         <div class="pill">XP <span id="xp">0</span>/100</div>
+        <div class="pill">🌍 <span id="worldCoins">0</span></div>
       </div>
       <div class="pet-wrap">
         <div class="hat" id="hat">👑</div>
         <div class="pet" id="pet">🐶</div>
         <div class="name">LIAN PET</div>
         <div class="mood" id="mood">שמחה לראות אותך!</div>
+        <div class="mood" id="evolutionMood">Evolution: Baby Friend</div>
       </div>
       <div class="stats">
         <div class="stat"><b>אוכל 🍎</b><div class="bar"><div class="fill" id="hunger"></div></div></div>
@@ -67,6 +70,7 @@ h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted)
           <button class="tab active" onclick="showTab(this,'care')">טיפול</button>
           <button class="tab" onclick="showTab(this,'shop')">חנות</button>
           <button class="tab" onclick="showTab(this,'eggs')">ביצים</button>
+          <button class="tab" onclick="showTab(this,'wheel')">גלגל מזל</button>
           <button class="tab" onclick="showTab(this,'mini')">מיני משחק</button>
           <button class="tab" onclick="showTab(this,'achievements')">הישגים</button>
         </div>
@@ -96,6 +100,19 @@ h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted)
             <div class="egg-card"><div class="big">💎</div><b>ביצה נדירה</b><span class="small">250 מטבעות</span><button class="btn" onclick="buyEgg('rare',250)">פתח</button></div>
             <div class="egg-card"><div class="big">✨</div><b>ביצת קסם</b><span class="small">500 מטבעות</span><button class="btn gold" onclick="buyEgg('magic',500)">פתח</button></div>
           </div>
+        </div>
+
+
+
+        <div id="wheel" class="tab-panel">
+          <div class="section-title">גלגל מזל יומי 🎡</div>
+          <div class="daily-box">
+            <b>סובבי פעם ביום וקבלי פרס</b><br>
+            <span class="small">מטבעות, XP, חברות או חיה נדירה.</span>
+          </div>
+          <div style="font-size:92px;margin:10px 0;filter:drop-shadow(0 12px 18px rgba(0,0,0,.15))" id="wheelIcon">🎡</div>
+          <button class="btn gold" onclick="spinWheel()">סובב גלגל</button>
+          <div class="footer-note">הפרס מתעדכן גם בפרופיל LIAN WORLD המשותף.</div>
         </div>
 
         <div id="mini" class="tab-panel">
@@ -130,8 +147,13 @@ const shopItems=[
   {type:'bg',id:'room',name:'חדר אישי',price:80,icon:'🏡'}, {type:'bg',id:'castle',name:'טירה קסומה',price:150,icon:'🏰'},
   {type:'bg',id:'space',name:'חלל',price:180,icon:'🪐'}
 ];
-const defaultState={coins:80,level:1,xp:0,pet:'🐶',hat:'',bg:'park',hunger:75,happy:75,clean:75,energy:75,friendship:20,ownedPets:['🐶','🐱','🐰','🦄'],ownedItems:[],lastDaily:'',streak:0,counts:{feed:0,play:0,wash:0,sleep:0,eggs:0,stars:0},achieved:{}};
+const defaultState={coins:80,level:1,xp:0,pet:'🐶',hat:'',bg:'park',hunger:75,happy:75,clean:75,energy:75,friendship:20,ownedPets:['🐶','🐱','🐰','🦄'],ownedItems:[],lastDaily:'',lastWheel:'',streak:0,counts:{feed:0,play:0,wash:0,sleep:0,eggs:0,stars:0,wheel:0},achieved:{}};
 let state=load();let miniTimer=null,miniActive=false,miniScore=0;
+const worldDefault={coins:0,xp:0,level:1,achievements:{},updated:''};
+function loadWorld(){try{return {...worldDefault,...JSON.parse(localStorage.getItem('lianWorldProfile')||'{}')}}catch(e){return {...worldDefault}}}
+function saveWorld(w){w.updated=new Date().toISOString();localStorage.setItem('lianWorldProfile',JSON.stringify(w))}
+function addWorldReward(coins,xp,source){const w=loadWorld();w.coins=(w.coins||0)+coins;w.xp=(w.xp||0)+xp;while(w.xp>=100){w.level=(w.level||1)+1;w.xp-=100}w.lastSource=source||'pet';saveWorld(w);return w}
+function unlockWorldAchievement(id,title){const w=loadWorld();w.achievements=w.achievements||{};if(!w.achievements[id]){w.achievements[id]={title:title,date:new Date().toLocaleDateString('he-IL'),source:'pet'};w.coins=(w.coins||0)+25;saveWorld(w)}}
 function load(){try{return {...defaultState,...JSON.parse(localStorage.getItem('lianPetGameV2')||'{}')}}catch(e){return {...defaultState}}}
 function save(){localStorage.setItem('lianPetGameV2',JSON.stringify(state))}
 function clamp(v){return Math.max(0,Math.min(100,v))}
@@ -140,27 +162,29 @@ function showReward(icon,title,text){document.getElementById('rewardIcon').textC
 function closeReward(){document.getElementById('rewardModal').classList.remove('open')}
 function showTab(btn,id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='achievements')renderAchievements()}
 function update(){
-  document.getElementById('coins').textContent=state.coins;document.getElementById('level').textContent=state.level;document.getElementById('xp').textContent=state.xp;
+  document.getElementById('coins').textContent=state.coins;document.getElementById('level').textContent=state.level;document.getElementById('xp').textContent=state.xp;const w=loadWorld();document.getElementById('worldCoins').textContent=(w.coins||0)+' מטבעות עולם';
   document.getElementById('pet').textContent=state.pet;document.getElementById('hat').textContent=state.hat||'';document.getElementById('hat').classList.toggle('show',!!state.hat);
   ['hunger','happy','clean','energy','friendship'].forEach(k=>document.getElementById(k).style.width=clamp(state[k])+'%');
   const stage=document.getElementById('stage');stage.className='panel stage '+(state.bg||'');
   let avg=(state.hunger+state.happy+state.clean+state.energy+state.friendship)/5;
-  document.getElementById('mood').textContent=avg>85?'מאושרת ומלאת קסם ✨':avg>60?'מרגישה נהדר 💖':avg>35?'רוצה קצת תשומת לב 🥺':'צריכה טיפול דחוף 😢';
+  document.getElementById('mood').textContent=avg>85?'מאושרת ומלאת קסם ✨':avg>60?'מרגישה נהדר 💖':avg>35?'רוצה קצת תשומת לב 🥺':'צריכה טיפול דחוף 😢';document.getElementById('evolutionMood').textContent=getEvolutionText();
   renderPetSelect();renderShop();checkAchievements();save();
 }
-function reward(amount,msg){state.coins+=amount;state.xp+=amount;state.friendship=clamp(state.friendship+3);while(state.xp>=100){state.level++;state.xp-=100;showReward('⭐','עלית שלב!','ליאן הגיעה לשלב '+state.level)}toast(msg+' +'+amount+' מטבעות');sparkles();update()}
+function reward(amount,msg){state.coins+=amount;state.xp+=amount;state.friendship=clamp(state.friendship+3);addWorldReward(amount,amount,'pet-care');while(state.xp>=100){state.level++;state.xp-=100;showReward('⭐','עלית שלב!','ליאן הגיעה לשלב '+state.level)}toast(msg+' +'+amount+' מטבעות');sparkles();update()}
 function feedPet(){state.hunger=clamp(state.hunger+18);state.energy=clamp(state.energy+5);state.counts.feed++;reward(8,'יאמי')}
 function playPet(){state.happy=clamp(state.happy+20);state.energy=clamp(state.energy-10);state.clean=clamp(state.clean-6);state.counts.play++;reward(10,'איזה כיף')}
 function washPet(){state.clean=clamp(state.clean+22);state.happy=clamp(state.happy+4);state.counts.wash++;reward(7,'נקי ומבריק')}
 function sleepPet(){state.energy=clamp(state.energy+24);state.hunger=clamp(state.hunger-7);state.counts.sleep++;reward(6,'חלומות קסומים')}
+function getEvolutionText(){if(state.level>=20)return 'Evolution: Legend Friend 👑';if(state.level>=15)return 'Evolution: Magic Friend ✨';if(state.level>=10)return 'Evolution: Super Friend 🌈';if(state.level>=5)return 'Evolution: Best Friend ❤️';return 'Evolution: Baby Friend 🐾'}
 function renderPetSelect(){const box=document.getElementById('petSelect');box.innerHTML='';Object.keys(pets).forEach(p=>{const owned=state.ownedPets.includes(p);const b=document.createElement('button');b.className='pet-chip'+(state.pet===p?' active':'');b.textContent=p+' '+(owned?pets[p].name:'🔒');b.onclick=()=>owned?choosePet(p):toast('צריך לפתוח את החיה בביצת הפתעה');box.appendChild(b)})}
 function choosePet(pet){state.pet=pet;toast('נבחרה חיה חדשה!');sparkles();update()}
 function renderShop(){const grid=document.getElementById('shopGrid');grid.innerHTML='';shopItems.forEach(it=>{const owned=state.ownedItems.includes(it.type+it.id);const card=document.createElement('div');card.className='shop-card';card.innerHTML='<div class="big">'+it.icon+'</div><b>'+it.name+'</b><span class="small">'+(owned?'נרכש':'מחיר: '+it.price+' מטבעות')+'</span><button class="btn '+(owned?'green':'')+'" onclick="buyItem(\''+it.type+'\',\''+it.id+'\','+it.price+')">'+(owned?'השתמש':'קנה')+'</button>';grid.appendChild(card)})}
 function buyItem(type,id,price){const key=type+id;if(!state.ownedItems.includes(key)){if(state.coins<price)return toast('אין מספיק מטבעות');state.coins-=price;state.ownedItems.push(key);toast('קנית פריט חדש!')}if(type==='hat')state.hat=id;if(type==='bg')state.bg=id;update()}
 function buyEgg(kind,price){if(state.coins<price)return toast('אין מספיק מטבעות');state.coins-=price;state.counts.eggs++;let pool=kind==='normal'?['🐼','🦊','🐨']:kind==='rare'?['🐯','🐼','🦊','🐨','🦋']:['🐲','🦄','🐯','🦋'];let won=pool[Math.floor(Math.random()*pool.length)];if(!state.ownedPets.includes(won)){state.ownedPets.push(won);showReward(won,'חיה חדשה!', 'פתחת את '+pets[won].name+'!')}else{state.coins+=60;showReward('💰','כבר יש לך!', 'קיבלת 60 מטבעות במקום חיה כפולה')}state.pet=won;reward(20,'ביצת הפתעה')}
-function claimDaily(){const t=todayKey();if(state.lastDaily===t)return toast('כבר לקחת בונוס יומי היום');state.lastDaily=t;state.streak=(state.streak||0)+1;let bonus=50+(state.streak*10);state.coins+=bonus;state.friendship=clamp(state.friendship+10);showReward('🎁','בונוס יומי','קיבלת '+bonus+' מטבעות! רצף: '+state.streak+' ימים');update()}
-function startMiniGame(){if(miniActive)return;miniActive=true;miniScore=0;document.getElementById('miniScore').textContent=0;const area=document.getElementById('miniGame');area.querySelectorAll('.star').forEach(s=>s.remove());let seconds=20;toast('המשחק התחיל!');miniTimer=setInterval(()=>{spawnStar();seconds--;if(seconds<=0){clearInterval(miniTimer);miniActive=false;let earned=miniScore*3;state.coins+=earned;state.xp+=earned;state.counts.stars+=miniScore;showReward('⭐','סיום משחק','תפסת '+miniScore+' כוכבים וקיבלת '+earned+' מטבעות');update()}},650)}
+function claimDaily(){const t=todayKey();if(state.lastDaily===t)return toast('כבר לקחת בונוס יומי היום');state.lastDaily=t;state.streak=(state.streak||0)+1;let bonus=50+(state.streak*10);state.coins+=bonus;state.friendship=clamp(state.friendship+10);addWorldReward(bonus,20,'daily-bonus');showReward('🎁','בונוס יומי','קיבלת '+bonus+' מטבעות! רצף: '+state.streak+' ימים');update()}
+function startMiniGame(){if(miniActive)return;miniActive=true;miniScore=0;document.getElementById('miniScore').textContent=0;const area=document.getElementById('miniGame');area.querySelectorAll('.star').forEach(s=>s.remove());let seconds=20;toast('המשחק התחיל!');miniTimer=setInterval(()=>{spawnStar();seconds--;if(seconds<=0){clearInterval(miniTimer);miniActive=false;let earned=miniScore*3;state.coins+=earned;state.xp+=earned;state.counts.stars+=miniScore;addWorldReward(earned,earned,'star-mini-game');showReward('⭐','סיום משחק','תפסת '+miniScore+' כוכבים וקיבלת '+earned+' מטבעות');update()}},650)}
 function spawnStar(){const area=document.getElementById('miniGame');const s=document.createElement('button');s.className='star';s.textContent='⭐';s.style.left=Math.random()*82+'%';s.style.top='20px';s.onclick=()=>{miniScore++;document.getElementById('miniScore').textContent=miniScore;s.remove()};area.appendChild(s);setTimeout(()=>s.remove(),1800)}
+function spinWheel(){const t=todayKey();if(state.lastWheel===t)return toast('כבר סובבת את גלגל המזל היום');state.lastWheel=t;state.counts.wheel=(state.counts.wheel||0)+1;const prizes=[{icon:'💰',text:'100 מטבעות',coins:100,xp:20},{icon:'⭐',text:'50 XP',coins:20,xp:50},{icon:'❤️',text:'20 חברות',coins:25,xp:20,friend:20},{icon:'🐲',text:'דרקון נדיר',coins:30,xp:30,pet:'🐲'},{icon:'🦋',text:'פרפר קסום',coins:30,xp:30,pet:'🦋'}];const prize=prizes[Math.floor(Math.random()*prizes.length)];document.getElementById('wheelIcon').textContent=prize.icon;state.coins+=prize.coins;state.xp+=prize.xp;state.friendship=clamp(state.friendship+(prize.friend||5));if(prize.pet && !state.ownedPets.includes(prize.pet))state.ownedPets.push(prize.pet);addWorldReward(prize.coins,prize.xp,'lucky-wheel');showReward(prize.icon,'גלגל מזל!',prize.text);update()}
 const achievements=[
   {id:'feed10',icon:'🍎',title:'שף קטן',desc:'האכלת 10 פעמים',check:()=>state.counts.feed>=10,prog:()=>state.counts.feed+'/10'},
   {id:'play10',icon:'🎾',title:'חברה למשחקים',desc:'שיחקת 10 פעמים',check:()=>state.counts.play>=10,prog:()=>state.counts.play+'/10'},
@@ -170,10 +194,10 @@ const achievements=[
   {id:'stars25',icon:'🌟',title:'ציידת כוכבים',desc:'תפסת 25 כוכבים',check:()=>state.counts.stars>=25,prog:()=>state.counts.stars+'/25'},
   {id:'pets6',icon:'🐾',title:'אוסף חיות',desc:'פתחת 6 חיות',check:()=>state.ownedPets.length>=6,prog:()=>state.ownedPets.length+'/6'}
 ];
-function checkAchievements(){achievements.forEach(a=>{if(!state.achieved[a.id]&&a.check()){state.achieved[a.id]=true;state.coins+=40;setTimeout(()=>showReward(a.icon,'הישג חדש!',a.title+' +40 מטבעות'),200)}})}
+function checkAchievements(){achievements.forEach(a=>{if(!state.achieved[a.id]&&a.check()){state.achieved[a.id]=true;state.coins+=40;unlockWorldAchievement('pet_'+a.id,a.title);setTimeout(()=>showReward(a.icon,'הישג חדש!',a.title+' +40 מטבעות'),200)}})}
 function renderAchievements(){const list=document.getElementById('achList');list.innerHTML='';achievements.forEach(a=>{const done=!!state.achieved[a.id];const div=document.createElement('div');div.className='achievement '+(done?'done':'locked');div.innerHTML='<div class="medal">'+a.icon+'</div><div class="ach-text"><b>'+a.title+'</b><div class="small">'+a.desc+'</div><div class="progress-line">'+(done?'הושלם ✅':'התקדמות: '+a.prog())+'</div></div>';list.appendChild(div)})}
 function sparkles(){for(let i=0;i<12;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=['✨','💖','⭐','🌈'][i%4];s.style.left=(42+Math.random()*24)+'%';s.style.top=(34+Math.random()*24)+'%';document.getElementById('stage').appendChild(s);setTimeout(()=>s.remove(),950)}}
-function resetGame(){if(confirm('לאפס את המשחק?')){state={...defaultState,ownedPets:[...defaultState.ownedPets],ownedItems:[],counts:{feed:0,play:0,wash:0,sleep:0,eggs:0,stars:0},achieved:{}};localStorage.removeItem('lianPetGameV2');update();toast('המשחק אופס')}}
+function resetGame(){if(confirm('לאפס את המשחק?')){state={...defaultState,ownedPets:[...defaultState.ownedPets],ownedItems:[],counts:{feed:0,play:0,wash:0,sleep:0,eggs:0,stars:0,wheel:0},achieved:{}};localStorage.removeItem('lianPetGameV2');update();toast('המשחק אופס')}}
 setInterval(()=>{state.hunger=clamp(state.hunger-.35);state.happy=clamp(state.happy-.24);state.clean=clamp(state.clean-.16);state.energy=clamp(state.energy-.20);state.friendship=clamp(state.friendship-.08);update()},15000);
 update();renderAchievements();
 </script>
