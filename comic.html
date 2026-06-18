@@ -412,6 +412,167 @@ body:before{
   -webkit-filter:none !important;
 }
 
+
+/* ===== COMIC MOVIE MODE ===== */
+.movie-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:30000;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(255,255,255,.16),transparent 30%),
+    rgba(0,0,0,.86);
+  padding:18px;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.movie-modal.open{display:flex}
+.movie-card{
+  width:min(1040px,96vw);
+  height:min(760px,92vh);
+  border-radius:34px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 34px 110px rgba(0,0,0,.55);
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+}
+.movie-top{
+  position:absolute;
+  top:16px;
+  right:18px;
+  left:18px;
+  z-index:5;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+}
+.movie-title{
+  color:#fff;
+  font-weight:900;
+  font-size:18px;
+  background:rgba(0,0,0,.36);
+  border:1px solid rgba(255,255,255,.14);
+  padding:10px 16px;
+  border-radius:999px;
+  backdrop-filter:blur(14px);
+}
+.movie-close{
+  pointer-events:auto;
+  border:0;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#fff;
+  color:#080808;
+  font-size:28px;
+  font-weight:900;
+  cursor:pointer;
+}
+.movie-stage{
+  width:100%;
+  height:100%;
+  border-radius:26px;
+  overflow:hidden;
+  background:#fff;
+  position:relative;
+  display:grid;
+  place-items:center;
+}
+.movie-stage .frame{
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  border:0 !important;
+  border-radius:26px !important;
+  box-shadow:none !important;
+  cursor:default !important;
+  transform:none !important;
+}
+.movie-stage .frame:after,
+.movie-stage .frame-num{
+  display:none !important;
+}
+.movie-stage .speech{
+  opacity:0;
+  transform:translateY(16px) scale(.92);
+  transition:.55s ease;
+}
+.movie-stage .speech.movie-show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.movie-stage .item{
+  animation:moviePop .9s ease both;
+}
+@keyframes moviePop{
+  0%{transform:scale(.7) rotate(-4deg);opacity:0}
+  70%{transform:scale(1.08) rotate(2deg);opacity:1}
+  100%{transform:scale(1) rotate(0deg);opacity:1}
+}
+.movie-end{
+  position:absolute;
+  inset:0;
+  z-index:8;
+  display:none;
+  place-items:center;
+  background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.28),rgba(0,0,0,.68));
+  color:#fff;
+  font-size:clamp(42px,8vw,86px);
+  font-weight:900;
+  text-shadow:0 12px 40px rgba(0,0,0,.55);
+}
+.movie-end.open{display:grid;animation:movieEnd .7s ease both}
+@keyframes movieEnd{
+  from{opacity:0;transform:scale(.86)}
+  to{opacity:1;transform:scale(1)}
+}
+.movie-controls{
+  position:absolute;
+  z-index:10;
+  right:18px;
+  left:18px;
+  bottom:18px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.movie-controls button{
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.90);
+  color:#080808;
+  border-radius:999px;
+  min-height:46px;
+  padding:0 18px;
+  font:900 15px 'Heebo',Arial;
+  cursor:pointer;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+.movie-spark{
+  position:fixed;
+  z-index:40000;
+  pointer-events:none;
+  font-size:32px;
+  animation:movieSpark 1.2s ease forwards;
+}
+@keyframes movieSpark{
+  0%{transform:translateY(0) scale(.6) rotate(0deg);opacity:0}
+  18%{opacity:1}
+  100%{transform:translateY(-90px) scale(1.5) rotate(220deg);opacity:0}
+}
+@media(max-width:820px){
+  .movie-card{height:82vh;border-radius:26px;padding:10px}
+  .movie-stage,.movie-stage .frame{border-radius:20px !important}
+  .movie-title{font-size:14px;padding:8px 12px}
+  .movie-close{width:38px;height:38px;font-size:24px}
+}
+
 </style>
 </head>
 <body>
@@ -429,6 +590,7 @@ body:before{
     <button class="action-card orangish" onclick="openComicGallery()">פתח גלריית קומיקסים <span class="icon">🖼️</span></button>
     <button class="action-card greenish" onclick="saveToComicGallery()">שמור בגלריית קומיקסים <span class="icon">👑</span></button>
     <button class="action-card bluish" onclick="openStoryMode()">מצב Story <span class="icon">📱</span></button>
+    <button class="action-card orangish" onclick="playComicMovie()">נגן קומיקס <span class="icon">🎬</span></button>
     <button class="action-card greenish" onclick="autoCreateStory()">צור סיפור אוטומטי <span class="icon">🪄</span></button>
     <button class="action-card orangish" onclick="applyQuickFilter()">החלף פילטר <span class="icon">🌈</span></button>
   </div>
@@ -511,6 +673,23 @@ body:before{
 <div id="successBox" class="modal success-box"><div class="modal-card"><h2>🎉 נשמר בהצלחה!</h2><p>הקומיקס נשמר באלבום של ליאן.</p><button class="nav-btn dark-dot" onclick="openAlbumNow()">פתח אלבום</button><button class="nav-btn" onclick="closeSuccessBox()">להישאר כאן</button></div></div>
 <div id="storyPhone" class="modal"><div class="story-shell"><button class="story-close" onclick="closeStoryMode()">×</button><div class="story-screen"><div id="storyContent" class="story-content"></div><div class="story-nav"><button class="nav-btn" onclick="prevStoryFrame()">הקודם</button><button class="nav-btn dark-dot" onclick="nextStoryFrame()">הבא</button></div></div></div></div>
 <div id="comicGalleryBox" class="modal"><div class="modal-card"><h2>גלריית הקומיקסים של ליאן</h2><p>כאן נשמרים קומיקסים נפרדים מהאלבום הרגיל.</p><button class="nav-btn" onclick="closeComicGallery()">סגור</button><div id="comicGalleryGrid" class="gallery-grid"></div><div id="comicGalleryEmpty" style="display:none;color:#6b7280;padding:20px">עוד אין קומיקסים בגלריה.</div></div></div>
+
+
+<div id="comicMovieModal" class="movie-modal">
+  <div class="movie-card">
+    <div class="movie-top">
+      <div class="movie-title">🎬 הסרטון של ליאן</div>
+      <button class="movie-close" onclick="closeComicMovie()">×</button>
+    </div>
+    <div id="movieStage" class="movie-stage"></div>
+    <div id="movieEnd" class="movie-end">⭐ הסוף ⭐</div>
+    <div class="movie-controls">
+      <button onclick="restartComicMovie()">▶️ הפעל שוב</button>
+      <button onclick="toggleMovieVoice()">🎤 קריינות</button>
+      <button onclick="closeComicMovie()">סגור</button>
+    </div>
+  </div>
+</div>
 
 <script>
 let activeFrame=document.querySelector('.frame.active');
@@ -642,6 +821,139 @@ function renderGalleryInto(grid,empty){
 function renderInlineComicGallery(){renderGalleryInto(document.getElementById('inlineComicGallery'),document.getElementById('inlineComicGalleryEmpty'))}
 function openComicGallery(){const box=document.getElementById('comicGalleryBox');renderGalleryInto(document.getElementById('comicGalleryGrid'),document.getElementById('comicGalleryEmpty'));box.classList.add('open')}function closeComicGallery(){document.getElementById('comicGalleryBox').classList.remove('open')}
 function launchConfetti(){const icons=['💖','✨','🌈','⭐','🎉','🧡'];for(let i=0;i<32;i++){const c=document.createElement('div');c.className='confetti-piece';c.textContent=icons[i%icons.length];c.style.left=Math.random()*100+'vw';c.style.animationDelay=(Math.random()*.45)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2400)}}
+
+let movieTimers=[];
+let movieVoiceOn=true;
+
+function clearMovieTimers(){
+  movieTimers.forEach(t=>clearTimeout(t));
+  movieTimers=[];
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function movieBeep(freq=520,duration=.09){
+  try{
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type='sine';
+    osc.frequency.value=freq;
+    gain.gain.setValueAtTime(0.001,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.06,ctx.currentTime+.01);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime+duration+.02);
+  }catch(e){}
+}
+
+function speakMovieText(text,delay=0){
+  if(!movieVoiceOn || !window.speechSynthesis || !text) return;
+  const t=setTimeout(()=>{
+    try{
+      const u=new SpeechSynthesisUtterance(text.replace(/[😀-🙏🌀-🗿🚀-🛿☀-⛿✀-➿]/gu,''));
+      u.lang='he-IL';
+      u.rate=.95;
+      u.pitch=1.05;
+      speechSynthesis.speak(u);
+    }catch(e){}
+  },delay);
+  movieTimers.push(t);
+}
+
+function launchMovieSparks(){
+  const icons=['✨','⭐','🌈','🎬','💫','🎉'];
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');
+    s.className='movie-spark';
+    s.textContent=icons[i%icons.length];
+    s.style.left=(10+Math.random()*80)+'vw';
+    s.style.top=(25+Math.random()*55)+'vh';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1300);
+  }
+}
+
+function playComicMovie(){
+  clearMovieTimers();
+  cleanSelection();
+
+  const modal=document.getElementById('comicMovieModal');
+  const stage=document.getElementById('movieStage');
+  const end=document.getElementById('movieEnd');
+
+  stage.innerHTML='';
+  end.classList.remove('open');
+
+  const clone=activeFrame.cloneNode(true);
+  clone.classList.remove('active','selected');
+  clone.querySelectorAll('.selected').forEach(x=>x.classList.remove('selected'));
+  stage.appendChild(clone);
+
+  modal.classList.add('open');
+
+  const speeches=Array.from(clone.querySelectorAll('.speech'));
+  const items=Array.from(clone.querySelectorAll('.item'));
+
+  speeches.forEach(s=>s.classList.remove('movie-show'));
+  items.forEach((it,i)=>{
+    it.style.animationDelay=(i*.08)+'s';
+  });
+
+  movieBeep(420,.12);
+  speakMovieText('הסרטון של ליאן מתחיל עכשיו',300);
+
+  if(!speeches.length){
+    const t=setTimeout(()=>{
+      launchMovieSparks();
+      movieBeep(760,.14);
+      end.classList.add('open');
+      speakMovieText('הסוף',100);
+    },1800);
+    movieTimers.push(t);
+    return;
+  }
+
+  speeches.forEach((speech,i)=>{
+    const delay=900+i*1850;
+    const t=setTimeout(()=>{
+      speech.classList.add('movie-show');
+      movieBeep(560+i*45,.10);
+      launchMovieSparks();
+      speakMovieText(speech.innerText,120);
+    },delay);
+    movieTimers.push(t);
+  });
+
+  const endTimer=setTimeout(()=>{
+    movieBeep(840,.18);
+    launchMovieSparks();
+    end.classList.add('open');
+    speakMovieText('הסוף',150);
+  },900+speeches.length*1850+900);
+  movieTimers.push(endTimer);
+}
+
+function closeComicMovie(){
+  clearMovieTimers();
+  document.getElementById('comicMovieModal').classList.remove('open');
+  document.getElementById('movieStage').innerHTML='';
+  document.getElementById('movieEnd').classList.remove('open');
+}
+
+function restartComicMovie(){
+  closeComicMovie();
+  setTimeout(playComicMovie,160);
+}
+
+function toggleMovieVoice(){
+  movieVoiceOn=!movieVoiceOn;
+  if(!movieVoiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
+  alert(movieVoiceOn ? 'הקריינות פועלת 🎤' : 'הקריינות כבויה 🔇');
+}
+
 renderCategories();renumberFrames();renderInlineComicGallery();
 </script>
 </body>
