@@ -136,6 +136,33 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
   content:"🐱";font-size:82px;
 }
 
+
+.pet.has-custom{
+  font-size:0;
+  width:100%;
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.park-pet.munchkin-park:before{
+  content:"";
+  display:block;
+  width:88px;
+  height:58px;
+  background:linear-gradient(135deg,#b97842 0 35%,#f7c28e 36% 58%,#ffffff 59% 75%,#b97842 76%);
+  border-radius:42px 48px 32px 34px;
+  border:3px solid rgba(70,35,18,.25);
+  box-shadow:18px -18px 0 -8px #b97842, -18px 8px 0 -12px #fff;
+}
+.park-pet.munchkin-park:after{
+  content:"🐱";
+  position:absolute;
+  right:-8px;
+  top:-54px;
+  font-size:70px;
+}
+
 </style>
 </head>
 <body>
@@ -296,14 +323,16 @@ function renderPetGraphic(){
   const petEl=document.getElementById('pet');
   const parkEl=document.getElementById('parkPet');
   const a=currentAnimal();
+  if(!petEl || !parkEl) return;
   if(a.custom){
     petEl.innerHTML=munchkinHTML();
-    petEl.style.fontSize='0';
+    petEl.classList.add('has-custom');
     parkEl.textContent='';
     parkEl.classList.add('munchkin-park');
   }else{
     petEl.textContent=a.e;
-    petEl.style.fontSize='';
+    petEl.innerHTML=a.e;
+    petEl.classList.remove('has-custom');
     parkEl.textContent=a.e;
     parkEl.classList.remove('munchkin-park');
   }
@@ -366,9 +395,28 @@ function showTab(btn,id){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
   document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');
 }
+
+function startPetWalkAnimation(ms=1200){
+  const petEl=document.getElementById('pet');
+  const mc=document.querySelector('.munchkin-cat');
+  if(petEl) petEl.classList.add('walking');
+  if(mc) mc.classList.add('walking');
+  setTimeout(()=>{
+    if(petEl) petEl.classList.remove('walking');
+    const mc2=document.querySelector('.munchkin-cat');
+    if(mc2) mc2.classList.remove('walking');
+  }, ms);
+}
+
 function reward(xp,coins,msg){state.xp+=xp;state.coins+=coins;if(state.xp>=100){state.xp-=100;state.level++;toast('עלית שלב! ⭐')}else toast(msg);save();update()}
 function feedPet(){state.hunger=clamp(state.hunger+18);state.happy=clamp(state.happy+5);playAnimalSound(state.pet);reward(8,8,'טעים! 🍎')}
-function playPet(){state.happy=clamp(state.happy+17);state.energy=clamp(state.energy-7);state.friendship=clamp(state.friendship+8);document.getElementById('pet').classList.add('walking'); const mc=document.querySelector('.munchkin-cat'); if(mc) mc.classList.add('walking');setTimeout(()=>document.getElementById('pet').classList.remove('walking'); const mc2=document.querySelector('.munchkin-cat'); if(mc2) mc2.classList.remove('walking'),1200);reward(10,10,'איזה כיף לשחק! 🎾')}
+function playPet(){
+  state.happy=clamp(state.happy+17);
+  state.energy=clamp(state.energy-7);
+  state.friendship=clamp(state.friendship+8);
+  startPetWalkAnimation(1200);
+  reward(10,10,'איזה כיף לשחק! 🎾');
+}
 function washPet(){state.clean=clamp(state.clean+22);chirp([700,900,1100],'triangle',.07,.08);reward(7,7,'נקי ומבריק 🛁')}
 function sleepPet(){state.energy=clamp(state.energy+25);state.hunger=clamp(state.hunger-6);petTalk('לילה טוב ליאן 🌙');reward(6,6,'חלומות נעימים')}
 function petClick(){playAnimalSound(state.pet);sparkles()}
@@ -391,7 +439,12 @@ function stopParkWalk(done=false){
   clearInterval(parkInterval); clearTimeout(parkTimeout);
   if(done){state.happy=clamp(state.happy+18);state.energy=clamp(state.energy-8);state.friendship=clamp(state.friendship+12);reward(14,15,'הטיול הסתיים! 🌳')}
 }
-function parkBall(){document.getElementById('pet').classList.add('walking'); const mc=document.querySelector('.munchkin-cat'); if(mc) mc.classList.add('walking');chirp([500,800,500],'sine',.1,.12);setTimeout(()=>document.getElementById('pet').classList.remove('walking'); const mc2=document.querySelector('.munchkin-cat'); if(mc2) mc2.classList.remove('walking'),1500);state.happy=clamp(state.happy+12);reward(9,8,'שיחקנו בכדור ⚽')}
+function parkBall(){
+  startPetWalkAnimation(1500);
+  chirp([500,800,500],'sine',.1,.12);
+  state.happy=clamp(state.happy+12);
+  reward(9,8,'שיחקנו בכדור ⚽');
+}
 function findPrize(){const prize=20+Math.floor(Math.random()*35);state.coins+=prize;petTalk('מצאתי פרס בפארק!');sparkles();update();save();toast('מצאת '+prize+' מטבעות 🎁')}
 function sparkles(){for(let i=0;i<14;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=['✨','💖','⭐','🌈'][i%4];s.style.left=(38+Math.random()*28)+'%';s.style.top=(34+Math.random()*24)+'%';document.getElementById('stage').appendChild(s);setTimeout(()=>s.remove(),950)}}
 function renderWeather(){
