@@ -3,221 +3,107 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>חיית המחמד של ליאן V5 · LIAN WORLD</title>
+<title>חיית המחמד של ליאן · Lian Pets</title>
 <style>
 *{box-sizing:border-box}
 :root{
-  --ink:#172033;--muted:#6b7280;--card:rgba(255,255,255,.74);--line:rgba(0,0,0,.09);
-  --shadow:0 18px 45px rgba(20,30,60,.13);--pink:#ff5aa5;--purple:#8b5cf6;--blue:#3b82f6;--mint:#35d39d;--yellow:#ffd166;
+  --ink:#172033;--muted:#6b7280;--card:rgba(255,255,255,.78);--line:rgba(0,0,0,.09);
+  --shadow:0 18px 45px rgba(20,30,60,.13);--pink:#ff5aa5;--blue:#3b82f6;--green:#10b981;--gold:#f59e0b;
 }
-body{margin:0;min-height:100vh;font-family:Arial,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 18% 6%,#fff 0 18%,transparent 35%),radial-gradient(circle at 92% 18%,#fff0fb 0 18%,transparent 36%),linear-gradient(135deg,#fff7fb,#eef8ff);text-align:center;overflow-x:hidden}
-.app{max-width:1160px;margin:0 auto;padding:18px}.hero{border:1px solid var(--line);border-radius:34px;padding:24px 16px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.54));box-shadow:var(--shadow);backdrop-filter:blur(18px)}
-h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted);font-weight:700}.top-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-.btn{border:0;border-radius:20px;min-height:52px;padding:0 16px;font-weight:900;font-size:15px;cursor:pointer;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.08);color:var(--ink);transition:.16s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}.btn:hover{transform:translateY(-2px)}.btn.dark{background:#111827;color:#fff}.btn.pink{background:linear-gradient(135deg,#ff7ab8,#ff4d9a);color:#fff}.btn.blue{background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff}.btn.green{background:linear-gradient(135deg,#6ee7b7,#10b981);color:#fff}.btn.gold{background:linear-gradient(135deg,#ffe066,#ff922b);color:#3b2500}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}.panel{border:1px solid var(--line);border-radius:30px;background:var(--card);box-shadow:var(--shadow);padding:18px;backdrop-filter:blur(18px)}
-.stage{min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;background:linear-gradient(#bfe9ff 0 56%,#b7efaa 56%);position:relative;overflow:hidden}.stage.night{background:linear-gradient(#1e1b4b 0 56%,#14532d 56%);color:#fff}.stage.beach{background:linear-gradient(#a7f3ff 0 58%,#ffe8a3 58%)}.stage.room{background:linear-gradient(#fff7ed 0 64%,#e5c8a9 64%)}.stage.castle{background:linear-gradient(#f5d0fe 0 58%,#c4b5fd 58%)}.stage.space{background:radial-gradient(circle at 20% 20%,#fff 0 2%,transparent 3%),radial-gradient(circle at 75% 28%,#a78bfa 0 5%,transparent 6%),linear-gradient(#111827 0 60%,#312e81 60%);color:#fff}
-.badge-row{position:absolute;top:14px;right:14px;left:14px;display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;z-index:2}.pill{background:rgba(255,255,255,.78);border-radius:999px;padding:9px 13px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.10);color:#172033}.pet-wrap{margin-top:100px;position:relative}.pet{font-size:160px;line-height:1;filter:drop-shadow(0 18px 22px rgba(0,0,0,.18));animation:breathe 2.2s ease-in-out infinite}.hat{position:absolute;top:-32px;left:50%;transform:translateX(-50%);font-size:58px;display:none}.hat.show{display:block}.name{font-size:34px;font-weight:1000;margin-top:8px}.mood{font-size:18px;font-weight:900;color:#374151;background:rgba(255,255,255,.70);border-radius:999px;padding:9px 15px;display:inline-block;margin-top:8px}
+body{
+  margin:0;min-height:100vh;font-family:Arial,"Segoe UI",sans-serif;color:var(--ink);
+  background:radial-gradient(circle at 18% 6%,#fff 0 18%,transparent 35%),
+             radial-gradient(circle at 92% 18%,#fff0fb 0 18%,transparent 36%),
+             linear-gradient(135deg,#fff7fb,#eef8ff);
+  text-align:center;overflow-x:hidden;
+}
+.app{max-width:1160px;margin:0 auto;padding:16px}
+.hero{border:1px solid var(--line);border-radius:34px;padding:22px 16px;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.56));box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+h1{margin:6px 0;font-size:clamp(34px,5vw,56px)}
+p{margin:0;color:var(--muted);font-weight:800}
+.top-actions,.tabs,.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.btn,.tab{
+  border:0;border-radius:20px;min-height:50px;padding:0 16px;font-weight:900;font-size:15px;cursor:pointer;
+  background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.08);color:var(--ink);transition:.16s;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px
+}
+.btn:hover,.tab:hover{transform:translateY(-2px)}
+.btn.dark,.tab.active{background:#111827;color:#fff}.btn.pink{background:linear-gradient(135deg,#ff7ab8,#ff4d9a);color:#fff}
+.btn.blue{background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff}.btn.green{background:linear-gradient(135deg,#6ee7b7,#10b981);color:#fff}.btn.gold{background:linear-gradient(135deg,#ffe066,#ff922b);color:#3b2500}
+.grid{display:grid;grid-template-columns:1.12fr .88fr;gap:16px;margin-top:16px}
+.panel{border:1px solid var(--line);border-radius:30px;background:var(--card);box-shadow:var(--shadow);padding:18px;backdrop-filter:blur(18px)}
+.stage{
+  min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  background:linear-gradient(#bfe9ff 0 56%,#b7efaa 56%);position:relative;overflow:hidden;
+}
+.badge-row{position:absolute;top:14px;right:14px;left:14px;display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;z-index:8}
+.pill{background:rgba(255,255,255,.82);border-radius:999px;padding:9px 13px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.10)}
+.pet-wrap{margin-top:100px;position:relative;z-index:4}
+.pet{font-size:150px;line-height:1;filter:drop-shadow(0 18px 22px rgba(0,0,0,.18));animation:breathe 2.2s ease-in-out infinite;cursor:pointer;user-select:none}
+.pet.walking{animation:walkBounce .45s ease-in-out infinite}
+.hat{position:absolute;top:-32px;left:50%;transform:translateX(-50%);font-size:58px;display:none}.hat.show{display:block}
+.name{font-size:32px;font-weight:1000;margin-top:8px}.mood{font-size:17px;font-weight:900;color:#374151;background:rgba(255,255,255,.72);border-radius:999px;padding:9px 15px;display:inline-block;margin-top:8px}
 @keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.04)}}
-.stats{width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}.stat{background:rgba(255,255,255,.74);border-radius:18px;padding:10px;border:1px solid rgba(255,255,255,.55)}.stat b{display:block;font-size:13px}.bar{height:11px;background:rgba(0,0,0,.10);border-radius:999px;overflow:hidden;margin-top:7px}.fill{height:100%;width:50%;border-radius:999px;background:linear-gradient(90deg,#ff5aa5,#8b5cf6)}
-.section-title{margin:8px 0 12px;font-size:22px;font-weight:1000}.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.actions .btn{height:64px}.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}.tab{border:0;border-radius:999px;background:#fff;padding:11px 14px;font-weight:900;box-shadow:0 7px 15px rgba(0,0,0,.07);cursor:pointer}.tab.active{background:#111827;color:#fff}.tab-panel{display:none}.tab-panel.active{display:block}
-.pet-select,.room-select{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}.pet-chip{border:2px solid transparent;background:#fff;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}.pet-chip.active{border-color:#111827;background:#111827;color:#fff}
-.shop{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.shop-card,.achievement,.egg-card{background:rgba(255,255,255,.80);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.06)}.shop-card .big,.egg-card .big{font-size:42px}.shop-card b,.egg-card b{display:block}.small{font-size:13px;color:var(--muted);font-weight:800}.achievement{display:flex;align-items:center;gap:10px;text-align:right;margin-bottom:8px}.achievement .medal{font-size:30px}.achievement.done{background:linear-gradient(135deg,#fff7cc,#ffffff);border-color:#ffd166}.achievement.locked{opacity:.58}.ach-text{flex:1}.progress-line{font-size:12px;color:#6b7280;font-weight:900}.daily-box{background:linear-gradient(135deg,#fff7cc,#ffffff);border:1px solid rgba(255,176,0,.25);border-radius:24px;padding:14px;margin-bottom:12px}.mini-game{position:relative;height:280px;border-radius:24px;background:linear-gradient(#dbeafe,#fef3c7);overflow:hidden;border:1px solid var(--line);margin-top:10px}.star{position:absolute;border:0;background:transparent;font-size:34px;cursor:pointer;animation:floatStar 1.8s linear forwards}@keyframes floatStar{to{transform:translateY(250px) rotate(160deg);opacity:.2}}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;border-radius:999px;padding:13px 20px;font-weight:900;box-shadow:0 12px 28px rgba(0,0,0,.25);display:none;z-index:50;max-width:92vw}.toast.show{display:block}.sparkle{position:absolute;font-size:26px;animation:pop 900ms ease forwards;pointer-events:none}@keyframes pop{to{transform:translateY(-80px) scale(1.8);opacity:0}}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px)}.modal.open{display:flex}.modal-card{width:min(520px,96vw);background:#fff;border-radius:30px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.25)}.modal-card .big{font-size:90px}.footer-note{color:#6b7280;font-size:12px;font-weight:800;margin-top:10px}
-
-.pet{transition:.18s}.pet.colorized{filter:drop-shadow(0 18px 22px rgba(0,0,0,.18)) hue-rotate(var(--petHue,0deg)) saturate(var(--petSat,1.15)) brightness(var(--petBright,1));text-shadow:0 0 var(--petGlowSize,28px) var(--petGlow,rgba(255,90,165,.55));font-size:var(--petSize,160px)}.pet.chubby{animation:chubbyBreathe 2.2s ease-in-out infinite;font-size:var(--petSize,178px);letter-spacing:-10px}.pet.pattern-dots{text-shadow:0 0 var(--petGlowSize,28px) var(--petGlow),18px 4px 0 rgba(255,255,255,.62),-18px -4px 0 rgba(255,255,255,.45)}.pet.pattern-stripes{text-shadow:0 0 var(--petGlowSize,28px) var(--petGlow),12px 0 0 rgba(17,24,39,.25),-12px 0 0 rgba(255,255,255,.42)}.pet.pattern-sparkle{text-shadow:0 0 var(--petGlowSize,34px) var(--petGlow),0 -28px 0 rgba(255,209,102,.9),24px 8px 0 rgba(255,90,165,.65),-24px 10px 0 rgba(59,130,246,.55)}@keyframes chubbyBreathe{0%,100%{transform:translateY(0) scale(1.22,1.04)}50%{transform:translateY(-9px) scale(1.30,1.10)}}.pet-wrap:after{content:"";position:absolute;inset:18px 28px 74px;border-radius:999px;background:var(--petAura,rgba(255,90,165,.14));filter:blur(22px);z-index:-1}.field{width:100%;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.88);min-height:48px;padding:10px 13px;font-weight:900;color:var(--ink);outline:none}.pet-picker-card{background:rgba(255,255,255,.80);border:1px solid var(--line);border-radius:20px;padding:10px;margin:10px 0}.pet-scroll{width:100%;height:128px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.86);padding:6px;font-weight:900;outline:none;box-shadow:0 8px 20px rgba(0,0,0,.05)}.pet-scroll option{padding:8px;border-radius:12px}.choose-pet-btn{width:100%;min-height:64px;font-size:18px;margin-top:10px;border-radius:22px}.color-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}.color-btn{height:42px;border:3px solid rgba(255,255,255,.86);border-radius:16px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.10)}.color-btn.active{outline:3px solid #111827}.style-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}.style-btn{border:0;border-radius:18px;background:#fff;min-height:50px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.08);cursor:pointer}.style-btn.active{background:#111827;color:#fff}.range-label{display:flex;justify-content:space-between;align-items:center;font-weight:900;margin-top:10px}.range{width:100%;accent-color:#111827}.mini-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.collection-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:0 8px 18px rgba(0,0,0,.05)}.collection-card .emoji{font-size:34px}.collection-card.locked{opacity:.48;filter:grayscale(1)}.task{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:20px;padding:12px;margin-bottom:8px;text-align:right}.task .icon{font-size:30px}.task.done{background:linear-gradient(135deg,#dcfce7,#ffffff);border-color:#86efac}.file-input{display:none}.profile-img{width:80px;height:80px;border-radius:24px;object-fit:cover;border:3px solid #fff;box-shadow:0 10px 25px rgba(0,0,0,.12);display:none;margin:8px auto}.profile-img.show{display:block}
-
-
-/* Munchkin Cat custom drawing */
-.pet.pet-art{font-size:initial;line-height:normal;width:min(260px,72vw);height:190px;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.18));animation:breathe 2.2s ease-in-out infinite;position:relative;margin:0 auto}
-.munchkin-cat{position:relative;width:250px;height:175px;margin:0 auto;transform:scale(var(--catScale,1));transform-origin:center bottom}
-.munchkin-cat .body{position:absolute;right:44px;bottom:42px;width:150px;height:78px;background:var(--catCream,#fff2d8);border-radius:56% 48% 46% 50%;box-shadow:inset -16px -10px 0 rgba(238,211,176,.52),inset 12px 8px 0 rgba(255,255,255,.62)}
-.munchkin-cat .belly{position:absolute;right:72px;bottom:45px;width:72px;height:52px;background:rgba(255,255,255,.48);border-radius:50%}
-.munchkin-cat .head{position:absolute;right:12px;bottom:84px;width:82px;height:72px;background:var(--catCream,#fff2d8);border-radius:48% 50% 46% 48%;box-shadow:inset -9px -8px 0 rgba(238,211,176,.42),inset 7px 6px 0 rgba(255,255,255,.65)}
-.munchkin-cat .ear{position:absolute;width:24px;height:28px;background:var(--catCream,#fff2d8);clip-path:polygon(50% 0,100% 100%,0 100%);top:-12px}.munchkin-cat .ear:after{content:"";position:absolute;left:6px;top:9px;width:12px;height:14px;background:#ffd6df;clip-path:polygon(50% 0,100% 100%,0 100%)}
-.munchkin-cat .ear.left{right:52px;transform:rotate(-18deg)}.munchkin-cat .ear.right{right:12px;transform:rotate(18deg)}
-.munchkin-cat .eye{position:absolute;top:32px;width:9px;height:13px;background:#172033;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.44)}.munchkin-cat .eye.left{right:49px}.munchkin-cat .eye.right{right:24px}
-.munchkin-cat .nose{position:absolute;right:36px;top:48px;width:8px;height:6px;background:#f5a3b7;border-radius:50% 50% 60% 60%}
-.munchkin-cat .mouth{position:absolute;right:30px;top:55px;width:20px;height:10px;border-bottom:2px solid rgba(80,50,40,.55);border-radius:0 0 18px 18px}
-.munchkin-cat .whisker{position:absolute;height:2px;width:28px;background:rgba(80,50,40,.42);top:52px}.munchkin-cat .w1{right:58px;transform:rotate(9deg)}.munchkin-cat .w2{right:58px;top:60px;transform:rotate(-8deg)}.munchkin-cat .w3{right:-10px;transform:rotate(-9deg)}.munchkin-cat .w4{right:-10px;top:60px;transform:rotate(8deg)}
-.munchkin-cat .tail{position:absolute;left:20px;bottom:92px;width:82px;height:30px;border-radius:50px 50px 18px 50px;border:18px solid var(--catCream,#fff2d8);border-right:0;border-bottom:0;transform:rotate(76deg);box-shadow:-8px -3px 0 rgba(238,211,176,.35)}
-.munchkin-cat .leg{position:absolute;bottom:25px;width:34px;height:28px;background:var(--catCream,#fff2d8);border-radius:18px 18px 12px 12px;box-shadow:inset -5px -5px 0 rgba(238,211,176,.45)}.munchkin-cat .leg.l1{right:56px}.munchkin-cat .leg.l2{right:118px}.munchkin-cat .paw{position:absolute;bottom:-4px;width:42px;height:16px;background:var(--catCream,#fff2d8);border-radius:999px;box-shadow:inset -5px -2px 0 rgba(238,211,176,.42)}.munchkin-cat .paw.p1{right:48px}.munchkin-cat .paw.p2{right:110px}
-.munchkin-cat .fluff{position:absolute;right:38px;bottom:118px;width:36px;height:20px;background:rgba(255,255,255,.50);border-radius:50%;filter:blur(.2px)}
-.pet.pattern-dots .munchkin-cat .body:after{content:"";position:absolute;inset:16px 24px auto auto;width:14px;height:14px;background:rgba(172,127,83,.28);border-radius:50%;box-shadow:-44px 12px 0 rgba(172,127,83,.22),-78px -3px 0 rgba(172,127,83,.18)}
-.pet.pattern-stripes .munchkin-cat .body:after{content:"";position:absolute;right:30px;top:10px;width:70px;height:34px;border-radius:50%;background:repeating-linear-gradient(90deg,rgba(172,127,83,.22) 0 8px,transparent 8px 18px)}
-.pet.pattern-sparkle .munchkin-cat:after{content:"✨";position:absolute;right:116px;top:8px;font-size:34px;filter:drop-shadow(0 0 14px var(--petGlow,#ff5aa599))}
-
-
-/* ===== LIAN PETS V5 ADDONS ===== */
-.pet-room-layer{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
-.room-item{
-  position:absolute;
-  font-size:48px;
-  filter:drop-shadow(0 10px 12px rgba(0,0,0,.16));
-}
-.room-bed{left:8%;bottom:17%;font-size:70px}
-.room-rug{left:50%;bottom:10%;transform:translateX(-50%);font-size:76px;opacity:.92}
-.room-toy{right:10%;bottom:17%;font-size:58px}
-.room-picture{right:10%;top:22%;font-size:54px}
-.room-plant{left:10%;top:28%;font-size:58px}
-.room-lamp{left:16%;bottom:32%;font-size:58px}
-.room-food{right:18%;bottom:31%;font-size:46px}
-.room-wall-soft{background:linear-gradient(#ffe4f1 0 64%,#f2d2b6 64%)!important}
-.room-wall-blue{background:linear-gradient(#dbeafe 0 64%,#d6c3a8 64%)!important}
-.room-wall-mint{background:linear-gradient(#d1fae5 0 64%,#dfc39f 64%)!important}
-.room-wall-purple{background:linear-gradient(#ede9fe 0 64%,#d6c3a8 64%)!important}
-.room-wall-sun{background:linear-gradient(#fef3c7 0 64%,#d6c3a8 64%)!important}
-
-.weather-sky{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-  overflow:hidden;
-}
-.weather-icon{
-  position:absolute;
-  font-size:30px;
-  animation:weatherFall 5.5s linear infinite;
-  opacity:.85;
-}
-@keyframes weatherFall{
-  from{transform:translateY(-40px) rotate(0deg)}
-  to{transform:translateY(620px) rotate(120deg);opacity:.25}
-}
-.weather-rain .weather-icon{font-size:26px}
-.weather-snow .weather-icon{font-size:25px}
-.weather-rainbow-band{
-  position:absolute;
-  left:50%;
-  top:80px;
-  transform:translateX(-50%);
-  width:70%;
-  height:150px;
-  border-radius:180px 180px 0 0;
-  border-top:18px solid rgba(255,90,165,.42);
-  border-right:18px solid rgba(59,130,246,.28);
-  border-left:18px solid rgba(53,211,157,.32);
-  opacity:.75;
-}
-.speech-bubble{
-  position:absolute;
-  top:88px;
-  left:50%;
-  transform:translateX(-50%);
-  max-width:86%;
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(0,0,0,.08);
-  border-radius:22px;
-  padding:12px 16px;
-  font-weight:1000;
-  color:#172033;
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  z-index:5;
-  display:none;
-}
-.speech-bubble.show{display:block;animation:speechPop .25s ease}
-@keyframes speechPop{from{transform:translateX(-50%) scale(.85);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
-.pet-accessory{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:4;
-  pointer-events:none;
-  display:none;
-  filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));
-}
-.pet-accessory.show{display:block}
-.acc-neck{top:118px;font-size:46px}
-.acc-glasses{top:55px;font-size:52px}
-.acc-shoes{top:196px;font-size:42px}
-.acc-wings{top:88px;font-size:82px;opacity:.85;z-index:2}
-.acc-costume{top:126px;font-size:62px;z-index:3}
-.acc-hand{top:142px;left:62%;font-size:42px}
-.room-tools,.closet-grid,.explore-grid,.weather-grid,.minigame-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  margin:10px 0;
-}
-.room-option,.closet-option,.explore-option,.weather-option,.mini-option{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.84);
-  border-radius:22px;
-  padding:12px;
-  min-height:84px;
-  font-weight:900;
-  box-shadow:0 8px 18px rgba(0,0,0,.06);
-  cursor:pointer;
-}
-.room-option .big,.closet-option .big,.explore-option .big,.weather-option .big,.mini-option .big{
-  display:block;
-  font-size:38px;
-  margin-bottom:5px;
-}
-.room-option.active,.closet-option.active,.explore-option.active,.weather-option.active{
-  outline:3px solid #111827;
-  background:#fff;
-}
-.pet.purr{animation:purr 240ms linear infinite}
-@keyframes purr{0%,100%{transform:translateX(0) scale(1.22,1.04)}50%{transform:translateX(2px) scale(1.24,1.05)}}
-.pet.loaf{
-  transform:scale(1.35,.74) translateY(26px)!important;
-  animation:none!important;
-}
-.pet.walk-short{animation:shortWalk .55s ease-in-out infinite!important}
-@keyframes shortWalk{0%,100%{transform:translateX(-5px) scale(1.18,1.02)}50%{transform:translateX(5px) scale(1.22,1.07)}}
-@media(max-width:820px){
-  .room-tools,.closet-grid,.explore-grid,.weather-grid,.minigame-grid{grid-template-columns:1fr 1fr}
-  .room-item{font-size:38px}
-  .room-bed{font-size:54px}.room-rug{font-size:58px}.room-toy{font-size:44px}
-}
-
-@media(max-width:820px){.app{padding:10px}.hero{border-radius:26px}.grid{grid-template-columns:1fr}.stage{min-height:500px}.pet{font-size:128px}.stats{grid-template-columns:repeat(2,1fr)}.stats .stat:last-child{grid-column:1/-1}.actions,.shop{grid-template-columns:1fr 1fr}.btn{font-size:14px;padding:0 12px}.panel{border-radius:24px;padding:14px}.badge-row{position:static;justify-content:center;margin-bottom:4px}.pet-wrap{margin-top:18px}}
+@keyframes walkBounce{0%,100%{transform:translateX(-5px) translateY(0) scale(1)}50%{transform:translateX(5px) translateY(-8px) scale(1.05)}}
+.stats{width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px;z-index:4}.stat{background:rgba(255,255,255,.76);border-radius:18px;padding:10px;border:1px solid rgba(255,255,255,.55)}.stat b{display:block;font-size:13px}.bar{height:11px;background:rgba(0,0,0,.10);border-radius:999px;overflow:hidden;margin-top:7px}.fill{height:100%;width:50%;border-radius:999px;background:linear-gradient(90deg,#ff5aa5,#8b5cf6)}
+.section-title{margin:8px 0 12px;font-size:22px;font-weight:1000}.tab-panel{display:none}.tab-panel.active{display:block}
+select,input{width:100%;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.9);min-height:48px;padding:10px 13px;font-weight:900;color:var(--ink);outline:none}
+.pet-scroll{height:150px}.shop,.animal-grid,.park-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:rgba(255,255,255,.84);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.06)}.card .big{font-size:42px}.small{font-size:13px;color:var(--muted);font-weight:800}
+.speech-bubble{position:absolute;top:88px;left:50%;transform:translateX(-50%);max-width:86%;background:rgba(255,255,255,.9);border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:12px 16px;font-weight:1000;box-shadow:0 10px 24px rgba(0,0,0,.12);z-index:9;display:none}
+.speech-bubble.show{display:block;animation:speechPop .25s ease}@keyframes speechPop{from{transform:translateX(-50%) scale(.85);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;border-radius:999px;padding:13px 20px;font-weight:900;box-shadow:0 12px 28px rgba(0,0,0,.25);display:none;z-index:80;max-width:92vw}.toast.show{display:block}
+.sparkle{position:absolute;font-size:26px;animation:pop 900ms ease forwards;pointer-events:none;z-index:20}@keyframes pop{to{transform:translateY(-80px) scale(1.8);opacity:0}}
+.park-scene{position:absolute;inset:0;background:linear-gradient(#9ddcff 0 50%,#8be37f 50% 100%);z-index:30;display:none;overflow:hidden}
+.park-scene.show{display:block}
+.sun{position:absolute;top:40px;left:60px;font-size:60px}.tree{position:absolute;bottom:120px;font-size:76px}.tree.t1{right:30px}.tree.t2{left:120px}.cloud{position:absolute;top:80px;font-size:54px;animation:cloudMove 7s linear infinite}.cloud.c1{right:10px}.cloud.c2{right:45%;animation-duration:10s}
+.path{position:absolute;left:-10%;right:-10%;bottom:55px;height:120px;background:#d9b478;border-radius:50% 50% 0 0;transform:rotate(-2deg)}
+.girl{position:absolute;bottom:115px;right:-140px;font-size:92px;animation:none;z-index:3}.park-pet{position:absolute;bottom:112px;right:-220px;font-size:88px;animation:none;z-index:3}.leash{position:absolute;bottom:181px;right:-185px;width:95px;height:3px;background:#7c3aed;transform:rotate(-6deg);transform-origin:right center;z-index:2;display:none}
+.park-scene.play .girl{animation:girlWalk 8s linear forwards}.park-scene.play .park-pet{animation:petWalk 8s linear forwards}.park-scene.play .leash{display:block;animation:leashWalk 8s linear forwards}
+@keyframes girlWalk{from{right:-130px}to{right:105%}}@keyframes petWalk{from{right:-225px}to{right:92%}}@keyframes leashWalk{from{right:-188px}to{right:99%}}@keyframes cloudMove{from{transform:translateX(0)}to{transform:translateX(-120vw)}}
+.video-label{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.9);border-radius:999px;padding:10px 16px;font-weight:1000;z-index:5}.park-timer{position:absolute;top:18px;left:18px;background:#111827;color:white;border-radius:999px;padding:10px 16px;font-weight:1000;z-index:5}
+.weather{position:absolute;inset:0;pointer-events:none;z-index:1}.drop{position:absolute;top:-40px;font-size:26px;animation:fall 5s linear infinite;opacity:.75}@keyframes fall{to{transform:translateY(650px) rotate(120deg);opacity:.1}}
+footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}.stage{min-height:500px}.pet{font-size:128px}.stats{grid-template-columns:repeat(2,1fr)}.stats .stat:last-child{grid-column:1/-1}.shop,.animal-grid,.park-buttons{grid-template-columns:1fr}.badge-row{position:static;justify-content:center;margin-bottom:4px}.pet-wrap{margin-top:18px}.girl{font-size:78px}.park-pet{font-size:74px}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="hero">
     <h1>🐾 חיית המחמד של ליאן</h1>
-    <p>LIAN WORLD V5 · בית לחיה, ארון בגדים, מזג אוויר, עולם חקר, מיני משחקים, בועות דיבור ואקססוריז חדשים</p>
+    <p>קולות אמיתיים בדפדפן · חיות שמדברות · טיול בפארק עם ילדה ואנימציה קצרה</p>
     <div class="top-actions">
       <a class="btn dark" href="index.html">⌂ דף הבית</a>
-      <a class="btn" href="achievements.html">🏆 הישגים</a>
-      <button class="btn gold" onclick="claimDaily()">🎁 בונוס יומי</button><button class="btn blue" onclick="togglePetSound()">🔊 קולות</button>
-      <button class="btn" onclick="resetGame()">איפוס משחק</button>
+      <button class="btn blue" onclick="toggleSound()">🔊 קולות: <span id="soundState">פעיל</span></button>
+      <button class="btn gold" onclick="dailyGift()">🎁 בונוס יומי</button>
+      <button class="btn" onclick="resetGame()">איפוס</button>
     </div>
   </div>
 
   <div class="grid">
     <div class="panel stage" id="stage">
       <div class="badge-row">
-        <div class="pill">💰 <span id="coins">0</span></div>
+        <div class="pill">💰 <span id="coins">120</span></div>
         <div class="pill">⭐ שלב <span id="level">1</span></div>
         <div class="pill">XP <span id="xp">0</span>/100</div>
-        <div class="pill">🌍 <span id="worldCoins">0</span></div>
       </div>
-      <div class="pet-room-layer" id="roomLayer"></div>
-      <div class="weather-sky" id="weatherSky"></div>
+      <div class="weather" id="weather"></div>
       <div class="speech-bubble" id="speechBubble">ליאן, בואי נשחק 🎾</div>
-      <div class="pet-wrap">
-        <div class="hat" id="hat">👑</div>
-        <div class="pet-accessory acc-wings" id="accWings"></div>
-        <div class="pet" id="pet">🐶</div>
-        <div class="pet-accessory acc-glasses" id="accGlasses"></div>
-        <div class="pet-accessory acc-neck" id="accNeck"></div>
-        <div class="pet-accessory acc-costume" id="accCostume"></div>
-        <div class="pet-accessory acc-shoes" id="accShoes"></div>
-        <div class="pet-accessory acc-hand" id="accHand"></div>
-        <div class="name" id="petNameDisplay">LIAN PET</div>
-        <div class="mood" id="mood">שמחה לראות אותך!</div>
-        <div class="mood" id="evolutionMood">Evolution: Baby Friend</div>
+
+      <div class="park-scene" id="parkScene">
+        <div class="video-label">🎬 טיול קצר בפארק</div>
+        <div class="park-timer" id="parkTimer">8</div>
+        <div class="sun">☀️</div><div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
+        <div class="tree t1">🌳</div><div class="tree t2">🌲</div><div class="path"></div>
+        <div class="girl">👧🏻</div><div class="leash"></div><div class="park-pet" id="parkPet">🐶</div>
       </div>
+
+      <div class="pet-wrap">
+        <div class="hat show" id="hat">🎀</div>
+        <div class="pet" id="pet" onclick="petClick()">🐶</div>
+        <div class="name" id="petName">בוני</div>
+        <div class="mood" id="mood">שמחה לראות אותך!</div>
+      </div>
+
       <div class="stats">
         <div class="stat"><b>אוכל 🍎</b><div class="bar"><div class="fill" id="hunger"></div></div></div>
         <div class="stat"><b>שמחה 💖</b><div class="bar"><div class="fill" id="happy"></div></div></div>
@@ -227,518 +113,209 @@ h1{margin:6px 0 6px;font-size:clamp(34px,5vw,56px)}p{margin:0;color:var(--muted)
       </div>
     </div>
 
-    <div>
-      <div class="panel">
-        <div class="tabs">
-          <button class="tab active" onclick="showTab(this,'care')">טיפול</button>
-          <button class="tab" onclick="showTab(this,'custom')">עיצוב חיה</button>
-          <button class="tab" onclick="showTab(this,'tasks')">משימות</button>
-          <button class="tab" onclick="showTab(this,'collection')">ספר חיות</button>
-          <button class="tab" onclick="showTab(this,'room')">בית החיה</button>
-          <button class="tab" onclick="showTab(this,'closet')">ארון</button>
-          <button class="tab" onclick="showTab(this,'weather')">מזג אוויר</button>
-          <button class="tab" onclick="showTab(this,'explore')">עולם חקר</button>
-          <button class="tab" onclick="showTab(this,'talk')">דיבור</button><button class="tab" onclick="showTab(this,'petpark')">פארק חיות</button>
-          <button class="tab" onclick="showTab(this,'shop')">חנות</button>
-          <button class="tab" onclick="showTab(this,'eggs')">ביצים</button>
-          <button class="tab" onclick="showTab(this,'wheel')">גלגל מזל</button>
-          <button class="tab" onclick="showTab(this,'mini')">מיני משחק</button>
-          <button class="tab" onclick="showTab(this,'achievements')">הישגים</button>
-          <button class="tab" onclick="showTab(this,'backup')">שמירה</button>
+    <div class="panel">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab(this,'care')">טיפול</button>
+        <button class="tab" onclick="showTab(this,'animals')">חיות וקולות</button>
+        <button class="tab" onclick="showTab(this,'park')">פארק חיות</button>
+        <button class="tab" onclick="showTab(this,'talk')">דיבור</button>
+        <button class="tab" onclick="showTab(this,'shop')">חנות</button>
+      </div>
+
+      <div id="care" class="tab-panel active">
+        <div class="section-title">פעולות טיפול</div>
+        <div class="actions">
+          <button class="btn pink" onclick="feedPet()">🍎 האכלה</button>
+          <button class="btn blue" onclick="playPet()">🎾 משחק</button>
+          <button class="btn green" onclick="washPet()">🛁 מקלחת</button>
+          <button class="btn" onclick="sleepPet()">🌙 שינה</button>
         </div>
+        <footer>לחיצה על החיה משמיעה את הקול שלה.</footer>
+      </div>
 
-        <div id="care" class="tab-panel active">
-          <div class="section-title">בחר חיה</div>
-          <select class="pet-scroll" id="petSelect" size="8" onchange="choosePetFromSelect(this.value)"></select>
-          <button class="btn dark choose-pet-btn" onclick="chooseSelectedPet()">✅ בחרי את החיה המסומנת</button>
-          <div class="section-title">פעולות</div>
-          <div class="actions">
-            <button class="btn pink" onclick="feedPet()">🍎 האכלה</button>
-            <button class="btn blue" onclick="playPet()">🎾 משחק</button>
-            <button class="btn green" onclick="washPet()">🛁 מקלחת</button>
-            <button class="btn" onclick="sleepPet()">🌙 שינה</button>
-          </div>
-          <div class="footer-note">כל פעולה נותנת מטבעות, XP וחברות עם החיה.</div>
+      <div id="animals" class="tab-panel">
+        <div class="section-title">בחרי חיה ושמעי קול</div>
+        <select id="petSelect" class="pet-scroll" size="8" onchange="choosePet(this.value)"></select>
+        <button class="btn blue" style="width:100%;margin-top:10px" onclick="playAnimalSound(state.pet)">🔊 השמע קול של החיה</button>
+        <div class="animal-grid" id="animalGrid" style="margin-top:10px"></div>
+      </div>
+
+      <div id="park" class="tab-panel">
+        <div class="section-title">פארק חיות 🌳</div>
+        <div class="park-buttons">
+          <button class="btn green" onclick="startParkWalk()">👧🏻🐾 יציאה לטיול קצר</button>
+          <button class="btn blue" onclick="parkBall()">⚽ משחק בכדור</button>
+          <button class="btn gold" onclick="findPrize()">🎁 חיפוש פרס</button>
+          <button class="btn" onclick="stopParkWalk()">⏹ עצור טיול</button>
         </div>
+        <footer>הטיול הוא אנימציה קצרה של ילדה שמוליכה את החיה בפארק.</footer>
+      </div>
 
-
-
-        <div id="custom" class="tab-panel">
-          <div class="section-title">עיצוב החיה 🎨</div>
-          <input class="field" id="petNameInput" placeholder="שם לחיה" maxlength="18" oninput="setPetName(this.value)">
-          <div class="small" style="margin-top:6px">השם נשמר לכל חיה בנפרד.</div>
-          <div class="section-title">צבע לחיה</div>
-          <input class="field" type="color" id="petColorPicker" onchange="setPetColor(this.value)">
-          <div class="color-grid" id="colorGrid"></div>
-          <button class="btn blue" onclick="randomPetColor()">🎲 צבע אקראי</button>
-          <div class="section-title">סגנון וצביעה מתקדמת ✨</div>
-          <div class="style-grid" id="styleGrid"></div>
-          <label class="range-label"><span>גודל החיה</span><span id="sizeLabel">100%</span></label>
-          <input class="range" id="petSizeRange" type="range" min="85" max="135" value="100" oninput="setPetDesign('size',this.value)">
-          <label class="range-label"><span>חוזק צבע</span><span id="satLabel">100%</span></label>
-          <input class="range" id="petSatRange" type="range" min="80" max="180" value="135" oninput="setPetDesign('sat',this.value)">
-          <label class="range-label"><span>בהירות</span><span id="brightLabel">100%</span></label>
-          <input class="range" id="petBrightRange" type="range" min="75" max="130" value="100" oninput="setPetDesign('bright',this.value)">
-          <label class="range-label"><span>הילה זוהרת</span><span id="glowLabel">28</span></label>
-          <input class="range" id="petGlowRange" type="range" min="0" max="60" value="28" oninput="setPetDesign('glow',this.value)">
-          <div class="section-title">תמונת פרופיל לחיה 📸</div>
-          <img id="profilePreview" class="profile-img" alt="תמונת חיה">
-          <label class="btn" for="profileUpload">בחרי תמונה מהטלפון</label>
-          <input class="file-input" id="profileUpload" type="file" accept="image/*" onchange="uploadPetImage(event)">
-          <button class="btn" onclick="clearPetImage()">מחק תמונה</button>
+      <div id="talk" class="tab-panel">
+        <div class="section-title">החיה מדברת עם ליאן 💬</div>
+        <div class="actions">
+          <button class="btn blue" onclick="petTalk('ליאן, אני אוהבת אותך!')">💖 משפט אהבה</button>
+          <button class="btn" onclick="petTalk('אפשר לצאת לפארק?')">🌳 לבקש פארק</button>
+          <button class="btn green" onclick="petTalk('אני שמחה! בואי נשחק!')">🎾 שמחה</button>
+          <button class="btn gold" onclick="petTalk('יאיי! מצאתי מטבעות!')">💰 פרס</button>
         </div>
+        <footer>בדפדפן באייפון/מחשב צריך ללחוץ פעם אחת על כפתור כדי לאפשר קול.</footer>
+      </div>
 
-        <div id="tasks" class="tab-panel">
-          <div class="section-title">משימות יומיות 📋</div>
-          <div class="daily-box"><b>השלימי משימות וקבלי בונוס מיוחד</b><br><span class="small">המשימות מתאפסות כל יום.</span></div>
-          <div id="taskList"></div>
-          <button class="btn gold" onclick="claimTaskBonus()">קבלי פרס משימות</button>
+      <div id="shop" class="tab-panel">
+        <div class="section-title">חנות אקססוריז</div>
+        <div class="shop">
+          <div class="card"><div class="big">👑</div><b>כתר</b><button class="btn gold" onclick="buyHat('👑',40)">קני 40</button></div>
+          <div class="card"><div class="big">🎀</div><b>פפיון</b><button class="btn pink" onclick="buyHat('🎀',35)">קני 35</button></div>
+          <div class="card"><div class="big">😎</div><b>משקפיים</b><button class="btn blue" onclick="buyHat('😎',45)">קני 45</button></div>
+          <div class="card"><div class="big">🌸</div><b>פרח</b><button class="btn green" onclick="buyHat('🌸',30)">קני 30</button></div>
         </div>
-
-        <div id="collection" class="tab-panel">
-          <div class="section-title">ספר החיות של ליאן 🐾</div>
-          <div class="daily-box"><b>התקדמות אוסף:</b> <span id="collectionProgress">0%</span><br><span class="small">פתחי ביצים וסובבי גלגל כדי לגלות חיות סודיות.</span></div>
-          <div class="collection-grid" id="collectionGrid"></div>
-        </div>
-
-
-        <div id="room" class="tab-panel">
-          <div class="section-title">בית החיה 🏠</div>
-          <div class="daily-box"><b>עיצוב החדר של החיה</b><br><span class="small">בחרי קירות, מיטה, שטיח, צעצועים וקישוטים.</span></div>
-          <div class="room-tools" id="roomTools"></div>
-        </div>
-
-        <div id="closet" class="tab-panel">
-          <div class="section-title">ארון בגדים 👗</div>
-          <div class="daily-box"><b>אקססוריז לחיה</b><br><span class="small">אפשר לשים משקפיים, שרשרת, כנפיים, נעליים, תחפושת וצעצוע ביד.</span></div>
-          <div class="closet-grid" id="closetGrid"></div>
-        </div>
-
-        <div id="weather" class="tab-panel">
-          <div class="section-title">מזג אוויר 🌦️</div>
-          <div class="weather-grid" id="weatherGrid"></div>
-        </div>
-
-        <div id="explore" class="tab-panel">
-          <div class="section-title">עולם חקר 🗺️</div>
-          <div class="daily-box"><b>צאי להרפתקה וקבלי פרסים</b><br><span class="small">יער, חוף, חלל, טירה וגן ממתקים.</span></div>
-          <div class="explore-grid" id="exploreGrid"></div>
-        </div>
-
-        <div id="talk" class="tab-panel">
-          <div class="section-title">בועות דיבור 💬</div>
-          <div class="actions">
-            <button class="btn pink" onclick="petTalk('ליאן, אני אוהבת אותך ❤️')">אהבה</button>
-            <button class="btn blue" onclick="petTalk('בואי נשחק בכדור 🎾')">משחק</button>
-            <button class="btn green" onclick="petTalk('אני רוצה חטיף קטן 🍪')">חטיף</button>
-            <button class="btn gold" onclick="petTalk('אני החיה הכי חמודה בעולם ✨')">קסם</button>
-            <button class="btn" onclick="munchkinPurr()">גרגור Munchkin 😻</button>
-            <button class="btn" onclick="munchkinLoaf()">מצב כיכר לחם 🥖</button>
-            <button class="btn" onclick="munchkinWalk()">הליכת רגליים קצרות 🐾</button>
-            <button class="btn" onclick="giveYarnBall()">כדור צמר 🧶</button>
-          </div>
-        </div>
-
-        
-<div id="petpark" class="tab-panel">
-<div class="section-title">🌳 פארק החיות</div>
-<p>שלחי את החיה לטיול ולקבלת פרסים.</p>
-<div class="actions">
-<button class="btn green" onclick="startWalk(1)">טיול 1 דקה</button>
-<button class="btn blue" onclick="startWalk(5)">טיול 5 דקות</button>
-<button class="btn pink" onclick="startWalk(15)">טיול 15 דקות</button>
-<button class="btn gold" onclick="startWalk(30)">טיול 30 דקות</button>
-</div>
-<div class="daily-box" id="walkStatus">החיה בבית 🏠</div>
-</div>
-
-<div id="shop" class="tab-panel">
-          <div class="section-title">חנות אביזרים ורקעים</div>
-          <div class="shop" id="shopGrid"></div>
-        </div>
-
-        <div id="eggs" class="tab-panel">
-          <div class="daily-box"><b>🥚 ביצי הפתעה</b><br><span class="small">קנה ביצה ופתח חיה חדשה באקראי.</span></div>
-          <div class="shop">
-            <div class="egg-card"><div class="big">🥚</div><b>ביצה רגילה</b><span class="small">100 מטבעות</span><button class="btn" onclick="buyEgg('normal',100)">פתח</button></div>
-            <div class="egg-card"><div class="big">💎</div><b>ביצה נדירה</b><span class="small">250 מטבעות</span><button class="btn" onclick="buyEgg('rare',250)">פתח</button></div>
-            <div class="egg-card"><div class="big">✨</div><b>ביצת קסם</b><span class="small">500 מטבעות</span><button class="btn gold" onclick="buyEgg('magic',500)">פתח</button></div>
-          </div>
-        </div>
-
-
-
-        <div id="wheel" class="tab-panel">
-          <div class="section-title">גלגל מזל יומי 🎡</div>
-          <div class="daily-box">
-            <b>סובבי פעם ביום וקבלי פרס</b><br>
-            <span class="small">מטבעות, XP, חברות או חיה נדירה.</span>
-          </div>
-          <div style="font-size:92px;margin:10px 0;filter:drop-shadow(0 12px 18px rgba(0,0,0,.15))" id="wheelIcon">🎡</div>
-          <button class="btn gold" onclick="spinWheel()">סובב גלגל</button>
-          <div class="footer-note">הפרס מתעדכן גם בפרופיל LIAN WORLD המשותף.</div>
-        </div>
-
-        <div id="mini" class="tab-panel">
-          <div class="section-title">תפיסת כוכבים ⭐</div>
-          <p>לחצי על כמה שיותר כוכבים ב־20 שניות וקבלי מטבעות.</p>
-          <button class="btn blue" onclick="startMiniGame()">התחל משחק</button>
-          <div class="mini-game" id="miniGame"><div class="pill" style="margin:12px auto;width:max-content">ניקוד: <span id="miniScore">0</span></div></div>
-        </div>
-
-        <div id="achievements" class="tab-panel">
-          <div class="section-title">הישגים 🏆</div>
-          <div id="achList"></div>
-        </div>
-      
-
-        <div id="backup" class="tab-panel">
-          <div class="section-title">שמירה וגיבוי 💾</div>
-          <div class="daily-box"><b>כאן אפשר לשמור את ההתקדמות לקובץ או להחזיר אותה.</b><br><span class="small">הכל נשמר גם אוטומטית בדפדפן.</span></div>
-          <div class="actions">
-            <button class="btn blue" onclick="exportSave()">⬇️ ייצוא שמירה</button>
-            <label class="btn green" for="importSaveInput">⬆️ ייבוא שמירה</label>
-          </div>
-          <input class="file-input" id="importSaveInput" type="file" accept="application/json" onchange="importSave(event)">
-        </div>
-
       </div>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-<div class="modal" id="rewardModal"><div class="modal-card"><div class="big" id="rewardIcon">🎁</div><h2 id="rewardTitle">פרס!</h2><p id="rewardText">קיבלת פרס חדש</p><button class="btn dark" onclick="closeReward()">סגור</button></div></div>
 
 <script>
-const todayKey=()=>new Date().toISOString().slice(0,10);
-const allAnimals=[
- {e:'🐶',name:'כלב',rarity:'רגילה',open:true},{e:'🐱',name:'חתול',rarity:'רגילה',open:true},{e:'😻',name:'Munchkin Cat שמנמן',rarity:'נדירה',open:true,chubby:true},{e:'🐰',name:'ארנב',rarity:'רגילה',open:true},{e:'🦄',name:'חד קרן',rarity:'נדירה',open:true},
- {e:'🐹',name:'אוגר',rarity:'רגילה'},{e:'🐼',name:'פנדה',rarity:'רגילה'},{e:'🦊',name:'שועל',rarity:'רגילה'},{e:'🐨',name:'קואלה',rarity:'רגילה'},{e:'🐯',name:'טיגריס',rarity:'נדירה'},
- {e:'🦋',name:'פרפר קסום',rarity:'נדירה'},{e:'🦜',name:'תוכי צבעוני',rarity:'נדירה'},{e:'🐬',name:'דולפין',rarity:'נדירה'},{e:'🐧',name:'פינגווין',rarity:'נדירה'},{e:'🦥',name:'עצלן',rarity:'נדירה'},
- {e:'🐲',name:'דרקון',rarity:'אגדית'},{e:'🐉',name:'דרקון זהב',rarity:'אגדית'},{e:'🦚',name:'טווס מלכותי',rarity:'אגדית'},{e:'🐺',name:'זאב ירח',rarity:'אגדית'},{e:'🦁',name:'אריה מלך',rarity:'אגדית'},
- {e:'🤖',name:'רובו־פט',rarity:'סודית'},{e:'👾',name:'חייזר חמוד',rarity:'סודית'},{e:'🛸',name:'חיית חלל',rarity:'סודית'},{e:'💎',name:'דרקון יהלום',rarity:'סודית'},{e:'🌟',name:'יצור כוכבים',rarity:'סודית'}
-];
-const pets=Object.fromEntries(allAnimals.map(a=>[a.e,{name:a.name,rarity:a.rarity,open:a.open,chubby:!!a.chubby}]));
-const colorPresets=['#ff5aa5','#8b5cf6','#3b82f6','#35d39d','#ffd166','#ff7a59','#22c55e','#06b6d4','#f43f5e','#111827','#ffffff','#9ca3af','#f97316','#a3e635','#14b8a6','#0ea5e9','#c084fc','#fb7185','#facc15','#000000'];
-const designStyles=[{id:'soft',name:'רך ונקי'},{id:'dots',name:'נקודות חמודות'},{id:'stripes',name:'פסים'},{id:'sparkle',name:'נצנצים'}];
-
-const roomOptions=[
-  {kind:'wall',id:'soft',icon:'🩷',name:'קירות ורודים'},
-  {kind:'wall',id:'blue',icon:'💙',name:'קירות כחולים'},
-  {kind:'wall',id:'mint',icon:'💚',name:'קירות מנטה'},
-  {kind:'wall',id:'purple',icon:'💜',name:'קירות סגולים'},
-  {kind:'wall',id:'sun',icon:'☀️',name:'חדר שמש'},
-  {kind:'bed',id:'🛏️',icon:'🛏️',name:'מיטה'},
-  {kind:'rug',id:'🟣',icon:'🟣',name:'שטיח עגול'},
-  {kind:'rug',id:'💟',icon:'💟',name:'שטיח לב'},
-  {kind:'toy',id:'🧶',icon:'🧶',name:'כדור צמר'},
-  {kind:'toy',id:'🎾',icon:'🎾',name:'כדור משחק'},
-  {kind:'toy',id:'🧸',icon:'🧸',name:'דובי'},
-  {kind:'picture',id:'🖼️',icon:'🖼️',name:'תמונה'},
-  {kind:'plant',id:'🪴',icon:'🪴',name:'עציץ'},
-  {kind:'lamp',id:'💡',icon:'💡',name:'מנורה'},
-  {kind:'food',id:'🍪',icon:'🍪',name:'קערת חטיף'}
-];
-const weatherOptions=[
-  {id:'sun',icon:'☀️',name:'שמש'},
-  {id:'rain',icon:'🌧️',name:'גשם'},
-  {id:'snow',icon:'❄️',name:'שלג'},
-  {id:'rainbow',icon:'🌈',name:'קשת'},
-  {id:'stars',icon:'✨',name:'כוכבים'}
-];
-const exploreOptions=[
-  {id:'forest',icon:'🌲',name:'יער קסום',coins:55,xp:25,pet:'🦊'},
-  {id:'beach',icon:'🏖️',name:'חוף ים',coins:60,xp:30,pet:'🐬'},
-  {id:'space',icon:'🚀',name:'חלל',coins:85,xp:45,pet:'👾'},
-  {id:'castle',icon:'🏰',name:'טירה',coins:75,xp:40,pet:'🦚'},
-  {id:'candy',icon:'🍭',name:'גן ממתקים',coins:65,xp:35,pet:'🌟'}
+const animals=[
+ {e:'🐶',name:'בוני הכלבלב',kind:'dog'},
+ {e:'🐱',name:'מיצי החתולה',kind:'cat'},
+ {e:'🐰',name:'רוזי הארנבת',kind:'rabbit'},
+ {e:'🐹',name:'גוגו האוגר',kind:'hamster'},
+ {e:'🦜',name:'קוקו התוכי',kind:'bird'},
+ {e:'🐼',name:'פנדה מתוקה',kind:'panda'},
+ {e:'🦊',name:'שועל חכם',kind:'fox'},
+ {e:'🐨',name:'קואלה חמודה',kind:'koala'},
+ {e:'🐧',name:'פינגווין קטן',kind:'penguin'},
+ {e:'🐯',name:'טיגריס מתוק',kind:'tiger'},
+ {e:'🐬',name:'דולפין שמח',kind:'dolphin'},
+ {e:'🦁',name:'אריה מלך',kind:'lion'},
+ {e:'🐺',name:'זאב ירח',kind:'wolf'},
+ {e:'🐲',name:'דרקון קסום',kind:'dragon'}
 ];
 
-const shopItems=[
-  {type:'hat',id:'👑',name:'כתר',price:50,icon:'👑'}, {type:'hat',id:'🎀',name:'פפיון',price:40,icon:'🎀'},
-  {type:'hat',id:'🎩',name:'כובע קסמים',price:90,icon:'🎩'}, {type:'hat',id:'🌸',name:'פרח',price:70,icon:'🌸'},
-  {type:'hat',id:'😎',name:'משקפיים',price:75,icon:'😎'}, {type:'hat',id:'🌟',name:'כוכב',price:85,icon:'🌟'},
-  {type:'hat',id:'🪽',name:'כנפיים',price:130,icon:'🪽'}, {type:'hat',id:'💖',name:'לבבות',price:95,icon:'💖'},
-  {type:'closet',slot:'neck',id:'🧣',name:'צעיף מתוק',price:55,icon:'🧣'}, {type:'closet',slot:'neck',id:'📿',name:'שרשרת פנינים',price:95,icon:'📿'},
-  {type:'closet',slot:'glasses',id:'🕶️',name:'משקפי שמש',price:80,icon:'🕶️'}, {type:'closet',slot:'glasses',id:'🥽',name:'משקפי הרפתקה',price:100,icon:'🥽'},
-  {type:'closet',slot:'shoes',id:'👟',name:'נעלי ספורט',price:75,icon:'👟'}, {type:'closet',slot:'shoes',id:'🩰',name:'נעלי בלרינה',price:90,icon:'🩰'},
-  {type:'closet',slot:'wings',id:'🪽',name:'כנפי מלאך',price:160,icon:'🪽'}, {type:'closet',slot:'wings',id:'🦋',name:'כנפי פרפר',price:170,icon:'🦋'},
-  {type:'closet',slot:'costume',id:'🦸',name:'תחפושת גיבורה',price:180,icon:'🦸'}, {type:'closet',slot:'costume',id:'👗',name:'שמלה יפה',price:135,icon:'👗'},
-  {type:'closet',slot:'costume',id:'👕',name:'חולצה מגניבה',price:100,icon:'👕'}, {type:'closet',slot:'costume',id:'🎃',name:'תחפושת חג',price:140,icon:'🎃'},
-  {type:'closet',slot:'hand',id:'🧶',name:'כדור צמר',price:65,icon:'🧶'}, {type:'closet',slot:'hand',id:'🎾',name:'כדור משחק',price:65,icon:'🎾'},
-  {type:'closet',slot:'hand',id:'🧸',name:'דובי קטן',price:110,icon:'🧸'}, {type:'closet',slot:'hand',id:'🍪',name:'עוגייה אהובה',price:45,icon:'🍪'},
-  {type:'bg',id:'beach',name:'חוף ים',price:60,icon:'🏖️'}, {type:'bg',id:'night',name:'לילה',price:60,icon:'🌙'},
-  {type:'bg',id:'room',name:'חדר אישי',price:80,icon:'🏡'}, {type:'bg',id:'castle',name:'טירה קסומה',price:150,icon:'🏰'},
-  {type:'bg',id:'space',name:'חלל',price:180,icon:'🪐'}
-];
-const defaultState={coins:160,level:1,xp:0,pet:'🐶',hat:'',bg:'park',hunger:75,happy:75,clean:75,energy:75,friendship:20,ownedPets:['🐶','🐱','😻','🐰','🦄'],ownedItems:[],lastDaily:'',lastWheel:'',lastTaskDay:'',taskBonusClaimed:false,streak:0,room:{wall:'soft',bed:'🛏️',rug:'🟣',toy:'🧶',picture:'🖼️',plant:'🪴',lamp:'💡',food:'🍪'},closet:{neck:'',glasses:'',shoes:'',wings:'',costume:'',hand:''},weather:'sun',exploreDone:{},petNames:{'😻':'Munchkin Cat שמנמן'},petColors:{'😻':'#fff2d8'},petDesigns:{},petImages:{},counts:{feed:0,play:0,wash:0,sleep:0,eggs:0,stars:0,wheel:0},dailyCounts:{day:'',feed:0,play:0,wash:0},achieved:{}};
-let state=load();let miniTimer=null,miniActive=false,miniScore=0;
-const worldDefault={coins:0,xp:0,level:1,achievements:{},updated:''};
-function loadWorld(){try{return {...worldDefault,...JSON.parse(localStorage.getItem('lianWorldProfile')||'{}')}}catch(e){return {...worldDefault}}}
-function saveWorld(w){w.updated=new Date().toISOString();localStorage.setItem('lianWorldProfile',JSON.stringify(w))}
-function addWorldReward(coins,xp,source){const w=loadWorld();w.coins=(w.coins||0)+coins;w.xp=(w.xp||0)+xp;while(w.xp>=100){w.level=(w.level||1)+1;w.xp-=100}w.lastSource=source||'pet';saveWorld(w);return w}
-function unlockWorldAchievement(id,title){const w=loadWorld();w.achievements=w.achievements||{};if(!w.achievements[id]){w.achievements[id]={title:title,date:new Date().toLocaleDateString('he-IL'),source:'pet'};w.coins=(w.coins||0)+25;saveWorld(w)}}
-function load(){try{const old=JSON.parse(localStorage.getItem('lianPetGameV4')||localStorage.getItem('lianPetGameV2')||'{}');return mergeState(old)}catch(e){return mergeState({})}}
-function mergeState(old){return {...defaultState,...old,ownedPets:[...new Set([...(defaultState.ownedPets||[]),...(old.ownedPets||[])])],ownedItems:[...(old.ownedItems||[])],room:{...defaultState.room,...(old.room||{})},closet:{...defaultState.closet,...(old.closet||{})},exploreDone:{...(old.exploreDone||{})},petNames:{...(old.petNames||{})},petColors:{...(defaultState.petColors||{}),...(old.petColors||{})},petDesigns:{...(defaultState.petDesigns||{}),...(old.petDesigns||{})},petImages:{...(old.petImages||{})},counts:{...defaultState.counts,...(old.counts||{})},dailyCounts:{...defaultState.dailyCounts,...(old.dailyCounts||{})},achieved:{...(old.achieved||{})}}}
-function save(){localStorage.setItem('lianPetGameV4',JSON.stringify(state))}
-function clamp(v){return Math.max(0,Math.min(100,v))}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1700)}
-function showReward(icon,title,text){document.getElementById('rewardIcon').textContent=icon;document.getElementById('rewardTitle').textContent=title;document.getElementById('rewardText').textContent=text;document.getElementById('rewardModal').classList.add('open')}
-function closeReward(){document.getElementById('rewardModal').classList.remove('open')}
-function showTab(btn,id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='achievements')renderAchievements();if(id==='tasks')renderTasks();if(id==='collection')renderCollection();if(id==='custom')renderCustom();if(id==='room')renderRoomTools();if(id==='closet')renderCloset();if(id==='weather')renderWeather();if(id==='explore')renderExplore()}
-function normalizeDaily(){const t=todayKey();if(state.dailyCounts.day!==t){state.dailyCounts={day:t,feed:0,play:0,wash:0};state.taskBonusClaimed=false}}
-function update(){normalizeDaily();document.getElementById('coins').textContent=state.coins;document.getElementById('level').textContent=state.level;document.getElementById('xp').textContent=state.xp;const w=loadWorld();document.getElementById('worldCoins').textContent=(w.coins||0)+' מטבעות עולם';
-  const petEl=document.getElementById('pet');renderPetVisual();petEl.title=pets[state.pet]?.name||'';applyPetColor();applyCloset();renderRoomLayer();renderWeatherSky();document.getElementById('hat').textContent=state.hat||'';document.getElementById('hat').classList.toggle('show',!!state.hat);
-  document.getElementById('petNameDisplay').textContent=getPetName();
-  ['hunger','happy','clean','energy','friendship'].forEach(k=>document.getElementById(k).style.width=clamp(state[k])+'%');
-  const stage=document.getElementById('stage');stage.className='panel stage '+(state.bg||'')+' room-wall-'+(state.room?.wall||'soft');
-  let avg=(state.hunger+state.happy+state.clean+state.energy+state.friendship)/5;
-  document.getElementById('mood').textContent=getMood(avg);document.getElementById('evolutionMood').textContent=getEvolutionText();
-  renderPetSelect();renderShop();renderCustom();renderTasks();renderCollection();renderRoomTools();renderCloset();renderWeather();renderExplore();checkAchievements();save();}
-function getMood(avg){if(state.hunger<30)return 'רעבה ורוצה תפוח 🍎';if(state.energy<30)return 'עייפה ורוצה לישון 🌙';if(state.clean<30)return 'רוצה מקלחת 🛁';if(state.friendship>85)return 'מאוהבת בליאן ❤️';if(avg>85)return 'נרגשת ומלאת קסם ✨';if(avg>60)return 'שמחה מאוד 💖';if(avg>35)return 'רוצה קצת תשומת לב 🥺';return 'עצובה וצריכה טיפול 😢'}
-function getPetEmoji(){return state.pet==='😻'?'🐱':state.pet}
+let state=JSON.parse(localStorage.getItem('lianPetsSoundParkV1')||'null')||{
+ pet:'🐶',coins:120,level:1,xp:0,hunger:76,happy:82,clean:72,energy:80,friendship:65,hat:'🎀',sound:true
+};
+let audioCtx=null, parkInterval=null, parkTimeout=null;
 
-function renderPetVisual(){const petEl=document.getElementById('pet');if(state.pet==='😻'){petEl.innerHTML='<div class="munchkin-cat" aria-label="Munchkin Cat שמנמן"><div class="tail"></div><div class="body"></div><div class="belly"></div><div class="leg l1"></div><div class="leg l2"></div><div class="paw p1"></div><div class="paw p2"></div><div class="head"><div class="ear left"></div><div class="ear right"></div><div class="fluff"></div><div class="eye left"></div><div class="eye right"></div><div class="nose"></div><div class="mouth"></div><div class="whisker w1"></div><div class="whisker w2"></div><div class="whisker w3"></div><div class="whisker w4"></div></div></div>';}else{petEl.textContent=getPetEmoji();}}
-function getPetName(){return state.petNames[state.pet]||pets[state.pet]?.name||'LIAN PET'}
-function setPetName(v){state.petNames[state.pet]=(v||'').trim()||pets[state.pet].name;update()}
-function getPetDesign(){return {style:'soft',size:100,sat:135,bright:100,glow:28,...(state.petDesigns[state.pet]||{})}}
-function applyPetColor(){const color=state.petColors[state.pet]||(state.pet==='😻'?'#fff2d8':'#ff5aa5');const design=getPetDesign();const petEl=document.getElementById('pet');const wrap=document.querySelector('.pet-wrap');petEl.className='pet colorized';if(state.pet==='😻')petEl.classList.add('pet-art');if(pets[state.pet]?.chubby)petEl.classList.add('chubby');if(design.style==='dots')petEl.classList.add('pattern-dots');if(design.style==='stripes')petEl.classList.add('pattern-stripes');if(design.style==='sparkle')petEl.classList.add('pattern-sparkle');petEl.style.setProperty('--petGlow',color+'99');petEl.style.setProperty('--petHue',colorToHueRotate(color)+'deg');petEl.style.setProperty('--petSat',(design.sat/100).toFixed(2));petEl.style.setProperty('--petBright',(design.bright/100).toFixed(2));petEl.style.setProperty('--petGlowSize',design.glow+'px');petEl.style.setProperty('--petSize',(160*design.size/100)+'px');petEl.style.setProperty('--catCream',color);petEl.style.setProperty('--catScale',(design.size/100).toFixed(2));wrap.style.setProperty('--petAura',color+'30')}
-function colorToHueRotate(hex){let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;let max=Math.max(r,g,b),min=Math.min(r,g,b),h=0;if(max!==min){let d=max-min;h=max===r?((g-b)/d+(g<b?6:0)):max===g?((b-r)/d+2):((r-g)/d+4);h*=60}return Math.round(h)}
-function setPetColor(c){state.petColors[state.pet]=c;toast('הצבע נשמר לחיה');update()}
-function randomPetColor(){setPetColor('#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'))}
-function setPetDesign(key,value){const d=getPetDesign();d[key]=key==='style'?value:Number(value);state.petDesigns[state.pet]=d;update()}
-function renderCustom(){const inp=document.getElementById('petNameInput');if(!inp)return;inp.value=getPetName();const color=state.petColors[state.pet]||'#ff5aa5';document.getElementById('petColorPicker').value=color;const grid=document.getElementById('colorGrid');grid.innerHTML='';colorPresets.forEach(c=>{const b=document.createElement('button');b.className='color-btn'+(c===color?' active':'');b.style.background=c;b.title=c;b.onclick=()=>setPetColor(c);grid.appendChild(b)});const design=getPetDesign();const styleGrid=document.getElementById('styleGrid');if(styleGrid){styleGrid.innerHTML='';designStyles.forEach(st=>{const b=document.createElement('button');b.className='style-btn'+(design.style===st.id?' active':'');b.textContent=st.name;b.onclick=()=>setPetDesign('style',st.id);styleGrid.appendChild(b)})}const size=document.getElementById('petSizeRange'),sat=document.getElementById('petSatRange'),bright=document.getElementById('petBrightRange'),glow=document.getElementById('petGlowRange');if(size){size.value=design.size;document.getElementById('sizeLabel').textContent=design.size+'%'}if(sat){sat.value=design.sat;document.getElementById('satLabel').textContent=design.sat+'%'}if(bright){bright.value=design.bright;document.getElementById('brightLabel').textContent=design.bright+'%'}if(glow){glow.value=design.glow;document.getElementById('glowLabel').textContent=design.glow}const img=document.getElementById('profilePreview');const src=state.petImages[state.pet];img.src=src||'';img.classList.toggle('show',!!src)}
-function uploadPetImage(ev){const file=ev.target.files&&ev.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{state.petImages[state.pet]=reader.result;toast('תמונת החיה נשמרה');update()};reader.readAsDataURL(file)}
-function clearPetImage(){delete state.petImages[state.pet];toast('התמונה נמחקה');update()}
-function reward(amount,msg){state.coins+=amount;state.xp+=amount;state.friendship=clamp(state.friendship+3);addWorldReward(amount,amount,'pet-care');while(state.xp>=100){state.level++;state.xp-=100;showReward('⭐','עלית שלב!','ליאן הגיעה לשלב '+state.level)}toast(msg+' +'+amount+' מטבעות');sparkles();update()}
-function feedPet(){state.hunger=clamp(state.hunger+18);state.energy=clamp(state.energy+5);state.counts.feed++;state.dailyCounts.feed++;petTalk('טעים לי! תודה ליאן 🍎');speakPet('טעים לי ליאן');reward(8,'יאמי')}
-function playPet(){state.happy=clamp(state.happy+20);state.energy=clamp(state.energy-10);state.clean=clamp(state.clean-6);state.counts.play++;state.dailyCounts.play++;petTalk('איזה כיף לשחק איתך 🎾');speakPet('בואי נשחק');reward(10,'איזה כיף')}
-function washPet(){state.clean=clamp(state.clean+22);state.happy=clamp(state.happy+4);state.counts.wash++;state.dailyCounts.wash++;reward(7,'נקי ומבריק')}
-function sleepPet(){state.energy=clamp(state.energy+24);state.hunger=clamp(state.hunger-7);state.counts.sleep++;petTalk('לילה טוב, אני חולמת על ליאן 🌙');speakPet('לילה טוב ליאן');reward(6,'חלומות קסומים')}
-function getEvolutionText(){if(state.level>=25)return 'Evolution: Rainbow Legend 🌈👑';if(state.level>=20)return 'Evolution: Legend Friend 👑';if(state.level>=15)return 'Evolution: Magic Friend ✨';if(state.level>=10)return 'Evolution: Super Friend 🌈';if(state.level>=5)return 'Evolution: Best Friend ❤️';return 'Evolution: Baby Friend 🐾'}
-function renderPetSelect(){const box=document.getElementById('petSelect');box.innerHTML='';allAnimals.forEach(a=>{const owned=state.ownedPets.includes(a.e);const opt=document.createElement('option');opt.value=a.e;opt.textContent=a.e+'  '+(owned?getDisplayName(a.e):'🔒 '+a.name)+' — '+a.rarity;opt.disabled=!owned;opt.selected=state.pet===a.e;box.appendChild(opt)})}
-function getDisplayName(e){return state.petNames[e]||pets[e]?.name||e}
-function choosePetFromSelect(pet){if(pet)choosePet(pet)}
-function chooseSelectedPet(){const sel=document.getElementById('petSelect');if(sel&&sel.value)choosePet(sel.value);else toast('בחרי חיה מהרשימה ואז לחצי על הכפתור')}
-function choosePet(pet){if(!state.ownedPets.includes(pet))return toast('צריך לפתוח את החיה בביצה או בגלגל');state.pet=pet;toast('נבחרה חיה חדשה!');sparkles();update()}
-function renderShop(){const grid=document.getElementById('shopGrid');grid.innerHTML='';shopItems.forEach(it=>{const key=it.type+(it.slot||'')+it.id;const owned=state.ownedItems.includes(key);const card=document.createElement('div');card.className='shop-card';const action=`buyItem('${it.type}','${it.id}',${it.price},'${it.slot||''}')`;card.innerHTML='<div class="big">'+it.icon+'</div><b>'+it.name+'</b><span class="small">'+(owned?'נרכש':'מחיר: '+it.price+' מטבעות')+'</span><button class="btn '+(owned?'green':'')+'" onclick="'+action+'">'+(owned?'השתמש / הסר':'קנה')+'</button>';grid.appendChild(card)})}
-function buyItem(type,id,price,slot){
-  const key=type+(slot||'')+id;
-  if(!state.ownedItems.includes(key)){
-    if(state.coins<price)return toast('אין מספיק מטבעות');
-    state.coins-=price;
-    state.ownedItems.push(key);
-    toast('קנית פריט חדש!');
-  }
-  if(type==='hat')state.hat=id;
-  if(type==='bg')state.bg=id;
-  if(type==='closet'){
-    state.closet[slot]=state.closet[slot]===id?'':id;
-    petTalk(state.closet[slot]?'וואו! האקססורי החדש מהמם ✨':'הסרתי את האקססורי');
-  }
-  update();
+function save(){localStorage.setItem('lianPetsSoundParkV1',JSON.stringify(state))}
+function clamp(n){return Math.max(0,Math.min(100,Math.round(n)))}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200)}
+function currentAnimal(){return animals.find(a=>a.e===state.pet)||animals[0]}
+function initAudio(){if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)()} if(audioCtx.state==='suspended')audioCtx.resume()}
+function tone(freq,dur=0.18,type='sine',vol=.12,delay=0){
+  if(!state.sound)return;
+  initAudio();
+  const now=audioCtx.currentTime+delay;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type=type; osc.frequency.setValueAtTime(freq,now);
+  gain.gain.setValueAtTime(0.0001,now);
+  gain.gain.exponentialRampToValueAtTime(vol,now+0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.start(now); osc.stop(now+dur+.03);
 }
-function pickAnimal(kind){let pool=kind==='normal'?['🐹','🐼','🦊','🐨','🐧']:kind==='rare'?['😻','🐯','🦋','🦜','🐬','🦥']:['🐲','🐉','🦚','🐺','🦁','🤖','👾','🛸','💎','🌟'];return pool[Math.floor(Math.random()*pool.length)]}
-function buyEgg(kind,price){if(state.coins<price)return toast('אין מספיק מטבעות');state.coins-=price;state.counts.eggs++;let won=pickAnimal(kind);if(!state.ownedPets.includes(won)){state.ownedPets.push(won);showReward(won,'חיה חדשה!', 'פתחת את '+pets[won].name+'!')}else{state.coins+=60;showReward('💰','כבר יש לך!', 'קיבלת 60 מטבעות במקום חיה כפולה')}state.pet=won;reward(20,'ביצת הפתעה')}
-function claimDaily(){const t=todayKey();if(state.lastDaily===t)return toast('כבר לקחת בונוס יומי היום');state.lastDaily=t;state.streak=(state.streak||0)+1;let bonus=50+(state.streak*10);state.coins+=bonus;state.friendship=clamp(state.friendship+10);addWorldReward(bonus,20,'daily-bonus');showReward('🎁','בונוס יומי','קיבלת '+bonus+' מטבעות! רצף: '+state.streak+' ימים');update()}
-function renderTasks(){const list=document.getElementById('taskList');if(!list)return;const tasks=getDailyTasks();list.innerHTML='';tasks.forEach(t=>{const done=t.now>=t.need;const div=document.createElement('div');div.className='task '+(done?'done':'');div.innerHTML='<div class="icon">'+t.icon+'</div><div><b>'+t.title+'</b><div class="small">'+Math.min(t.now,t.need)+'/'+t.need+(done?' הושלם ✅':'')+'</div></div>';list.appendChild(div)})}
-function getDailyTasks(){normalizeDaily();return[{icon:'🍎',title:'האכלה 5 פעמים',now:state.dailyCounts.feed,need:5},{icon:'🎾',title:'משחק 3 פעמים',now:state.dailyCounts.play,need:3},{icon:'🛁',title:'מקלחת פעם אחת',now:state.dailyCounts.wash,need:1}]}
-function claimTaskBonus(){const allDone=getDailyTasks().every(t=>t.now>=t.need);if(!allDone)return toast('עוד לא סיימת את כל המשימות');if(state.taskBonusClaimed)return toast('כבר קיבלת היום את פרס המשימות');state.taskBonusClaimed=true;state.coins+=120;state.xp+=50;state.friendship=clamp(state.friendship+20);addWorldReward(120,50,'daily-tasks');showReward('🏆','כל המשימות הושלמו!','קיבלת 120 מטבעות ו־50 XP');update()}
-function renderCollection(){const grid=document.getElementById('collectionGrid');if(!grid)return;grid.innerHTML='';allAnimals.forEach(a=>{const owned=state.ownedPets.includes(a.e);const div=document.createElement('div');div.className='collection-card '+(owned?'':'locked');div.innerHTML='<div class="emoji">'+(owned?a.e:'❔')+'</div><b>'+(owned?getDisplayName(a.e):'נעול')+'</b><span class="small">'+a.rarity+'</span>';grid.appendChild(div)});const pct=Math.round(state.ownedPets.length/allAnimals.length*100);document.getElementById('collectionProgress').textContent=pct+'% · '+state.ownedPets.length+'/'+allAnimals.length}
-function startMiniGame(){if(miniActive)return;miniActive=true;miniScore=0;document.getElementById('miniScore').textContent=0;const area=document.getElementById('miniGame');area.querySelectorAll('.star').forEach(s=>s.remove());let seconds=20;toast('המשחק התחיל!');miniTimer=setInterval(()=>{spawnStar();seconds--;if(seconds<=0){clearInterval(miniTimer);miniActive=false;let earned=miniScore*3;state.coins+=earned;state.xp+=earned;state.counts.stars+=miniScore;addWorldReward(earned,earned,'star-mini-game');showReward('⭐','סיום משחק','תפסת '+miniScore+' כוכבים וקיבלת '+earned+' מטבעות');update()}},650)}
-function spawnStar(){const area=document.getElementById('miniGame');const s=document.createElement('button');s.className='star';s.textContent='⭐';s.style.left=Math.random()*82+'%';s.style.top='20px';s.onclick=()=>{miniScore++;document.getElementById('miniScore').textContent=miniScore;s.remove()};area.appendChild(s);setTimeout(()=>s.remove(),1800)}
-function spinWheel(){const t=todayKey();if(state.lastWheel===t)return toast('כבר סובבת את גלגל המזל היום');state.lastWheel=t;state.counts.wheel=(state.counts.wheel||0)+1;const secret=['🤖','👾','🛸','💎','🌟'];const prizes=[{icon:'💰',text:'100 מטבעות',coins:100,xp:20},{icon:'⭐',text:'50 XP',coins:20,xp:50},{icon:'❤️',text:'20 חברות',coins:25,xp:20,friend:20},{icon:'😻',text:'Munchkin Cat שמנמן',coins:35,xp:35,pet:'😻'},{icon:'🐉',text:'דרקון זהב',coins:30,xp:30,pet:'🐉'},{icon:'❔',text:'חיה סודית',coins:40,xp:40,pet:secret[Math.floor(Math.random()*secret.length)]}];const prize=prizes[Math.floor(Math.random()*prizes.length)];document.getElementById('wheelIcon').textContent=prize.icon;state.coins+=prize.coins;state.xp+=prize.xp;state.friendship=clamp(state.friendship+(prize.friend||5));if(prize.pet && !state.ownedPets.includes(prize.pet)){state.ownedPets.push(prize.pet);state.pet=prize.pet}addWorldReward(prize.coins,prize.xp,'lucky-wheel');showReward(prize.pet||prize.icon,'גלגל מזל!',prize.text);update()}
-
-function renderRoomLayer(){
-  const layer=document.getElementById('roomLayer');if(!layer)return;
-  const r=state.room||defaultState.room;
-  layer.innerHTML=
-    '<div class="room-item room-bed">'+(r.bed||'🛏️')+'</div>'+
-    '<div class="room-item room-rug">'+(r.rug||'🟣')+'</div>'+
-    '<div class="room-item room-toy">'+(r.toy||'🧶')+'</div>'+
-    '<div class="room-item room-picture">'+(r.picture||'🖼️')+'</div>'+
-    '<div class="room-item room-plant">'+(r.plant||'🪴')+'</div>'+
-    '<div class="room-item room-lamp">'+(r.lamp||'💡')+'</div>'+
-    '<div class="room-item room-food">'+(r.food||'🍪')+'</div>';
+function chirp(freqs,type='sine',dur=.16,space=.12){freqs.forEach((f,i)=>tone(f,dur,type,.12,i*space))}
+function playAnimalSound(pet=state.pet){
+  if(!state.sound)return toast('הקולות כבויים');
+  const kind=(animals.find(a=>a.e===pet)||{}).kind||'dog';
+  initAudio();
+  if(kind==='cat'){chirp([620,520,690],'sine',.22,.16); petTalk('מיאו מיאו!');}
+  else if(kind==='dog'){chirp([250,210,260],'square',.13,.16); petTalk('הב הב!');}
+  else if(kind==='rabbit'){chirp([720,850,760],'triangle',.08,.09); petTalk('קפיץ קפוץ!');}
+  else if(kind==='hamster'){chirp([980,1240,1080,1320],'triangle',.07,.075); petTalk('ציף ציף קטן!');}
+  else if(kind==='bird'){chirp([1000,1400,1200,1550],'sine',.08,.08); petTalk('שלום ליאן!');}
+  else if(kind==='lion'||kind==='tiger'){chirp([180,135,110],'sawtooth',.22,.18); petTalk('רררר!');}
+  else if(kind==='wolf'){chirp([420,620,820],'sine',.35,.18); petTalk('אוווו!');}
+  else if(kind==='dolphin'){chirp([900,1300,1700,1200],'sine',.06,.07); petTalk('קליק קליק!');}
+  else if(kind==='dragon'){chirp([120,90,160,80],'sawtooth',.18,.14); petTalk('אש קסומה!');}
+  else {chirp([540,680,590],'triangle',.11,.11); petTalk('היי ליאן!');}
 }
-function renderRoomTools(){
-  const box=document.getElementById('roomTools');if(!box)return;
-  box.innerHTML='';
-  roomOptions.forEach(o=>{
-    const b=document.createElement('button');
-    b.className='room-option '+((state.room&&state.room[o.kind]===o.id)?'active':'');
-    b.innerHTML='<span class="big">'+o.icon+'</span>'+o.name;
-    b.onclick=()=>{state.room[o.kind]=o.id;toast('החדר עודכן');update()};
-    box.appendChild(b);
-  });
+function speakHebrew(text){
+  if(!state.sound || !('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='he-IL'; u.rate=.95; u.pitch=1.25; u.volume=.95;
+  window.speechSynthesis.speak(u);
 }
-function applyCloset(){
-  const c=state.closet||{};
-  const map={neck:'accNeck',glasses:'accGlasses',shoes:'accShoes',wings:'accWings',costume:'accCostume',hand:'accHand'};
-  Object.keys(map).forEach(slot=>{
-    const el=document.getElementById(map[slot]);if(!el)return;
-    el.textContent=c[slot]||'';
-    el.classList.toggle('show',!!c[slot]);
-  });
+function petTalk(text){
+  const b=document.getElementById('speechBubble');
+  b.textContent=text; b.classList.add('show');
+  clearTimeout(b._timer); b._timer=setTimeout(()=>b.classList.remove('show'),3200);
+  speakHebrew(text);
 }
-function renderCloset(){
-  const box=document.getElementById('closetGrid');if(!box)return;
-  const closetItems=shopItems.filter(x=>x.type==='closet');
-  box.innerHTML='';
-  closetItems.forEach(it=>{
-    const owned=state.ownedItems.includes('closet'+it.slot+it.id);
-    const active=state.closet&&state.closet[it.slot]===it.id;
-    const b=document.createElement('button');
-    b.className='closet-option '+(active?'active':'');
-    b.innerHTML='<span class="big">'+it.icon+'</span>'+it.name+'<br><span class="small">'+(owned?'נרכש':'בחנות: '+it.price+' מטבעות')+'</span>';
-    b.onclick=()=> owned ? buyItem('closet',it.id,0,it.slot) : toast('קונים את זה קודם בחנות');
-    box.appendChild(b);
-  });
+function toggleSound(){
+  state.sound=!state.sound; save(); update();
+  if(state.sound){initAudio(); toast('קולות הופעלו 🔊'); chirp([600,800,1000],'sine',.08,.08)}
+  else toast('קולות הושתקו 🔇');
 }
+function choosePet(pet){
+  state.pet=pet; const a=currentAnimal(); document.getElementById('petName').textContent=a.name;
+  state.happy=clamp(state.happy+3); state.friendship=clamp(state.friendship+2);
+  playAnimalSound(pet); sparkles(); update();
+}
+function showTab(btn,id){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');
+}
+function reward(xp,coins,msg){state.xp+=xp;state.coins+=coins;if(state.xp>=100){state.xp-=100;state.level++;toast('עלית שלב! ⭐')}else toast(msg);save();update()}
+function feedPet(){state.hunger=clamp(state.hunger+18);state.happy=clamp(state.happy+5);playAnimalSound(state.pet);reward(8,8,'טעים! 🍎')}
+function playPet(){state.happy=clamp(state.happy+17);state.energy=clamp(state.energy-7);state.friendship=clamp(state.friendship+8);document.getElementById('pet').classList.add('walking');setTimeout(()=>document.getElementById('pet').classList.remove('walking'),1200);reward(10,10,'איזה כיף לשחק! 🎾')}
+function washPet(){state.clean=clamp(state.clean+22);chirp([700,900,1100],'triangle',.07,.08);reward(7,7,'נקי ומבריק 🛁')}
+function sleepPet(){state.energy=clamp(state.energy+25);state.hunger=clamp(state.hunger-6);petTalk('לילה טוב ליאן 🌙');reward(6,6,'חלומות נעימים')}
+function petClick(){playAnimalSound(state.pet);sparkles()}
+function dailyGift(){state.coins+=50;state.happy=clamp(state.happy+10);petTalk('קיבלת מתנה יומית!');update();save();toast('קיבלת 50 מטבעות 🎁')}
+function buyHat(hat,price){if(state.coins<price)return toast('אין מספיק מטבעות');state.coins-=price;state.hat=hat;petTalk('וואו! האקססורי מהמם ✨');update();save()}
+function resetGame(){if(confirm('לאפס את המשחק?')){localStorage.removeItem('lianPetsSoundParkV1');location.reload()}}
+function startParkWalk(){
+  initAudio();
+  const scene=document.getElementById('parkScene'), parkPet=document.getElementById('parkPet'), timer=document.getElementById('parkTimer');
+  parkPet.textContent=state.pet; scene.classList.add('show'); scene.classList.remove('play'); void scene.offsetWidth; scene.classList.add('play');
+  let seconds=8; timer.textContent=seconds;
+  petTalk('איזה כיף! יוצאים לטיול בפארק!');
+  playAnimalSound(state.pet);
+  clearInterval(parkInterval); clearTimeout(parkTimeout);
+  parkInterval=setInterval(()=>{seconds--; timer.textContent=seconds; if(seconds===5||seconds===2)playAnimalSound(state.pet); if(seconds<=0)clearInterval(parkInterval)},1000);
+  parkTimeout=setTimeout(()=>{stopParkWalk(true)},8200);
+}
+function stopParkWalk(done=false){
+  const scene=document.getElementById('parkScene'); scene.classList.remove('show','play');
+  clearInterval(parkInterval); clearTimeout(parkTimeout);
+  if(done){state.happy=clamp(state.happy+18);state.energy=clamp(state.energy-8);state.friendship=clamp(state.friendship+12);reward(14,15,'הטיול הסתיים! 🌳')}
+}
+function parkBall(){document.getElementById('pet').classList.add('walking');chirp([500,800,500],'sine',.1,.12);setTimeout(()=>document.getElementById('pet').classList.remove('walking'),1500);state.happy=clamp(state.happy+12);reward(9,8,'שיחקנו בכדור ⚽')}
+function findPrize(){const prize=20+Math.floor(Math.random()*35);state.coins+=prize;petTalk('מצאתי פרס בפארק!');sparkles();update();save();toast('מצאת '+prize+' מטבעות 🎁')}
+function sparkles(){for(let i=0;i<14;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=['✨','💖','⭐','🌈'][i%4];s.style.left=(38+Math.random()*28)+'%';s.style.top=(34+Math.random()*24)+'%';document.getElementById('stage').appendChild(s);setTimeout(()=>s.remove(),950)}}
 function renderWeather(){
-  const box=document.getElementById('weatherGrid');if(!box)return;
-  box.innerHTML='';
-  weatherOptions.forEach(w=>{
-    const b=document.createElement('button');
-    b.className='weather-option '+(state.weather===w.id?'active':'');
-    b.innerHTML='<span class="big">'+w.icon+'</span>'+w.name;
-    b.onclick=()=>{state.weather=w.id;petTalk('איזה מזג אוויר יפה '+w.icon);update()};
-    box.appendChild(b);
+  const w=document.getElementById('weather'); w.innerHTML='';
+  for(let i=0;i<12;i++){const d=document.createElement('div');d.className='drop';d.textContent=i%3?'🌸':'✨';d.style.left=Math.random()*100+'%';d.style.animationDelay=Math.random()*5+'s';w.appendChild(d)}
+}
+function update(){
+  document.getElementById('coins').textContent=state.coins;document.getElementById('level').textContent=state.level;document.getElementById('xp').textContent=state.xp;
+  document.getElementById('soundState').textContent=state.sound?'פעיל':'כבוי';
+  document.getElementById('pet').textContent=state.pet;document.getElementById('parkPet').textContent=state.pet;
+  document.getElementById('hat').textContent=state.hat||'';document.getElementById('hat').classList.toggle('show',!!state.hat);
+  const a=currentAnimal();document.getElementById('petName').textContent=a.name;
+  ['hunger','happy','clean','energy','friendship'].forEach(k=>document.getElementById(k).style.width=clamp(state[k])+'%');
+  const avg=(state.hunger+state.happy+state.clean+state.energy+state.friendship)/5;
+  document.getElementById('mood').textContent=state.hunger<30?'רעבה ורוצה אוכל 🍎':state.energy<30?'עייפה ורוצה לישון 🌙':avg>80?'מאושרת מאוד 💖':avg>55?'שמחה לשחק 🎾':'צריכה תשומת לב 🥺';
+  save();
+}
+function renderAnimals(){
+  const sel=document.getElementById('petSelect'); sel.innerHTML='';
+  animals.forEach(a=>{const o=document.createElement('option');o.value=a.e;o.textContent=a.e+'  '+a.name;sel.appendChild(o)});
+  sel.value=state.pet;
+  const grid=document.getElementById('animalGrid');grid.innerHTML='';
+  animals.forEach(a=>{
+    const c=document.createElement('div');c.className='card';
+    c.innerHTML='<div class="big">'+a.e+'</div><b>'+a.name+'</b><div class="small">לחצי לשמוע קול</div><button class="btn blue" onclick="choosePet(\''+a.e+'\')">בחרי והשמיעי</button>';
+    grid.appendChild(c);
   });
 }
-function renderWeatherSky(){
-  const sky=document.getElementById('weatherSky');if(!sky)return;
-  const w=state.weather||'sun';
-  sky.className='weather-sky weather-'+w;
-  if(w==='sun'){sky.innerHTML='<div style="position:absolute;left:10%;top:48px;font-size:58px">☀️</div>';return}
-  if(w==='rainbow'){sky.innerHTML='<div class="weather-rainbow-band"></div>';return}
-  const icon=w==='rain'?'💧':w==='snow'?'❄️':w==='stars'?'✨':'';
-  sky.innerHTML='';
-  if(icon){
-    for(let i=0;i<18;i++){
-      const s=document.createElement('div');
-      s.className='weather-icon';
-      s.textContent=icon;
-      s.style.left=(Math.random()*96)+'%';
-      s.style.top=(-80-Math.random()*240)+'px';
-      s.style.animationDelay=(Math.random()*4)+'s';
-      sky.appendChild(s);
-    }
-  }
-}
-function renderExplore(){
-  const box=document.getElementById('exploreGrid');if(!box)return;
-  box.innerHTML='';
-  exploreOptions.forEach(x=>{
-    const done=state.exploreDone&&state.exploreDone[x.id]===todayKey();
-    const b=document.createElement('button');
-    b.className='explore-option';
-    b.innerHTML='<span class="big">'+x.icon+'</span>'+x.name+'<br><span class="small">'+(done?'כבר טיילת כאן היום':'פרס: '+x.coins+' מטבעות')+'</span>';
-    b.onclick=()=>goExplore(x.id);
-    box.appendChild(b);
-  });
-}
-function goExplore(id){
-  const x=exploreOptions.find(v=>v.id===id);if(!x)return;
-  state.exploreDone=state.exploreDone||{};
-  if(state.exploreDone[id]===todayKey())return toast('כבר טיילת כאן היום');
-  state.exploreDone[id]=todayKey();
-  state.coins+=x.coins;state.xp+=x.xp;state.friendship=clamp(state.friendship+12);
-  if(x.pet&&!state.ownedPets.includes(x.pet)&&Math.random()<0.35){state.ownedPets.push(x.pet);showReward(x.pet,'מצאת חיה בהרפתקה!','פתחת את '+pets[x.pet].name)}
-  else showReward(x.icon,'הרפתקה הושלמה','קיבלת '+x.coins+' מטבעות ו־'+x.xp+' XP');
-  addWorldReward(x.coins,x.xp,'explore');
-  update();
-}
-function petTalk(msg){
-  const b=document.getElementById('speechBubble');if(!b)return;
-  b.textContent=msg;b.classList.add('show');
-  clearTimeout(window.__speechTimer);
-  window.__speechTimer=setTimeout(()=>b.classList.remove('show'),3000);
-}
-function munchkinPurr(){
-  petTalk('רררר... Munchkin מגרגרת 😻');
-  const pet=document.getElementById('pet');pet.classList.add('purr');
-  setTimeout(()=>pet.classList.remove('purr'),1800);
-}
-function munchkinLoaf(){
-  petTalk('מצב כיכר לחם הופעל 🥖');
-  const pet=document.getElementById('pet');pet.classList.add('loaf');
-  setTimeout(()=>pet.classList.remove('loaf'),2600);
-}
-function munchkinWalk(){
-  petTalk('הליכה קטנה ומתוקה עם רגליים קצרות 🐾');
-  const pet=document.getElementById('pet');pet.classList.add('walk-short');
-  setTimeout(()=>pet.classList.remove('walk-short'),2400);
-}
-function giveYarnBall(){
-  state.closet.hand='🧶';
-  petTalk('יאיי! כדור צמר חדש 🧶');
-  state.happy=clamp(state.happy+12);state.friendship=clamp(state.friendship+8);
-  update();
-}
-
-const achievements=[
-  {id:'feed10',icon:'🍎',title:'שף קטן',desc:'האכלת 10 פעמים',check:()=>state.counts.feed>=10,prog:()=>state.counts.feed+'/10'},
-  {id:'play10',icon:'🎾',title:'חברה למשחקים',desc:'שיחקת 10 פעמים',check:()=>state.counts.play>=10,prog:()=>state.counts.play+'/10'},
-  {id:'level5',icon:'⭐',title:'כוכבת עולה',desc:'הגעת לשלב 5',check:()=>state.level>=5,prog:()=>state.level+'/5'},
-  {id:'friend80',icon:'❤️',title:'חברות אמת',desc:'מד חברות 80+',check:()=>state.friendship>=80,prog:()=>state.friendship+'/80'},
-  {id:'egg1',icon:'🥚',title:'מגלת חיות',desc:'פתחת ביצת הפתעה',check:()=>state.counts.eggs>=1,prog:()=>state.counts.eggs+'/1'},
-  {id:'stars25',icon:'🌟',title:'ציידת כוכבים',desc:'תפסת 25 כוכבים',check:()=>state.counts.stars>=25,prog:()=>state.counts.stars+'/25'},
-  {id:'pets6',icon:'🐾',title:'אוסף חיות',desc:'פתחת 6 חיות',check:()=>state.ownedPets.length>=6,prog:()=>state.ownedPets.length+'/6'},
-  {id:'petsAll',icon:'👑',title:'אספנית החיות של ליאן',desc:'פתחת את כל החיות',check:()=>state.ownedPets.length>=allAnimals.length,prog:()=>state.ownedPets.length+'/'+allAnimals.length},
-  {id:'explore3',icon:'🗺️',title:'חוקרת עולמות',desc:'יצאת ל־3 הרפתקאות',check:()=>Object.keys(state.exploreDone||{}).length>=3,prog:()=>Object.keys(state.exploreDone||{}).length+'/3'},
-  {id:'closet5',icon:'👗',title:'סטייליסטית חיות',desc:'קנית 5 אקססוריז',check:()=>state.ownedItems.filter(x=>x.startsWith('closet')).length>=5,prog:()=>state.ownedItems.filter(x=>x.startsWith('closet')).length+'/5'},
-  {id:'wheel3',icon:'🎡',title:'מלכת הגלגל',desc:'סובבת גלגל 3 פעמים',check:()=>state.counts.wheel>=3,prog:()=>state.counts.wheel+'/3'}
-];
-function checkAchievements(){achievements.forEach(a=>{if(!state.achieved[a.id]&&a.check()){state.achieved[a.id]=true;state.coins+=40;unlockWorldAchievement('pet_'+a.id,a.title);setTimeout(()=>showReward(a.icon,'הישג חדש!',a.title+' +40 מטבעות'),200)}})}
-function renderAchievements(){const list=document.getElementById('achList');list.innerHTML='';achievements.forEach(a=>{const done=!!state.achieved[a.id];const div=document.createElement('div');div.className='achievement '+(done?'done':'locked');div.innerHTML='<div class="medal">'+a.icon+'</div><div class="ach-text"><b>'+a.title+'</b><div class="small">'+a.desc+'</div><div class="progress-line">'+(done?'הושלם ✅':'התקדמות: '+a.prog())+'</div></div>';list.appendChild(div)})}
-function sparkles(){for(let i=0;i<12;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=['✨','💖','⭐','🌈'][i%4];s.style.left=(42+Math.random()*24)+'%';s.style.top=(34+Math.random()*24)+'%';document.getElementById('stage').appendChild(s);setTimeout(()=>s.remove(),950)}}
-function exportSave(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lian-pets-save.json';a.click();URL.revokeObjectURL(a.href);toast('קובץ שמירה נוצר')}
-function importSave(ev){const file=ev.target.files&&ev.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{state=mergeState(JSON.parse(reader.result));toast('השמירה נטענה בהצלחה');update()}catch(e){toast('קובץ שמירה לא תקין')}};reader.readAsText(file)}
-function resetGame(){if(confirm('לאפס את המשחק?')){state=mergeState({});localStorage.removeItem('lianPetGameV4');localStorage.removeItem('lianPetGameV2');update();toast('המשחק אופס')}}
-setInterval(()=>{state.hunger=clamp(state.hunger-.35);state.happy=clamp(state.happy-.24);state.clean=clamp(state.clean-.16);state.energy=clamp(state.energy-.20);state.friendship=clamp(state.friendship-.08);update()},15000);
-
-let petSoundEnabled=true;
-function togglePetSound(){
- petSoundEnabled=!petSoundEnabled;
- toast(petSoundEnabled?'קולות הופעלו 🔊':'קולות הושתקו 🔇');
-}
-function speakPet(msg){
- if(!petSoundEnabled || !('speechSynthesis' in window)) return;
- const u=new SpeechSynthesisUtterance(msg);
- u.lang='he-IL';
- u.rate=1;
- speechSynthesis.speak(u);
-}
-function startWalk(minutes){
- if(state.walkEnd && Date.now()<state.walkEnd){
-   return toast('החיה כבר בטיול 🐾');
- }
- state.walkEnd=Date.now() + (minutes*60000);
- updateWalkStatus();
- toast('החיה יצאה לטיול 🌳');
-}
-function updateWalkStatus(){
- const el=document.getElementById('walkStatus');
- if(!el) return;
- if(state.walkEnd && Date.now()<state.walkEnd){
-   const left=Math.ceil((state.walkEnd-Date.now())/1000);
-   el.innerHTML='🐾 בטיול בפארק<br>⏱️ '+left+' שניות';
- }else if(state.walkEnd){
-   const reward=20+Math.floor(Math.random()*80);
-   state.coins+=reward;
-   state.xp+=reward;
-   state.walkEnd=0;
-   el.innerHTML='🎁 החיה חזרה מהפארק וקיבלה '+reward+' מטבעות';
- }else{
-   el.innerHTML='החיה בבית 🏠';
- }
- save();
-}
-setInterval(updateWalkStatus,1000);
-
-update();renderAchievements();updateWalkStatus();
+setInterval(()=>{state.hunger=clamp(state.hunger-.35);state.happy=clamp(state.happy-.22);state.clean=clamp(state.clean-.14);state.energy=clamp(state.energy-.18);state.friendship=clamp(state.friendship-.05);update()},15000);
+renderAnimals();renderWeather();update();
 </script>
 </body>
 </html>
