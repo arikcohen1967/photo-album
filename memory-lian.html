@@ -263,6 +263,20 @@ select{
 }
 
 .board.hard .back{font-size:31px}
+
+.board.expert{
+  grid-template-columns:repeat(8,1fr);
+  max-width:1200px;
+}
+.board.extreme{
+  grid-template-columns:repeat(10,1fr);
+  max-width:1400px;
+}
+.board.expert .card{height:72px}
+.board.extreme .card{height:62px}
+.board.expert .back{font-size:28px}
+.board.extreme .back{font-size:24px}
+
 .board.hard .front:before{width:27px;height:27px;border-radius:8px}
 
 .card.matched .back{
@@ -368,11 +382,11 @@ select{
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat:last-child{grid-column:1/-1}
   .record-grid{grid-template-columns:1fr}
-  .board.easy,.board.medium,.board.hard{
+  .board.easy,.board.medium,.board.hard,.board.expert,.board.extreme,.board.mega,.board.insane{
     grid-template-columns:repeat(4,1fr);
     max-width:680px;
   }
-  .card,.board.easy .card,.board.medium .card,.board.hard .card{height:88px}
+  .card,.board.easy .card,.board.medium .card,.board.hard .card,.board.expert .card,.board.extreme .card,.board.mega .card,.board.insane .card{height:88px}
   .back,.board.hard .back{font-size:34px}
 }
 
@@ -381,12 +395,115 @@ select{
   .logo{width:62px;height:62px;font-size:34px;border-radius:20px}
   .panel{padding:12px;border-radius:22px}
   .board{gap:8px}
-  .board.easy,.board.medium,.board.hard{grid-template-columns:repeat(4,1fr)}
-  .card,.board.easy .card,.board.medium .card,.board.hard .card{height:74px}
+  .board.easy,.board.medium,.board.hard,.board.expert,.board.extreme,.board.mega,.board.insane{grid-template-columns:repeat(4,1fr)}
+  .card,.board.easy .card,.board.medium .card,.board.hard .card,.board.expert .card,.board.extreme .card,.board.mega .card,.board.insane .card{height:74px}
   .front:before,.board.hard .front:before{width:24px;height:24px}
   .back,.board.hard .back{font-size:29px}
   button,select,a{width:100%;font-size:16px}
 }
+
+.board.mega{
+  grid-template-columns:repeat(15,1fr);
+  max-width:1500px;
+}
+.board.insane{
+  grid-template-columns:repeat(20,1fr);
+  max-width:1700px;
+}
+.board.mega .card{height:54px}
+.board.insane .card{height:46px}
+.board.mega .back{font-size:20px}
+.board.insane .back{font-size:17px}
+.board.mega .front:before{width:18px;height:18px;border-radius:6px}
+.board.insane .front:before{width:14px;height:14px;border-radius:5px}
+
+.game-bank{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:15px;
+}
+.bank-card{
+  background:rgba(0,0,0,.36);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:20px;
+  padding:13px 8px;
+}
+.bank-card .label{
+  display:block;
+  font-size:13px;
+  color:#bdbdbd;
+  margin-bottom:6px;
+}
+.bank-card .value{
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+}
+.shop-mini{
+  max-width:950px;
+}
+.shop-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.shop-item{
+  background:rgba(0,0,0,.32);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;
+  padding:12px;
+}
+.shop-item .icon{
+  font-size:34px;
+  display:block;
+  margin-bottom:6px;
+}
+.shop-item button{
+  width:100%;
+  margin-top:8px;
+  padding:10px 12px;
+  font-size:14px;
+}
+.fx{
+  position:fixed;
+  pointer-events:none;
+  z-index:120;
+  font-size:30px;
+  animation:fxPop 900ms ease forwards;
+}
+@keyframes fxPop{
+  to{transform:translateY(-80px) scale(1.7);opacity:0}
+}
+body.theme-glow .card.matched .back{
+  box-shadow:0 0 22px rgba(255,255,255,.85),0 16px 35px rgba(0,0,0,.42);
+}
+body.theme-big .back{
+  font-size:44px;
+}
+body.theme-big .board.hard .back,
+body.theme-big .board.expert .back,
+body.theme-big .board.extreme .back,
+body.theme-big .board.mega .back,
+body.theme-big .board.insane .back{
+  font-size:32px;
+}
+@media(max-width:900px){
+  .board.mega,.board.insane{
+    grid-template-columns:repeat(5,1fr);
+    max-width:760px;
+  }
+  .board.mega .card,.board.insane .card{height:64px}
+  .board.mega .back,.board.insane .back{font-size:22px}
+  .game-bank,.shop-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:420px){
+  .board.mega,.board.insane{grid-template-columns:repeat(5,1fr)}
+  .board.mega .card,.board.insane .card{height:54px}
+  .board.mega .back,.board.insane .back{font-size:18px}
+  .game-bank,.shop-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -406,6 +523,10 @@ select{
         <option value="easy">קל - 12 זוגות</option>
         <option value="medium" selected>בינוני - 16 זוגות</option>
         <option value="hard">קשה - 22 זוגות</option>
+        <option value="expert">מומחית - 32 זוגות</option>
+        <option value="extreme">אקסטרים - 50 זוגות</option>
+        <option value="mega">מגה - 75 זוגות</option>
+        <option value="insane">משוגע - 100 זוגות</option>
       </select>
       <button onclick="newGame()">🔄 משחק חדש</button>
       <button class="stop" onclick="stopGame()">⏹️ עצור / בטל משחק</button>
@@ -420,6 +541,13 @@ select{
       <div class="stat"><span class="label">זוגות נמצאו</span><span class="value" id="pairs">0</span></div>
       <div class="stat"><span class="label">רצף הצלחות</span><span class="value" id="streak">0</span></div>
       <div class="stat"><span class="label">ניקוד</span><span class="value" id="score">0</span></div>
+    </div>
+
+    <div class="game-bank">
+      <div class="bank-card"><span class="label">מטבעות</span><span class="value" id="coins">0</span></div>
+      <div class="bank-card"><span class="label">דרגת שחקן</span><span class="value" id="playerRank">מתחילה</span></div>
+      <div class="bank-card"><span class="label">XP</span><span class="value" id="playerXp">0</span></div>
+      <div class="bank-card"><span class="label">כוח מיוחד</span><span class="value" id="powerHint">רגיל</span></div>
     </div>
   </section>
 
@@ -437,6 +565,16 @@ select{
       <div class="record"><strong>קשה</strong><span id="recordHard">אין שיא עדיין</span></div>
     </div>
   </section>
+
+  <section class="records shop-mini">
+    <h2>🛒 חנות זיכרון</h2>
+    <div class="shop-grid">
+      <div class="shop-item"><span class="icon">✨</span><strong>אפקט זוהר</strong><span>150 מטבעות</span><button onclick="buyShopItem('glow',150)">קנה / הפעל</button></div>
+      <div class="shop-item"><span class="icon">🔎</span><strong>אימוג׳ים גדולים</strong><span>120 מטבעות</span><button onclick="buyShopItem('big',120)">קנה / הפעל</button></div>
+      <div class="shop-item"><span class="icon">👀</span><strong>הצצה חכמה</strong><span>80 מטבעות</span><button onclick="smartPeek()">השתמש</button></div>
+      <div class="shop-item"><span class="icon">🎁</span><strong>בונוס יומי</strong><span>פעם ביום</span><button onclick="claimDailyCoins()">קבל פרס</button></div>
+    </div>
+  </section>
 </div>
 
 <div id="winBox" class="win-box">
@@ -449,11 +587,166 @@ select{
 
 <script>
 const icons = [
-  "🚀","🎮","🎧","🎬","⚽","🏀","🎸","💎","🔥","⚡",
-  "🌌","🛸","🤖","🧠","🦾","🕹️","🏆","🎯","🧩","📱",
-  "💻","🎤","🎲","🛼","🦋","🐉","🌟","💥","🪐","🧪",
-  "🏎️","🎹","🎨","📸","🍕","🍦","🧋","🌈","👑","🦄",
-  "🦖","🐬","🦜","🛹","🥇","🧿","🪄","🔮","🎁","✨"
+"🚀",
+"🎮",
+"🎧",
+"🎬",
+"⚽",
+"🏀",
+"🎸",
+"💎",
+"🔥",
+"⚡",
+"🌌",
+"🛸",
+"🤖",
+"🧠",
+"🦾",
+"🕹️",
+"🏆",
+"🎯",
+"🧩",
+"📱",
+"💻",
+"🎤",
+"🎲",
+"🛼",
+"🦋",
+"🐉",
+"🌟",
+"💥",
+"🪐",
+"🧪",
+"🏎️",
+"🎹",
+"🎨",
+"📸",
+"🍕",
+"🍦",
+"🧋",
+"🌈",
+"👑",
+"🦄",
+"🦖",
+"🐬",
+"🦜",
+"🛹",
+"🥇",
+"🧿",
+"🪄",
+"🔮",
+"🎁",
+"✨",
+"🐶",
+"🐱",
+"🐰",
+"🐹",
+"🐼",
+"🦊",
+"🐨",
+"🐯",
+"🦁",
+"🐮",
+"🐷",
+"🐸",
+"🐵",
+"🐔",
+"🦆",
+"🦅",
+"🦉",
+"🐺",
+"🐗",
+"🐴",
+"🐝",
+"🪲",
+"🐢",
+"🐙",
+"🦀",
+"🐠",
+"🐳",
+"🦈",
+"🍎",
+"🍉",
+"🍇",
+"🍓",
+"🍒",
+"🍑",
+"🍍",
+"🥝",
+"🥑",
+"🌽",
+"🚗",
+"🚕",
+"🚓",
+"🚑",
+"🚒",
+"✈️",
+"🚁",
+"⛵",
+"🚂",
+"🏰",
+"🎂",
+"🎈",
+"🥳",
+"🧁",
+"🍭",
+"🍫",
+"🍩",
+"🍪",
+"🥨",
+"🌭",
+"🍔",
+"🍟",
+"🌮",
+"🍣",
+"🍿",
+"🥤",
+"☕",
+"🎪",
+"🎡",
+"🎢",
+"🏝️",
+"⛰️",
+"🌋",
+"🌙",
+"☀️",
+"⛄",
+"☂️",
+"🌸",
+"🌺",
+"🌻",
+"🌵",
+"🍀",
+"🍄",
+"🦕",
+"🦩",
+"🦚",
+"🦥",
+"🦦",
+"🦨",
+"🦇",
+"🐿️",
+"🦔",
+"🐾",
+"🦴",
+"🛍️",
+"💌",
+"📚",
+"✏️",
+"🖍️",
+"🎀",
+"🧸",
+"🪁",
+"🥁",
+"🎺",
+"🎻",
+"🎷",
+"🪩",
+"🎭",
+"🎼",
+"📀",
+"📷",
+"🎥"
 ];
 
 let firstCard = null;
@@ -469,6 +762,97 @@ let timer = null;
 let started = false;
 let soundOn = true;
 
+let memoryProfile = loadMemoryProfile();
+function loadMemoryProfile(){
+  try{
+    return Object.assign({coins:0,xp:0,owned:{},active:{glow:false,big:false},lastDaily:""}, JSON.parse(localStorage.getItem("lianMemoryProfile") || "{}"));
+  }catch(error){
+    return {coins:0,xp:0,owned:{},active:{glow:false,big:false},lastDaily:""};
+  }
+}
+function saveMemoryProfile(){
+  localStorage.setItem("lianMemoryProfile", JSON.stringify(memoryProfile));
+}
+function playerRank(){
+  const xp = memoryProfile.xp || 0;
+  if(xp >= 10000) return "אגדת זיכרון";
+  if(xp >= 6000) return "אלופה";
+  if(xp >= 3000) return "מומחית";
+  if(xp >= 1200) return "מתקדמת";
+  if(xp >= 400) return "מתאמנת";
+  return "מתחילה";
+}
+function updateProfileUI(){
+  document.getElementById("coins").textContent = memoryProfile.coins || 0;
+  document.getElementById("playerRank").textContent = playerRank();
+  document.getElementById("playerXp").textContent = memoryProfile.xp || 0;
+  document.getElementById("powerHint").textContent = (memoryProfile.active.glow ? "זוהר " : "") + (memoryProfile.active.big ? "גדול" : "רגיל");
+  document.body.classList.toggle("theme-glow", !!memoryProfile.active.glow);
+  document.body.classList.toggle("theme-big", !!memoryProfile.active.big);
+}
+function addCoins(amount, xp){
+  memoryProfile.coins = (memoryProfile.coins || 0) + amount;
+  memoryProfile.xp = (memoryProfile.xp || 0) + (xp || amount);
+  saveMemoryProfile();
+  updateProfileUI();
+}
+function buyShopItem(id, price){
+  if(!memoryProfile.owned[id]){
+    if((memoryProfile.coins || 0) < price){
+      messageEl.textContent = "אין מספיק מטבעות לקנייה הזאת";
+      playTone("bad");
+      return;
+    }
+    memoryProfile.coins -= price;
+    memoryProfile.owned[id] = true;
+  }
+  if(id === "glow") memoryProfile.active.glow = !memoryProfile.active.glow;
+  if(id === "big") memoryProfile.active.big = !memoryProfile.active.big;
+  saveMemoryProfile();
+  updateProfileUI();
+  messageEl.textContent = "הפריט הופעל / כובה בהצלחה";
+}
+function claimDailyCoins(){
+  const today = new Date().toISOString().slice(0,10);
+  if(memoryProfile.lastDaily === today){
+    messageEl.textContent = "כבר קיבלת בונוס יומי היום";
+    return;
+  }
+  memoryProfile.lastDaily = today;
+  addCoins(100, 80);
+  burstFx("🎁", window.innerWidth/2, 220);
+  messageEl.textContent = "קיבלת 100 מטבעות בונוס יומי";
+}
+function burstFx(icon, x, y){
+  for(let i=0;i<12;i++){
+    const el = document.createElement("div");
+    el.className = "fx";
+    el.textContent = icon || "✨";
+    el.style.left = (x + Math.random()*120 - 60) + "px";
+    el.style.top = (y + Math.random()*80 - 40) + "px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 950);
+  }
+}
+function smartPeek(){
+  if((memoryProfile.coins || 0) < 80){
+    messageEl.textContent = "צריך 80 מטבעות להצצה חכמה";
+    return;
+  }
+  memoryProfile.coins -= 80;
+  saveMemoryProfile();
+  updateProfileUI();
+  const cards = [...document.querySelectorAll(".card:not(.matched)")].slice(0,10);
+  lockBoard = true;
+  cards.forEach(card=>card.classList.add("flipped"));
+  setTimeout(()=>{
+    cards.forEach(card=>card.classList.remove("flipped"));
+    resetTurn();
+    lockBoard = false;
+    messageEl.textContent = "ההצצה החכמה הסתיימה";
+  },2500);
+}
+
 const board = document.getElementById("board");
 const timeEl = document.getElementById("time");
 const movesEl = document.getElementById("moves");
@@ -481,6 +865,10 @@ function levelPairs(level){
   if(level === "easy") return 12;
   if(level === "medium") return 16;
   if(level === "hard") return 22;
+  if(level === "expert") return 32;
+  if(level === "extreme") return 50;
+  if(level === "mega") return 75;
+  if(level === "insane") return 100;
   return 16;
 }
 
@@ -488,6 +876,10 @@ function levelHebrew(level){
   if(level === "easy") return "קל";
   if(level === "medium") return "בינוני";
   if(level === "hard") return "קשה";
+  if(level === "expert") return "מומחית";
+  if(level === "extreme") return "אקסטרים";
+  if(level === "mega") return "מגה";
+  if(level === "insane") return "משוגע";
   return level;
 }
 
@@ -603,6 +995,7 @@ function newGame(){
     board.appendChild(card);
   });
 
+  updateProfileUI();
   renderRecords();
 }
 
@@ -658,6 +1051,7 @@ function flipCard(card){
     const speedBonus = Math.max(0, 30 - Math.floor(seconds / 8));
     const streakBonus = streak * 15;
     score += 100 + streakBonus + speedBonus;
+    addCoins(5, 8);
 
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
@@ -757,6 +1151,9 @@ function finishGame(){
   const level = document.getElementById("level").value;
   const levelName = levelHebrew(level);
   const newRecord = saveRecord(level);
+  const winCoins = totalPairs * 4;
+  addCoins(winCoins, totalPairs * 10);
+  burstFx("🏆", window.innerWidth/2, 210);
   renderRecords();
 
   document.getElementById("winText").innerHTML =
@@ -764,6 +1161,7 @@ function finishGame(){
     "זמן: <b>" + formatTime(seconds) + "</b><br>" +
     "מהלכים: <b>" + moves + "</b><br>" +
     "ניקוד: <b>" + score + "</b><br><br>" +
+    "מטבעות זכייה: <b>" + winCoins + "</b><br><br>" +
     (newRecord ? "🎉 שיא חדש במכשיר הזה!" : "נסו לשבור את השיא בפעם הבאה.");
 
   document.getElementById("winBox").style.display = "flex";
@@ -803,6 +1201,7 @@ function peekCards(){
 }
 
 newGame();
+updateProfileUI();
 </script>
 
 </body>
