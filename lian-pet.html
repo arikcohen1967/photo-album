@@ -267,7 +267,7 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
         <div class="section-title">בחרי חיה ושמעי קול</div>
         <select id="petSelect" class="pet-scroll" size="8" onchange="choosePet(this.value)"></select>
         <button class="btn blue" style="width:100%;margin-top:10px" onclick="playAnimalSound(state.pet)">🔊 השמע קול של החיה</button>
-        <div class="sound-note">המשחק כולל קולות אמיתיים מהרשת. אם קובץ חיצוני לא נטען, מופעל גיבוי קולי מובנה.</div>
+        <div class="sound-note">המשחק כולל קולות אמיתיים מהרשת בלבד — ללא קול מלאכותי כפול.</div>
         <div class="animal-grid" id="animalGrid" style="margin-top:10px"></div>
       </div>
 
@@ -391,26 +391,13 @@ function renderPetGraphic(){
   }
 }
 
-function initAudio(){if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)()} if(audioCtx.state==='suspended')audioCtx.resume()}
-function tone(freq,dur=0.18,type='sine',vol=.12,delay=0){
-  if(!state.sound)return;
-  initAudio();
-  const now=audioCtx.currentTime+delay;
-  const osc=audioCtx.createOscillator();
-  const gain=audioCtx.createGain();
-  osc.type=type; osc.frequency.setValueAtTime(freq,now);
-  gain.gain.setValueAtTime(0.0001,now);
-  gain.gain.exponentialRampToValueAtTime(vol,now+0.015);
-  gain.gain.exponentialRampToValueAtTime(0.0001,now+dur);
-  osc.connect(gain); gain.connect(audioCtx.destination);
-  osc.start(now); osc.stop(now+dur+.03);
-}
-function chirp(freqs,type='sine',dur=.16,space=.12){freqs.forEach((f,i)=>tone(f,dur,type,.12,i*space))}
+function initAudio(){return;}
+function tone(freq,dur=0.18,type='sine',vol=.12,delay=0){return;}
+function chirp(freqs,type='sine',dur=.16,space=.12){return;}
 
 const SOUND_FILES={
   // קולות אמיתיים מהרשת — אין צורך להעלות תיקיית sounds ל-GitHub.
-  // אם קובץ חיצוני לא נטען, המשחק מפעיל גיבוי קולי מובנה כדי שלא תהיה תקלה.
-  cat:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
+    cat:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
   dog:'https://commons.wikimedia.org/wiki/Special:FilePath/Barking%20of%20a%20dog.ogg',
   bird:'https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20singing.ogg',
   cow:'https://commons.wikimedia.org/wiki/Special:FilePath/Single%20Cow%20Moo.ogg',
@@ -428,35 +415,25 @@ const SOUND_FILES={
   koala:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
   penguin:'https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20singing.ogg'
 };
-function playMp3OrFallback(kind,fallback){
+function playRealAnimalSound(kind){
   const src=SOUND_FILES[kind];
-  if(!src){fallback();return;}
+  if(!state.sound || !src){return;}
   try{
     const a=new Audio(src);
     a.volume=.88;
-    let done=false;
-    const fail=()=>{if(!done){done=true;fallback();}};
-    a.onerror=fail;
-    a.oncanplaythrough=()=>{done=true;};
+    a.currentTime=0;
     const p=a.play();
-    if(p && p.catch)p.catch(fail);
-    setTimeout(()=>{if(!done && a.readyState===0)fail();},420);
-  }catch(e){fallback();}
+    if(p && p.catch){
+      p.catch(()=>{ console.log('Animal sound could not play:', kind); });
+    }
+  }catch(e){
+    console.log('Animal sound error:', kind, e);
+  }
 }
 function synthAnimalSound(kind){
-  if(kind==='cat') chirp([620,520,690],'sine',.22,.16);
-  else if(kind==='dog') chirp([250,210,260,190],'square',.12,.14);
-  else if(kind==='rabbit') chirp([720,850,760],'triangle',.08,.09);
-  else if(kind==='hamster') chirp([980,1240,1080,1320],'triangle',.07,.075);
-  else if(kind==='bird') chirp([1000,1400,1200,1550,1280],'sine',.07,.07);
-  else if(kind==='horse') chirp([420,620,380,760],'sawtooth',.18,.13);
-  else if(kind==='cow') chirp([190,160,145],'sine',.32,.22);
-  else if(kind==='sheep') chirp([480,420,520],'triangle',.20,.15);
-  else if(kind==='lion'||kind==='tiger') chirp([180,135,110],'sawtooth',.22,.18);
-  else if(kind==='wolf') chirp([420,620,820],'sine',.35,.18);
-  else if(kind==='dolphin') chirp([900,1300,1700,1200],'sine',.06,.07);
-  else if(kind==='dragon') chirp([120,90,160,80],'sawtooth',.18,.14);
-  else chirp([540,680,590],'triangle',.11,.11);
+  // נשאר השם כדי שכפתורים קיימים ימשיכו לעבוד, אבל אין כאן יותר צליל מלאכותי.
+  // כל הקריאות עוברות לקולות אמיתיים בלבד.
+  playRealAnimalSound(kind);
 }
 function animalText(kind){
   const map={cat:'מיאו מיאו!',dog:'הב הב!',rabbit:'קפיץ קפוץ!',hamster:'ציף ציף קטן!',bird:'ציף ציף!',horse:'היייי!',cow:'מווו!',sheep:'מההה!',lion:'רררר!',tiger:'רררר!',wolf:'אוווו!',dolphin:'קליק קליק!',dragon:'אש קסומה!',panda:'היי ליאן!',fox:'היי ליאן!',koala:'היי ליאן!',penguin:'היי ליאן!'};
@@ -465,8 +442,7 @@ function animalText(kind){
 function playAnimalSound(pet=state.pet){
   if(!state.sound)return toast('הקולות כבויים');
   const kind=(animals.find(a=>a.e===pet)||{}).kind||'dog';
-  initAudio();
-  playMp3OrFallback(kind,()=>synthAnimalSound(kind));
+  playRealAnimalSound(kind);
   petTalk(animalText(kind));
 }
 function speakHebrew(text){
@@ -484,7 +460,7 @@ function petTalk(text){
 }
 function toggleSound(){
   state.sound=!state.sound; save(); update();
-  if(state.sound){initAudio(); toast('קולות הופעלו 🔊'); chirp([600,800,1000],'sine',.08,.08)}
+  if(state.sound){toast('קולות הופעלו 🔊')}
   else toast('קולות הושתקו 🔇');
 }
 function choosePet(pet){
@@ -549,7 +525,7 @@ function parkPhotoMoment(){
 }
 function parkBall(){
   startPetWalkAnimation(1500);
-  chirp([500,800,500],'sine',.1,.12);
+
   state.happy=clamp(state.happy+12);
   reward(9,8,'שיחקנו בכדור ⚽');
 }
