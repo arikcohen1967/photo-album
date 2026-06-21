@@ -1203,5 +1203,121 @@ prepareRiderPhoto();renderAnimals();renderWeather();update();
 })();
 </script>
 
+
+<style>
+/* === FINAL USER FIX: controllable horse + visible Lian rider + stop sounds === */
+#horseScene.manual-ride{display:block!important;inset:-22px!important;background:radial-gradient(circle at 18% 10%,rgba(255,255,255,.86),transparent 18%),linear-gradient(#8edbff 0 38%,#8ad975 38% 51%,#c98c4e 51% 100%)!important;min-height:660px!important;}
+#horseScene.manual-ride .horse-rider{animation:none!important;left:8%!important;bottom:132px!important;z-index:55!important;transition:left .18s ease,bottom .18s ease,transform .18s ease;filter:drop-shadow(0 24px 24px rgba(0,0,0,.28))!important;}
+#horseScene.manual-ride .horse-rider.manual-jump{bottom:292px!important;transform:rotate(-8deg) scale(1.08)!important;}
+#horseScene.manual-ride .rider-photo{display:block!important;opacity:1!important;background-color:#fff!important;background-size:cover!important;background-position:center top!important;border:6px solid #fff!important;box-shadow:0 14px 26px rgba(0,0,0,.28)!important;z-index:7!important;}
+#horseScene.manual-ride .horse-body{display:block!important;opacity:1!important;filter:none!important;}
+.ride-controls{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.8);border-radius:28px;padding:10px 12px;box-shadow:0 16px 34px rgba(0,0,0,.22);backdrop-filter:blur(14px)}
+.ride-controls button{border:0;border-radius:18px;min-height:46px;padding:0 15px;font-weight:1000;font-size:15px;cursor:pointer;background:#111827;color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.16)}
+.ride-controls button.jump{background:linear-gradient(135deg,#f59e0b,#f97316);color:#3b2500}.ride-controls button.stop{background:linear-gradient(135deg,#ef4444,#b91c1c)}.ride-controls button.sound{background:linear-gradient(135deg,#64748b,#111827)}
+.manual-prize{position:absolute;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;background:rgba(255,255,255,.96);border:4px solid #fff;box-shadow:0 14px 28px rgba(0,0,0,.24);z-index:45;animation:showPrizePulse 1s ease-in-out infinite}.manual-prize small{position:absolute;bottom:-23px;background:#111827;color:#fff;font-size:11px;font-weight:1000;border-radius:999px;padding:4px 8px;white-space:nowrap}.manual-prize.collected{transform:translateY(-70px) scale(1.45)!important;opacity:0!important;transition:.3s!important}.manual-prize.p1{left:26%;bottom:180px}.manual-prize.p2{left:47%;bottom:335px}.manual-prize.p3{left:66%;bottom:180px}.manual-prize.p4{left:82%;bottom:250px}
+.manual-gate{position:absolute;left:45%;bottom:158px;width:160px;height:158px;z-index:28;filter:drop-shadow(0 16px 18px rgba(0,0,0,.23))}.manual-gate .post{position:absolute;bottom:0;width:17px;height:152px;border-radius:10px;background:linear-gradient(180deg,#fff,#cbd5e1);border:3px solid #334155}.manual-gate .post.left{left:0}.manual-gate .post.right{right:0}.manual-gate .rail{position:absolute;left:14px;right:14px;height:14px;border-radius:999px;border:3px solid rgba(15,23,42,.65);background:repeating-linear-gradient(90deg,#ef4444 0 20px,#fff 20px 40px,#2563eb 40px 60px,#fff 60px 80px)}.manual-gate .r1{bottom:38px}.manual-gate .r2{bottom:76px}.manual-gate .r3{bottom:114px}
+.sound-stop-floating{position:absolute;top:18px;left:120px;z-index:95;background:#111827!important;color:#fff!important;border:0;border-radius:999px;min-height:42px;padding:0 14px;font-weight:1000;box-shadow:0 10px 22px rgba(0,0,0,.24);cursor:pointer}
+@media(max-width:820px){#horseScene.manual-ride{inset:-8px!important;min-height:565px!important}.ride-controls{bottom:8px;gap:6px;padding:8px}.ride-controls button{font-size:13px;min-height:40px;padding:0 11px}.manual-gate{left:42%;bottom:115px;width:118px;height:118px}.manual-gate .post{height:114px;width:13px}.manual-gate .rail{left:10px;right:10px;height:10px}.manual-gate .r1{bottom:28px}.manual-gate .r2{bottom:56px}.manual-gate .r3{bottom:84px}.manual-prize{width:42px;height:42px;font-size:26px}.manual-prize.p1{left:22%;bottom:140px}.manual-prize.p2{left:47%;bottom:260px}.manual-prize.p3{left:67%;bottom:140px}.manual-prize.p4{left:80%;bottom:210px}.sound-stop-floating{left:84px;top:14px;font-size:12px}}
+</style>
+<script>
+/* === FINAL USER FIX: real control, jump on click, visible Lian, and sound stop === */
+(function(){
+  const oldPlayReal = window.playRealAnimalSound;
+  const oldToggleSound = window.toggleSound;
+  window.__activeLianAudios = window.__activeLianAudios || [];
+  window.playRealAnimalSound = function(kind){
+    const src = (typeof SOUND_FILES!=='undefined' && SOUND_FILES[kind]) ? SOUND_FILES[kind] : null;
+    if(!state.sound || !src) return;
+    try{
+      const a = new Audio(src); a.volume=.78; a.currentTime=0;
+      window.__activeLianAudios.push(a);
+      a.onended = ()=>{ window.__activeLianAudios = window.__activeLianAudios.filter(x=>x!==a); };
+      const p=a.play(); if(p && p.catch) p.catch(()=>{});
+    }catch(e){ if(oldPlayReal) oldPlayReal(kind); }
+  };
+  window.synthAnimalSound = function(kind){ window.playRealAnimalSound(kind); };
+  window.stopAllSounds = function(msg=true){
+    try{ window.__activeLianAudios.forEach(a=>{try{a.pause();a.currentTime=0;}catch(e){}}); window.__activeLianAudios=[]; }catch(e){}
+    clearInterval(parkSoundInterval); clearInterval(window.horseRideSoundInterval); clearInterval(window.dogWalkSoundInterval);
+    if(msg && typeof toast==='function') toast('כל הקולות נעצרו 🔇');
+  };
+  window.toggleSound = function(){ if(oldToggleSound) oldToggleSound(); if(!state.sound) window.stopAllSounds(false); };
+
+  function el(id){return document.getElementById(id)}
+  function addStopButtons(){
+    const top=document.querySelector('.top-actions');
+    if(top && !el('stopAllSoundsTop')){
+      const b=document.createElement('button');b.id='stopAllSoundsTop';b.className='btn dark';b.type='button';b.textContent='🔇 עצור קולות';b.onclick=()=>stopAllSounds(true);top.appendChild(b);
+    }
+    ['parkScene','horseScene','dogWalkScene'].forEach(id=>{const s=el(id); if(s && !s.querySelector('.sound-stop-floating')){const b=document.createElement('button');b.className='sound-stop-floating';b.type='button';b.textContent='🔇 עצור קול';b.onclick=()=>stopAllSounds(true);s.appendChild(b);}});
+  }
+  function ensureManualRideUI(){
+    const scene=el('horseScene'); if(!scene) return;
+    addStopButtons();
+    if(!scene.querySelector('.manual-gate')){const g=document.createElement('div');g.className='manual-gate';g.innerHTML='<span class="post left"></span><span class="post right"></span><span class="rail r1"></span><span class="rail r2"></span><span class="rail r3"></span>';scene.appendChild(g)}
+    if(!scene.querySelector('.ride-controls')){const c=document.createElement('div');c.className='ride-controls';c.innerHTML='<button type="button" onclick="rideMove(-1)">⬅️ שמאלה</button><button type="button" class="jump" onclick="rideJump()">⬆️ קפיצה</button><button type="button" onclick="rideMove(1)">ימינה ➡️</button><button type="button" class="sound" onclick="stopAllSounds(true)">🔇 עצור קול</button><button type="button" class="stop" onclick="stopHorseRide(false)">⏹️ סיום</button>';scene.appendChild(c)}
+    prepareRiderPhoto();
+    const rider=el('horseRider'); if(rider){rider.style.left=(window.rideX||8)+'%';}
+  }
+  function clearManualPrizes(){document.querySelectorAll('.manual-prize').forEach(x=>x.remove())}
+  function spawnManualPrizes(){
+    const scene=el('horseScene'); if(!scene) return; clearManualPrizes();
+    [['p1','🥇','+50'],['p2','💎','קפיצה'],['p3','⭐','+35'],['p4','🏆','גביע']].forEach(([cls,ico,label])=>{const p=document.createElement('div');p.className='manual-prize '+cls;p.innerHTML=ico+'<small>'+label+'</small>';scene.appendChild(p)});
+  }
+  function collectNear(){
+    const x=window.rideX||8, jumping=!!window.rideJumping;
+    document.querySelectorAll('.manual-prize:not(.collected)').forEach(p=>{
+      const cls=[...p.classList].find(c=>/^p\d$/.test(c));
+      const px={p1:26,p2:47,p3:66,p4:82}[cls]||0;
+      const needsJump=cls==='p2'||cls==='p4';
+      if(Math.abs(x-px)<=8 && (!needsJump || jumping)){
+        p.classList.add('collected');
+        state.pro=state.pro||{}; state.pro.rideScore=(state.pro.rideScore||0)+(cls==='p2'?100:cls==='p4'?140:50); state.pro.ribbons=(state.pro.ribbons||0)+(cls==='p1'||cls==='p4'?1:0); state.pro.gems=(state.pro.gems||0)+(cls==='p2'?1:0); state.coins+=(cls==='p4'?35:cls==='p2'?24:12); state.happy=clamp(state.happy+5); state.friendship=clamp(state.friendship+4);
+        petTalk('אספת פרס ברכיבה! '+p.textContent.replace(/\+.*/,'')); sparkles(); update(); save(); if(typeof updateRideHUD==='function')updateRideHUD();
+      }
+    });
+    const collected=document.querySelectorAll('.manual-prize.collected').length;
+    const score=el('ridingScore'); if(score) score.textContent='רכיבה חופשית: אספת '+collected+'/4 פרסים';
+    const prog=el('rideProProgress'); if(prog) prog.style.width=(collected*25)+'%';
+  }
+  window.rideMove=function(dir){
+    const rider=el('horseRider'); if(!rider) return;
+    window.rideX=Math.max(2,Math.min(88,(window.rideX||8)+dir*9));
+    rider.style.left=window.rideX+'%'; collectNear();
+    if(state.sound && Math.random()>.55) window.playRealAnimalSound('horse');
+  };
+  window.rideJump=function(){
+    const rider=el('horseRider'); if(!rider||window.rideJumping) return;
+    window.rideJumping=true; rider.classList.add('manual-jump'); window.playRealAnimalSound('horse');
+    setTimeout(()=>collectNear(),250);
+    setTimeout(()=>{rider.classList.remove('manual-jump');window.rideJumping=false;collectNear();},720);
+  };
+  window.startHorseRide=function(){
+    stopAllSounds(false); initAudio(); if(typeof stopParkWalk==='function')stopParkWalk(false); if(window.stopDogWalk)stopDogWalk(false);
+    const scene=el('horseScene'); if(!scene) return;
+    window.rideX=8; window.rideJumping=false; scene.classList.add('show','manual-ride'); scene.classList.remove('play','jump','showjump'); ensureManualRideUI(); spawnManualPrizes();
+    const score=el('ridingScore'); if(score) score.textContent='רכיבה חופשית: הזיזי את הסוס ואספי 0/4 פרסים';
+    const mission=el('rideProMission'); if(mission) mission.textContent='משימה: לכוון את הסוס עם הכפתורים ולקפוץ בלחיצה מעל המכשול';
+    const prog=el('rideProProgress'); if(prog) prog.style.width='0%';
+    petTalk('עכשיו אפשר לכוון את הסוס ולגרום לו לקפוץ בלחיצה! 🏇'); window.playRealAnimalSound('horse');
+    clearInterval(window.horseRideSoundInterval); window.horseRideSoundInterval=setInterval(()=>{if(state.sound)window.playRealAnimalSound('horse')},5200);
+  };
+  window.horseJumpPractice=function(){ window.startHorseRide(); setTimeout(()=>rideMove(1),250); setTimeout(()=>rideMove(1),500); setTimeout(()=>rideMove(1),750); setTimeout(()=>rideMove(1),1000); setTimeout(()=>rideJump(),1150); };
+  const oldStopHorse=window.stopHorseRide;
+  window.stopHorseRide=function(done=false){
+    stopAllSounds(false); clearInterval(window.horseRideSoundInterval); clearInterval(window.horseRideInterval); clearTimeout(window.horseRideTimeout);
+    const scene=el('horseScene'); const collected=document.querySelectorAll('.manual-prize.collected').length;
+    if(done || collected>0){state.happy=clamp(state.happy+10+collected*2);state.friendship=clamp(state.friendship+8+collected*2);reward(12+collected*4,12+collected*6,'הרכיבה הסתיימה — אספת '+collected+' פרסים 🏆')}
+    if(scene) scene.classList.remove('show','manual-ride','play','jump','showjump'); clearManualPrizes(); update(); save();
+  };
+  document.addEventListener('keydown',e=>{const scene=el('horseScene'); if(!scene||!scene.classList.contains('manual-ride'))return; if(e.key==='ArrowLeft')rideMove(-1); if(e.key==='ArrowRight')rideMove(1); if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();rideJump();}});
+  const oldStopPark=window.stopParkWalk;
+  window.stopParkWalk=function(done=false){ stopAllSounds(false); if(oldStopPark) oldStopPark(done); };
+  const oldStopDog=window.stopDogWalk;
+  if(oldStopDog){window.stopDogWalk=function(done=false){ stopAllSounds(false); oldStopDog(done); }}
+  window.addEventListener('load',addStopButtons); addStopButtons();
+})();
+</script>
+
 </body>
 </html>
