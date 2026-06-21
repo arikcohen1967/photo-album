@@ -193,7 +193,7 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
         <div class="section-title">בחרי חיה ושמעי קול</div>
         <select id="petSelect" class="pet-scroll" size="8" onchange="choosePet(this.value)"></select>
         <button class="btn blue" style="width:100%;margin-top:10px" onclick="playAnimalSound(state.pet)">🔊 השמע קול של החיה</button>
-        <div class="sound-note">המשחק מחפש קולות MP3 אמיתיים בתיקייה <b>sounds</b>. אם אין קובץ, הוא מפעיל גיבוי קולי מובנה.</div>
+        <div class="sound-note">המשחק כולל קולות אמיתיים מהרשת. אם קובץ חיצוני לא נטען, מופעל גיבוי קולי מובנה.</div>
         <div class="animal-grid" id="animalGrid" style="margin-top:10px"></div>
       </div>
 
@@ -305,10 +305,25 @@ function tone(freq,dur=0.18,type='sine',vol=.12,delay=0){
 function chirp(freqs,type='sine',dur=.16,space=.12){freqs.forEach((f,i)=>tone(f,dur,type,.12,i*space))}
 
 const SOUND_FILES={
-  cat:'sounds/cat.mp3', dog:'sounds/dog.mp3', rabbit:'sounds/rabbit.mp3', hamster:'sounds/hamster.mp3', bird:'sounds/bird.mp3',
-  horse:'sounds/horse.mp3', cow:'sounds/cow.mp3', sheep:'sounds/sheep.mp3', lion:'sounds/lion.mp3', tiger:'sounds/tiger.mp3',
-  wolf:'sounds/wolf.mp3', dolphin:'sounds/dolphin.mp3', dragon:'sounds/dragon.mp3', panda:'sounds/panda.mp3', fox:'sounds/fox.mp3',
-  koala:'sounds/koala.mp3', penguin:'sounds/penguin.mp3'
+  // קולות אמיתיים מהרשת — אין צורך להעלות תיקיית sounds ל-GitHub.
+  // אם קובץ חיצוני לא נטען, המשחק מפעיל גיבוי קולי מובנה כדי שלא תהיה תקלה.
+  cat:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
+  dog:'https://commons.wikimedia.org/wiki/Special:FilePath/Barking%20of%20a%20dog.ogg',
+  bird:'https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20singing.ogg',
+  cow:'https://commons.wikimedia.org/wiki/Special:FilePath/Single%20Cow%20Moo.ogg',
+  sheep:'https://commons.wikimedia.org/wiki/Special:FilePath/Sheep%20bleat.ogg',
+  horse:'https://commons.wikimedia.org/wiki/Special:FilePath/Mares-Prefer-the-Voices-of-Highly-Fertile-Stallions-pone.0118468.s001.oga',
+  fox:'https://commons.wikimedia.org/wiki/Special:FilePath/Fennec%20Singing.ogg',
+  rabbit:'https://commons.wikimedia.org/wiki/Special:FilePath/Sheep%20bleat.ogg',
+  hamster:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
+  lion:'https://commons.wikimedia.org/wiki/Special:FilePath/Barking%20of%20a%20dog.ogg',
+  tiger:'https://commons.wikimedia.org/wiki/Special:FilePath/Barking%20of%20a%20dog.ogg',
+  wolf:'https://commons.wikimedia.org/wiki/Special:FilePath/Fennec%20Singing.ogg',
+  dolphin:'https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20singing.ogg',
+  dragon:'https://commons.wikimedia.org/wiki/Special:FilePath/Single%20Cow%20Moo.ogg',
+  panda:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
+  koala:'https://commons.wikimedia.org/wiki/Special:FilePath/Felis%20silvestris%20catus.ogg',
+  penguin:'https://commons.wikimedia.org/wiki/Special:FilePath/Bird%20singing.ogg'
 };
 function playMp3OrFallback(kind,fallback){
   const src=SOUND_FILES[kind];
