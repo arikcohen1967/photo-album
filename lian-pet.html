@@ -1321,3 +1321,130 @@ prepareRiderPhoto();renderAnimals();renderWeather();update();
 
 </body>
 </html>
+<!-- === CLEAN RIDING FIX: professional scene, no on-screen direction buttons === -->
+<style>
+/* Hide the old control pad completely so it never blocks the riding scene */
+#horseScene .ride-controls{display:none!important;visibility:hidden!important;pointer-events:none!important}
+
+#horseScene.manual-ride{
+  cursor:grab;
+  touch-action:none;
+  background:
+    radial-gradient(circle at 14% 14%,#fff7b0 0 42px,transparent 45px),
+    linear-gradient(#83d8ff 0 42%,#7bd36a 42% 55%,#c78952 55% 100%)!important;
+}
+#horseScene.manual-ride:before{
+  content:'מסך רכיבה: גרור ימינה/שמאלה • לחץ לקפיצה • במחשב: חצים + רווח';
+  position:absolute;right:18px;left:18px;bottom:14px;z-index:80;
+  background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);border-radius:999px;
+  padding:10px 14px;font-weight:1000;color:#172033;box-shadow:0 10px 24px rgba(0,0,0,.12);
+  pointer-events:none;backdrop-filter:blur(12px)
+}
+#horseScene.manual-ride .riding-label{background:rgba(255,255,255,.9)!important;color:#172033!important}
+#horseScene.manual-ride .riding-score{background:rgba(17,24,39,.92)!important}
+#horseScene.manual-ride .riding-track{
+  height:178px!important;bottom:40px!important;border-radius:46% 48% 0 0!important;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 22px,transparent 22px 55px),linear-gradient(180deg,#e6bd7b,#b97238)!important;
+}
+#horseScene.manual-ride .riding-fence{bottom:222px!important;opacity:.75!important}
+#horseScene.manual-ride .jump-obstacle{display:none!important}
+
+/* Replace the rough emoji look with a clean illustrated horse and rider */
+#horseScene.manual-ride #horseRider{
+  width:330px!important;height:245px!important;bottom:104px!important;z-index:35!important;
+  filter:drop-shadow(0 22px 18px rgba(67,40,18,.28))!important;transition:left .28s ease, bottom .18s ease, transform .18s ease!important;
+}
+#horseScene.manual-ride #horseRider .horse-body{
+  font-size:0!important;position:absolute!important;left:34px!important;bottom:22px!important;width:235px!important;height:112px!important;
+  background:linear-gradient(180deg,#8b4a24,#5f321b)!important;border-radius:58% 44% 48% 45%!important;
+  transform:none!important;box-shadow:inset -18px -18px 0 rgba(0,0,0,.12)!important;
+}
+#horseScene.manual-ride #horseRider .horse-body:before{
+  content:'';position:absolute;right:-36px;top:-42px;width:70px;height:92px;background:linear-gradient(180deg,#8b4a24,#65361d);
+  border-radius:52% 58% 40% 42%;transform:rotate(18deg);box-shadow:inset -10px -10px 0 rgba(0,0,0,.12)
+}
+#horseScene.manual-ride #horseRider .horse-body:after{
+  content:'';position:absolute;right:-76px;top:-62px;width:72px;height:54px;background:#8b4a24;border-radius:56% 48% 48% 55%;transform:rotate(8deg);
+  box-shadow:inset -9px -7px 0 rgba(0,0,0,.13)
+}
+#horseScene.manual-ride #horseRider:before{
+  content:'';position:absolute;left:15px;bottom:105px;width:72px;height:22px;background:#3b2114;border-radius:100% 0 0 100%;transform:rotate(23deg);z-index:1
+}
+#horseScene.manual-ride #horseRider:after{
+  content:'';position:absolute;left:62px;bottom:0;width:22px;height:92px;background:#5f321b;border-radius:999px;box-shadow:58px 0 0 #5f321b,128px 0 0 #5f321b,182px 0 0 #5f321b;z-index:0
+}
+#horseScene.manual-ride #horseRider .horse-dust{left:20px!important;bottom:8px!important;font-size:28px!important;opacity:.5!important}
+#horseScene.manual-ride #horseRider .riding-helmet{font-size:0!important;display:block!important;left:145px!important;bottom:194px!important;width:44px!important;height:22px!important;background:#ff5aa5!important;border-radius:50% 50% 42% 42%!important;z-index:8!important;box-shadow:0 4px 0 rgba(0,0,0,.12)!important}
+#horseScene.manual-ride #horseRider .riding-helmet:after{content:'';position:absolute;right:-12px;top:12px;width:24px;height:6px;background:#ff5aa5;border-radius:999px;transform:rotate(10deg)}
+#horseScene.manual-ride #horseRider .rider-photo{
+  display:block!important;left:128px!important;bottom:108px!important;width:84px!important;height:112px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;z-index:7!important;overflow:visible!important;
+}
+#horseScene.manual-ride #horseRider .rider-photo:before{
+  content:'👧';position:absolute;left:10px;top:-16px;font-size:70px;line-height:1;filter:drop-shadow(0 6px 4px rgba(0,0,0,.16));
+}
+#horseScene.manual-ride #horseRider .rider-photo:after{
+  content:'';position:absolute;left:27px;top:54px;width:44px;height:68px;background:linear-gradient(180deg,#7dd3fc,#2563eb);border-radius:20px 20px 16px 16px;transform:rotate(-10deg);box-shadow:12px 54px 0 -8px #1f2937,-10px 54px 0 -8px #1f2937;
+}
+#horseScene.manual-ride #horseRider.manual-jump{bottom:210px!important;transform:rotate(-5deg) scale(1.04)!important}
+
+#horseScene.manual-ride .manual-gate{bottom:118px!important;z-index:24!important;filter:drop-shadow(0 10px 10px rgba(0,0,0,.22))}
+#horseScene.manual-ride .manual-prize{z-index:50!important;animation:floatPrize 1.3s ease-in-out infinite alternate!important}
+@keyframes floatPrize{from{transform:translateY(0) scale(1)}to{transform:translateY(-10px) scale(1.06)}}
+@media(max-width:820px){
+  #horseScene.manual-ride:before{font-size:12px;bottom:10px;padding:8px 10px;border-radius:18px}
+  #horseScene.manual-ride #horseRider{width:250px!important;height:196px!important;bottom:88px!important}
+  #horseScene.manual-ride #horseRider .horse-body{left:24px!important;bottom:20px!important;width:178px!important;height:86px!important}
+  #horseScene.manual-ride #horseRider .horse-body:before{right:-28px;top:-34px;width:54px;height:72px}
+  #horseScene.manual-ride #horseRider .horse-body:after{right:-59px;top:-48px;width:56px;height:42px}
+  #horseScene.manual-ride #horseRider:after{left:48px;bottom:0;width:17px;height:74px;box-shadow:44px 0 0 #5f321b,98px 0 0 #5f321b,140px 0 0 #5f321b}
+  #horseScene.manual-ride #horseRider .rider-photo{left:95px!important;bottom:88px!important;width:66px!important;height:88px!important}
+  #horseScene.manual-ride #horseRider .rider-photo:before{font-size:54px;left:8px;top:-13px}
+  #horseScene.manual-ride #horseRider .rider-photo:after{left:22px;top:42px;width:34px;height:54px}
+  #horseScene.manual-ride #horseRider .riding-helmet{left:109px!important;bottom:158px!important;width:35px!important;height:18px!important}
+  #horseScene.manual-ride #horseRider.manual-jump{bottom:168px!important}
+}
+</style>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  let dragStartX=null, dragStartRideX=null, lastTap=0;
+  function active(){const s=$('horseScene');return s&&s.classList.contains('manual-ride')&&s.classList.contains('show')}
+  function moveToPercent(p){
+    const rider=$('horseRider'); if(!rider) return;
+    window.rideX=Math.max(0,Math.min(74,p));
+    rider.style.left=window.rideX+'%';
+    if(typeof collectNear==='function') collectNear();
+  }
+  window.rideMove=function(dir){moveToPercent((window.rideX||8)+dir*10)};
+  const oldStart=window.startHorseRide;
+  window.startHorseRide=function(){
+    if(typeof oldStart==='function') oldStart();
+    const scene=$('horseScene'), rider=$('horseRider'); if(!scene||!rider) return;
+    scene.querySelectorAll('.ride-controls').forEach(x=>x.remove());
+    scene.classList.add('manual-ride','show'); scene.classList.remove('play','jump','showjump');
+    window.rideX=8; window.rideJumping=false; moveToPercent(8);
+    const mission=$('rideProMission'); if(mission) mission.innerHTML='משימה: לכוון את הסוס בגרירה / חצים, ולקפוץ בלחיצה או רווח <small>אין כפתורים על המסך כדי שלא יסתירו את ליאן והסוס.</small><div class="pro-progress"><span id="rideProProgress"></span></div>';
+    const score=$('ridingScore'); if(score) score.textContent='רכיבה חופשית: אספי פרסים וקפצי מעל המכשול';
+  };
+  window.horseJumpPractice=function(){ window.startHorseRide(); setTimeout(()=>window.rideJump&&window.rideJump(),350); };
+  document.addEventListener('pointerdown',function(e){
+    if(!active()) return; const scene=$('horseScene'); if(!scene.contains(e.target)) return;
+    dragStartX=e.clientX; dragStartRideX=window.rideX||8; scene.setPointerCapture&&scene.setPointerCapture(e.pointerId);
+  },true);
+  document.addEventListener('pointermove',function(e){
+    if(!active()||dragStartX===null) return; const scene=$('horseScene'); const rect=scene.getBoundingClientRect();
+    const delta=((e.clientX-dragStartX)/rect.width)*82; moveToPercent(dragStartRideX+delta); e.preventDefault();
+  },{capture:true,passive:false});
+  document.addEventListener('pointerup',function(e){
+    if(!active()) return; const dx=dragStartX===null?999:Math.abs(e.clientX-dragStartX); dragStartX=null;
+    const now=Date.now();
+    if(dx<8){ if(window.rideJump) window.rideJump(); lastTap=now; }
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(!active()) return;
+    if(e.key==='ArrowLeft'){e.preventDefault();window.rideMove(-1)}
+    if(e.key==='ArrowRight'){e.preventDefault();window.rideMove(1)}
+    if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();window.rideJump&&window.rideJump()}
+  },true);
+})();
+</script>
