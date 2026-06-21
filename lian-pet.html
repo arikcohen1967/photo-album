@@ -120,27 +120,49 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
 .sound-note{margin-top:10px;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.18);border-radius:18px;padding:10px;font-size:13px;color:#065f46;font-weight:900}
 @media(max-width:820px){.girl.lian-walker{width:76px;height:116px}.lian-photo{width:76px;height:116px;border-radius:24px}.park-sign{right:18px;bottom:188px;font-size:13px;padding:8px 10px}}
 
-/* Horse Riding Park - Lian Pets Ultimate */
-.horse-scene{position:absolute;inset:0;background:linear-gradient(#9fdcff 0 43%,#74d681 43% 100%);z-index:34;display:none;overflow:hidden}
+/* Horse Riding Park - Lian Pets Ultimate · Professional Upgrade */
+.horse-scene{
+  position:absolute;inset:-18px;background:
+    radial-gradient(circle at 18% 13%,rgba(255,255,255,.9) 0 7%,transparent 15%),
+    linear-gradient(#8ed8ff 0 40%,#66c96f 40% 100%);
+  z-index:34;display:none;overflow:hidden;border-radius:30px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)
+}
 .horse-scene.show{display:block}
-.riding-label{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.92);border-radius:999px;padding:10px 16px;font-weight:1000;z-index:8;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-.riding-score{position:absolute;top:18px;left:18px;background:#111827;color:#fff;border-radius:999px;padding:10px 16px;font-weight:1000;z-index:8}
-.stable-sign{position:absolute;right:24px;bottom:165px;background:#9a5a22;color:#fff;border:5px solid #6b3a14;border-radius:16px;padding:12px 15px;font-size:17px;font-weight:1000;box-shadow:0 10px 20px rgba(0,0,0,.22);z-index:5}
-.riding-track{position:absolute;left:-8%;right:-8%;bottom:55px;height:115px;background:#c99153;border-top:10px solid rgba(111,70,33,.28);border-radius:50% 50% 0 0;transform:rotate(-1deg)}
-.riding-fence{position:absolute;left:0;right:0;bottom:155px;height:22px;background:repeating-linear-gradient(90deg,#9a5a22 0 24px,#7a4217 24px 32px);opacity:.9;z-index:1}
-.jump-obstacle{position:absolute;bottom:112px;font-size:58px;z-index:4;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18))}
-.jump-obstacle.o1{left:18%}.jump-obstacle.o2{left:47%}.jump-obstacle.o3{left:74%}
-.ribbon{position:absolute;bottom:240px;font-size:44px;z-index:4;animation:ribbonFloat 1.6s ease-in-out infinite}.ribbon.r1{left:33%}.ribbon.r2{left:62%;animation-delay:.4s}
+.riding-label{position:absolute;top:20px;right:22px;background:rgba(255,255,255,.94);border-radius:999px;padding:12px 18px;font-weight:1000;z-index:12;box-shadow:0 10px 22px rgba(0,0,0,.14)}
+.riding-score{position:absolute;top:20px;left:22px;background:#111827;color:#fff;border-radius:999px;padding:12px 18px;font-weight:1000;z-index:12;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+.stable-sign{position:absolute;right:26px;bottom:202px;background:linear-gradient(180deg,#a65f25,#7a3f13);color:#fff;border:6px solid #5d2f0d;border-radius:18px;padding:13px 17px;font-size:18px;font-weight:1000;box-shadow:0 14px 26px rgba(0,0,0,.24);z-index:8}
+.riding-arena{position:absolute;left:0;right:0;bottom:0;height:47%;background:linear-gradient(180deg,#d8b27a,#bd8550);clip-path:polygon(0 25%,100% 8%,100% 100%,0 100%);z-index:1}
+.riding-track{position:absolute;left:-10%;right:-10%;bottom:44px;height:158px;background:linear-gradient(180deg,#d7a462,#b77738);border-top:12px solid rgba(105,62,24,.34);border-bottom:10px solid rgba(255,255,255,.24);border-radius:50% 50% 0 0;transform:rotate(-1deg);z-index:2}
+.riding-fence{position:absolute;left:0;right:0;bottom:200px;height:44px;background:linear-gradient(180deg,transparent 0 9px,#8a4f20 9px 17px,transparent 17px 27px,#8a4f20 27px 35px,transparent 35px);z-index:3;opacity:.95}
+.riding-fence:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 54px,#6e3a13 54px 64px,transparent 64px 112px)}
+.jump-obstacle{position:absolute;bottom:134px;width:118px;height:112px;z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.22))}
+.jump-obstacle.o1{left:20%}.jump-obstacle.o2{left:49%;height:122px}.jump-obstacle.o3{left:75%;height:128px}
+.jump-standard{position:absolute;bottom:0;width:13px;height:100%;background:linear-gradient(#fff,#f3f4f6);border:3px solid #1f2937;border-radius:8px}.jump-standard.left{left:0}.jump-standard.right{right:0}
+.jump-rail{position:absolute;left:8px;right:8px;height:12px;border-radius:999px;background:repeating-linear-gradient(90deg,#ef4444 0 18px,#fff 18px 36px,#2563eb 36px 54px,#fff 54px 72px);border:2px solid rgba(17,24,39,.55)}
+.jump-rail.r1{bottom:20px}.jump-rail.r2{bottom:52px}.jump-rail.r3{bottom:84px}
+.jump-obstacle.o2 .jump-rail{background:repeating-linear-gradient(90deg,#16a34a 0 18px,#fff 18px 36px,#f59e0b 36px 54px,#fff 54px 72px)}
+.jump-obstacle.o3 .jump-rail{background:repeating-linear-gradient(90deg,#8b5cf6 0 18px,#fff 18px 36px,#ec4899 36px 54px,#fff 54px 72px)}
+.ribbon{position:absolute;bottom:290px;font-size:48px;z-index:6;animation:ribbonFloat 1.6s ease-in-out infinite}.ribbon.r1{left:34%}.ribbon.r2{left:64%;animation-delay:.4s}
 @keyframes ribbonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.horse-rider{position:absolute;right:-230px;bottom:105px;width:230px;height:210px;z-index:6;animation:none;filter:drop-shadow(0 18px 20px rgba(0,0,0,.22))}
-.horse-body{position:absolute;bottom:0;right:0;font-size:132px;line-height:1;transform:scaleX(-1)}
-.rider-photo{position:absolute;right:82px;bottom:92px;width:74px;height:102px;border-radius:40% 40% 48% 48%;border:4px solid rgba(255,255,255,.9);background-size:cover;background-position:center top;box-shadow:0 8px 18px rgba(0,0,0,.22);transform:rotate(-4deg)}
-.riding-helmet{position:absolute;right:100px;bottom:184px;font-size:34px;z-index:2}
-.horse-scene.play .horse-rider{animation:horseRide 9s linear forwards}
-.horse-scene.jump .horse-rider{animation:horseJump 2.7s ease-in-out forwards}
-@keyframes horseRide{0%{right:-230px;bottom:105px}18%{bottom:105px}26%{bottom:165px}34%{bottom:105px}48%{bottom:105px}56%{bottom:170px}64%{bottom:105px}78%{bottom:105px}86%{bottom:165px}100%{right:104%;bottom:105px}}
-@keyframes horseJump{0%{right:10%;bottom:105px}35%{right:38%;bottom:175px}70%{right:65%;bottom:105px}100%{right:92%;bottom:105px}}
-@media(max-width:820px){.horse-rider{width:180px;height:170px}.horse-body{font-size:104px}.rider-photo{right:65px;bottom:72px;width:58px;height:82px}.riding-helmet{right:78px;bottom:146px}.jump-obstacle{font-size:42px}.stable-sign{font-size:14px;bottom:145px}}
+.horse-rider{position:absolute;left:-360px;bottom:116px;width:345px;height:286px;z-index:9;animation:none;filter:drop-shadow(0 22px 24px rgba(0,0,0,.24))}
+.horse-body{position:absolute;bottom:0;left:42px;font-size:198px;line-height:1;transform:scaleX(-1)}
+.rider-photo{position:absolute;left:145px;bottom:138px;width:98px;height:132px;border-radius:36% 36% 48% 48%;border:5px solid rgba(255,255,255,.95);background-size:cover;background-position:center top;box-shadow:0 12px 24px rgba(0,0,0,.24);transform:rotate(4deg);z-index:3}
+.riding-helmet{position:absolute;left:166px;bottom:260px;font-size:44px;z-index:4;filter:drop-shadow(0 4px 5px rgba(0,0,0,.15))}
+.horse-dust{position:absolute;left:35px;bottom:28px;font-size:30px;opacity:.78;animation:dustPuff .8s ease-in-out infinite;z-index:1}
+@keyframes dustPuff{0%,100%{transform:translateX(0) scale(.9);opacity:.45}50%{transform:translateX(-18px) scale(1.15);opacity:.85}}
+.horse-scene.play .horse-rider{animation:horseRidePro 10.5s linear forwards}
+.horse-scene.jump .horse-rider{animation:horseJumpPro 3.3s ease-in-out forwards}
+@keyframes horseRidePro{
+  0%{left:-360px;bottom:116px}17%{bottom:116px}24%{bottom:215px}31%{bottom:116px}
+  45%{bottom:116px}52%{bottom:226px}59%{bottom:116px}
+  73%{bottom:116px}81%{bottom:225px}88%{bottom:116px}100%{left:108%;bottom:116px}
+}
+@keyframes horseJumpPro{0%{left:3%;bottom:116px}25%{left:26%;bottom:116px}48%{left:42%;bottom:232px}68%{left:58%;bottom:116px}100%{left:88%;bottom:116px}}
+@media(max-width:820px){
+  .horse-scene{inset:-8px}.horse-rider{width:255px;height:220px;left:-270px}.horse-body{font-size:146px;left:30px}.rider-photo{left:106px;bottom:103px;width:72px;height:100px}.riding-helmet{left:121px;bottom:197px;font-size:34px}.jump-obstacle{width:86px;height:86px;bottom:112px}.jump-obstacle.o1{left:17%}.jump-obstacle.o2{left:47%}.jump-obstacle.o3{left:72%}.stable-sign{font-size:14px;bottom:170px}.riding-label,.riding-score{font-size:12px;padding:8px 10px}.riding-fence{bottom:166px}.riding-track{height:125px;bottom:35px}
+  @keyframes horseRidePro{0%{left:-270px;bottom:88px}17%{bottom:88px}24%{bottom:166px}31%{bottom:88px}45%{bottom:88px}52%{bottom:172px}59%{bottom:88px}73%{bottom:88px}81%{bottom:170px}88%{bottom:88px}100%{left:108%;bottom:88px}}
+  @keyframes horseJumpPro{0%{left:0;bottom:88px}25%{left:22%;bottom:88px}48%{left:39%;bottom:176px}68%{left:56%;bottom:88px}100%{left:86%;bottom:88px}}
+}
 
 
 /* Dog walking timer park upgrade */
@@ -215,15 +237,17 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
       </div>
 
       <div class="horse-scene" id="horseScene">
-        <div class="riding-label">🏇 פארק רכיבה וקפיצות</div>
-        <div class="riding-score" id="ridingScore">מכשולים: 0/3</div>
+        <div class="riding-label">🏇 פארק רכיבה מקצועי</div>
+        <div class="riding-score" id="ridingScore">מסלול מקצועי: 0/3</div>
         <div class="sun">☀️</div><div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
         <div class="tree t1">🌳</div><div class="tree t2">🌲</div>
-        <div class="riding-fence"></div><div class="riding-track"></div>
-        <div class="stable-sign">אורוות ליאן<br>קפיצות סוסים 🐴</div>
-        <div class="jump-obstacle o1">🚧</div><div class="jump-obstacle o2">🪵</div><div class="jump-obstacle o3">🌈</div>
+        <div class="riding-arena"></div><div class="riding-fence"></div><div class="riding-track"></div>
+        <div class="stable-sign">אורוות ליאן<br>מסלול קפיצות מקצועי 🐴</div>
+        <div class="jump-obstacle o1"><span class="jump-standard left"></span><span class="jump-standard right"></span><span class="jump-rail r1"></span><span class="jump-rail r2"></span><span class="jump-rail r3"></span></div>
+        <div class="jump-obstacle o2"><span class="jump-standard left"></span><span class="jump-standard right"></span><span class="jump-rail r1"></span><span class="jump-rail r2"></span><span class="jump-rail r3"></span></div>
+        <div class="jump-obstacle o3"><span class="jump-standard left"></span><span class="jump-standard right"></span><span class="jump-rail r1"></span><span class="jump-rail r2"></span><span class="jump-rail r3"></span></div>
         <div class="ribbon r1">🏵️</div><div class="ribbon r2">🎀</div>
-        <div class="horse-rider" id="horseRider"><div class="riding-helmet">⛑️</div><div class="rider-photo" id="riderPhoto"></div><div class="horse-body">🐎</div></div>
+        <div class="horse-rider" id="horseRider"><div class="horse-dust">💨</div><div class="riding-helmet">⛑️</div><div class="rider-photo" id="riderPhoto"></div><div class="horse-body">🐎</div></div>
       </div>
 
       <div class="pet-wrap">
@@ -286,7 +310,7 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
           <button class="btn green" onclick="startDogWalkTimer(10)">🐕 טיול 10 דקות</button>
           <button class="btn blue" onclick="startDogWalkTimer(15)">🐕 טיול 15 דקות</button>
           <button class="btn gold" onclick="startDogWalkTimer(30)">🐕 טיול 30 דקות</button>
-          <button class="btn" onclick="dogJumpObstacle()">🚧 קפיצה מעל מכשול</button>
+          <button class="btn" onclick="dogJumpObstacle()">🏆 קפיצת ראווה מקצועית</button>
           <button class="btn pink" onclick="dogParkPhoto()">📸 צילום טיול</button>
           <button class="btn" onclick="stopDogWalk(false)">⏹ עצור טיול כלבים</button>
         </div>
@@ -303,12 +327,12 @@ footer{font-size:12px;color:#6b7280;font-weight:800;margin-top:14px}
         <div class="section-title">פארק רכיבה על סוסים 🐴</div>
         <div class="park-buttons">
           <button class="btn green" onclick="startHorseRide()">🏇 ליאן יוצאת לרכיבה</button>
-          <button class="btn blue" onclick="horseJumpPractice()">🚧 קפיצה מעל מכשול</button>
+          <button class="btn blue" onclick="horseJumpPractice()">🏆 קפיצת ראווה מקצועית</button>
           <button class="btn gold" onclick="collectRidingRibbon()">🏵️ איסוף סרטים</button>
           <button class="btn pink" onclick="horseShowPhoto()">📸 צילום רכיבה</button>
           <button class="btn" onclick="stopHorseRide()">⏹ עצור רכיבה</button>
         </div>
-        <footer>ליאן רוכבת על סוס במסלול עם גדרות, קורות, קשת ומכשולים מגניבים.</footer>
+        <footer>ליאן רוכבת במסלול גדול ומקצועי עם מכשולי קפיצה אמיתיים, גדרות צבעוניות וקפיצות קדימה.</footer>
       </div>
 
       <div id="talk" class="tab-panel">
@@ -652,20 +676,20 @@ function startHorseRide(){
   const scene=document.getElementById('horseScene');
   const score=document.getElementById('ridingScore');
   scene.classList.add('show'); scene.classList.remove('play','jump'); void scene.offsetWidth; scene.classList.add('play');
-  score.textContent='מכשולים: 0/3';
-  petTalk('ליאן יוצאת לרכיבה! קדימה סוסי! 🏇');
+  score.textContent='מסלול מקצועי: 0/3';
+  petTalk('ליאן יוצאת לרכיבה מקצועית קדימה במסלול הקפיצות! 🏇');
   synthAnimalSound('horse');
   let passed=0;
   clearInterval(window.horseRideInterval); clearTimeout(window.horseRideTimeout);
-  window.horseRideInterval=setInterval(()=>{passed++; score.textContent='מכשולים: '+Math.min(passed,3)+'/3'; synthAnimalSound('horse'); if(passed>=3)clearInterval(window.horseRideInterval)},2300);
+  window.horseRideInterval=setInterval(()=>{passed++; score.textContent='מסלול מקצועי: '+Math.min(passed,3)+'/3'; synthAnimalSound('horse'); if(passed>=3)clearInterval(window.horseRideInterval)},2300);
   window.horseRideTimeout=setTimeout(()=>{stopHorseRide(true)},9200);
 }
 function horseJumpPractice(){
   initAudio(); prepareRiderPhoto(); stopParkWalk(false);
   const scene=document.getElementById('horseScene');
   scene.classList.add('show'); scene.classList.remove('play','jump'); void scene.offsetWidth; scene.classList.add('jump');
-  document.getElementById('ridingScore').textContent='קפיצה מיוחדת! 🚧';
-  petTalk('וואו! ליאן קופצת מעל המכשול!');
+  document.getElementById('ridingScore').textContent='קפיצת ראווה מקצועית! 🏆';
+  petTalk('וואו! ליאן והסוס קופצים קדימה מעל מכשול אמיתי!');
   synthAnimalSound('horse'); sparkles();
   state.happy=clamp(state.happy+10); state.energy=clamp(state.energy-5); state.friendship=clamp(state.friendship+8);
   reward(10,12,'קפיצה מושלמת! 🏆');
