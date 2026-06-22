@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Lian Pet Tycoon Deluxe</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --sky1:#8fe7ff;--sky2:#dff7ff;--grass1:#64df8c;--grass2:#25b85f;
+  --ink:#17324d;--muted:#5a6d83;--white:#fff;--gold:#ffd84d;--pink:#ff71bc;
+  --purple:#8b5cf6;--blue:#37a8ff;--green:#31d878;--line:rgba(255,255,255,.55);
+  --shadow:0 18px 45px rgba(20,55,90,.22);
+}
+html,body{margin:0;min-height:100%;font-family:Arial,"Segoe UI",sans-serif;color:var(--ink);overflow-x:hidden;background:linear-gradient(180deg,var(--sky1),var(--sky2) 48%,#d9ffcf)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 10%,rgba(255,255,255,.9),transparent 9%),radial-gradient(circle at 83% 16%,rgba(255,255,255,.75),transparent 10%),radial-gradient(circle at 48% 4%,rgba(255,255,255,.75),transparent 8%)}
+.app{max-width:1180px;margin:auto;padding:12px;position:relative;z-index:1}.top{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.hero{background:rgba(255,255,255,.55);border:2px solid rgba(255,255,255,.7);border-radius:28px;padding:16px 18px;box-shadow:var(--shadow);backdrop-filter:blur(16px);text-align:right}.hero h1{margin:0;font-size:clamp(28px,5vw,52px);color:#15406f}.hero p{margin:5px 0 0;color:var(--muted);font-weight:900}.sound{border:0;border-radius:22px;min-width:88px;min-height:74px;background:linear-gradient(145deg,#fff,#e6f8ff);box-shadow:var(--shadow);font-size:28px;font-weight:1000;color:#174166}.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.pill{background:rgba(255,255,255,.72);border:2px solid rgba(255,255,255,.8);border-radius:22px;padding:11px;box-shadow:var(--shadow);font-weight:1000}.pill b{font-size:22px}.layout{display:grid;grid-template-columns:1fr 330px;gap:12px}.world{position:relative;min-height:610px;border-radius:34px;overflow:hidden;background:linear-gradient(180deg,#baf3ff 0 17%,#82e68f 17% 100%);border:3px solid rgba(255,255,255,.8);box-shadow:var(--shadow)}
+.world:before{content:"";position:absolute;inset:17% 0 0;background:radial-gradient(ellipse at 50% 100%,#18a852 0 35%,transparent 36%),linear-gradient(135deg,rgba(255,255,255,.24) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.20) 50%,rgba(255,255,255,.20) 75%,transparent 75%);background-size:100% 100%,70px 70px;opacity:.55}.cloud{position:absolute;background:#fff;border-radius:999px;box-shadow:28px 2px 0 2px #fff,58px 4px 0 -4px #fff;opacity:.9;width:70px;height:26px}.c1{top:42px;right:10%}.c2{top:74px;left:15%;transform:scale(.8)}.path{position:absolute;right:8%;left:8%;bottom:20px;height:190px;background:rgba(255,229,151,.9);border:3px solid rgba(187,129,42,.24);border-radius:70% 70% 24px 24px/80% 80% 24px 24px;transform:perspective(600px) rotateX(20deg);box-shadow:inset 0 0 0 7px rgba(255,255,255,.28)}.spot{position:absolute;width:148px;height:132px;border:0;border-radius:28px;background:linear-gradient(145deg,#fff,#effcff);box-shadow:0 16px 34px rgba(16,70,110,.22);font-weight:1000;color:#17324d;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.18s transform}.spot:active{transform:scale(.96)}.spot .emoji{font-size:44px}.spot small{color:#64748b;font-weight:900}.locked{filter:grayscale(.4);opacity:.72}.home{right:8%;top:175px}.cat{right:33%;top:235px}.shop{left:9%;top:180px}.stable{right:15%;bottom:130px}.park{left:30%;bottom:125px}.mine{left:8%;bottom:285px}.mansion{right:42%;top:105px}.character{position:absolute;right:45%;bottom:58px;width:82px;height:120px;z-index:6;transition:.35s ease}.girl{position:absolute;inset:auto 14px 0 14px;height:88px;border-radius:36px 36px 24px 24px;background:linear-gradient(180deg,#ff85c8,#ff4aa2);box-shadow:0 12px 24px rgba(0,0,0,.16)}.girl:before{content:"👧";position:absolute;top:-52px;right:-2px;font-size:62px}.pet{position:absolute;right:-44px;bottom:0;font-size:48px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));animation:bob 1.6s ease-in-out infinite}.coin-pop{position:absolute;z-index:20;font-size:25px;font-weight:1000;color:#b77900;animation:pop 1s ease-out forwards;pointer-events:none}.side{display:flex;flex-direction:column;gap:12px}.card{background:rgba(255,255,255,.72);border:2px solid rgba(255,255,255,.84);border-radius:28px;padding:14px;box-shadow:var(--shadow)}.card h2{margin:0 0 10px;color:#174166}.main-btn,.buy,.reward{width:100%;min-height:58px;border:0;border-radius:20px;background:linear-gradient(145deg,#fff5a8,#ffc83d);box-shadow:0 12px 22px rgba(180,125,0,.24);font-size:18px;font-weight:1000;color:#4a3100;margin:6px 0}.main-btn{font-size:22px;min-height:72px}.buy{background:linear-gradient(145deg,#e9f9ff,#a7e8ff);color:#174166}.buy:disabled{opacity:.45;filter:grayscale(1)}.reward{background:linear-gradient(145deg,#ffd6ef,#ff78bd);color:#69113f}.quest{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px;border-radius:16px;background:rgba(255,255,255,.58);margin:7px 0;font-weight:900}.done{color:#16934b}.bar{height:13px;background:rgba(30,80,120,.15);border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#34d399,#60a5fa,#c084fc);width:0}.toast{position:fixed;z-index:99;bottom:16px;left:50%;transform:translateX(-50%);background:#17324d;color:#fff;border-radius:999px;padding:12px 18px;font-weight:1000;box-shadow:0 18px 34px rgba(0,0,0,.22);display:none}.toast.show{display:block}.spark{position:absolute;z-index:12;pointer-events:none;animation:spark 1.4s linear forwards}@keyframes bob{50%{transform:translateY(-8px)}}@keyframes pop{to{transform:translateY(-70px) scale(1.25);opacity:0}}@keyframes spark{to{transform:translateY(-120px) rotate(120deg);opacity:0}}@media(max-width:900px){.layout{grid-template-columns:1fr}.world{min-height:560px}.spot{width:128px;height:116px}.spot .emoji{font-size:38px}.hud{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.app{padding:8px}.hero{border-radius:22px}.top{grid-template-columns:1fr}.sound{min-height:56px;width:100%}.world{min-height:560px;border-radius:26px}.spot{width:116px;height:104px;border-radius:22px;font-size:13px}.spot .emoji{font-size:34px}.home{right:3%;top:155px}.cat{right:35%;top:220px}.shop{left:3%;top:155px}.stable{right:5%;bottom:125px}.park{left:33%;bottom:95px}.mine{left:3%;bottom:260px}.mansion{right:35%;top:82px}.character{right:38%;transform:scale(.9)}.card{border-radius:22px}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <header class="hero"><h1>👑 Lian Pet Tycoon Deluxe</h1><p>עולם חיות בסגנון Roblox · אוספים כסף · פותחים אזורים · משדרגים את מנצ'קין</p></header>
+    <button class="sound" id="soundBtn">🔊<br><small>Sound</small></button>
+  </div>
+  <section class="hud">
+    <div class="pill">🪙 מטבעות<br><b id="coins">0</b></div>
+    <div class="pill">💎 יהלומים<br><b id="gems">0</b></div>
+    <div class="pill">⭐ רמה<br><b id="level">1</b></div>
+    <div class="pill">🐾 חיות<br><b id="pets">1</b></div>
+  </section>
+  <div class="layout">
+    <main class="world" id="world">
+      <div class="cloud c1"></div><div class="cloud c2"></div><div class="path"></div>
+      <button class="spot home" data-place="home"><span class="emoji">🏠</span>בית ליאן<small>פתוח</small></button>
+      <button class="spot cat" data-place="cat"><span class="emoji">🐱</span>מנצ'קין<small>מייצר כסף</small></button>
+      <button class="spot shop locked" data-place="shop"><span class="emoji">🐶</span>חנות חיות<small id="shopText">נעול</small></button>
+      <button class="spot stable locked" data-place="stable"><span class="emoji">🐴</span>אורווה<small id="stableText">נעול</small></button>
+      <button class="spot park locked" data-place="park"><span class="emoji">🎡</span>פארק<small id="parkText">נעול</small></button>
+      <button class="spot mine locked" data-place="mine"><span class="emoji">💎</span>מכרה יהלומים<small id="mineText">נעול</small></button>
+      <button class="spot mansion locked" data-place="mansion"><span class="emoji">🏰</span>ארמון ליאן<small id="mansionText">נעול</small></button>
+      <div class="character" id="character"><div class="girl"></div><div class="pet" id="petEmoji">🐱</div></div>
+    </main>
+    <aside class="side">
+      <section class="card"><h2>💰 איסוף כסף</h2><button class="main-btn" id="collectBtn">אסוף 🪙</button><div class="bar"><span id="xpBar"></span></div><p id="incomeText">מנצ'קין מייצר 1 מטבע לשנייה</p></section>
+      <section class="card"><h2>🛒 חנות שדרוגים</h2><button class="buy" id="buyDog">🐶 קנה כלב — 120 🪙</button><button class="buy" id="buyStable">🐴 פתח אורווה — 420 🪙</button><button class="buy" id="buyMine">💎 פתח מכרה — 900 🪙</button><button class="buy" id="buyPark">🎡 פתח פארק — 1400 🪙</button><button class="buy" id="buyMansion">🏰 ארמון ליאן — 2500 🪙 + 25 💎</button></section>
+      <section class="card"><h2>🎁 פרסים ומשימות</h2><button class="reward" id="giftBtn">פתח תיבה יומית</button><div id="quests"></div></section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+let audioCtx=null,soundOn=true;
+const start={coins:100,gems:0,level:1,xp:0,pets:1,income:1,dog:false,stable:false,mine:false,park:false,mansion:false,giftDay:''};
+let s=load();
+function load(){try{return {...start,...JSON.parse(localStorage.getItem('lianTycoonDeluxe')||'{}')}}catch(e){return {...start}}}
+function save(){try{localStorage.setItem('lianTycoonDeluxe',JSON.stringify(s))}catch(e){}}
+function beep(freq=520,dur=.08,type='sine'){if(!soundOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.07,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
+function melody(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle'),i*90))}
+function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1600)}
+function render(){
+ $('coins').textContent=Math.floor(s.coins);$('gems').textContent=s.gems;$('level').textContent=s.level;$('pets').textContent=s.pets;
+ $('xpBar').style.width=Math.min(100,s.xp%100)+'%';$('incomeText').textContent=`החיות מייצרות ${s.income} מטבעות לשנייה`;
+ toggle('shop',s.dog,'פתוח');toggle('stable',s.stable,'פתוח');toggle('mine',s.mine,'פתוח');toggle('park',s.park,'פתוח');toggle('mansion',s.mansion,'פתוח');
+ $('buyDog').disabled=s.dog||s.coins<120;$('buyStable').disabled=s.stable||s.coins<420;$('buyMine').disabled=s.mine||s.coins<900;$('buyPark').disabled=s.park||s.coins<1400;$('buyMansion').disabled=s.mansion||s.coins<2500||s.gems<25;
+ $('petEmoji').textContent=s.stable?'🐴':s.dog?'🐶':'🐱'; renderQuests(); save();
+}
+function toggle(place,on,text){document.querySelector(`[data-place="${place}"]`).classList.toggle('locked',!on);const el=$(place+'Text');if(el)el.textContent=on?text:'נעול'}
+function addCoins(n,x=50,y=50){s.coins+=n;s.xp+=Math.max(1,Math.floor(n/3));while(s.xp>=s.level*100){s.xp-=s.level*100;s.level++;s.gems+=3;melody();toast('עלית רמה! קיבלת 3 יהלומים 💎')}coinPop(n,x,y);render()}
+function coinPop(n,x,y){const p=document.createElement('div');p.className='coin-pop';p.textContent='+'+n+' 🪙';p.style.right=x+'%';p.style.top=y+'%';$('world').appendChild(p);setTimeout(()=>p.remove(),1000)}
+function spark(){for(let i=0;i<18;i++){const d=document.createElement('div');d.className='spark';d.textContent=['✨','⭐','💎','🌈'][Math.floor(Math.random()*4)];d.style.right=(20+Math.random()*60)+'%';d.style.top=(35+Math.random()*45)+'%';d.style.fontSize=(22+Math.random()*18)+'px';$('world').appendChild(d);setTimeout(()=>d.remove(),1500)}}
+function buy(key,cost,cb){if(s[key])return;if(s.coins<cost)return toast('אין מספיק מטבעות עדיין');s.coins-=cost;cb();spark();melody();render()}
+$('collectBtn').onclick=e=>{beep(620);addCoins(10+s.pets*3,45,72)};
+$('buyDog').onclick=()=>buy('dog',120,()=>{s.dog=true;s.pets++;s.income+=2;toast('הכלב הצטרף למשפחה 🐶')});
+$('buyStable').onclick=()=>buy('stable',420,()=>{s.stable=true;s.pets++;s.income+=5;toast('האורווה נפתחה 🐴')});
+$('buyMine').onclick=()=>buy('mine',900,()=>{s.mine=true;s.income+=8;toast('מכרה היהלומים נפתח 💎')});
+$('buyPark').onclick=()=>buy('park',1400,()=>{s.park=true;s.income+=12;toast('פארק ליאן נפתח 🎡')});
+$('buyMansion').onclick=()=>{if(s.mansion)return;if(s.coins<2500||s.gems<25)return toast('צריך עוד כסף או יהלומים');s.coins-=2500;s.gems-=25;s.mansion=true;s.income+=30;s.pets+=2;spark();melody();toast('ארמון ליאן נפתח 👑');render()};
+$('giftBtn').onclick=()=>{const today=new Date().toDateString();if(s.giftDay===today){toast('כבר פתחת תיבה היום');beep(260);return}s.giftDay=today;const c=150+Math.floor(Math.random()*350),g=2+Math.floor(Math.random()*6);s.coins+=c;s.gems+=g;spark();melody();toast(`קיבלת ${c} מטבעות ו-${g} יהלומים 🎁`);render()};
+$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').innerHTML=(soundOn?'🔊':'🔇')+'<br><small>Sound</small>';beep(440)};
+document.querySelectorAll('.spot').forEach(btn=>btn.onclick=()=>{const r=btn.getBoundingClientRect(),w=$('world').getBoundingClientRect();$('character').style.right=Math.max(6,Math.min(78,100-((r.left-w.left+r.width/2)/w.width*100)))+'%';$('character').style.bottom=Math.max(40,Math.min(390,(w.bottom-r.bottom)+30))+'px';beep(500);toast(btn.textContent.replace(/נעול|פתוח|מייצר כסף/g,'').trim())});
+function renderQuests(){const qs=[['אספי 500 מטבעות',s.coins>=500],['פתחי את חנות החיות',s.dog],['הגיעי לרמה 5',s.level>=5],['פתחי את המכרה',s.mine],['בני את ארמון ליאן',s.mansion]];$('quests').innerHTML=qs.map(q=>`<div class="quest"><span>${q[0]}</span><b class="${q[1]?'done':''}">${q[1]?'✅':'🔒'}</b></div>`).join('')}
+setInterval(()=>{s.coins+=s.income;s.xp+=1;if(s.mine&&Math.random()<.08)s.gems++;render()},1000);
+render();
+</script>
+</body>
+</html>
