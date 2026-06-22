@@ -3,121 +3,229 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>ליאן טיקטוק סטודיו Ultimate</title>
+<title>ליאן טיקטוק סטודיו Ultimate · Black Glass</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#06070a;--panel:rgba(255,255,255,.075);--panel2:rgba(255,255,255,.12);--line:rgba(255,255,255,.15);--ink:#f8fafc;--muted:rgba(248,250,252,.68);--pink:#ff4fa3;--purple:#8b5cf6;--blue:#2f8cff;--green:#23c76a;--gold:#f59e0b;--shadow:0 24px 70px rgba(0,0,0,.42)}
 html,body{margin:0;min-height:100%;font-family:Arial,"Segoe UI",sans-serif;background:radial-gradient(circle at 15% 5%,rgba(255,79,163,.20),transparent 28%),radial-gradient(circle at 88% 10%,rgba(47,140,255,.18),transparent 30%),radial-gradient(circle at 50% 100%,rgba(139,92,246,.14),transparent 34%),linear-gradient(135deg,#050608,#10131a 55%,#07080b);color:var(--ink);overflow-x:hidden;text-align:center}
 body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:42px 42px;pointer-events:none;mask-image:linear-gradient(to bottom,black,transparent 82%)}
-.app{width:min(1240px,100%);margin:auto;padding:14px;position:relative;z-index:1}.top{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-bottom:12px}.back,.coins,.rankBox{min-height:52px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:#fff;text-decoration:none;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;box-shadow:0 10px 28px rgba(0,0,0,.25);backdrop-filter:blur(20px)}.coins{font-size:18px;flex-direction:column;line-height:1.1}.title h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:-1px}.title b{color:var(--pink)}.title p{margin:4px 0 0;color:var(--muted);font-weight:900}.layout{display:grid;grid-template-columns:285px 1fr 250px;gap:14px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.055));border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(22px);padding:14px;overflow:hidden}.upload{display:block;background:linear-gradient(135deg,#ff7ab8,#d946ef);border-radius:18px;padding:16px 10px;font-size:17px;font-weight:1000;cursor:pointer;margin-bottom:10px}.upload input{display:none}.section-title{text-align:right;font-size:18px;font-weight:1000;margin:12px 2px 10px}.tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}.tab{border:1px solid var(--line);background:rgba(0,0,0,.22);color:#fff;border-radius:999px;padding:8px 11px;font-weight:900;cursor:pointer}.tab.active{background:linear-gradient(135deg,#ff4fa3,#8b5cf6)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:370px;overflow:auto;padding-left:2px}.tool{border:1px solid var(--line);background:rgba(0,0,0,.22);color:#fff;border-radius:14px;min-height:64px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:12px}.tool .emoji{font-size:30px}.tool.active{outline:2px solid var(--pink);box-shadow:0 0 22px rgba(255,79,163,.35)}.bubbles{display:flex;flex-direction:column;gap:7px;max-height:220px;overflow:auto}.bubble-btn{border:1px solid rgba(255,79,163,.65);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:9px;font-weight:900;cursor:pointer}.stage-panel{padding:14px}.phone{position:relative;margin:auto;width:min(470px,94vw);aspect-ratio:9/16;border-radius:30px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 80px rgba(0,0,0,.55)}.canvas{position:absolute;inset:0;overflow:hidden;touch-action:none;background:linear-gradient(135deg,#ffeff8,#dbeafe)}.placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#111827;font-weight:1000;padding:28px}.placeholder .big{font-size:70px}.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}.overlay{position:absolute;user-select:none;touch-action:none;cursor:grab;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25));z-index:6}.sticker{font-size:54px}.text-item{font-size:32px;font-weight:1000;color:white;text-shadow:0 4px 13px rgba(0,0,0,.65);padding:5px 8px}.speech{background:#fff;color:#111;border:3px solid #111;border-radius:22px;padding:12px 16px;font-weight:1000;font-size:25px;max-width:260px}.caption{position:absolute;left:18px;right:18px;bottom:52px;color:#fff;font-size:25px;font-weight:1000;text-shadow:0 5px 14px rgba(0,0,0,.65);z-index:5;display:none}.tiktok-ui{position:absolute;left:14px;top:35%;display:flex;flex-direction:column;gap:13px;z-index:8}.tiktok-btn{width:50px;height:50px;border-radius:999px;background:rgba(0,0,0,.36);border:1px solid rgba(255,255,255,.22);display:grid;place-items:center;color:white;font-size:24px;font-weight:1000;box-shadow:0 8px 20px rgba(0,0,0,.22)}.statsOverlay{position:absolute;right:14px;bottom:14px;text-align:right;color:#fff;text-shadow:0 3px 12px #000;z-index:8;font-weight:1000}.spark{position:absolute;font-size:22px;animation:float 3s linear infinite;z-index:4;pointer-events:none}.confetti{position:absolute;top:-30px;font-size:24px;animation:fall 3.5s linear forwards;z-index:9;pointer-events:none}.snow{position:absolute;top:-20px;font-size:18px;animation:fall 5s linear forwards;z-index:9;pointer-events:none}.heartfx{position:absolute;bottom:-20px;font-size:26px;animation:float 3.5s linear forwards;z-index:9;pointer-events:none}@keyframes float{from{transform:translateY(0) scale(.8);opacity:.95}to{transform:translateY(-210px) scale(1.55);opacity:0}}@keyframes fall{to{transform:translateY(760px) rotate(260deg);opacity:0}}
-.controls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.big-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;margin-top:12px}.action{border:1px solid var(--line);border-radius:17px;min-height:56px;background:rgba(255,255,255,.09);color:white;font-weight:1000;font-size:14px;cursor:pointer}.action.purple{background:linear-gradient(135deg,#d946ef,#7c3aed)}.action.blue{background:linear-gradient(135deg,#38bdf8,#2563eb)}.action.green{background:linear-gradient(135deg,#4ade80,#16a34a)}.action.gold{background:linear-gradient(135deg,#ffe066,#ff922b);color:#3b2500}.filters{display:flex;flex-direction:column;gap:8px;max-height:355px;overflow:auto}.filter{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:8px;background:rgba(0,0,0,.2);color:#fff;font-weight:900;cursor:pointer;text-align:right}.thumb{height:42px;border-radius:12px;background:linear-gradient(135deg,#fbcfe8,#bfdbfe)}.glam{filter:saturate(1.35) contrast(1.08)}.cute{filter:saturate(1.2) brightness(1.08)}.princess{filter:hue-rotate(305deg) saturate(1.25) brightness(1.06)}.bw{filter:grayscale(1)}.warm{filter:sepia(.25) saturate(1.15)}.cool{filter:hue-rotate(25deg) saturate(1.15)}.barbie{filter:hue-rotate(310deg) saturate(1.5) brightness(1.08)}.neon{filter:saturate(1.8) contrast(1.25)}.galaxy{filter:hue-rotate(245deg) saturate(1.45) contrast(1.1)}.dream{filter:brightness(1.12) saturate(1.05) blur(.2px)}.magic{filter:hue-rotate(35deg) saturate(1.4) brightness(1.08)}.input{width:100%;border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.25);color:#fff;min-height:46px;padding:10px;font-weight:900;outline:none}.caption-box,.gallery-box,.profile-box{margin-top:14px;border:1px solid rgba(255,79,163,.45);border-radius:20px;padding:12px;background:rgba(255,79,163,.05)}.caption-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-height:140px;overflow:auto}.chip{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:9px 12px;font-weight:900;cursor:pointer}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:170px;overflow:auto}.gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);cursor:pointer}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:80;background:#111827;color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:12px 18px;font-weight:900;display:none;box-shadow:0 18px 40px rgba(0,0,0,.35);max-width:92vw}.toast.show{display:block}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:90;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.gift{width:min(420px,94vw);border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#1b1020,#08090d);box-shadow:var(--shadow);padding:24px}.gift .big{font-size:72px}.hidden-canvas{display:none}.small{font-size:12px;color:var(--muted);font-weight:800}.progress{height:10px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;width:40%;background:linear-gradient(90deg,#ff4fa3,#f59e0b)}
-@media(max-width:980px){.top{grid-template-columns:1fr}.back,.coins,.rankBox{width:100%}.layout{grid-template-columns:1fr}.stickers-panel{order:2}.stage-panel{order:1}.filters-panel{order:3}.grid{grid-template-columns:repeat(5,1fr);max-height:none}.controls{grid-template-columns:repeat(5,1fr)}.big-actions{grid-template-columns:1fr}.phone{width:min(390px,96vw)}.filters{max-height:none}.bubbles{max-height:none}}
+.app{width:min(1240px,100%);margin:auto;padding:14px;position:relative;z-index:1}.top{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-bottom:12px}.back,.coins{min-height:52px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:#fff;text-decoration:none;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;box-shadow:0 10px 28px rgba(0,0,0,.25);backdrop-filter:blur(20px)}.coins{font-size:18px;flex-direction:column;line-height:1.1}.title h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:-1px}.title b{color:var(--pink)}.title p{margin:4px 0 0;color:var(--muted);font-weight:900}.layout{display:grid;grid-template-columns:285px 1fr 250px;gap:14px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.055));border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(22px);padding:14px;overflow:hidden}.upload{display:block;background:linear-gradient(135deg,#ff7ab8,#d946ef);border-radius:18px;padding:16px 10px;font-size:17px;font-weight:1000;cursor:pointer;margin-bottom:10px}.upload input{display:none}.section-title{text-align:right;font-size:18px;font-weight:1000;margin:12px 2px 10px}.tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}.tab{border:1px solid var(--line);background:rgba(0,0,0,.22);color:#fff;border-radius:999px;padding:8px 11px;font-weight:900;cursor:pointer}.tab.active{background:linear-gradient(135deg,#ff4fa3,#8b5cf6)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:370px;overflow:auto;padding-left:2px}.tool{border:1px solid var(--line);background:rgba(0,0,0,.22);color:#fff;border-radius:14px;min-height:64px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:12px}.tool .emoji{font-size:30px}.tool.active{outline:2px solid var(--pink);box-shadow:0 0 22px rgba(255,79,163,.35)}.bubbles{display:flex;flex-direction:column;gap:7px;max-height:220px;overflow:auto}.bubble-btn{border:1px solid rgba(255,79,163,.65);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:9px;font-weight:900;cursor:pointer}.stage-panel{padding:14px}.phone{position:relative;margin:auto;width:min(470px,94vw);aspect-ratio:9/16;border-radius:30px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 80px rgba(0,0,0,.55)}.canvas{position:absolute;inset:0;overflow:hidden;touch-action:none;background:linear-gradient(135deg,#ffeff8,#dbeafe)}.placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#111827;font-weight:1000;padding:28px}.placeholder .big{font-size:70px}.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}.overlay{position:absolute;user-select:none;touch-action:none;cursor:grab;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25));z-index:6}.sticker{font-size:54px}.text-item{font-size:32px;font-weight:1000;color:white;text-shadow:0 4px 13px rgba(0,0,0,.65);padding:5px 8px}.speech{background:#fff;color:#111;border:3px solid #111;border-radius:22px;padding:12px 16px;font-weight:1000;font-size:25px;max-width:260px}.caption{position:absolute;left:18px;right:18px;bottom:52px;color:#fff;font-size:25px;font-weight:1000;text-shadow:0 5px 14px rgba(0,0,0,.65);z-index:5;display:none}.tiktok-ui{position:absolute;left:14px;top:35%;display:flex;flex-direction:column;gap:13px;z-index:8}.tiktok-btn{width:50px;height:50px;border-radius:999px;background:rgba(0,0,0,.36);border:1px solid rgba(255,255,255,.22);display:grid;place-items:center;color:white;font-size:24px;font-weight:1000;box-shadow:0 8px 20px rgba(0,0,0,.22)}.statsOverlay{position:absolute;right:14px;bottom:14px;text-align:right;color:#fff;text-shadow:0 3px 12px #000;z-index:8;font-weight:1000}.spark{position:absolute;font-size:22px;animation:float 3s linear infinite;z-index:4;pointer-events:none}.confetti{position:absolute;top:-30px;font-size:24px;animation:fall 3.5s linear forwards;z-index:9;pointer-events:none}.snow{position:absolute;top:-20px;font-size:18px;animation:fall 5s linear forwards;z-index:9;pointer-events:none}.heartfx{position:absolute;bottom:-20px;font-size:26px;animation:float 3.5s linear forwards;z-index:9;pointer-events:none}@keyframes float{from{transform:translateY(0) scale(.8);opacity:.95}to{transform:translateY(-210px) scale(1.55);opacity:0}}@keyframes fall{to{transform:translateY(760px) rotate(260deg);opacity:0}}
+.reelMode .phone{animation:phonePulse 1.7s ease-in-out infinite}.reelMode .photo{animation:reelZoom 4s ease-in-out infinite}.reelBadge{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#ff4fa3,#8b5cf6);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;font-weight:1000;z-index:12;display:none}.reelMode .reelBadge{display:block}@keyframes reelZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}@keyframes phonePulse{0%,100%{box-shadow:0 28px 80px rgba(0,0,0,.55)}50%{box-shadow:0 28px 95px rgba(255,79,163,.42)}}
+.controls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.big-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;margin-top:12px}.action{border:1px solid var(--line);border-radius:17px;min-height:56px;background:rgba(255,255,255,.09);color:white;font-weight:1000;font-size:14px;cursor:pointer}.action.purple{background:linear-gradient(135deg,#d946ef,#7c3aed)}.action.blue{background:linear-gradient(135deg,#38bdf8,#2563eb)}.action.green{background:linear-gradient(135deg,#4ade80,#16a34a)}.action.gold{background:linear-gradient(135deg,#ffe066,#ff922b);color:#3b2500}.filters{display:flex;flex-direction:column;gap:8px;max-height:355px;overflow:auto}.filter{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:8px;background:rgba(0,0,0,.2);color:#fff;font-weight:900;cursor:pointer;text-align:right}.thumb{height:42px;border-radius:12px;background:linear-gradient(135deg,#fbcfe8,#bfdbfe)}.glam{filter:saturate(1.35) contrast(1.08)}.cute{filter:saturate(1.2) brightness(1.08)}.princess{filter:hue-rotate(305deg) saturate(1.25) brightness(1.06)}.bw{filter:grayscale(1)}.warm{filter:sepia(.25) saturate(1.15)}.cool{filter:hue-rotate(25deg) saturate(1.15)}.barbie{filter:hue-rotate(310deg) saturate(1.5) brightness(1.08)}.neon{filter:saturate(1.8) contrast(1.25)}.galaxy{filter:hue-rotate(245deg) saturate(1.45) contrast(1.1)}.dream{filter:brightness(1.12) saturate(1.05) blur(.2px)}.magic{filter:hue-rotate(35deg) saturate(1.4) brightness(1.08)}.input{width:100%;border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.25);color:#fff;min-height:46px;padding:10px;font-weight:900;outline:none}.caption-box,.gallery-box,.profile-box,.template-box,.challenge-box{margin-top:14px;border:1px solid rgba(255,79,163,.45);border-radius:20px;padding:12px;background:rgba(255,79,163,.05)}.caption-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-height:140px;overflow:auto}.chip{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:9px 12px;font-weight:900;cursor:pointer}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:170px;overflow:auto}.gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);cursor:pointer}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:80;background:#111827;color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:12px 18px;font-weight:900;display:none;box-shadow:0 18px 40px rgba(0,0,0,.35);max-width:92vw}.toast.show{display:block}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:90;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.gift{width:min(420px,94vw);border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#1b1020,#08090d);box-shadow:var(--shadow);padding:24px}.gift .big{font-size:72px}.hidden-canvas{display:none}.small{font-size:12px;color:var(--muted);font-weight:800}.progress{height:10px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;width:40%;background:linear-gradient(90deg,#ff4fa3,#f59e0b)}
+@media(max-width:980px){.top{grid-template-columns:1fr}.back,.coins{width:100%}.layout{grid-template-columns:1fr}.stickers-panel{order:2}.stage-panel{order:1}.filters-panel{order:3}.grid{grid-template-columns:repeat(5,1fr);max-height:none}.controls{grid-template-columns:repeat(5,1fr)}.big-actions{grid-template-columns:1fr}.phone{width:min(390px,96vw)}.filters{max-height:none}.bubbles{max-height:none}}
 @media(max-width:520px){.app{padding:10px}.title h1{font-size:32px}.grid{grid-template-columns:repeat(4,1fr)}.tool .emoji{font-size:26px}.tool{font-size:11px;min-height:58px}.controls{grid-template-columns:repeat(2,1fr)}.phone{width:100%;border-radius:24px}.panel{padding:12px}.speech{font-size:21px}.sticker{font-size:46px}.tiktok-btn{width:44px;height:44px;font-size:21px}.caption{font-size:22px}}
+
+
+/* =========================================================
+   LIAN TIKTOK STUDIO · PROFESSIONAL BLACK GLASS EDITION
+   Keeps emojis/effects colorful, makes the UI black-white-transparent.
+   ========================================================= */
+:root{
+  --bg:#050608;
+  --panel:rgba(255,255,255,.075);
+  --panel2:rgba(255,255,255,.115);
+  --line:rgba(255,255,255,.145);
+  --ink:#f8fafc;
+  --muted:rgba(248,250,252,.66);
+  --pink:#ffffff;
+  --purple:#e5e7eb;
+  --blue:#f8fafc;
+  --green:#ffffff;
+  --gold:#ffffff;
+  --shadow:0 30px 90px rgba(0,0,0,.50);
+}
+html,body{
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,255,255,.115),transparent 27%),
+    radial-gradient(circle at 88% 10%,rgba(148,163,184,.16),transparent 31%),
+    radial-gradient(circle at 50% 98%,rgba(255,255,255,.07),transparent 34%),
+    linear-gradient(135deg,#050608,#0d1016 45%,#171b23) !important;
+}
+body:before{
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) !important;
+  background-size:44px 44px !important;
+}
+.top{
+  padding:10px;
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 24px 70px rgba(0,0,0,.28);
+  backdrop-filter:blur(24px) saturate(145%);
+  -webkit-backdrop-filter:blur(24px) saturate(145%);
+}
+.title h1 b{
+  color:#fff !important;
+  text-shadow:0 0 22px rgba(255,255,255,.30);
+}
+.title p{color:rgba(248,250,252,.64) !important}
+.back,.coins,.rankBox,.panel{
+  background:linear-gradient(180deg,rgba(255,255,255,.105),rgba(255,255,255,.052)) !important;
+  border:1px solid rgba(255,255,255,.145) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.42) !important;
+  backdrop-filter:blur(28px) saturate(135%) !important;
+  -webkit-backdrop-filter:blur(28px) saturate(135%) !important;
+}
+.panel{
+  position:relative;
+}
+.panel:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,255,255,.11),transparent 46%),
+    linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.01));
+}
+.panel > *{position:relative;z-index:1}
+.upload,
+.upload[style],
+.action.purple,.action.blue,.action.green,.action.gold,
+.tab.active{
+  background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.075)) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 34px rgba(0,0,0,.26) !important;
+}
+.action,.tool,.bubble-btn,.filter,.chip,.tab,.input{
+  background:rgba(0,0,0,.25) !important;
+  border:1px solid rgba(255,255,255,.135) !important;
+  color:#fff !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 24px rgba(0,0,0,.16);
+}
+.action:hover,.tool:hover,.bubble-btn:hover,.filter:hover,.chip:hover,.tab:hover,.upload:hover,.back:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.26) !important;
+  background:rgba(255,255,255,.13) !important;
+}
+.tool.active{
+  outline:2px solid rgba(255,255,255,.80) !important;
+  box-shadow:0 0 28px rgba(255,255,255,.18), inset 0 1px 0 rgba(255,255,255,.14) !important;
+}
+.section-title{
+  color:#fff;
+  text-shadow:0 8px 24px rgba(0,0,0,.38);
+}
+.caption-box,.gallery-box,.profile-box{
+  border:1px solid rgba(255,255,255,.14) !important;
+  background:rgba(255,255,255,.055) !important;
+}
+.caption-box .section-title{color:#fff !important}
+.phone{
+  border:1px solid rgba(255,255,255,.22) !important;
+  box-shadow:0 30px 90px rgba(0,0,0,.60), inset 0 0 0 1px rgba(255,255,255,.06) !important;
+  background:#050608 !important;
+}
+.canvas{
+  background:linear-gradient(135deg,#f8fafc,#cbd5e1) !important;
+}
+.placeholder{
+  color:#111827 !important;
+}
+.tiktok-btn{
+  background:rgba(0,0,0,.34) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.statsOverlay{
+  padding:9px 11px;
+  border-radius:16px;
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.13);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.thumb{
+  background:linear-gradient(135deg,#f8fafc,#94a3b8) !important;
+}
+.progress{background:rgba(255,255,255,.12) !important}
+.progress span{background:linear-gradient(90deg,#fff,#94a3b8) !important}
+.gift{
+  background:linear-gradient(180deg,rgba(31,41,55,.96),rgba(3,7,18,.96)) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+}
+.toast{
+  background:rgba(17,24,39,.92) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.gallery img{
+  border:1px solid rgba(255,255,255,.16) !important;
+  box-shadow:0 10px 25px rgba(0,0,0,.30);
+}
+/* Keep exported creative content colorful; UI only is monochrome. */
+.sticker,.spark,.confetti,.snow,.heartfx,.tiktok-btn{filter:none !important}
+
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="app">
   <div class="top">
     <a class="back" href="index.html">⌂ חזרה לאתר</a>
-    <div class="title"><h1>🎤 <b>ליאן</b> TikTok Studio Ultimate ✨</h1><p>סטודיו תמונות, פרסים, לייקים, דרגות וגלריה</p></div>
+    <div class="title"><h1>🎤 <b>ליאן</b> TikTok Studio Ultimate Plus ✨</h1><p>סטודיו תמונות, פרסים, לייקים, דרגות, גלריה, תבניות ו-Reel</p></div>
     <div class="coins"><span><span id="coins">1250</span> 🪙</span><span class="small" id="rankText">כוכבת מתחילה</span></div>
   </div>
-
   <div class="layout">
     <aside class="panel stickers-panel">
       <label class="upload">⬆️ העלאת תמונה<input id="file" type="file" accept="image/*"></label>
       <label class="upload" style="background:linear-gradient(135deg,#38bdf8,#2563eb)">📷 צילום מהמצלמה<input id="camera" type="file" accept="image/*" capture="user"></label>
-      <div class="tabs" id="stickerTabs"></div>
-      <div class="grid" id="stickers"></div>
-      <div class="section-title">בועות דיבור 💬</div>
-      <div class="bubbles" id="bubbles"></div>
+      <div class="tabs" id="stickerTabs"></div><div class="grid" id="stickers"></div>
+      <div class="section-title">בועות דיבור 💬</div><div class="bubbles" id="bubbles"></div>
     </aside>
-
     <main class="panel stage-panel">
-      <div class="phone" id="phone">
-        <div class="canvas" id="canvas">
-          <img class="photo" id="photo" alt="תמונה">
-          <div class="placeholder" id="placeholder"><div class="big">📸</div><div>העלי תמונה והתחילי לעצב</div></div>
-          <div class="caption" id="caption"></div>
-          <div class="tiktok-ui"><div class="tiktok-btn">❤️</div><div class="tiktok-btn">💬</div><div class="tiktok-btn">↗️</div><div class="tiktok-btn">🎵</div></div>
-          <div class="statsOverlay"><div id="likesText">❤️ 4,328 Likes</div><div id="viewsText">👀 18,540 Views</div></div>
-        </div>
-      </div>
-      <div class="controls">
-        <button class="action" onclick="addText()">T טקסט</button>
-        <button class="action" onclick="addFrame()">▣ מסגרת</button>
-        <button class="action" onclick="clearSelected()">🗑 מחק</button>
-        <button class="action" onclick="undo()">↶ בטל</button>
-        <button class="action" onclick="resetAll()">↻ איפוס</button>
-      </div>
-      <div class="big-actions">
-        <button class="action purple" onclick="randomCaption()">🎙️ כיתוב AI</button>
-        <button class="action blue" onclick="saveImage()">⬇️ שמור</button>
-        <button class="action green" onclick="shareWhatsApp()">🟢 וואטסאפ</button>
-      </div>
-      <div class="big-actions">
-        <button class="action gold" onclick="dailyGift()">🎁 קופסת הפתעות</button>
-        <button class="action" onclick="effect('confetti')">🎉 קונפטי</button>
-        <button class="action" onclick="effect('hearts')">💖 לבבות</button>
-      </div>
-      <div class="big-actions">
-        <button class="action" onclick="effect('sparkles')">✨ נצנצים</button>
-        <button class="action" onclick="effect('snow')">❄️ שלג</button>
-        <button class="action" onclick="newStats()">❤️ לייקים חדשים</button>
-      </div>
+      <div class="phone" id="phone"><div class="canvas" id="canvas"><img class="photo" id="photo" alt="תמונה"><div class="placeholder" id="placeholder"><div class="big">📸</div><div>העלי תמונה והתחילי לעצב</div></div><div class="caption" id="caption"></div><div class="reelBadge">🎬 Reel Mode</div><div class="tiktok-ui"><div class="tiktok-btn">❤️</div><div class="tiktok-btn">💬</div><div class="tiktok-btn">↗️</div><div class="tiktok-btn">🎵</div></div><div class="statsOverlay"><div id="likesText">❤️ 4,328 Likes</div><div id="viewsText">👀 18,540 Views</div></div></div></div>
+      <div class="controls"><button class="action" onclick="addText()">T טקסט</button><button class="action" onclick="addFrame()">▣ מסגרת</button><button class="action" onclick="clearSelected()">🗑 מחק</button><button class="action" onclick="undo()">↶ בטל</button><button class="action" onclick="resetAll()">↻ איפוס</button></div>
+      <div class="big-actions"><button class="action purple" onclick="randomCaption()">🎙️ כיתוב AI</button><button class="action blue" onclick="saveImage()">⬇️ שמור</button><button class="action green" onclick="shareWhatsApp()">🟢 וואטסאפ</button></div>
+      <div class="big-actions"><button class="action gold" onclick="dailyGift()">🎁 קופסת הפתעות</button><button class="action" onclick="toggleReel()">🎬 מצב Reel</button><button class="action" onclick="completeChallenge()">🏆 סיים אתגר</button></div>
+      <div class="big-actions"><button class="action" onclick="effect('confetti')">🎉 קונפטי</button><button class="action" onclick="effect('hearts')">💖 לבבות</button><button class="action" onclick="newStats()">❤️ לייקים חדשים</button></div>
+      <div class="big-actions"><button class="action" onclick="effect('sparkles')">✨ נצנצים</button><button class="action" onclick="effect('snow')">❄️ שלג</button><button class="action" onclick="randomTemplate()">🎭 תבנית אקראית</button></div>
       <div class="caption-box"><div class="section-title" style="text-align:center;color:#ff6ab7">✨ משפטים מוכנים ✨</div><div class="caption-chips" id="captionChips"></div></div>
       <div class="gallery-box"><div class="section-title" style="text-align:center">🖼 גלריית יצירות</div><div class="gallery" id="gallery"></div></div>
     </main>
-
     <aside class="panel filters-panel">
       <div class="profile-box"><div class="section-title" style="text-align:center">👑 הפרופיל של ליאן</div><div id="profileLine">0 יצירות · 0 מתנות</div><div class="progress"><span id="rankProgress"></span></div></div>
+      <div class="template-box"><div class="section-title" style="text-align:center">🎭 תבניות מוכנות</div><div class="grid" style="grid-template-columns:1fr 1fr;max-height:none" id="templates"></div></div>
+      <div class="challenge-box"><div class="section-title" style="text-align:center">🏆 אתגר יומי</div><div id="challengeText" class="small" style="font-size:14px;line-height:1.5"></div><button class="action gold" style="width:100%;margin-top:8px" onclick="completeChallenge()">סיימתי את האתגר</button></div>
       <div class="section-title">פילטרים 🪄</div><div class="filters" id="filters"></div>
       <div class="section-title">טקסט ✍️</div><input class="input" id="customText" placeholder="כתבי טקסט משלך"><button class="action" style="width:100%;margin-top:8px" onclick="addCustomText()">הוסף טקסט</button>
       <div class="section-title">מוזיקה 🎵</div><div class="grid" style="grid-template-columns:1fr 1fr;max-height:none" id="musicGrid"></div>
     </aside>
   </div>
 </div>
-<canvas class="hidden-canvas" id="exportCanvas"></canvas>
-<div class="toast" id="toast"></div>
+<canvas class="hidden-canvas" id="exportCanvas"></canvas><div class="toast" id="toast"></div>
 <div class="modal" id="giftModal"><div class="gift"><div class="big">🎁</div><h2 id="giftTitle">קופסת הפתעות</h2><p id="giftText">פתחת מתנה!</p><button class="action gold" style="width:100%;margin-top:12px" onclick="closeGift()">סגור</button></div></div>
 <script>
 const canvas=document.getElementById('canvas'), photo=document.getElementById('photo'), file=document.getElementById('file'), camera=document.getElementById('camera'), placeholder=document.getElementById('placeholder'), caption=document.getElementById('caption');
-let selected=null, history=[], coins=Number(localStorage.getItem('lianUltimateCoins')||1250), audioCtx=null, currentFilter='', gallery=JSON.parse(localStorage.getItem('lianUltimateGallery')||'[]'), created=Number(localStorage.getItem('lianUltimateCreated')||0), gifts=Number(localStorage.getItem('lianUltimateGifts')||0);
+let selected=null, history=[], coins=Number(localStorage.getItem('lianUltimateCoins')||1250), audioCtx=null, currentFilter='', gallery=JSON.parse(localStorage.getItem('lianUltimateGallery')||'[]'), created=Number(localStorage.getItem('lianUltimateCreated')||0), gifts=Number(localStorage.getItem('lianUltimateGifts')||0), reel=false;
 const $=id=>document.getElementById(id);$('coins').textContent=coins;
-const cats={
-'⭐ כוכבים':['✨','⭐','🌟','💫','⚡','☄️','🌙','☀️','🔥','💥','🌈','💎','🎆','🎇','🪄','🔮','🧿','🎀'],
-'💖 לבבות':['💖','💕','💗','💓','💞','❤️','🩷','🧡','💛','💚','💙','💜','🖤','🤍','😍','😘','🥰','💌'],
-'👑 הלבשה':['👑','😎','🕶️','🎩','🧢','👒','🎀','🪽','🦋','🐱','🐰','🦄','💄','💅','👗','👠','💍','👜'],
-'🐾 חיות':['🐶','🐱','🐰','🐼','🐨','🦊','🐵','🐹','🦄','🐴','🦋','🐬','🦜','🐥','🐞','🐢','🐯','🦁'],
-'🍭 מתוק':['🍦','🍭','🍬','🍩','🍪','🧁','🍰','🍓','🍒','🍉','🍕','🍟','🥤','🍿','🍫','🥐','🥨','🍎'],
-'🎤 טיקטוק':['🎤','🎵','🎶','🎧','📱','📸','🎬','🎞️','📹','💃','🕺','🪩','🎉','🏆','🥇','💯','✅','🚀']
-};
+const cats={'⭐ כוכבים':['✨','⭐','🌟','💫','⚡','☄️','🌙','☀️','🔥','💥','🌈','💎','🎆','🎇','🪄','🔮','🧿','🎀'],'💖 לבבות':['💖','💕','💗','💓','💞','❤️','🩷','🧡','💛','💚','💙','💜','🖤','🤍','😍','😘','🥰','💌'],'👑 הלבשה':['👑','😎','🕶️','🎩','🧢','👒','🎀','🪽','🦋','🐱','🐰','🦄','💄','💅','👗','👠','💍','👜'],'🐾 חיות':['🐶','🐱','🐰','🐼','🐨','🦊','🐵','🐹','🦄','🐴','🦋','🐬','🦜','🐥','🐞','🐢','🐯','🦁'],'🍭 מתוק':['🍦','🍭','🍬','🍩','🍪','🧁','🍰','🍓','🍒','🍉','🍕','🍟','🥤','🍿','🍫','🥐','🥨','🍎'],'🎤 טיקטוק':['🎤','🎵','🎶','🎧','📱','📸','🎬','🎞️','📹','💃','🕺','🪩','🎉','🏆','🥇','💯','✅','🚀']};
 const bubbleList=['היי! 💕','איזה כיף! ⭐','אני כוכבת! 👑','וואו! 💖','יום מושלם! 🌸','BFF לנצח 💗','Love it! ✨','רגע מושלם 📸','חיוך מנצח 😍','מלכת הסטייל 👑'];
 const captions=['חיים בסטייל ✨','לא עוצרת לרגע 💖','יום מושלם עם החברות 👯‍♀️','החיוך שלי שווה מיליון ⭐','נסיכה ליום אחד 👑','אני הכוכבת של היום 🎤','רגע קטן, זיכרון ענק 💫','מוכנה לכבוש את העולם 🌎','היום שלי מתחיל בחיוך 😊','רק אנרגיות טובות 🌈','סטייל של כוכבת 💎','אין כמוני בעולם 🦄','יום של חלומות ✨','הכי יפה כשאני אני 💖','נוצצת בלי להתאמץ 🌟','החיים הם במה 🎬','מלכת הפיד 👑','חיוך, קסם וסטייל 🎀','בדרך לעוד הרפתקה 🚀','הכל אפשרי כשמחייכים 😍'];
 const filterList=[['','ללא פילטר'],['glam','Glam'],['cute','Cute'],['princess','Princess'],['bw','B&W'],['warm','Warm'],['cool','Cool'],['barbie','Barbie'],['neon','Neon'],['galaxy','Galaxy'],['dream','Dream'],['magic','Magic']];
 const music=[['Happy',[440,554,659,554]],['Pop',[523,659,784,659]],['Dance',[330,440,660,880]],['K-Pop',[392,494,587,740]],['Magic',[659,784,988,784]],['Cute',[523,587,659,698]]];
+const templates=[['👑 נסיכה','princess',['👑','✨','💖'],'נסיכה ליום אחד 👑','hearts'],['🎂 יום הולדת','barbie',['🎉','🎂','🎁'],'יום הולדת שמח לי! 🎂','confetti'],['👯 חברות','cute',['💖','BFF','🌸'],'יום מושלם עם החברות 👯‍♀️','sparkles'],['🐾 חיות','warm',['🐶','🐱','🐰'],'החברים הכי חמודים שלי 🐾','hearts'],['🌌 גלקסי','galaxy',['🌙','💫','⭐'],'נוצצת כמו כוכב 🌟','sparkles'],['🎤 כוכבת','neon',['🎤','🪩','🔥'],'אני הכוכבת של היום 🎤','confetti']];
+const challenges=['צרי יצירה עם כתר ופילטר Princess 👑','הוסיפי 3 לבבות ותמונה אחת 💖','השתמשי במצב Reel ושמרי יצירה 🎬','בחרי תבנית מוכנה והוסיפי כיתוב AI 🎭','השתמשי באפקט קונפטי ושתפי לוואטסאפ 🎉'];
 function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
-function addCoins(n){coins+=n;localStorage.setItem('lianUltimateCoins',coins);$('coins').textContent=coins;updateRank()}
-function updateRank(){const ranks=['כוכבת מתחילה','יוצרת מוכשרת','כוכבת סטודיו','סופר סטאר','מלכת הטיקטוק של ליאן'];let i=Math.min(4,Math.floor(coins/700));$('rankText').textContent=ranks[i];$('rankProgress').style.width=Math.min(100,(coins%700)/7)+'%';$('profileLine').textContent=`${created} יצירות · ${gifts} מתנות · ${ranks[i]}`}
-function clickSound(){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=520;o.type='sine';g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.055,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.08);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.09)}catch(e){}}
-document.addEventListener('click',e=>{if(e.target.closest('button,.tool,.bubble-btn,.filter,.upload,.back,.tab'))clickSound()});
+function addCoins(n){coins+=n;localStorage.setItem('lianUltimateCoins',coins);$('coins').textContent=coins;updateRank()}function updateRank(){const ranks=['כוכבת מתחילה','יוצרת מוכשרת','כוכבת סטודיו','סופר סטאר','מלכת הטיקטוק של ליאן'];let i=Math.min(4,Math.floor(coins/700));$('rankText').textContent=ranks[i];$('rankProgress').style.width=Math.min(100,(coins%700)/7)+'%';$('profileLine').textContent=`${created} יצירות · ${gifts} מתנות · ${ranks[i]}`}
+function clickSound(){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=520;o.type='sine';g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.055,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.08);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.09)}catch(e){}}document.addEventListener('click',e=>{if(e.target.closest('button,.tool,.bubble-btn,.filter,.upload,.back,.tab'))clickSound()});
 function saveHistory(){history.push(canvas.innerHTML);if(history.length>20)history.shift()}function undo(){if(!history.length)return toast('אין מה לבטל');canvas.innerHTML=history.pop();restoreRefs();toast('בוטל צעד אחרון')}function restoreRefs(){selected=null;bindOverlays()}function handleFileInput(e){const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{saveHistory();photo.src=reader.result;photo.style.display='block';placeholder.style.display='none';addCoins(15);newStats();toast('התמונה עלתה בהצלחה ✨')};reader.readAsDataURL(f)}file.addEventListener('change',handleFileInput);camera.addEventListener('change',handleFileInput);
-function makeTool(emoji,label,fn){const b=document.createElement('button');b.className='tool';b.innerHTML=`<span class="emoji">${emoji}</span><span>${label}</span>`;b.onclick=fn;return b}
-let currentCat=Object.keys(cats)[0];function renderTabs(){const tabs=$('stickerTabs');tabs.innerHTML='';Object.keys(cats).forEach(c=>{const b=document.createElement('button');b.className='tab'+(c===currentCat?' active':'');b.textContent=c;b.onclick=()=>{currentCat=c;renderTabs();renderStickers()};tabs.appendChild(b)})}function renderStickers(){const box=$('stickers');box.innerHTML='';cats[currentCat].forEach(s=>box.appendChild(makeTool(s,s,()=>addSticker(s))))}renderTabs();renderStickers();
-bubbleList.forEach(t=>{const b=document.createElement('button');b.className='bubble-btn';b.textContent=t;b.onclick=()=>addBubble(t);$('bubbles').appendChild(b)});
-filterList.forEach(([cls,label])=>{const f=document.createElement('button');f.className='filter';f.innerHTML=`<span class="thumb ${cls}"></span><span>${label}</span>`;f.onclick=()=>setFilter(cls);$('filters').appendChild(f)});
-captions.forEach(c=>{const chip=document.createElement('button');chip.className='chip';chip.textContent=c;chip.onclick=()=>setCaption(c);$('captionChips').appendChild(chip)});
-music.forEach(([name,notes])=>{const b=makeTool('🎵',name,()=>playMusic(notes,name));$('musicGrid').appendChild(b)});
-function addOverlay(el,x=45,y=45){saveHistory();el.classList.add('overlay');el.style.left=x+'%';el.style.top=y+'%';canvas.appendChild(el);select(el);makeDraggable(el);addCoins(5)}function addSticker(s){const el=document.createElement('div');el.className='sticker';el.textContent=s;addOverlay(el,28+Math.random()*35,14+Math.random()*45)}function addBubble(t){const el=document.createElement('div');el.className='speech';el.textContent=t;addOverlay(el,22,12)}function addText(){const el=document.createElement('div');el.className='text-item';el.textContent='Queen ✨';addOverlay(el,28,70)}function addCustomText(){const t=$('customText').value.trim();if(!t)return toast('כתבי טקסט קודם');const el=document.createElement('div');el.className='text-item';el.textContent=t;addOverlay(el,22,68)}function setCaption(t){saveHistory();caption.textContent=t;caption.style.display='block';addCoins(3)}function randomCaption(){setCaption(captions[Math.floor(Math.random()*captions.length)]);toast('נוצר כיתוב חדש ✨')}function setFilter(cls){currentFilter=cls;photo.className='photo '+cls;toast('פילטר עודכן')}function select(el){document.querySelectorAll('.overlay').forEach(o=>o.style.outline='none');selected=el;if(el)el.style.outline='2px dashed rgba(255,255,255,.75)'}function clearSelected(){if(!selected)return toast('בחרי קודם פריט למחיקה');saveHistory();selected.remove();selected=null}function addFrame(){saveHistory();canvas.style.boxShadow='inset 0 0 0 12px rgba(255,79,163,.85), inset 0 0 0 20px rgba(255,255,255,.35)';toast('נוספה מסגרת')}function resetAll(){saveHistory();document.querySelectorAll('.overlay,.spark,.confetti,.snow,.heartfx').forEach(e=>e.remove());caption.style.display='none';canvas.style.boxShadow='none';toast('הסטודיו נוקה')}
+function makeTool(emoji,label,fn){const b=document.createElement('button');b.className='tool';b.innerHTML=`<span class="emoji">${emoji}</span><span>${label}</span>`;b.onclick=fn;return b}let currentCat=Object.keys(cats)[0];function renderTabs(){const tabs=$('stickerTabs');tabs.innerHTML='';Object.keys(cats).forEach(c=>{const b=document.createElement('button');b.className='tab'+(c===currentCat?' active':'');b.textContent=c;b.onclick=()=>{currentCat=c;renderTabs();renderStickers()};tabs.appendChild(b)})}function renderStickers(){const box=$('stickers');box.innerHTML='';cats[currentCat].forEach(s=>box.appendChild(makeTool(s,s,()=>addSticker(s))))}renderTabs();renderStickers();
+bubbleList.forEach(t=>{const b=document.createElement('button');b.className='bubble-btn';b.textContent=t;b.onclick=()=>addBubble(t);$('bubbles').appendChild(b)});filterList.forEach(([cls,label])=>{const f=document.createElement('button');f.className='filter';f.innerHTML=`<span class="thumb ${cls}"></span><span>${label}</span>`;f.onclick=()=>setFilter(cls);$('filters').appendChild(f)});captions.forEach(c=>{const chip=document.createElement('button');chip.className='chip';chip.textContent=c;chip.onclick=()=>setCaption(c);$('captionChips').appendChild(chip)});music.forEach(([name,notes])=>{$('musicGrid').appendChild(makeTool('🎵',name,()=>playMusic(notes,name)))});templates.forEach((t,i)=>{$('templates').appendChild(makeTool(t[0].split(' ')[0],t[0].replace(/^\S+ /,''),()=>applyTemplate(i)))});
+function addOverlay(el,x=45,y=45){saveHistory();el.classList.add('overlay');el.style.left=x+'%';el.style.top=y+'%';canvas.appendChild(el);select(el);makeDraggable(el);addCoins(5)}function addSticker(s,x,y){const el=document.createElement('div');el.className='sticker';el.textContent=s;addOverlay(el,x??(28+Math.random()*35),y??(14+Math.random()*45))}function addBubble(t){const el=document.createElement('div');el.className='speech';el.textContent=t;addOverlay(el,22,12)}function addText(){const el=document.createElement('div');el.className='text-item';el.textContent='Queen ✨';addOverlay(el,28,70)}function addCustomText(){const t=$('customText').value.trim();if(!t)return toast('כתבי טקסט קודם');const el=document.createElement('div');el.className='text-item';el.textContent=t;addOverlay(el,22,68)}function setCaption(t){saveHistory();caption.textContent=t;caption.style.display='block';addCoins(3)}function randomCaption(){setCaption(captions[Math.floor(Math.random()*captions.length)]);toast('נוצר כיתוב חדש ✨')}function setFilter(cls){currentFilter=cls;photo.className='photo '+cls;toast('פילטר עודכן')}function select(el){document.querySelectorAll('.overlay').forEach(o=>o.style.outline='none');selected=el;if(el)el.style.outline='2px dashed rgba(255,255,255,.75)'}function clearSelected(){if(!selected)return toast('בחרי קודם פריט למחיקה');saveHistory();selected.remove();selected=null}function addFrame(){saveHistory();canvas.style.boxShadow='inset 0 0 0 12px rgba(255,79,163,.85), inset 0 0 0 20px rgba(255,255,255,.35)';toast('נוספה מסגרת')}function resetAll(){saveHistory();document.querySelectorAll('.overlay,.spark,.confetti,.snow,.heartfx').forEach(e=>e.remove());caption.style.display='none';canvas.style.boxShadow='none';toast('הסטודיו נוקה')}
 function makeDraggable(el){let sx=0,sy=0,ox=0,oy=0,drag=false;el.addEventListener('pointerdown',e=>{select(el);drag=true;el.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect(),cr=canvas.getBoundingClientRect();ox=r.left-cr.left;oy=r.top-cr.top});el.addEventListener('pointermove',e=>{if(!drag)return;const cr=canvas.getBoundingClientRect();let nx=ox+(e.clientX-sx),ny=oy+(e.clientY-sy);nx=Math.max(0,Math.min(nx,cr.width-el.offsetWidth));ny=Math.max(0,Math.min(ny,cr.height-el.offsetHeight));el.style.left=(nx/cr.width*100)+'%';el.style.top=(ny/cr.height*100)+'%'});el.addEventListener('pointerup',()=>drag=false)}function bindOverlays(){document.querySelectorAll('.overlay').forEach(makeDraggable)}
 function effect(type){const chars={sparkles:['✨','⭐','💫'],confetti:['🎉','🎊','🩷','💜','💛'],snow:['❄️','☃️'],hearts:['💖','💕','💗']};for(let i=0;i<30;i++){const s=document.createElement('div');s.className=type==='snow'?'snow':type==='hearts'?'heartfx':type==='confetti'?'confetti':'spark';s.textContent=chars[type][Math.floor(Math.random()*chars[type].length)];s.style.left=Math.random()*95+'%';s.style.animationDelay=Math.random()*1.8+'s';if(type==='hearts'||type==='sparkles')s.style.bottom='-30px';canvas.appendChild(s);setTimeout(()=>s.remove(),6000)}addCoins(4)}effect('sparkles');
-function playMusic(notes,name){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();notes.forEach((freq,i)=>setTimeout(()=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.18)},i*190));toast('מוזיקה: '+name)}catch(e){}}
-function newStats(){const likes=Math.floor(800+Math.random()*9800),views=Math.floor(likes*3+Math.random()*55000);$('likesText').textContent='❤️ '+likes.toLocaleString()+' Likes';$('viewsText').textContent='👀 '+views.toLocaleString()+' Views'}newStats();
-function dailyGift(){const today=new Date().toDateString(),last=localStorage.getItem('lianUltimateGiftDay');let prize;if(last===today){prize='כבר פתחת היום מתנה, אבל קיבלת 20 מטבעות בונוס!';addCoins(20)}else{localStorage.setItem('lianUltimateGiftDay',today);const prizes=['100 מטבעות','מדבקת כתר חדשה 👑','פילטר קסם 🪄','אפקט קונפטי 🎉','50 מטבעות ועוד לבבות 💖'];prize=prizes[Math.floor(Math.random()*prizes.length)];addCoins(prize.includes('100')?100:50);gifts++;localStorage.setItem('lianUltimateGifts',gifts)}$('giftText').textContent=prize;$('giftModal').classList.add('show');updateRank()}function closeGift(){$('giftModal').classList.remove('show')}
-function saveImage(){exportImage(true)}async function exportImage(download){const out=$('exportCanvas'),ctx=out.getContext('2d');const rect=canvas.getBoundingClientRect();out.width=900;out.height=1600;ctx.fillStyle='#111827';ctx.fillRect(0,0,out.width,out.height);if(photo.src){ctx.save();const map={bw:'grayscale(1)',cute:'saturate(1.2) brightness(1.08)',glam:'saturate(1.35) contrast(1.08)',princess:'hue-rotate(305deg) saturate(1.25) brightness(1.06)',warm:'sepia(.25) saturate(1.15)',cool:'hue-rotate(25deg) saturate(1.15)',barbie:'hue-rotate(310deg) saturate(1.5) brightness(1.08)',neon:'saturate(1.8) contrast(1.25)',galaxy:'hue-rotate(245deg) saturate(1.45) contrast(1.1)',dream:'brightness(1.12) saturate(1.05)',magic:'hue-rotate(35deg) saturate(1.4) brightness(1.08)'};ctx.filter=map[currentFilter]||'none';ctx.drawImage(photo,0,0,out.width,out.height);ctx.restore()}else{const grd=ctx.createLinearGradient(0,0,out.width,out.height);grd.addColorStop(0,'#ffeff8');grd.addColorStop(1,'#dbeafe');ctx.fillStyle=grd;ctx.fillRect(0,0,out.width,out.height)}ctx.textAlign='center';ctx.textBaseline='middle';document.querySelectorAll('.overlay').forEach(el=>{const r=el.getBoundingClientRect();const x=(r.left-rect.left+r.width/2)/rect.width*out.width;const y=(r.top-rect.top+r.height/2)/rect.height*out.height;if(el.classList.contains('sticker')){ctx.font='86px Arial';ctx.fillText(el.textContent,x,y)}else if(el.classList.contains('speech')){ctx.font='bold 44px Arial';const pad=28,w=Math.min(600,ctx.measureText(el.textContent).width+pad*2),h=92;ctx.fillStyle='white';ctx.strokeStyle='#111';ctx.lineWidth=7;roundRect(ctx,x-w/2,y-h/2,w,h,28,true,true);ctx.fillStyle='#111';ctx.fillText(el.textContent,x,y)}else{ctx.font='bold 58px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.strokeText(el.textContent,x,y);ctx.fillText(el.textContent,x,y)}});if(caption.style.display!=='none'&&caption.textContent){ctx.font='bold 50px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.strokeText(caption.textContent,out.width/2,out.height-120);ctx.fillText(caption.textContent,out.width/2,out.height-120)}ctx.font='bold 36px Arial';ctx.textAlign='left';ctx.fillStyle='white';ctx.fillText($('likesText').textContent,35,out.height-55);const url=out.toDataURL('image/png');if(download){const a=document.createElement('a');a.href=url;a.download='lian-tiktok-ultimate.png';a.click();gallery.unshift(url);gallery=gallery.slice(0,9);localStorage.setItem('lianUltimateGallery',JSON.stringify(gallery));created++;localStorage.setItem('lianUltimateCreated',created);addCoins(35);renderGallery();toast('התמונה נשמרה בגלריה 🎉')}return url}
-function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}function renderGallery(){const g=$('gallery');g.innerHTML='';gallery.forEach(src=>{const img=document.createElement('img');img.src=src;img.onclick=()=>{photo.src=src;photo.style.display='block';placeholder.style.display='none';toast('יצירה נטענה')};g.appendChild(img)});updateRank()}renderGallery();
-async function shareWhatsApp(){const text=encodeURIComponent('תראו מה יצרתי בליאן TikTok Studio Ultimate ✨');window.open('https://wa.me/?text='+text,'_blank');toast('וואטסאפ נפתח לשיתוף')}
-updateRank();
+function applyTemplate(i){const t=templates[i];saveHistory();setFilter(t[1]);setCaption(t[3]);t[2].forEach((s,k)=>addSticker(s,18+k*22,18+k*13));effect(t[4]);newStats();addFrame();addCoins(35);toast('התבנית נוספה: '+t[0])}function randomTemplate(){applyTemplate(Math.floor(Math.random()*templates.length))}
+function setDailyChallenge(){const today=new Date().toDateString();let idx=localStorage.getItem('lianChallengeIdx'),day=localStorage.getItem('lianChallengeDay');if(day!==today||idx===null){idx=Math.floor(Math.random()*challenges.length);localStorage.setItem('lianChallengeDay',today);localStorage.setItem('lianChallengeIdx',idx);localStorage.removeItem('lianChallengeDone')}const done=localStorage.getItem('lianChallengeDone')===today;$('challengeText').innerHTML=(done?'✅ הושלם היום!<br>':'')+challenges[idx]}function completeChallenge(){const today=new Date().toDateString();if(localStorage.getItem('lianChallengeDone')===today)return toast('האתגר כבר הושלם היום');localStorage.setItem('lianChallengeDone',today);addCoins(120);effect('confetti');toast('כל הכבוד! קיבלת 120 מטבעות 🏆');setDailyChallenge()}
+function toggleReel(){reel=!reel;document.body.classList.toggle('reelMode',reel);if(reel){effect('sparkles');effect('hearts');toast('מצב Reel הופעל 🎬')}else toast('מצב Reel כובה')}function playMusic(notes,name){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();notes.forEach((freq,i)=>setTimeout(()=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.18)},i*190));toast('מוזיקה: '+name)}catch(e){}}
+function newStats(){const likes=Math.floor(800+Math.random()*9800),views=Math.floor(likes*3+Math.random()*55000);$('likesText').textContent='❤️ '+likes.toLocaleString()+' Likes';$('viewsText').textContent='👀 '+views.toLocaleString()+' Views'}newStats();function dailyGift(){const today=new Date().toDateString(),last=localStorage.getItem('lianUltimateGiftDay');let prize;if(last===today){prize='כבר פתחת היום מתנה, אבל קיבלת 20 מטבעות בונוס!';addCoins(20)}else{localStorage.setItem('lianUltimateGiftDay',today);const prizes=['100 מטבעות','מדבקת כתר חדשה 👑','פילטר קסם 🪄','אפקט קונפטי 🎉','50 מטבעות ועוד לבבות 💖','תבנית אקראית במתנה 🎭'];prize=prizes[Math.floor(Math.random()*prizes.length)];addCoins(prize.includes('100')?100:50);if(prize.includes('תבנית'))randomTemplate();gifts++;localStorage.setItem('lianUltimateGifts',gifts)}$('giftText').textContent=prize;$('giftModal').classList.add('show');updateRank()}function closeGift(){$('giftModal').classList.remove('show')}
+function saveImage(){exportImage(true)}async function exportImage(download){const out=$('exportCanvas'),ctx=out.getContext('2d');const rect=canvas.getBoundingClientRect();out.width=900;out.height=1600;ctx.fillStyle='#111827';ctx.fillRect(0,0,out.width,out.height);if(photo.src){ctx.save();const map={bw:'grayscale(1)',cute:'saturate(1.2) brightness(1.08)',glam:'saturate(1.35) contrast(1.08)',princess:'hue-rotate(305deg) saturate(1.25) brightness(1.06)',warm:'sepia(.25) saturate(1.15)',cool:'hue-rotate(25deg) saturate(1.15)',barbie:'hue-rotate(310deg) saturate(1.5) brightness(1.08)',neon:'saturate(1.8) contrast(1.25)',galaxy:'hue-rotate(245deg) saturate(1.45) contrast(1.1)',dream:'brightness(1.12) saturate(1.05)',magic:'hue-rotate(35deg) saturate(1.4) brightness(1.08)'};ctx.filter=map[currentFilter]||'none';ctx.drawImage(photo,0,0,out.width,out.height);ctx.restore()}else{const grd=ctx.createLinearGradient(0,0,out.width,out.height);grd.addColorStop(0,'#ffeff8');grd.addColorStop(1,'#dbeafe');ctx.fillStyle=grd;ctx.fillRect(0,0,out.width,out.height)}ctx.textAlign='center';ctx.textBaseline='middle';document.querySelectorAll('.overlay').forEach(el=>{const r=el.getBoundingClientRect();const x=(r.left-rect.left+r.width/2)/rect.width*out.width;const y=(r.top-rect.top+r.height/2)/rect.height*out.height;if(el.classList.contains('sticker')){ctx.font='86px Arial';ctx.fillText(el.textContent,x,y)}else if(el.classList.contains('speech')){ctx.font='bold 44px Arial';const pad=28,w=Math.min(600,ctx.measureText(el.textContent).width+pad*2),h=92;ctx.fillStyle='white';ctx.strokeStyle='#111';ctx.lineWidth=7;roundRect(ctx,x-w/2,y-h/2,w,h,28,true,true);ctx.fillStyle='#111';ctx.fillText(el.textContent,x,y)}else{ctx.font='bold 58px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.strokeText(el.textContent,x,y);ctx.fillText(el.textContent,x,y)}});if(caption.style.display!=='none'&&caption.textContent){ctx.font='bold 50px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.strokeText(caption.textContent,out.width/2,out.height-120);ctx.fillText(caption.textContent,out.width/2,out.height-120)}ctx.font='bold 36px Arial';ctx.textAlign='left';ctx.fillStyle='white';ctx.fillText($('likesText').textContent,35,out.height-55);if(reel){ctx.font='bold 40px Arial';ctx.textAlign='right';ctx.fillText('🎬 REEL',out.width-35,55)}const url=out.toDataURL('image/png');if(download){const a=document.createElement('a');a.href=url;a.download='lian-tiktok-ultimate-plus.png';a.click();gallery.unshift(url);gallery=gallery.slice(0,9);localStorage.setItem('lianUltimateGallery',JSON.stringify(gallery));created++;localStorage.setItem('lianUltimateCreated',created);addCoins(35);renderGallery();toast('התמונה נשמרה בגלריה 🎉')}return url}
+function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}function renderGallery(){const g=$('gallery');g.innerHTML='';gallery.forEach(src=>{const img=document.createElement('img');img.src=src;img.onclick=()=>{photo.src=src;photo.style.display='block';placeholder.style.display='none';toast('יצירה נטענה')};g.appendChild(img)});updateRank()}renderGallery();async function shareWhatsApp(){const text=encodeURIComponent('תראו מה יצרתי בליאן TikTok Studio Ultimate Plus ✨');window.open('https://wa.me/?text='+text,'_blank');toast('וואטסאפ נפתח לשיתוף')}setDailyChallenge();updateRank();
 </script>
 </body>
 </html>
