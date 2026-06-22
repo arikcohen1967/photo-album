@@ -1,3 +1,7 @@
+תיקנתי בעיית left !important שמנעה מהסוס לזוז בטלפון
+
+להורדת הקובץ המתוקן לטלפון
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -1448,54 +1452,125 @@ prepareRiderPhoto();renderAnimals();renderWeather();update();
   },true);
 })();
 </script>
-<!-- === FINAL WORKING RIDE CONTROL FIX 2026-06-22 === -->
+<!-- === MOBILE FINAL FIX 2026-06-22: touch/drag horse control for phones === -->
 <style>
-#horseScene .ride-controls{display:none!important;visibility:hidden!important;pointer-events:none!important}
-#horseScene.final-ride{display:block!important;cursor:grab;touch-action:none;user-select:none;background:radial-gradient(circle at 12% 12%,#fff7b0 0 44px,transparent 47px),linear-gradient(#7ed7ff 0 42%,#77d96b 42% 55%,#c88950 55% 100%)!important}
-#horseScene.final-ride:active{cursor:grabbing}
-#horseScene.final-ride:before{content:'שליטה: גרירה ימינה/שמאלה או חצים במחשב · לחיצה / רווח = קפיצה';position:absolute;right:16px;left:16px;bottom:12px;z-index:120;background:rgba(255,255,255,.88);border-radius:999px;padding:10px 14px;font-weight:1000;color:#172033;box-shadow:0 10px 24px rgba(0,0,0,.14);pointer-events:none;backdrop-filter:blur(12px)}
-#horseScene.final-ride .riding-track{height:178px!important;bottom:40px!important;background:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 22px,transparent 22px 54px),linear-gradient(180deg,#e8bd7b,#ae6d36)!important;border-radius:46% 48% 0 0!important}
-#horseScene.final-ride .riding-fence{bottom:222px!important;opacity:.75!important}
-#horseScene.final-ride .jump-obstacle{display:none!important}
-#horseScene.final-ride #horseRider{width:330px!important;height:245px!important;bottom:104px!important;z-index:45!important;filter:drop-shadow(0 22px 18px rgba(67,40,18,.28))!important;transition:left .16s ease,bottom .18s ease,transform .18s ease!important;animation:none!important}
-#horseScene.final-ride #horseRider .horse-body{font-size:0!important;position:absolute!important;left:34px!important;bottom:22px!important;width:235px!important;height:112px!important;background:linear-gradient(180deg,#8b4a24,#5f321b)!important;border-radius:58% 44% 48% 45%!important;transform:none!important;box-shadow:inset -18px -18px 0 rgba(0,0,0,.12)!important}
-#horseScene.final-ride #horseRider .horse-body:before{content:'';position:absolute;right:-36px;top:-42px;width:70px;height:92px;background:linear-gradient(180deg,#8b4a24,#65361d);border-radius:52% 58% 40% 42%;transform:rotate(18deg);box-shadow:inset -10px -10px 0 rgba(0,0,0,.12)}
-#horseScene.final-ride #horseRider .horse-body:after{content:'';position:absolute;right:-76px;top:-62px;width:72px;height:54px;background:#8b4a24;border-radius:56% 48% 48% 55%;transform:rotate(8deg);box-shadow:inset -9px -7px 0 rgba(0,0,0,.13)}
-#horseScene.final-ride #horseRider:before{content:'';position:absolute;left:15px;bottom:105px;width:72px;height:22px;background:#3b2114;border-radius:100% 0 0 100%;transform:rotate(23deg);z-index:1}
-#horseScene.final-ride #horseRider:after{content:'';position:absolute;left:62px;bottom:0;width:22px;height:92px;background:#5f321b;border-radius:999px;box-shadow:58px 0 0 #5f321b,128px 0 0 #5f321b,182px 0 0 #5f321b;z-index:0}
-#horseScene.final-ride #horseRider .horse-dust{left:20px!important;bottom:8px!important;font-size:28px!important;opacity:.55!important}
-#horseScene.final-ride #horseRider .riding-helmet{font-size:0!important;display:block!important;left:145px!important;bottom:194px!important;width:44px!important;height:22px!important;background:#ff5aa5!important;border-radius:50% 50% 42% 42%!important;z-index:8!important;box-shadow:0 4px 0 rgba(0,0,0,.12)!important}
-#horseScene.final-ride #horseRider .riding-helmet:after{content:'';position:absolute;right:-12px;top:12px;width:24px;height:6px;background:#ff5aa5;border-radius:999px;transform:rotate(10deg)}
-#horseScene.final-ride #horseRider .rider-photo{display:block!important;left:128px!important;bottom:108px!important;width:84px!important;height:112px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;z-index:7!important;overflow:visible!important}
-#horseScene.final-ride #horseRider .rider-photo:before{content:'👧';position:absolute;left:10px;top:-16px;font-size:70px;line-height:1;filter:drop-shadow(0 6px 4px rgba(0,0,0,.16))}
-#horseScene.final-ride #horseRider .rider-photo:after{content:'';position:absolute;left:27px;top:54px;width:44px;height:68px;background:linear-gradient(180deg,#7dd3fc,#2563eb);border-radius:20px 20px 16px 16px;transform:rotate(-10deg);box-shadow:12px 54px 0 -8px #1f2937,-10px 54px 0 -8px #1f2937}
-#horseScene.final-ride #horseRider.final-jump{bottom:210px!important;transform:rotate(-5deg) scale(1.04)!important}
-.final-gate{position:absolute;left:46%;bottom:118px;width:155px;height:150px;z-index:30;filter:drop-shadow(0 10px 10px rgba(0,0,0,.22));pointer-events:none}.final-gate .post{position:absolute;bottom:0;width:16px;height:145px;border-radius:10px;background:linear-gradient(#fff,#cbd5e1);border:3px solid #334155}.final-gate .left{left:0}.final-gate .right{right:0}.final-gate .rail{position:absolute;left:13px;right:13px;height:13px;border-radius:999px;border:2px solid rgba(15,23,42,.65);background:repeating-linear-gradient(90deg,#ef4444 0 20px,#fff 20px 40px,#2563eb 40px 60px,#fff 60px 80px)}.final-gate .r1{bottom:35px}.final-gate .r2{bottom:72px}.final-gate .r3{bottom:109px}
-.final-prize{position:absolute;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;background:rgba(255,255,255,.96);border:4px solid #fff;box-shadow:0 14px 28px rgba(0,0,0,.24);z-index:70;animation:finalPrize 1.2s ease-in-out infinite alternate;pointer-events:none}.final-prize small{position:absolute;bottom:-23px;background:#111827;color:#fff;font-size:11px;font-weight:1000;border-radius:999px;padding:4px 8px;white-space:nowrap}.final-prize.collected{transform:translateY(-70px) scale(1.45)!important;opacity:0!important;transition:.28s!important}.final-prize.p1{left:26%;bottom:180px}.final-prize.p2{left:47%;bottom:335px}.final-prize.p3{left:66%;bottom:180px}.final-prize.p4{left:82%;bottom:250px}@keyframes finalPrize{from{transform:translateY(0) scale(1)}to{transform:translateY(-10px) scale(1.06)}}
-@media(max-width:820px){#horseScene.final-ride{inset:-8px!important;min-height:565px!important}#horseScene.final-ride:before{font-size:12px;bottom:10px;padding:8px 10px;border-radius:18px}#horseScene.final-ride #horseRider{width:250px!important;height:196px!important;bottom:88px!important}#horseScene.final-ride #horseRider .horse-body{left:24px!important;bottom:20px!important;width:178px!important;height:86px!important}#horseScene.final-ride #horseRider .horse-body:before{right:-28px;top:-34px;width:54px;height:72px}#horseScene.final-ride #horseRider .horse-body:after{right:-59px;top:-48px;width:56px;height:42px}#horseScene.final-ride #horseRider:after{left:48px;bottom:0;width:17px;height:74px;box-shadow:44px 0 0 #5f321b,98px 0 0 #5f321b,140px 0 0 #5f321b}#horseScene.final-ride #horseRider .rider-photo{left:95px!important;bottom:88px!important;width:66px!important;height:88px!important}#horseScene.final-ride #horseRider .rider-photo:before{font-size:54px;left:8px;top:-13px}#horseScene.final-ride #horseRider .rider-photo:after{left:22px;top:42px;width:34px;height:54px}#horseScene.final-ride #horseRider .riding-helmet{left:109px!important;bottom:158px!important;width:35px!important;height:18px!important}#horseScene.final-ride #horseRider.final-jump{bottom:168px!important}.final-gate{left:44%;bottom:92px;width:112px;height:112px}.final-gate .post{height:108px;width:12px}.final-gate .rail{left:9px;right:9px;height:10px}.final-gate .r1{bottom:25px}.final-gate .r2{bottom:52px}.final-gate .r3{bottom:80px}.final-prize{width:42px;height:42px;font-size:26px}.final-prize.p1{left:22%;bottom:140px}.final-prize.p2{left:47%;bottom:260px}.final-prize.p3{left:67%;bottom:140px}.final-prize.p4{left:80%;bottom:210px}}
+#horseScene.manual-ride .ride-controls{display:none!important;visibility:hidden!important;pointer-events:none!important}
+#horseScene.manual-ride{touch-action:none!important;user-select:none!important;-webkit-user-select:none!important;overflow:hidden!important;cursor:grab!important}
+#horseScene.manual-ride #horseRider{left:var(--ride-left,8%)!important;transition:left .08s linear,bottom .18s ease,transform .18s ease!important;will-change:left,bottom,transform!important}
+#horseScene.manual-ride #horseRider.manual-jump{bottom:168px!important;transform:rotate(-5deg) scale(1.05)!important}
+#horseScene.manual-ride .mobile-ride-hint{position:absolute;right:12px;left:12px;bottom:10px;z-index:120;background:rgba(255,255,255,.88);border-radius:18px;padding:9px 10px;font-weight:1000;font-size:13px;color:#172033;box-shadow:0 10px 24px rgba(0,0,0,.14);pointer-events:none;backdrop-filter:blur(10px)}
+#horseScene.manual-ride .mobile-jump-btn{position:absolute;left:14px;bottom:64px;z-index:121;width:62px;height:62px;border:0;border-radius:50%;font-size:28px;font-weight:1000;background:linear-gradient(135deg,#ffe066,#ff922b);color:#3b2500;box-shadow:0 14px 26px rgba(0,0,0,.24);opacity:.92;touch-action:none}
+#horseScene.manual-ride .manual-prize{pointer-events:none!important}
+@media(max-width:820px){
+  #horseScene.manual-ride{min-height:585px!important}
+  #horseScene.manual-ride #horseRider{width:250px!important;height:196px!important;bottom:88px!important}
+  #horseScene.manual-ride #horseRider.manual-jump{bottom:168px!important}
+}
 </style>
 <script>
 (function(){
-  const $=id=>document.getElementById(id);
-  let dragStartX=null, dragStartRideX=8;
-  function setText(id,txt){const e=$(id); if(e) e.textContent=txt;}
-  function setProgress(p){const e=$('rideProProgress'); if(e) e.style.width=p+'%';}
-  function stopSounds(){try{ if(window.stopAllSounds) window.stopAllSounds(false); }catch(e){} clearInterval(window.horseRideSoundInterval); clearInterval(window.horseRideInterval); clearTimeout(window.horseRideTimeout);}
-  function preparePhoto(){try{ if(window.prepareRiderPhoto) window.prepareRiderPhoto(); }catch(e){}}
-  function cleanScene(){document.querySelectorAll('#horseScene .ride-controls,#horseScene .manual-prize,#horseScene .manual-gate,#horseScene .final-prize,#horseScene .final-gate').forEach(x=>x.remove());}
-  function addCourse(){const scene=$('horseScene'); if(!scene) return; cleanScene(); const g=document.createElement('div'); g.className='final-gate'; g.innerHTML='<span class="post left"></span><span class="post right"></span><span class="rail r1"></span><span class="rail r2"></span><span class="rail r3"></span>'; scene.appendChild(g); [['p1','🥇','+50'],['p2','💎','קפיצה'],['p3','⭐','+35'],['p4','🏆','גביע']].forEach(([cls,ico,label])=>{const p=document.createElement('div');p.className='final-prize '+cls;p.innerHTML=ico+'<small>'+label+'</small>';scene.appendChild(p);});}
-  function updateHud(){const collected=document.querySelectorAll('#horseScene .final-prize.collected').length; setText('ridingScore','רכיבה חופשית: אספת '+collected+'/4 פרסים'); setProgress(collected*25); if(collected>=4){setText('rideProMission','מעולה! אספת את כל הפרסים במסלול 🏆');}}
-  function collectNear(){const x=window.rideX||8, jumping=!!window.rideJumping; document.querySelectorAll('#horseScene .final-prize:not(.collected)').forEach(p=>{const cls=[...p.classList].find(c=>/^p\d$/.test(c)); const px={p1:26,p2:47,p3:66,p4:82}[cls]||0; const needsJump=cls==='p2'||cls==='p4'; if(Math.abs(x-px)<=8 && (!needsJump || jumping)){p.classList.add('collected'); state.pro=state.pro||{}; state.pro.rideScore=(state.pro.rideScore||0)+(cls==='p2'?100:cls==='p4'?140:50); state.pro.ribbons=(state.pro.ribbons||0)+(cls==='p1'||cls==='p4'?1:0); state.pro.gems=(state.pro.gems||0)+(cls==='p2'?1:0); state.coins+=(cls==='p4'?35:cls==='p2'?24:12); state.happy=clamp(state.happy+5); state.friendship=clamp(state.friendship+4); if(window.petTalk) petTalk('אספת פרס ברכיבה! '+p.textContent.replace(/\+.*/,'')); if(window.sparkles) sparkles(); if(window.update) update(); if(window.save) save(); }}); updateHud();}
-  function active(){const s=$('horseScene'); return !!(s&&s.classList.contains('final-ride')&&s.classList.contains('show'));}
-  function moveToPercent(p){const rider=$('horseRider'); if(!rider) return; window.rideX=Math.max(0,Math.min(74,p)); rider.style.left=window.rideX+'%'; collectNear();}
-  window.rideMove=function(dir){moveToPercent((window.rideX||8)+dir*10);};
-  window.rideJump=function(){const rider=$('horseRider'); if(!rider||window.rideJumping) return; window.rideJumping=true; rider.classList.add('final-jump'); try{ if(window.playRealAnimalSound&&state.sound) playRealAnimalSound('horse'); }catch(e){} setTimeout(collectNear,230); setTimeout(()=>{rider.classList.remove('final-jump'); window.rideJumping=false; collectNear();},760);};
-  window.startHorseRide=function(){stopSounds(); preparePhoto(); try{ if(window.stopParkWalk) stopParkWalk(false); if(window.stopDogWalk) stopDogWalk(false); }catch(e){} const scene=$('horseScene'), rider=$('horseRider'); if(!scene||!rider) return; scene.classList.add('show','final-ride','manual-ride'); scene.classList.remove('play','jump','showjump'); window.rideX=8; window.rideJumping=false; rider.style.left='8%'; rider.classList.remove('manual-jump','final-jump'); addCourse(); setText('ridingScore','רכיבה חופשית: אספת 0/4 פרסים'); const mission=$('rideProMission'); if(mission) mission.innerHTML='משימה: לכוון את הסוס בגרירה או בחצים, ולקפוץ בלחיצה או רווח <small>אין כפתורי כיוון על המסך כדי שלא יסתירו.</small><div class="pro-progress"><span id="rideProProgress"></span></div>'; setProgress(0); if(window.petTalk) petTalk('עכשיו אפשר לשלוט בסוס באמת — גרירה, חצים וקפיצה! 🏇'); try{ if(window.playRealAnimalSound&&state.sound) playRealAnimalSound('horse'); }catch(e){} window.horseRideSoundInterval=setInterval(()=>{try{if(state.sound&&window.playRealAnimalSound)playRealAnimalSound('horse')}catch(e){}},6000);};
-  window.horseJumpPractice=function(){window.startHorseRide(); const seq=[1,1,1,1]; seq.forEach((d,i)=>setTimeout(()=>window.rideMove(d),260+i*180)); setTimeout(()=>window.rideJump(),1050);};
-  window.stopHorseRide=function(done=false){stopSounds(); const collected=document.querySelectorAll('#horseScene .final-prize.collected').length; if(done||collected>0){state.happy=clamp(state.happy+10+collected*2); state.friendship=clamp(state.friendship+8+collected*2); if(window.reward) reward(12+collected*4,12+collected*6,'הרכיבה הסתיימה — אספת '+collected+' פרסים 🏆');} const scene=$('horseScene'); if(scene) scene.classList.remove('show','final-ride','manual-ride','play','jump','showjump'); cleanScene(); if(window.update) update(); if(window.save) save();};
-  document.addEventListener('pointerdown',e=>{if(!active())return; const scene=$('horseScene'); if(!scene.contains(e.target))return; dragStartX=e.clientX; dragStartRideX=window.rideX||8; try{scene.setPointerCapture(e.pointerId)}catch(err){}},true);
-  document.addEventListener('pointermove',e=>{if(!active()||dragStartX===null)return; const scene=$('horseScene'); const rect=scene.getBoundingClientRect(); moveToPercent(dragStartRideX+((e.clientX-dragStartX)/rect.width)*82); e.preventDefault();},{capture:true,passive:false});
-  document.addEventListener('pointerup',e=>{if(!active())return; const dx=dragStartX===null?999:Math.abs(e.clientX-dragStartX); dragStartX=null; if(dx<8) window.rideJump();},true);
-  document.addEventListener('keydown',e=>{if(!active())return; if(e.key==='ArrowLeft'){e.preventDefault();window.rideMove(-1)} if(e.key==='ArrowRight'){e.preventDefault();window.rideMove(1)} if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();window.rideJump()}},true);
+  const $ = id => document.getElementById(id);
+  const prizeMap = {p1:{x:22, score:50, coins:12, jump:false}, p2:{x:47, score:100, coins:24, jump:true}, p3:{x:67, score:50, coins:12, jump:false}, p4:{x:80, score:140, coins:35, jump:true}};
+  let dragging=false, startClientX=0, startRideX=8;
+  function scene(){return $('horseScene')}
+  function rider(){return $('horseRider')}
+  function active(){const s=scene();return !!(s && s.classList.contains('show') && s.classList.contains('manual-ride'))}
+  function setLeft(x){
+    const s=scene(), r=rider(); if(!s||!r) return;
+    window.rideX=Math.max(0, Math.min(74, Number(x)||0));
+    s.style.setProperty('--ride-left', window.rideX+'%');
+    r.style.setProperty('left', window.rideX+'%', 'important');
+    collectMobilePrizes();
+  }
+  function ensureMobileUi(){
+    const s=scene(); if(!s) return;
+    s.querySelectorAll('.ride-controls').forEach(n=>n.remove());
+    if(!s.querySelector('.mobile-ride-hint')){
+      const hint=document.createElement('div'); hint.className='mobile-ride-hint';
+      hint.textContent='בטלפון: גרור את הסוס ימינה/שמאלה • לחץ על המסך או על כפתור הקפיצה';
+      s.appendChild(hint);
+    }
+    if(!s.querySelector('.mobile-jump-btn')){
+      const b=document.createElement('button'); b.type='button'; b.className='mobile-jump-btn'; b.textContent='⬆️';
+      b.addEventListener('pointerdown', function(ev){ev.preventDefault(); ev.stopPropagation(); window.rideJump();}, {passive:false});
+      s.appendChild(b);
+    }
+    if(!s.querySelector('.manual-gate')){
+      const g=document.createElement('div'); g.className='manual-gate';
+      g.innerHTML='<span class="post left"></span><span class="post right"></span><span class="rail r1"></span><span class="rail r2"></span><span class="rail r3"></span>';
+      s.appendChild(g);
+    }
+  }
+  function clearPrizes(){document.querySelectorAll('#horseScene .manual-prize').forEach(x=>x.remove())}
+  function spawnPrizes(){
+    const s=scene(); if(!s) return; clearPrizes();
+    [['p1','🥇','+50'],['p2','💎','קפיצה'],['p3','⭐','+50'],['p4','🏆','גביע']].forEach(function(row){
+      const p=document.createElement('div'); p.className='manual-prize '+row[0]; p.innerHTML=row[1]+'<small>'+row[2]+'</small>'; s.appendChild(p);
+    });
+  }
+  window.collectMobilePrizes = function(){
+    if(!active()) return;
+    const x=window.rideX||8, jumping=!!window.rideJumping;
+    document.querySelectorAll('#horseScene .manual-prize:not(.collected)').forEach(function(p){
+      const cls=[...p.classList].find(c=>/^p\d$/.test(c)); const cfg=prizeMap[cls]; if(!cfg) return;
+      if(Math.abs(x-cfg.x)<=9 && (!cfg.jump || jumping)){
+        p.classList.add('collected');
+        try{
+          state.pro=state.pro||{}; state.pro.rideScore=(state.pro.rideScore||0)+cfg.score; state.coins=(state.coins||0)+cfg.coins;
+          if(cls==='p2') state.pro.gems=(state.pro.gems||0)+1; if(cls==='p1'||cls==='p4') state.pro.ribbons=(state.pro.ribbons||0)+1;
+          state.happy=clamp(state.happy+5); state.friendship=clamp(state.friendship+4);
+          if(typeof updateRideHUD==='function') updateRideHUD(); if(typeof update==='function') update(); if(typeof save==='function') save();
+        }catch(e){}
+        if(typeof sparkles==='function') sparkles();
+      }
+    });
+    const c=document.querySelectorAll('#horseScene .manual-prize.collected').length;
+    const score=$('ridingScore'); if(score) score.textContent='רכיבה בטלפון: אספת '+c+'/4 פרסים';
+    const prog=$('rideProProgress'); if(prog) prog.style.width=(c*25)+'%';
+  };
+  window.rideMove = function(dir){ setLeft((window.rideX||8) + dir*10); };
+  window.rideJump = function(){
+    const r=rider(); if(!r || window.rideJumping) return;
+    window.rideJumping=true; r.classList.add('manual-jump');
+    try{ if(typeof window.playRealAnimalSound==='function') window.playRealAnimalSound('horse'); }catch(e){}
+    setTimeout(window.collectMobilePrizes,180);
+    setTimeout(function(){ r.classList.remove('manual-jump'); window.rideJumping=false; window.collectMobilePrizes(); },620);
+  };
+  window.startHorseRide = function(){
+    try{ if(typeof stopAllSounds==='function') stopAllSounds(false); if(typeof stopParkWalk==='function') stopParkWalk(false); if(typeof stopDogWalk==='function') stopDogWalk(false); }catch(e){}
+    const s=scene(); if(!s) return;
+    clearTimeout(window.horseRideTimeout); clearInterval(window.horseRideInterval); clearInterval(window.horseRideSoundInterval);
+    s.classList.add('show','manual-ride'); s.classList.remove('play','jump','showjump');
+    ensureMobileUi(); spawnPrizes(); window.rideJumping=false; setLeft(8);
+    const score=$('ridingScore'); if(score) score.textContent='רכיבה בטלפון: גרור את הסוס ואסוף 0/4 פרסים';
+    const mission=$('rideProMission'); if(mission) mission.innerHTML='משימה: שליטה מלאה בטלפון — גרירה לצדדים וקפיצה בלחיצה <small>אין כפתורי כיוון שמסתירים את המשחק.</small><div class="pro-progress"><span id="rideProProgress"></span></div>';
+    const prog=$('rideProProgress'); if(prog) prog.style.width='0%';
+  };
+  window.horseJumpPractice = function(){ window.startHorseRide(); setTimeout(function(){setLeft(44)},300); setTimeout(window.rideJump,650); };
+  window.stopHorseRide = function(done){
+    try{ if(typeof stopAllSounds==='function') stopAllSounds(false); }catch(e){}
+    clearTimeout(window.horseRideTimeout); clearInterval(window.horseRideInterval); clearInterval(window.horseRideSoundInterval);
+    const collected=document.querySelectorAll('#horseScene .manual-prize.collected').length;
+    if(done || collected>0){try{state.happy=clamp(state.happy+8+collected*2);state.friendship=clamp(state.friendship+6+collected*2); if(typeof reward==='function') reward(10+collected*4,10+collected*5,'הרכיבה הסתיימה — אספת '+collected+' פרסים 🏆')}catch(e){}}
+    const s=scene(); if(s){s.classList.remove('show','manual-ride','play','jump','showjump'); s.querySelectorAll('.mobile-ride-hint,.mobile-jump-btn').forEach(n=>n.remove());}
+    clearPrizes(); try{if(typeof update==='function') update(); if(typeof save==='function') save();}catch(e){}
+  };
+  function pointerDown(ev){
+    if(!active()) return; const s=scene(); if(!s || !s.contains(ev.target) || ev.target.closest('.sound-stop-floating')) return;
+    dragging=true; startClientX=ev.clientX; startRideX=window.rideX||8;
+    try{s.setPointerCapture(ev.pointerId)}catch(e){}
+  }
+  function pointerMove(ev){
+    if(!active()||!dragging) return; const s=scene(); const rect=s.getBoundingClientRect();
+    const delta=((ev.clientX-startClientX)/rect.width)*82; setLeft(startRideX+delta); ev.preventDefault();
+  }
+  function pointerUp(ev){
+    if(!active()) return; const moved=Math.abs((ev.clientX||0)-startClientX); dragging=false;
+    if(moved<10 && !(ev.target&&ev.target.closest('.mobile-jump-btn'))) window.rideJump();
+  }
+  document.addEventListener('pointerdown', pointerDown, {capture:true, passive:false});
+  document.addEventListener('pointermove', pointerMove, {capture:true, passive:false});
+  document.addEventListener('pointerup', pointerUp, {capture:true, passive:false});
+  document.addEventListener('keydown', function(e){if(!active())return; if(e.key==='ArrowLeft'){e.preventDefault();window.rideMove(-1)} if(e.key==='ArrowRight'){e.preventDefault();window.rideMove(1)} if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();window.rideJump()}}, true);
 })();
 </script>
