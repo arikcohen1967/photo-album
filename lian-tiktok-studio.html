@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>ליאן טיקטוק סטודיו</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#06070a;--panel:rgba(255,255,255,.075);--panel2:rgba(255,255,255,.12);--line:rgba(255,255,255,.15);
+  --ink:#f8fafc;--muted:rgba(248,250,252,.68);--pink:#ff4fa3;--purple:#8b5cf6;--blue:#2f8cff;--green:#23c76a;
+  --shadow:0 24px 70px rgba(0,0,0,.42)
+}
+html,body{margin:0;min-height:100%;font-family:Arial,"Segoe UI",sans-serif;background:radial-gradient(circle at 15% 5%,rgba(255,79,163,.18),transparent 28%),radial-gradient(circle at 88% 10%,rgba(47,140,255,.16),transparent 30%),linear-gradient(135deg,#050608,#10131a 55%,#07080b);color:var(--ink);overflow-x:hidden;text-align:center}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:42px 42px;pointer-events:none;mask-image:linear-gradient(to bottom,black,transparent 82%)}
+.app{width:min(1180px,100%);margin:auto;padding:14px;position:relative;z-index:1}.top{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-bottom:12px}.back,.coins{min-height:52px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:#fff;text-decoration:none;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;box-shadow:0 10px 28px rgba(0,0,0,.25);backdrop-filter:blur(20px)}.coins{font-size:18px}.title h1{margin:0;font-size:clamp(32px,5vw,58px);letter-spacing:-1px}.title b{color:var(--pink)}.title p{margin:4px 0 0;color:var(--muted);font-weight:900}.layout{display:grid;grid-template-columns:260px 1fr 220px;gap:14px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.055));border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(22px);padding:14px;overflow:hidden}.upload{display:block;background:linear-gradient(135deg,#ff7ab8,#d946ef);border-radius:18px;padding:20px 10px;font-size:18px;font-weight:1000;cursor:pointer;margin-bottom:14px}.upload input{display:none}.section-title{text-align:right;font-size:18px;font-weight:1000;margin:8px 2px 10px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.tool{border:1px solid var(--line);background:rgba(0,0,0,.22);color:#fff;border-radius:14px;min-height:66px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:13px}.tool .emoji{font-size:30px}.tool.active{outline:2px solid var(--pink);box-shadow:0 0 22px rgba(255,79,163,.35)}.bubbles{display:flex;flex-direction:column;gap:7px}.bubble-btn{border:1px solid rgba(255,79,163,.65);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:10px;font-weight:900;cursor:pointer}.stage-panel{padding:14px}.phone{position:relative;margin:auto;width:min(470px,94vw);aspect-ratio:9/16;border-radius:26px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 80px rgba(0,0,0,.55)}.canvas{position:absolute;inset:0;overflow:hidden;touch-action:none;background:linear-gradient(135deg,#ffeff8,#dbeafe)}.placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#111827;font-weight:1000;padding:28px}.placeholder .big{font-size:70px}.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}.overlay{position:absolute;user-select:none;touch-action:none;cursor:grab;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25));z-index:5}.sticker{font-size:54px}.text-item{font-size:32px;font-weight:1000;color:white;text-shadow:0 4px 13px rgba(0,0,0,.65);padding:5px 8px}.speech{background:#fff;color:#111;border:3px solid #111;border-radius:22px;padding:12px 16px;font-weight:1000;font-size:26px;max-width:260px}.speech:after{content:"";position:absolute;bottom:-17px;right:30px;border-width:18px 12px 0 0;border-style:solid;border-color:#111 transparent transparent transparent}.caption{position:absolute;left:18px;right:18px;bottom:42px;color:#fff;font-size:26px;font-weight:1000;text-shadow:0 5px 14px rgba(0,0,0,.65);z-index:4;display:none}.spark{position:absolute;font-size:20px;animation:float 2.8s linear infinite;z-index:3;pointer-events:none}@keyframes float{from{transform:translateY(0) scale(.8);opacity:.9}to{transform:translateY(-180px) scale(1.5);opacity:0}}
+.controls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.big-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;margin-top:12px}.action{border:1px solid var(--line);border-radius:17px;min-height:58px;background:rgba(255,255,255,.09);color:white;font-weight:1000;font-size:15px;cursor:pointer}.action.purple{background:linear-gradient(135deg,#d946ef,#7c3aed)}.action.blue{background:linear-gradient(135deg,#38bdf8,#2563eb)}.action.green{background:linear-gradient(135deg,#4ade80,#16a34a)}.filters{display:flex;flex-direction:column;gap:8px}.filter{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:8px;background:rgba(0,0,0,.2);color:#fff;font-weight:900;cursor:pointer;text-align:right}.thumb{height:42px;border-radius:12px;background:linear-gradient(135deg,#fbcfe8,#bfdbfe)}.glam{filter:saturate(1.35) contrast(1.08)}.cute{filter:saturate(1.2) brightness(1.08)}.princess{filter:hue-rotate(305deg) saturate(1.25) brightness(1.06)}.bw{filter:grayscale(1)}.warm{filter:sepia(.25) saturate(1.15)}.cool{filter:hue-rotate(25deg) saturate(1.15)}.input{width:100%;border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.25);color:#fff;min-height:48px;padding:10px;font-weight:900;outline:none}.caption-box{margin-top:14px;border:1px solid rgba(255,79,163,.45);border-radius:20px;padding:12px;background:rgba(255,79,163,.05)}.caption-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.chip{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:10px 13px;font-weight:900;cursor:pointer}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;background:#111827;color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:12px 18px;font-weight:900;display:none;box-shadow:0 18px 40px rgba(0,0,0,.35)}.toast.show{display:block}.hidden-canvas{display:none}
+@media(max-width:940px){.top{grid-template-columns:1fr}.back,.coins{width:100%}.layout{grid-template-columns:1fr}.panel{border-radius:22px}.stickers-panel{order:2}.stage-panel{order:1}.filters-panel{order:3}.grid{grid-template-columns:repeat(4,1fr)}.tool{min-height:62px}.controls{grid-template-columns:repeat(5,1fr)}.big-actions{grid-template-columns:1fr}.filter{grid-template-columns:45px 1fr}.phone{width:min(390px,96vw)}}
+@media(max-width:520px){.app{padding:10px}.title h1{font-size:34px}.grid{grid-template-columns:repeat(3,1fr)}.tool .emoji{font-size:26px}.tool{font-size:12px}.controls{grid-template-columns:repeat(3,1fr)}.phone{width:100%;border-radius:22px}.panel{padding:12px}.speech{font-size:22px}.sticker{font-size:48px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <a class="back" href="index.html">⌂ חזרה לאתר</a>
+    <div class="title"><h1>🎤 <b>ליאן</b> טיקטוק סטודיו ✨</h1><p>צרי · ערכי · שתפי · הכי כוכבת!</p></div>
+    <div class="coins"><span id="coins">1250</span> 🪙 מטבעות</div>
+  </div>
 
+  <div class="layout">
+    <aside class="panel stickers-panel">
+      <label class="upload">⬆️ העלאת תמונה מהגלריה<input id="file" type="file" accept="image/*"></label>
+      <div class="section-title">מדבקות ⭐</div>
+      <div class="grid" id="stickers"></div>
+      <div class="section-title">בועות דיבור 💬</div>
+      <div class="bubbles" id="bubbles"></div>
+    </aside>
+
+    <main class="panel stage-panel">
+      <div class="phone" id="phone">
+        <div class="canvas" id="canvas">
+          <img class="photo" id="photo" alt="תמונה">
+          <div class="placeholder" id="placeholder"><div class="big">📸</div><div>העלי תמונה והתחילי לעצב</div></div>
+          <div class="caption" id="caption"></div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="action" onclick="addText()">T טקסט</button>
+        <button class="action" onclick="addFrame()">▣ מסגרת</button>
+        <button class="action" onclick="clearSelected()">🗑 מחק פריט</button>
+        <button class="action" onclick="undo()">↶ בטל</button>
+        <button class="action" onclick="resetAll()">↻ איפוס</button>
+      </div>
+      <div class="big-actions">
+        <button class="action purple" onclick="randomCaption()">🎙️ תמציאי לי כיתוב</button>
+        <button class="action blue" onclick="saveImage()">⬇️ שמור תמונה</button>
+        <button class="action green" onclick="shareWhatsApp()">🟢 שתף וואטסאפ</button>
+      </div>
+      <div class="caption-box">
+        <div class="section-title" style="text-align:center;color:#ff6ab7">✨ AI Caption Generator ✨</div>
+        <div class="caption-chips" id="captionChips"></div>
+      </div>
+    </main>
+
+    <aside class="panel filters-panel">
+      <div class="section-title">פילטרים 🪄</div>
+      <div class="filters" id="filters"></div>
+      <div class="section-title">טקסט ✍️</div>
+      <input class="input" id="customText" placeholder="כתבי טקסט משלך">
+      <button class="action" style="width:100%;margin-top:8px" onclick="addCustomText()">הוסף טקסט</button>
+      <div class="section-title">מוזיקה 🎵</div>
+      <button class="action" style="width:100%" onclick="playMusic()" id="musicBtn">▶ Happy Day</button>
+    </aside>
+  </div>
+</div>
+<canvas class="hidden-canvas" id="exportCanvas"></canvas>
+<div class="toast" id="toast"></div>
+
+<script>
+const canvas=document.getElementById('canvas'), photo=document.getElementById('photo'), file=document.getElementById('file'), placeholder=document.getElementById('placeholder'), caption=document.getElementById('caption');
+let selected=null, history=[], coins=Number(localStorage.getItem('lianStudioCoins')||1250), audioCtx=null, musicOn=false, currentFilter='';
+document.getElementById('coins').textContent=coins;
+const stickerList=['✨','💖','⭐','🦄','🎉','🌸','🐼','🍦','😎','👑','😊','🎵','🔥','🌈','🍭','🦋','💎','🎤'];
+const bubbleList=['היי! 💕','איזה כיף! ⭐','אני כוכבת! 👑','וואו! 💖','יום מושלם! 🌸'];
+const captions=['חיים בסטייל ✨','לא עוצרת לרגע 💖','יום מושלם עם החברות 👯‍♀️','החיוך שלי שווה מיליון ⭐','נסיכה ליום אחד 👑','אני הכוכבת של היום 🎤'];
+const filters=[['','ללא פילטר'],['glam','Glam'],['cute','Cute'],['princess','Princess'],['bw','B&W'],['warm','Warm'],['cool','Cool']];
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
+function addCoins(n){coins+=n;localStorage.setItem('lianStudioCoins',coins);document.getElementById('coins').textContent=coins}
+function clickSound(){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=520;o.type='sine';g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.055,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.08);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.09)}catch(e){}}
+document.addEventListener('click',e=>{if(e.target.closest('button,.tool,.bubble-btn,.filter,.upload,.back'))clickSound()});
+function saveHistory(){history.push(canvas.innerHTML); if(history.length>20)history.shift()}
+function undo(){if(!history.length)return toast('אין מה לבטל'); canvas.innerHTML=history.pop(); restoreRefs(); toast('בוטל צעד אחרון')}
+function restoreRefs(){window.photo=document.getElementById('photo'); selected=null; bindOverlays()}
+file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{saveHistory();photo.src=reader.result;photo.style.display='block';placeholder.style.display='none';addCoins(15);toast('התמונה עלתה בהצלחה ✨')};reader.readAsDataURL(f)});
+function makeTool(emoji,label,fn){const b=document.createElement('button');b.className='tool';b.innerHTML=`<span class="emoji">${emoji}</span><span>${label}</span>`;b.onclick=fn;return b}
+stickerList.forEach(s=>document.getElementById('stickers').appendChild(makeTool(s,s,()=>addSticker(s))));
+bubbleList.forEach(t=>{const b=document.createElement('button');b.className='bubble-btn';b.textContent=t;b.onclick=()=>addBubble(t);document.getElementById('bubbles').appendChild(b)});
+filters.forEach(([cls,label])=>{const f=document.createElement('button');f.className='filter';f.innerHTML=`<span class="thumb ${cls}"></span><span>${label}</span>`;f.onclick=()=>setFilter(cls);document.getElementById('filters').appendChild(f)});
+captions.forEach(c=>{const chip=document.createElement('button');chip.className='chip';chip.textContent=c;chip.onclick=()=>setCaption(c);document.getElementById('captionChips').appendChild(chip)});
+function addOverlay(el,x=45,y=45){saveHistory();el.classList.add('overlay');el.style.left=x+'%';el.style.top=y+'%';canvas.appendChild(el);select(el);makeDraggable(el);addCoins(5)}
+function addSticker(s){const el=document.createElement('div');el.className='sticker';el.textContent=s;addOverlay(el,35+Math.random()*25,22+Math.random()*35)}
+function addBubble(t){const el=document.createElement('div');el.className='speech';el.textContent=t;addOverlay(el,26,12)}
+function addText(){const el=document.createElement('div');el.className='text-item';el.textContent='Queen ✨';addOverlay(el,28,70)}
+function addCustomText(){const t=document.getElementById('customText').value.trim();if(!t)return toast('כתבי טקסט קודם');const el=document.createElement('div');el.className='text-item';el.textContent=t;addOverlay(el,22,68)}
+function setCaption(t){saveHistory();caption.textContent=t;caption.style.display='block';addCoins(3)}
+function randomCaption(){setCaption(captions[Math.floor(Math.random()*captions.length)]);toast('נוצר כיתוב חדש ✨')}
+function setFilter(cls){currentFilter=cls;photo.className='photo '+cls;toast('פילטר עודכן')}
+function select(el){document.querySelectorAll('.overlay').forEach(o=>o.style.outline='none');selected=el;if(el)el.style.outline='2px dashed rgba(255,255,255,.75)'}
+function clearSelected(){if(!selected)return toast('בחרי קודם פריט למחיקה');saveHistory();selected.remove();selected=null}
+function addFrame(){saveHistory();canvas.style.boxShadow='inset 0 0 0 12px rgba(255,79,163,.85), inset 0 0 0 20px rgba(255,255,255,.35)';toast('נוספה מסגרת')}
+function resetAll(){saveHistory();document.querySelectorAll('.overlay,.spark').forEach(e=>e.remove());caption.style.display='none';canvas.style.boxShadow='none';toast('הסטודיו נוקה')}
+function makeDraggable(el){let sx=0,sy=0,ox=0,oy=0,drag=false;el.addEventListener('pointerdown',e=>{select(el);drag=true;el.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect(),cr=canvas.getBoundingClientRect();ox=r.left-cr.left;oy=r.top-cr.top});el.addEventListener('pointermove',e=>{if(!drag)return;const cr=canvas.getBoundingClientRect();let nx=ox+(e.clientX-sx),ny=oy+(e.clientY-sy);nx=Math.max(0,Math.min(nx,cr.width-el.offsetWidth));ny=Math.max(0,Math.min(ny,cr.height-el.offsetHeight));el.style.left=(nx/cr.width*100)+'%';el.style.top=(ny/cr.height*100)+'%'});el.addEventListener('pointerup',()=>drag=false)}
+function bindOverlays(){document.querySelectorAll('.overlay').forEach(makeDraggable)}
+function addSparkles(){for(let i=0;i<18;i++){const s=document.createElement('div');s.className='spark';s.textContent=['✨','💖','⭐','🌸'][Math.floor(Math.random()*4)];s.style.left=Math.random()*95+'%';s.style.bottom='-30px';s.style.animationDelay=Math.random()*2+'s';canvas.appendChild(s)}}addSparkles();
+function playMusic(){try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();musicOn=!musicOn;document.getElementById('musicBtn').textContent=musicOn?'⏸ Happy Day':'▶ Happy Day';if(musicOn){[440,554,659,554].forEach((freq,i)=>setTimeout(()=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.18)},i*190))}}catch(e){}}
+function drawRoundImage(ctx,img,x,y,w,h,r){ctx.save();ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();ctx.clip();ctx.drawImage(img,x,y,w,h);ctx.restore()}
+function saveImage(){exportImage(true)}
+async function exportImage(download){const out=document.getElementById('exportCanvas'),ctx=out.getContext('2d');const rect=canvas.getBoundingClientRect();out.width=900;out.height=1600;ctx.fillStyle='#111827';ctx.fillRect(0,0,out.width,out.height);if(photo.src){ctx.save();if(currentFilter==='bw')ctx.filter='grayscale(1)'; if(currentFilter==='cute')ctx.filter='saturate(1.2) brightness(1.08)'; if(currentFilter==='glam')ctx.filter='saturate(1.35) contrast(1.08)'; if(currentFilter==='princess')ctx.filter='hue-rotate(305deg) saturate(1.25) brightness(1.06)'; if(currentFilter==='warm')ctx.filter='sepia(.25) saturate(1.15)'; if(currentFilter==='cool')ctx.filter='hue-rotate(25deg) saturate(1.15)';ctx.drawImage(photo,0,0,out.width,out.height);ctx.restore()}else{const grd=ctx.createLinearGradient(0,0,out.width,out.height);grd.addColorStop(0,'#ffeff8');grd.addColorStop(1,'#dbeafe');ctx.fillStyle=grd;ctx.fillRect(0,0,out.width,out.height)}
+ctx.textAlign='center';ctx.textBaseline='middle';document.querySelectorAll('.overlay').forEach(el=>{const r=el.getBoundingClientRect();const x=(r.left-rect.left+r.width/2)/rect.width*out.width;const y=(r.top-rect.top+r.height/2)/rect.height*out.height;if(el.classList.contains('sticker')){ctx.font='86px Arial';ctx.fillText(el.textContent,x,y)}else if(el.classList.contains('speech')){ctx.font='bold 48px Arial';const pad=28,w=Math.min(520,ctx.measureText(el.textContent).width+pad*2),h=92;ctx.fillStyle='white';ctx.strokeStyle='#111';ctx.lineWidth=7;roundRect(ctx,x-w/2,y-h/2,w,h,28,true,true);ctx.fillStyle='#111';ctx.fillText(el.textContent,x,y)}else{ctx.font='bold 58px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.strokeText(el.textContent,x,y);ctx.fillText(el.textContent,x,y)}});if(caption.style.display!=='none'&&caption.textContent){ctx.font='bold 54px Arial';ctx.fillStyle='white';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=8;ctx.textAlign='center';ctx.strokeText(caption.textContent,out.width/2,out.height-110);ctx.fillText(caption.textContent,out.width/2,out.height-110)}
+const url=out.toDataURL('image/png');if(download){const a=document.createElement('a');a.href=url;a.download='lian-tiktok-studio.png';a.click();addCoins(25);toast('התמונה נשמרה 🎉')}return url}
+function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}
+async function shareWhatsApp(){const text=encodeURIComponent('תראו מה יצרתי בליאן טיקטוק סטודיו ✨');window.open('https://wa.me/?text='+text,'_blank');toast('וואטסאפ נפתח לשיתוף')}
+</script>
+</body>
+</html>
