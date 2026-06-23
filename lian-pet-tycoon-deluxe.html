@@ -26,7 +26,7 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
 .cloud{position:absolute;background:#fff;border-radius:999px;box-shadow:28px 2px 0 2px #fff,58px 4px 0 -4px #fff;opacity:.9;width:70px;height:26px}.c1{top:42px;right:10%}.c2{top:74px;left:15%;transform:scale(.8)}
 .path{position:absolute;right:7%;left:7%;bottom:18px;height:205px;background:rgba(255,229,151,.92);border:3px solid rgba(187,129,42,.24);border-radius:70% 70% 24px 24px/82% 82% 24px 24px;transform:perspective(600px) rotateX(20deg);box-shadow:inset 0 0 0 7px rgba(255,255,255,.28)}
 .spot{position:absolute;width:148px;height:132px;border:0;border-radius:30px;background:linear-gradient(145deg,#fff,#effcff);box-shadow:0 16px 34px rgba(16,70,110,.22);font-weight:1000;color:#17324d;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.18s transform;z-index:3}.spot:active{transform:scale(.96)}.spot .emoji{font-size:44px}.spot small{color:#64748b;font-weight:900}.locked{filter:grayscale(.45);opacity:.72}
-.home{right:35%;top:120px;transform:scale(1.25)}.cat{right:38%;top:285px;transform:scale(1.15)}.shop{display:none}.stable{right:13%;bottom:142px}.park{left:31%;bottom:122px}.mine{display:none}.mansion{display:none}
+.home{right:7%;top:170px}.cat{right:34%;top:238px}.shop{left:8%;top:175px}.stable{right:13%;bottom:142px}.park{left:31%;bottom:122px}.mine{left:8%;bottom:300px}.mansion{right:42%;top:94px}
 .character{position:absolute;right:44%;bottom:56px;width:112px;height:136px;z-index:7;transition:.35s ease}.avatar{position:absolute;right:7px;bottom:22px;width:96px;height:96px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 14px 28px rgba(0,0,0,.22);background:#fff}.wearable{position:absolute;z-index:8;pointer-events:none}.wear-crown{right:28px;bottom:105px;font-size:42px;display:none}.wear-wings{right:-30px;bottom:45px;font-size:52px;display:none}.wear-bow{right:22px;bottom:104px;font-size:36px;display:none}.wear-glow{position:absolute;right:0;bottom:14px;width:112px;height:112px;border-radius:50%;background:radial-gradient(circle,rgba(255,216,77,.45),transparent 65%);display:none;animation:pulse 1.6s infinite}
 .pet{position:absolute;right:-40px;bottom:0;font-size:48px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));animation:bob 1.6s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-8px)}}@keyframes pulse{50%{transform:scale(1.12);opacity:.65}}
 .side{display:flex;flex-direction:column;gap:12px}.card{border-radius:28px;padding:14px}.card h2{margin:0 0 10px;color:#174166}
@@ -53,6 +53,143 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
 @keyframes firework{0%{transform:scale(.2);opacity:.2}50%{transform:scale(1.8);opacity:1}100%{transform:scale(2.6);opacity:0}}
 .photo-preview{width:100%;max-height:430px;object-fit:contain;border-radius:22px;background:#fff;margin:8px 0}
 @media(max-width:540px){.hud{grid-template-columns:repeat(2,1fr)}.island{left:35%;bottom:330px}.festival-banner{font-size:13px;max-width:94%;white-space:normal}}
+
+
+/* === MOBILE CLEAN HOME MAP FIX - v17 ===
+   מטרת התיקון: במסך הטלפון החצר העליונה לא תהיה מפה צפופה.
+   משאירים רק בית ליאן + מנצ'קין. כל שאר המקומות נשארים באזור איסוף הכסף.
+*/
+.world.rainbow:after,
+.world.festival .festival-banner,
+.festival-banner{
+  display:none!important;
+  content:none!important;
+}
+
+.world .spot{
+  display:none!important;
+}
+
+/* רק שני מוקדים בחצר */
+.world .spot.home,
+.world .spot.cat{
+  display:flex!important;
+}
+
+/* מראה נקי גם במסך רחב */
+.world .spot.home{
+  right:50%!important;
+  left:auto!important;
+  top:92px!important;
+  transform:translateX(50%) scale(1.28)!important;
+  z-index:8!important;
+}
+.world .spot.cat{
+  right:50%!important;
+  left:auto!important;
+  top:278px!important;
+  transform:translateX(50%) scale(1.12)!important;
+  z-index:9!important;
+}
+
+/* הסתרת כפילויות ודברים שיצרו עומס בחצר */
+.world .spot.shop,
+.world .spot.mine,
+.world .spot.mansion,
+.world .spot.island,
+.world .spot.park,
+.world .spot.stable,
+.world .spot.locked{
+  display:none!important;
+}
+
+/* הדמות/תמונה במרכז יצרה בלגן עם מנצ'קין - מוסתרת בחצר */
+.world .character{
+  display:none!important;
+}
+
+/* שביל נקי מתחת לבית */
+.world .path{
+  right:24%!important;
+  left:24%!important;
+  bottom:14px!important;
+  height:185px!important;
+  opacity:.92!important;
+}
+
+/* התאמת גובה החצר כדי שאיסוף הכסף יופיע מהר יותר בטלפון */
+@media(max-width:930px){
+  .world{
+    min-height:500px!important;
+  }
+}
+
+/* תיקון מיוחד לטלפונים */
+@media(max-width:540px){
+  .world{
+    min-height:455px!important;
+    border-radius:26px!important;
+    overflow:hidden!important;
+  }
+
+  .cloud.c1{top:38px!important;right:12%!important;transform:scale(.72)!important}
+  .cloud.c2{top:70px!important;left:12%!important;transform:scale(.62)!important}
+
+  .world .spot{
+    display:none!important;
+  }
+
+  .world .spot.home{
+    display:flex!important;
+    width:132px!important;
+    height:112px!important;
+    right:50%!important;
+    left:auto!important;
+    top:82px!important;
+    transform:translateX(50%) scale(1.18)!important;
+    z-index:10!important;
+  }
+
+  .world .spot.cat{
+    display:flex!important;
+    width:126px!important;
+    height:108px!important;
+    right:50%!important;
+    left:auto!important;
+    top:242px!important;
+    transform:translateX(50%) scale(1.05)!important;
+    z-index:11!important;
+  }
+
+  .world .spot.home .emoji,
+  .world .spot.cat .emoji{
+    font-size:38px!important;
+  }
+
+  .world .spot.home small,
+  .world .spot.cat small{
+    font-size:11px!important;
+    line-height:1.1!important;
+  }
+
+  .world .path{
+    right:18%!important;
+    left:18%!important;
+    bottom:12px!important;
+    height:150px!important;
+  }
+
+  .pet{
+    display:none!important;
+  }
+}
+
+/* תיקון toast: לא יפריע במסכי משחק */
+.toast{
+  bottom:94px!important;
+  padding:9px 14px!important;
+  font-size:14px!important;
+}
 
 </style>
 </head>
