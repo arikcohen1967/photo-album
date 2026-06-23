@@ -135,6 +135,20 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
   .map-island .mi{font-size:34px}
 }
 
+
+/* BOTTOM NAV REAL SCREENS */
+.nav-item,.nav-home{cursor:pointer;user-select:none}
+.nav-item:active,.nav-home:active{transform:scale(.96)}
+.nav-panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.nav-card{border:0;border-radius:26px;background:rgba(255,255,255,.86);box-shadow:0 12px 25px rgba(26,81,127,.16);padding:16px;text-align:center;font-weight:1000;color:#12336e;min-height:118px}
+.nav-card .big{font-size:52px;display:block;margin-bottom:6px}
+.nav-card small{display:block;margin-top:6px;color:#5b6d84;font-weight:800;font-size:14px;line-height:1.35}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px;border-radius:22px;background:rgba(255,255,255,.78);margin:10px 0;font-weight:1000}
+.switch-btn{border:0;border-radius:999px;min-width:86px;height:42px;font-weight:1000;color:#fff;background:linear-gradient(180deg,#4ade80,#16a34a)}
+.switch-btn.off{background:linear-gradient(180deg,#a1a1aa,#52525b)}
+.danger{background:linear-gradient(180deg,#ff7a7a,#e53939)!important;color:#fff!important}
+@media(max-width:560px){.nav-panel-grid{grid-template-columns:1fr 1fr;gap:10px}.nav-card{border-radius:22px;padding:12px;min-height:112px}.nav-card .big{font-size:46px}}
+
 </style>
 </head>
 <body>
@@ -167,8 +181,26 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
   </div>
   <div class="activity"><div class="emoji" id="activityEmoji">💎</div><h2 id="activityTitle">Crystal Island</h2><p id="activityText">כאן מתחילים פעילות, צוברים נקודות, פרסים והפתעות.</p><button class="primary" id="earnBtn">אספו פרס עכשיו 🪙</button></div>
 </section>
+
+<section id="navScreen" class="screen">
+  <div class="screen-topbar">
+    <div class="screen-actions">
+      <button class="icon-btn" id="navBackBtn">⬅ חזרה</button>
+      <button class="icon-btn home-btn" id="navHomeBtn">🏠 בית</button>
+    </div>
+    <div class="screen-name"><span class="screen-emoji" id="navEmoji">🛒</span><span id="navTitle">חנות</span></div>
+    <button class="icon-btn" id="navSoundBtn">🔊</button>
+  </div>
+  <div class="activity">
+    <div class="emoji" id="navBigEmoji">🛒</div>
+    <h2 id="navHeading">חנות</h2>
+    <p id="navDesc">כאן נפתח מסך אמיתי.</p>
+    <div class="nav-panel-grid" id="navContent"></div>
+  </div>
+</section>
+
 </main>
-<nav class="bottom-nav"><div class="nav-item"><span class="n">🛒</span>חנות</div><div class="nav-item"><span class="n">🎒</span>תיק</div><div class="nav-home"><div><span class="n">🏠</span><span>בית</span></div></div><div class="nav-item"><span class="n">📋</span>משימות</div><div class="nav-item"><span class="n">⚙️</span>הגדרות</div></nav>
+<nav class="bottom-nav"><div class="nav-item" data-nav="shop"><span class="n">🛒</span>חנות</div><div class="nav-item" data-nav="bag"><span class="n">🎒</span>תיק</div><div class="nav-home" data-nav="home"><div><span class="n">🏠</span><span>בית</span></div></div><div class="nav-item" data-nav="missions"><span class="n">📋</span>משימות</div><div class="nav-item" data-nav="settings"><span class="n">⚙️</span>הגדרות</div></nav>
 <script>
 const data={crystal:["💎","Crystal Island","איסוף יהלומים ואוצרות נדירים באי הקסום."],secret:["🏝️","אי סודי","חפשו אוצרות, סודות מיוחדים ומקומות נסתרים."],home:["🏡","בית ליאן","עצבו את הבית, שדרגו חדרים והוסיפו פריטים."],cat:["😺",'מצב "קו"',"טפלו בחיות, האכילו אותן וקבלו לבבות."],shop:["🏪","חנות","קנו פריטים, שדרוגים, בגדים והפתעות."],farm:["🏚️","חווה","גדלו חיות, אספו מוצרים והרווחו מטבעות."],park:["🎡","הפארק","מיני משחקים, כיף, רכיבה והפתעות."],mine:["⛏️","המכרה","כרו משאבים יקרים ואוצרות נדירים."]};
 let coins=12450, soundOn=true;
@@ -176,7 +208,7 @@ function clickSound(){if(!soundOn)return;try{const ctx=new (window.AudioContext|
 document.querySelectorAll(".tile").forEach(btn=>btn.addEventListener("click",()=>{clickSound();const item=data[btn.dataset.screen];document.getElementById("activityEmoji").textContent=item[0];document.getElementById("activityTitle").textContent=item[1];document.getElementById("activityText").textContent=item[2];document.getElementById("topbarEmoji").textContent=item[0];document.getElementById("topbarTitle").textContent=item[1];document.getElementById("homeScreen").classList.remove("active");document.getElementById("activityScreen").classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}));
 document.getElementById("backBtn").onclick=()=>{clickSound();document.getElementById("activityScreen").classList.remove("active");document.getElementById("homeScreen").classList.add("active")};
 
-document.getElementById("homeBtn").onclick=()=>{clickSound();document.getElementById("activityScreen").classList.remove("active");document.getElementById("homeScreen").classList.add("active");window.scrollTo({top:0,behavior:"smooth"})};
+document.getElementById("homeBtn").onclick=()=>{ if(typeof goHome==="function") goHome(); else {clickSound();document.getElementById("activityScreen").classList.remove("active");document.getElementById("homeScreen").classList.add("active");window.scrollTo({top:0,behavior:"smooth"})} };
 document.getElementById("screenSoundBtn").onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";document.getElementById("screenSoundBtn").textContent=soundOn?"🔊":"🔇";clickSound()};
 
 document.getElementById("earnBtn").onclick=()=>{clickSound();coins+=50;document.getElementById("coins").textContent=coins.toLocaleString("en-US");addXP(35);coinFly();showReward("אספת 50 מטבעות + 35 XP","🪙")};
@@ -208,6 +240,54 @@ document.querySelectorAll(".map-island:not(.lock)").forEach(btn=>btn.addEventLis
 }));
 document.querySelectorAll(".map-island.lock").forEach(btn=>btn.addEventListener("click",()=>showReward("האי הזה ייפתח ברמה גבוהה יותר 🔒","🔒")));
 document.getElementById("dailyGiftBtn").onclick=()=>{clickSound();coins+=250;document.getElementById("coins").textContent=coins.toLocaleString("en-US");addXP(80);coinFly();showReward("מתנה יומית: 250 מטבעות + 80 XP","🎁")};
+
+
+const navData={
+  shop:{e:"🛒",t:"חנות",d:"קנו אוכל, אביזרים, צעצועים ושדרוגים לחיות.",
+    items:[["🍖","אוכל לחיות","מעלה אנרגיה ושמחה"],["👑","כתרים ואביזרים","פריטים יפים לדמות"],["🧸","צעצועים","משחקים לחיות"],["💎","חבילת יהלומים","פרס מיוחד"]]},
+  bag:{e:"🎒",t:"תיק",d:"כל הפריטים שליאן אספה נמצאים כאן.",
+    items:[["🎁","מתנות","3 מתנות זמינות"],["🍎","אוכל","7 פריטים"],["👗","בגדים","4 אביזרים"],["🏆","גביעים","2 הישגים"]]},
+  missions:{e:"📋",t:"משימות",d:"משימות יומיות ושבועיות עם פרסים.",
+    items:[["🐾","טפלו ב־5 חיות","פרס: 500 מטבעות"],["🪙","אספו מטבעות","פרס: 300 מטבעות"],["🎮","שחקו 3 משחקים","פרס: 200 מטבעות"],["⭐","עלו רמה","פרס: 80 XP"]]},
+  settings:{e:"⚙️",t:"הגדרות",d:"שליטה בצלילים, מוזיקה ואיפוס המשחק.",
+    items:[["🔊","צלילים","כיבוי/הפעלה"],["🎵","מוזיקה","בקרוב"],["💾","שמירה","המשחק נשמר בדפדפן"],["🧹","איפוס","התחלה מחדש"]]}
+};
+function hideAllScreens(){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+}
+function goHome(){
+  clickSound();
+  hideAllScreens();
+  document.getElementById("homeScreen").classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function openNavScreen(key){
+  if(key==="home"){goHome();return}
+  clickSound();
+  const n=navData[key]; if(!n)return;
+  document.getElementById("navEmoji").textContent=n.e;
+  document.getElementById("navBigEmoji").textContent=n.e;
+  document.getElementById("navTitle").textContent=n.t;
+  document.getElementById("navHeading").textContent=n.t;
+  document.getElementById("navDesc").textContent=n.d;
+  document.getElementById("navContent").innerHTML=n.items.map((it,idx)=>{
+    if(key==="settings" && idx===0) return `<button class="nav-card" id="settingsSoundToggle"><span class="big">${it[0]}</span>${it[1]}<small>${soundOn?"פעיל":"כבוי"}</small></button>`;
+    if(key==="settings" && idx===3) return `<button class="nav-card danger" id="resetGameBtn"><span class="big">${it[0]}</span>${it[1]}<small>${it[2]}</small></button>`;
+    return `<button class="nav-card" data-reward="${key}"><span class="big">${it[0]}</span>${it[1]}<small>${it[2]}</small></button>`;
+  }).join("");
+  hideAllScreens();
+  document.getElementById("navScreen").classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll(".nav-card[data-reward]").forEach(btn=>btn.onclick=()=>{clickSound();addXP(20);showReward("פעולה בוצעה! קיבלת 20 XP","⭐")});
+  const toggle=document.getElementById("settingsSoundToggle");
+  if(toggle) toggle.onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";document.getElementById("navSoundBtn").textContent=soundOn?"🔊":"🔇";showReward(soundOn?"הצלילים הופעלו":"הצלילים כובו",soundOn?"🔊":"🔇")};
+  const reset=document.getElementById("resetGameBtn");
+  if(reset) reset.onclick=()=>{coins=12450;xp=420;level=15;document.getElementById("coins").textContent=coins.toLocaleString("en-US");addXP(0);showReward("המשחק אופס לדוגמה","🧹")};
+}
+document.querySelectorAll("[data-nav]").forEach(btn=>btn.addEventListener("click",()=>openNavScreen(btn.dataset.nav)));
+document.getElementById("navBackBtn").onclick=goHome;
+document.getElementById("navHomeBtn").onclick=goHome;
+document.getElementById("navSoundBtn").onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";document.getElementById("navSoundBtn").textContent=soundOn?"🔊":"🔇";clickSound()};
 
 </script>
 </body>
