@@ -66,6 +66,14 @@ body{padding-bottom:96px}
 .ride-game{position:relative;height:360px;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#aeeaff 0 45%,#57cf75 45%);border:3px solid #fff;box-shadow:inset 0 -18px 0 rgba(130,82,25,.25)}.ride-track{position:absolute;left:0;right:0;bottom:18px;height:78px;background:#e9c57a;border-top:5px dashed rgba(130,82,25,.35)}.rider{position:absolute;right:18px;bottom:73px;font-size:58px;transition:bottom .22s ease}.rider.jump{bottom:178px}.obstacle,.prize{position:absolute;bottom:80px;font-size:38px;animation:moveLeft 3.8s linear forwards}.prize{bottom:142px}@keyframes moveLeft{from{left:-70px}to{left:110%}}.ride-score{display:flex;justify-content:space-between;font-weight:1000;margin:8px 0}.pet-mood{display:flex;align-items:center;gap:10px}.mood-face{font-size:44px}.mood-bar{height:12px;border-radius:999px;background:#dbeafe;overflow:hidden;flex:1}.mood-bar span{display:block;height:100%;width:70%;background:linear-gradient(90deg,#34d399,#facc15,#fb7185)}
 @media(max-width:540px){body{padding-bottom:108px}.bottom-dock{grid-template-columns:repeat(3,1fr);bottom:7px}.dock-btn{min-height:54px;border-radius:16px}.dock-btn b{font-size:22px}.pro-panel{bottom:188px}.pro-grid{grid-template-columns:1fr}.ride-game{height:310px}}
 
+
+
+/* === ULTIMATE 2.0 FULL EXPANSION === */
+.bottom-dock{grid-template-columns:repeat(8,1fr)!important}
+.house-stage{position:relative;min-height:330px;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#fff7ed,#fef3c7 48%,#fde68a);border:3px solid #fff;box-shadow:inset 0 -16px 0 rgba(124,58,237,.08)}
+.room-row{position:absolute;inset:auto 12px 18px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.room{min-height:92px;border:0;border-radius:22px;background:rgba(255,255,255,.72);box-shadow:0 10px 22px rgba(0,0,0,.12);font-weight:1000;color:#17324d}.room b{display:block;font-size:34px}.lian-room-avatar{position:absolute;right:50%;transform:translateX(50%);top:34px;font-size:76px;animation:bob 1.6s ease-in-out infinite}.home-level-badge{position:absolute;top:12px;right:12px;background:#17324d;color:#fff;border-radius:999px;padding:10px 14px;font-weight:1000}.care-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.care-stat{border-radius:18px;background:rgba(255,255,255,.7);padding:10px;font-weight:1000}.care-stat span{display:block;height:12px;border-radius:999px;background:#dbeafe;margin-top:8px;overflow:hidden}.care-stat i{display:block;height:100%;width:70%;background:linear-gradient(90deg,#34d399,#60a5fa,#f472b6)}.store-shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.store-item{border:0;text-align:right;border-radius:22px;padding:13px;background:linear-gradient(145deg,#fff,#eef8ff);box-shadow:0 12px 22px rgba(15,55,90,.14);font-weight:1000;color:#17324d}.store-item strong{display:block;font-size:30px}.badge-new{display:inline-block;background:#ef4444;color:#fff;border-radius:999px;padding:3px 8px;font-size:11px;margin-inline-start:6px}.mission-card{border-radius:22px;background:rgba(255,255,255,.72);padding:12px;margin:8px 0;font-weight:1000;display:flex;align-items:center;justify-content:space-between;gap:10px}.mission-card button{width:auto;min-height:42px;padding:0 14px;margin:0}.mini-race-lane{position:relative;height:94px;border-radius:20px;background:linear-gradient(90deg,#dbeafe,#dcfce7);overflow:hidden;border:2px solid #fff}.mini-runner{position:absolute;right:8px;bottom:18px;font-size:38px;transition:right .45s ease}.app-polish{position:fixed;z-index:60;top:10px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);backdrop-filter:blur(16px);border-radius:999px;padding:8px 14px;font-weight:1000;color:#12324f;box-shadow:0 12px 30px rgba(15,55,90,.12);display:none}.app-polish.show{display:block}
+@media(max-width:540px){.bottom-dock{grid-template-columns:repeat(4,1fr)!important}.care-grid,.store-shelf,.room-row{grid-template-columns:repeat(2,1fr)}.pro-panel{bottom:215px}.house-stage{min-height:390px}.lian-room-avatar{top:74px}}
+
 </style>
 </head>
 <body>
@@ -104,6 +112,8 @@ body{padding-bottom:96px}
   <button class="dock-btn pink2" id="dockPark"><b>🎡</b><span>פארק</span></button>
   <button class="dock-btn" id="dockShop"><b>🛒</b><span>חנות</span></button>
   <button class="dock-btn" id="dockPhoto"><b>📸</b><span>תמונה</span></button>
+  <button class="dock-btn pink2" id="dockHouse"><b>🏡</b><span>בית</span></button>
+  <button class="dock-btn hot" id="dockMissions"><b>⭐</b><span>משימות</span></button>
 </div>
 <div class="big-lian" id="bigLian"><button id="closeBigLian">×</button><img id="bigLianImg" alt="ליאן גדולה"></div>
 <div class="pro-panel" id="petsPanel"><button class="close-panel" onclick="closeProPanels()">סגור</button><h2>🐾 ממלכת החיות של ליאן</h2><div class="pet-mood"><div class="mood-face" id="moodFace">😺</div><div><b id="moodText">מנצ׳קין שמח</b><div class="mood-bar"><span id="moodBar"></span></div></div></div><div class="pro-grid" id="proPetGrid"></div></div>
@@ -111,6 +121,9 @@ body{padding-bottom:96px}
 <div class="pro-panel" id="parkPanel"><button class="close-panel" onclick="closeProPanels()">סגור</button><h2>🎡 פארק ליאן</h2><p class="small">פעילויות קצרות שנותנות XP, מטבעות ומצב רוח טוב לחיות.</p><div class="pro-grid"><button class="btn pink" id="parkPicnic">🧺 פיקניק חיות</button><button class="btn blue" id="parkParade">🎈 מצעד חיות</button><button class="btn purple" id="parkTreasure">🗺️ חיפוש אוצר</button><button class="btn" id="parkShow">🏆 מופע כוכבים</button></div></div>
 <div class="pro-panel" id="ridePanel"><button class="close-panel" onclick="closeProPanels()">סגור</button><h2>🐴 רכיבת פרסים</h2><div class="ride-score"><span>ניקוד: <b id="rideScore">0</b></span><span>זמן: <b id="rideTime">30</b></span></div><div class="ride-game" id="rideGame"><div class="ride-track"></div><div class="rider" id="rider">👧🏻‍🦱🐴</div></div><button class="btn" id="rideStart">התחל רכיבה</button><button class="btn blue" id="rideJump">קפיצה</button></div>
 
+<div class="pro-panel" id="housePanel"><button class="close-panel" onclick="closeProPanels()">סגור</button><h2>🏡 בית ליאן האמיתי</h2><div class="house-stage"><div class="home-level-badge" id="homeBadge">בית רמה 1</div><div class="lian-room-avatar">👧🏻‍🦱🐱</div><div class="room-row"><button class="room" id="roomSleep"><b>🛏️</b>חדר שינה</button><button class="room" id="roomKitchen"><b>🍽️</b>מטבח</button><button class="room" id="roomSalon"><b>🎮</b>סלון משחקים</button><button class="room" id="roomGarden"><b>🌷</b>גינה</button></div></div><button class="btn" id="upgradeRealHouse">שדרגי את בית ליאן</button></div>
+<div class="pro-panel" id="missionsPanel"><button class="close-panel" onclick="closeProPanels()">סגור</button><h2>⭐ משימות יומיות ו־App Store Polish</h2><p class="small">משימות קצרות, פרסים, והתקדמות שנשמרת אוטומטית.</p><div id="dailyMissionList"></div><div class="mini-race-lane"><div class="mini-runner" id="miniRunner">👧🏻‍🦱🐾</div></div><button class="btn blue" id="quickRun">ריצת פארק מהירה</button></div>
+<div class="app-polish" id="appPolish">נשמר אוטומטית ✓</div>
 <div class="toast" id="toast"></div>
 <div class="modal" id="eggModal"><div class="modal-card"><div class="egg" id="eggIcon">🥚</div><h2 id="eggTitle">פתחת ביצה!</h2><p id="eggResult"></p><button class="btn" onclick="closeModal('eggModal')">סגור</button></div></div>
 <div class="modal" id="wheelModal"><div class="modal-card"><div class="egg">🎡</div><h2>גלגל המזל</h2><p id="wheelResult"></p><button class="btn" onclick="closeModal('wheelModal')">סגור</button></div></div><div class="modal" id="photoModal"><div class="modal-card"><h2>📸 תמונת ניצחון של ליאן</h2><img id="photoPreview" class="photo-preview" alt="תמונת ניצחון"><button class="btn" id="downloadPhotoBtn">הורד תמונה</button><button class="btn blue" onclick="closeModal('photoModal')">סגור</button></div></div>
@@ -176,6 +189,59 @@ function installUltimate2(){
   renderProPanels();
 }
 installUltimate2();
+
+
+
+/* === ULTIMATE 2.0 FULL EXPANSION LOGIC === */
+s.hunger = s.hunger ?? 72; s.energy = s.energy ?? 78; s.fun = s.fun ?? 66; s.dailyDone = s.dailyDone || {}; s.houseStars = s.houseStars || 1;
+function autosavePulse(){save(); const el=$('appPolish'); if(!el)return; el.classList.add('show'); clearTimeout(window.__savePulse); window.__savePulse=setTimeout(()=>el.classList.remove('show'),900)}
+const oldSave=save; save=function(){try{localStorage.setItem('lianTycoonPro',JSON.stringify(s))}catch(e){}};
+function careAdd(kind,n){s[kind]=Math.max(0,Math.min(100,(s[kind]||60)+n)); moodAdd(Math.round(n/3)); autosavePulse(); renderCare();}
+function renderCare(){
+  const map={hunger:'careHunger',energy:'careEnergy',fun:'careFun'};
+  Object.entries(map).forEach(([k,id])=>{const el=$(id); if(el)el.style.width=(s[k]||60)+'%'});
+  if($('homeBadge'))$('homeBadge').textContent='בית רמה '+(s.houseStars||s.house||1)+' · '+rankName();
+}
+function roomReward(kind,msg,c,g,x){careAdd(kind,18); proReward(c,g,x,msg);}
+function expandPetsPanel(){
+  const p=$('petsPanel'); if(!p || $('careStats'))return;
+  p.insertAdjacentHTML('beforeend',`<h2>💖 טיפול במנצ׳קין</h2><div class="care-grid" id="careStats"><div class="care-stat">רעב 🍪<span><i id="careHunger"></i></span></div><div class="care-stat">אנרגיה 💤<span><i id="careEnergy"></i></span></div><div class="care-stat">כיף 🎈<span><i id="careFun"></i></span></div></div><div class="pro-grid"><button class="btn pink" id="feedCat">האכלה</button><button class="btn blue" id="sleepCat">שינה</button><button class="btn purple" id="playCat">משחק</button><button class="btn" id="groomCat">טיפוח נוצץ</button></div>`);
+  $('feedCat').onclick=()=>{if(s.coins<35)return toast('צריך 35 מטבעות');s.coins-=35;careAdd('hunger',25);toast('מנצ׳קין אכל ושמח 🍪')};
+  $('sleepCat').onclick=()=>{careAdd('energy',25);toast('מנצ׳קין נח וחזר בכוחות 💤')};
+  $('playCat').onclick=()=>{careAdd('fun',25);proReward(45,0,30,'משחק עם מנצ׳קין')};
+  $('groomCat').onclick=()=>{if(s.gems<1)return toast('צריך יהלום אחד');s.gems-=1;careAdd('fun',35);s.xp+=60;toast('טיפוח נוצץ למנצ׳קין ✨');render()};
+}
+function expandShopPanel(){
+  const p=$('shopPanel'); if(!p || $('premiumShelf'))return;
+  p.insertAdjacentHTML('beforeend',`<h2>👑 אקססוריז וחדרים</h2><div class="store-shelf" id="premiumShelf"><button class="store-item" id="buyRoyalBed"><strong>🛏️</strong>מיטת נסיכה <span class="badge-new">חדש</span><br>450 🪙</button><button class="store-item" id="buyPetCastle"><strong>🏰</strong>טירת חיות<br>950 🪙</button><button class="store-item" id="buyMagicCollar"><strong>💎</strong>קולר קסם<br>6 💎</button><button class="store-item" id="buyRainbowTrail"><strong>🌈</strong>שביל קשת<br>12 💎</button></div>`);
+  $('buyRoyalBed').onclick=()=>buyExtra('royalBed',450,0,'מיטת נסיכה נרכשה 🛏️');
+  $('buyPetCastle').onclick=()=>buyExtra('petCastle',950,0,'טירת חיות נבנתה 🏰');
+  $('buyMagicCollar').onclick=()=>buyExtra('magicCollar',0,6,'קולר קסם למנצ׳קין 💎');
+  $('buyRainbowTrail').onclick=()=>buyExtra('rainbowTrail',0,12,'שביל קשת הופעל 🌈');
+}
+function buyExtra(key,coins,gems,msg){s.extras=s.extras||{}; if(s.extras[key])return toast('כבר קנית את זה'); if(s.coins<coins)return toast('אין מספיק מטבעות'); if(s.gems<gems)return toast('אין מספיק יהלומים'); s.coins-=coins; s.gems-=gems; s.extras[key]=true; if(key==='rainbowTrail')s.weather='rainbow'; s.xp+=120; spark(32); melody(); toast(msg); autosavePulse(); render();}
+function renderMissions(){
+ const today=new Date().toDateString(); if(s.missionDay!==today){s.missionDay=today;s.dailyDone={};}
+ const missions=[['collect','אספי 500 מטבעות',s.coins>=500,180,1],['care','שמחי את מנצ׳קין מעל 80',s.mood>=80,220,2],['ride','צברי 5 נקודות רכיבה',rideScore>=5 || (s.rideBest||0)>=5,260,3],['park','בצעי פעילות בפארק',s.dailyDone.parkActivity,200,2]];
+ const box=$('dailyMissionList'); if(!box)return;
+ box.innerHTML=missions.map(([id,t,ok,c,g])=>`<div class="mission-card"><span>${ok?'✅':'🔒'} ${t}<br><small>${c} 🪙 · ${g} 💎</small></span><button class="btn ${ok?'':'blue'}" onclick="claimMission('${id}',${c},${g},${ok})">קבל</button></div>`).join('');
+}
+function claimMission(id,c,g,ok){if(!ok)return toast('המשימה עוד לא הושלמה'); if(s.dailyDone['claim_'+id])return toast('כבר קיבלת את הפרס'); s.dailyDone['claim_'+id]=true; s.coins+=c; s.gems+=g; s.xp+=80; spark(30); melody(); toast('פרס משימה התקבל ⭐'); autosavePulse(); renderMissions(); render();}
+function quickParkRun(){s.dailyDone.parkActivity=true; const pos=Math.min(82,8+Math.random()*76); if($('miniRunner'))$('miniRunner').style.right=pos+'%'; proReward(160,2,60,'ריצת פארק מהירה'); renderMissions();}
+function installFullExpansion(){
+ expandPetsPanel(); expandShopPanel(); renderCare(); renderMissions();
+ if($('dockHouse'))$('dockHouse').onclick=()=>{renderCare();openPanel('housePanel')};
+ if($('dockMissions'))$('dockMissions').onclick=()=>{renderMissions();openPanel('missionsPanel')};
+ if($('roomSleep'))$('roomSleep').onclick=()=>roomReward('energy','שינה בבית ליאן',90,0,35);
+ if($('roomKitchen'))$('roomKitchen').onclick=()=>roomReward('hunger','ארוחה במטבח',110,1,40);
+ if($('roomSalon'))$('roomSalon').onclick=()=>roomReward('fun','משחק בסלון',120,1,45);
+ if($('roomGarden'))$('roomGarden').onclick=()=>{s.dailyDone.parkActivity=true; roomReward('fun','טיול בגינה',150,2,55);renderMissions()};
+ if($('upgradeRealHouse'))$('upgradeRealHouse').onclick=()=>{const cost=(s.houseStars||1)*700;if(s.coins<cost)return toast('צריך '+cost+' מטבעות לשדרוג');s.coins-=cost;s.houseStars=(s.houseStars||1)+1;s.house=Math.max(s.house||1,s.houseStars);s.income+=2;s.xp+=180;toast('בית ליאן שודרג! הכנסה עלתה 🏡');spark(38);renderCare();render()};
+ if($('quickRun'))$('quickRun').onclick=quickParkRun;
+ const oldParkPicnic=$('parkPicnic')?.onclick; if($('parkPicnic'))$('parkPicnic').onclick=()=>{s.dailyDone.parkActivity=true;proReward(140,1,45,'פיקניק חיות מושלם');renderMissions()};
+}
+installFullExpansion();
+setInterval(()=>{s.hunger=Math.max(0,(s.hunger||70)-1);s.energy=Math.max(0,(s.energy||70)-1);s.fun=Math.max(0,(s.fun||70)-1); if((s.hunger+s.energy+s.fun)/3<45)moodAdd(-1); renderCare(); save();},30000);
 
 render();
 </script>
