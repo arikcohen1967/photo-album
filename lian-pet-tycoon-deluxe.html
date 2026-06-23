@@ -223,6 +223,87 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
 }
 </style>
 
+
+<style id="bottom-nav-fixed-final">
+/* FINAL FIX: bottom menu is always above everything and fully clickable */
+.bottom-nav{
+  position:fixed!important;
+  left:10px!important;
+  right:10px!important;
+  bottom:calc(env(safe-area-inset-bottom) + 6px)!important;
+  transform:none!important;
+  width:auto!important;
+  max-width:860px!important;
+  margin:auto!important;
+  height:78px!important;
+  z-index:9998!important;
+  pointer-events:auto!important;
+  border-radius:30px!important;
+  background:rgba(255,255,255,.96)!important;
+  border:3px solid rgba(255,255,255,.95)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.25)!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,1fr)!important;
+  align-items:center!important;
+  padding:6px 8px!important;
+  direction:rtl!important;
+}
+.bottom-nav button{
+  border:0!important;
+  background:transparent!important;
+  height:64px!important;
+  border-radius:22px!important;
+  font-family:inherit!important;
+  color:#132d65!important;
+  font-weight:1000!important;
+  font-size:12px!important;
+  cursor:pointer!important;
+  pointer-events:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:2px!important;
+  touch-action:manipulation!important;
+}
+.bottom-nav button:active{transform:scale(.94)!important;background:rgba(30,140,255,.10)!important}
+.bottom-nav .nav-main{
+  width:82px!important;
+  height:82px!important;
+  margin-top:-30px!important;
+  justify-self:center!important;
+  border-radius:28px!important;
+  background:linear-gradient(180deg,#ff78c2,#e73596)!important;
+  color:#fff!important;
+  box-shadow:0 14px 28px rgba(225,43,143,.38)!important;
+  border:3px solid rgba(255,255,255,.95)!important;
+}
+.bottom-nav .nav-ico{font-size:28px!important;line-height:1!important}
+.bottom-nav .nav-main .nav-ico{font-size:38px!important}
+body{padding-bottom:100px!important}
+.nav-panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.nav-card{
+  border:0;border-radius:26px;background:rgba(255,255,255,.9);
+  box-shadow:0 12px 25px rgba(26,81,127,.16);
+  padding:16px;text-align:center;font-weight:1000;color:#12336e;min-height:112px;
+  font-family:inherit;touch-action:manipulation
+}
+.nav-card .big{font-size:48px;display:block;margin-bottom:6px}
+.nav-card small{display:block;margin-top:6px;color:#5b6d84;font-weight:800;font-size:14px;line-height:1.35}
+.nav-card:active{transform:scale(.96)}
+.danger{background:linear-gradient(180deg,#ff7a7a,#e53939)!important;color:#fff!important}
+@media(max-width:560px){
+  .bottom-nav{height:72px!important;left:6px!important;right:6px!important;bottom:calc(env(safe-area-inset-bottom) + 4px)!important;border-radius:26px!important;padding:5px 5px!important}
+  .bottom-nav button{height:60px!important;font-size:11px!important;border-radius:18px!important}
+  .bottom-nav .nav-main{width:74px!important;height:74px!important;margin-top:-26px!important;border-radius:25px!important}
+  .bottom-nav .nav-ico{font-size:24px!important}
+  .bottom-nav .nav-main .nav-ico{font-size:34px!important}
+  .nav-panel-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .nav-card{border-radius:22px;padding:12px;min-height:104px}
+  .nav-card .big{font-size:42px}
+}
+</style>
+
 </head>
 <body>
 <main class="app">
@@ -255,25 +336,26 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
   <div class="activity"><div class="emoji" id="activityEmoji">💎</div><h2 id="activityTitle">Crystal Island</h2><p id="activityText">כאן מתחילים פעילות, צוברים נקודות, פרסים והפתעות.</p><button class="primary" id="earnBtn">אספו פרס עכשיו 🪙</button></div>
 </section>
 
+
 <section id="navScreen" class="screen">
   <div class="screen-topbar">
     <div class="screen-actions">
-      <button class="icon-btn" id="navBackBtn">⬅ חזרה</button>
-      <button class="icon-btn home-btn" id="navHomeBtn">🏠 בית</button>
+      <button class="icon-btn" id="navBackBtn" type="button">⬅ חזרה</button>
+      <button class="icon-btn home-btn" id="navHomeBtn" type="button">🏠 בית</button>
     </div>
     <div class="screen-name"><span class="screen-emoji" id="navEmoji">🛒</span><span id="navTitle">חנות</span></div>
-    <button class="icon-btn" id="navSoundBtn">🔊</button>
+    <button class="icon-btn" id="navSoundBtn" type="button">🔊</button>
   </div>
   <div class="activity">
     <div class="emoji" id="navBigEmoji">🛒</div>
     <h2 id="navHeading">חנות</h2>
-    <p id="navDesc">כאן נפתח מסך אמיתי.</p>
+    <p id="navDesc">מסך פעיל.</p>
     <div class="nav-panel-grid" id="navContent"></div>
   </div>
 </section>
 
 </main>
-<nav class="bottom-nav"><div class="nav-item" data-nav="shop"><span class="n">🛒</span>חנות</div><div class="nav-item" data-nav="bag"><span class="n">🎒</span>תיק</div><div class="nav-home" data-nav="home"><div><span class="n">🏠</span><span>בית</span></div></div><div class="nav-item" data-nav="missions"><span class="n">📋</span>משימות</div><div class="nav-item" data-nav="settings"><span class="n">⚙️</span>הגדרות</div></nav>
+
 <script>
 const data={crystal:["💎","Crystal Island","איסוף יהלומים ואוצרות נדירים באי הקסום."],secret:["🏝️","אי סודי","חפשו אוצרות, סודות מיוחדים ומקומות נסתרים."],home:["🏡","בית ליאן","עצבו את הבית, שדרגו חדרים והוסיפו פריטים."],cat:["😺",'מצב "קו"',"טפלו בחיות, האכילו אותן וקבלו לבבות."],shop:["🏪","חנות","קנו פריטים, שדרוגים, בגדים והפתעות."],farm:["🏚️","חווה","גדלו חיות, אספו מוצרים והרווחו מטבעות."],park:["🎡","הפארק","מיני משחקים, כיף, רכיבה והפתעות."],mine:["⛏️","המכרה","כרו משאבים יקרים ואוצרות נדירים."]};
 let coins=12450, soundOn=true;
@@ -450,6 +532,135 @@ setupLianClick();
     <b>💗 ליאן 💗</b>
   </div>
 </div>
+
+
+<nav class="bottom-nav" aria-label="תפריט תחתון פעיל">
+  <button type="button" data-open-nav="settings"><span class="nav-ico">⚙️</span><span>הגדרות</span></button>
+  <button type="button" data-open-nav="missions"><span class="nav-ico">📋</span><span>משימות</span></button>
+  <button type="button" class="nav-main" data-open-nav="home"><span class="nav-ico">🏠</span><span>בית</span></button>
+  <button type="button" data-open-nav="bag"><span class="nav-ico">🎒</span><span>תיק</span></button>
+  <button type="button" data-open-nav="shop"><span class="nav-ico">🛒</span><span>חנות</span></button>
+</nav>
+
+
+<script id="bottom-nav-fixed-final-js">
+(function(){
+  const navData = {
+    shop:{e:"🛒",t:"חנות",d:"קנו אוכל, אביזרים, צעצועים ושדרוגים לחיות.",
+      items:[["🍖","אוכל לחיות","מעלה אנרגיה ושמחה"],["👑","כתרים ואביזרים","פריטים יפים לדמות"],["🧸","צעצועים","משחקים לחיות"],["💎","חבילת יהלומים","פרס מיוחד"]]},
+    bag:{e:"🎒",t:"תיק",d:"כל הפריטים שליאן אספה נמצאים כאן.",
+      items:[["🎁","מתנות","3 מתנות זמינות"],["🍎","אוכל","7 פריטים"],["👗","בגדים","4 אביזרים"],["🏆","גביעים","2 הישגים"]]},
+    missions:{e:"📋",t:"משימות",d:"משימות יומיות ושבועיות עם פרסים.",
+      items:[["🐾","טפלו ב־5 חיות","פרס: 500 מטבעות"],["🪙","אספו 200 מטבעות","פרס: 300 מטבעות"],["🎮","שחקו 3 מיני משחקים","פרס: 200 מטבעות"],["⭐","עלו רמה","פרס: 80 XP"]]},
+    settings:{e:"⚙️",t:"הגדרות",d:"כאן שולטים בצלילים, שמירה ואיפוס המשחק.",
+      items:[["🔊","צלילים","כיבוי / הפעלה"],["🎵","מוזיקה","בקרוב"],["💾","שמירה","נשמר בדפדפן"],["🧹","איפוס","התחלה מחדש"]]}
+  };
+
+  function safeSound(){
+    try{ if(typeof clickSound === "function") clickSound(); }catch(e){}
+  }
+
+  function showOnly(id){
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    const el = document.getElementById(id);
+    if(el) el.classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function goHome(){
+    safeSound();
+    showOnly("homeScreen");
+  }
+
+  function smallReward(msg, emoji){
+    try{
+      if(typeof showReward === "function"){ showReward(msg, emoji || "⭐"); return; }
+    }catch(e){}
+    alert(msg);
+  }
+
+  function openNav(key){
+    if(key === "home"){ goHome(); return; }
+    const n = navData[key];
+    if(!n) return;
+    safeSound();
+
+    document.getElementById("navEmoji").textContent = n.e;
+    document.getElementById("navBigEmoji").textContent = n.e;
+    document.getElementById("navTitle").textContent = n.t;
+    document.getElementById("navHeading").textContent = n.t;
+    document.getElementById("navDesc").textContent = n.d;
+
+    document.getElementById("navContent").innerHTML = n.items.map((it, idx) => {
+      const danger = key === "settings" && idx === 3 ? " danger" : "";
+      return `<button type="button" class="nav-card${danger}" data-card-action="${key}-${idx}">
+        <span class="big">${it[0]}</span>${it[1]}<small>${it[2]}</small>
+      </button>`;
+    }).join("");
+
+    showOnly("navScreen");
+
+    document.querySelectorAll(".nav-card").forEach(card => {
+      card.addEventListener("click", function(){
+        safeSound();
+        const action = this.getAttribute("data-card-action") || "";
+        if(action === "settings-0"){
+          try{
+            window.soundOn = !window.soundOn;
+            const s1 = document.getElementById("soundBtn");
+            const s2 = document.getElementById("navSoundBtn");
+            if(s1) s1.textContent = window.soundOn ? "🔊" : "🔇";
+            if(s2) s2.textContent = window.soundOn ? "🔊" : "🔇";
+          }catch(e){}
+          smallReward("עודכן מצב הצלילים", "🔊");
+          return;
+        }
+        if(action === "settings-3"){
+          try{
+            if(typeof coins !== "undefined"){ coins = 12450; }
+            const c = document.getElementById("coins");
+            if(c) c.textContent = "12,450";
+          }catch(e){}
+          smallReward("המשחק אופס", "🧹");
+          return;
+        }
+        try{ if(typeof addXP === "function") addXP(20); }catch(e){}
+        smallReward("פעולה בוצעה! קיבלת 20 XP", "⭐");
+      });
+    });
+  }
+
+  document.querySelectorAll("[data-open-nav]").forEach(btn => {
+    btn.addEventListener("click", function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      openNav(this.getAttribute("data-open-nav"));
+    }, {passive:false});
+  });
+
+  const back = document.getElementById("navBackBtn");
+  const home = document.getElementById("navHomeBtn");
+  const sound = document.getElementById("navSoundBtn");
+  if(back) back.onclick = goHome;
+  if(home) home.onclick = goHome;
+  if(sound) sound.onclick = function(){
+    try{
+      window.soundOn = !window.soundOn;
+      this.textContent = window.soundOn ? "🔊" : "🔇";
+      const s1 = document.getElementById("soundBtn");
+      if(s1) s1.textContent = window.soundOn ? "🔊" : "🔇";
+    }catch(e){}
+    safeSound();
+  };
+
+  // make sure bottom nav is never blocked by other elements
+  const nav = document.querySelector(".bottom-nav");
+  if(nav){
+    nav.style.pointerEvents = "auto";
+    nav.querySelectorAll("button").forEach(b => b.style.pointerEvents = "auto");
+  }
+})();
+</script>
 
 </body>
 </html>
