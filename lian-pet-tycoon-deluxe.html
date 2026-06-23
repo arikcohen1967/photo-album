@@ -55,215 +55,428 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
 @media(max-width:540px){.hud{grid-template-columns:repeat(2,1fr)}.island{left:35%;bottom:330px}.festival-banner{font-size:13px;max-width:94%;white-space:normal}}
 
 
-/* ADVENTURE ISLAND 2.0 */
-.adventure-card{background:linear-gradient(145deg,#fff,#eaf8ff)!important;border:3px solid rgba(255,255,255,.92)!important}
-.adventure-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.story-box{border-radius:22px;background:linear-gradient(145deg,#ffffff,#eef9ff);padding:14px;margin:10px 0;text-align:right;font-weight:900;line-height:1.55;color:#17324d}
-.story-choice{width:100%;border:0;border-radius:18px;background:linear-gradient(145deg,#fff5a8,#ffd84f);padding:13px 12px;margin:6px 0;font-weight:1000;color:#4a3100;font-size:16px;box-shadow:0 10px 18px rgba(180,125,0,.16)}
-.park-game{min-height:240px;position:relative;overflow:hidden;border-radius:24px;background:linear-gradient(180deg,#baf3ff,#e9f9ff 45%,#a7f3d0);border:3px solid #fff;margin:10px 0}
-.balloon{position:absolute;border:0;background:transparent;font-size:42px;animation:floatUp 4.8s linear forwards;filter:drop-shadow(0 8px 8px rgba(0,0,0,.16))}
-@keyframes floatUp{from{bottom:-55px;transform:translateX(0) rotate(-5deg)}to{bottom:110%;transform:translateX(22px) rotate(8deg)}}
-.treasure-tile{border:0;border-radius:20px;background:linear-gradient(145deg,#fff,#fff1a8);min-height:70px;font-size:32px;box-shadow:0 12px 22px rgba(0,0,0,.12)}
-.adventure-map-title{position:absolute;right:50%;top:104px;transform:translateX(50%);z-index:4;background:rgba(255,255,255,.78);border:2px solid #fff;border-radius:999px;padding:9px 14px;font-weight:1000;color:#174166;box-shadow:0 12px 22px rgba(0,0,0,.12)}
-@media(max-width:540px){.adventure-grid{grid-template-columns:1fr}.adventure-map-title{top:118px;font-size:13px}.story-choice{font-size:15px}}
+/* =========================================================
+   PET TYCOON 3.0 MOBILE ISLAND EDITION
+   מסך בית מובייל מקצועי: אי לחיץ, סרגל עליון ותחתון
+========================================================= */
 
+.mobile-bottom-nav,.zone-action-modal{display:none}
 
-/* PROFESSIONAL CLEAN UI OVERRIDE - 2.1 */
-:root{
-  --sky1:#e7f8ff;
-  --sky2:#f7fdff;
-  --grass:#dff8dd;
-  --ink:#18324a;
-  --muted:#64748b;
-  --gold:#ffd84f;
-  --pink:#ff7abd;
-  --purple:#7c5cff;
-  --blue:#2ea8ff;
-  --white:#fff;
-  --shadow:0 18px 48px rgba(20,55,90,.14);
-  --line:rgba(255,255,255,.78);
-}
-html,body{
-  background:
-    radial-gradient(circle at 15% 10%,rgba(255,255,255,.90),transparent 20%),
-    radial-gradient(circle at 86% 8%,rgba(206,236,255,.80),transparent 24%),
-    linear-gradient(180deg,#dff7ff 0%,#f7fdff 43%,#e9ffe7 100%);
-}
-body:before{opacity:.42}
-.app{max-width:1180px;padding:16px}
-.top{grid-template-columns:1fr 86px;gap:12px;margin-bottom:12px}
-.hero{
-  border-radius:28px;
-  padding:18px 20px;
-  background:rgba(255,255,255,.82);
-  border:1px solid rgba(255,255,255,.95);
-  box-shadow:0 18px 45px rgba(20,55,90,.12);
-}
-.logo{width:68px;height:68px;border-radius:22px}
-h1{font-size:clamp(30px,4vw,46px);color:#174166}
-.hero p{font-size:15px;color:#607085}
-.sound{
-  min-width:86px;
-  min-height:82px;
-  border-radius:24px;
-  background:rgba(255,255,255,.86);
-  border:1px solid rgba(255,255,255,.95);
-  box-shadow:0 18px 45px rgba(20,55,90,.12);
-}
-.hud{
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-  margin:10px 0 14px;
-}
-.pill{
-  border-radius:18px;
-  padding:9px 8px;
-  background:rgba(255,255,255,.78);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 10px 24px rgba(20,55,90,.09);
-  font-size:13px;
-}
-.pill b{font-size:20px}
-.layout{
-  grid-template-columns:minmax(0,1fr) 330px;
-  gap:14px;
-  align-items:start;
-}
-.world{
-  min-height:620px;
-  border-radius:32px;
-  background:
-    radial-gradient(circle at 20% 24%,rgba(255,255,255,.55),transparent 14%),
-    linear-gradient(180deg,#c9f5ff 0 22%,#baf0b5 22% 100%);
-  border:1px solid rgba(255,255,255,.95);
-  box-shadow:0 22px 55px rgba(20,55,90,.16);
-}
-.path{
-  height:170px;
-  right:11%;
-  left:11%;
-  bottom:24px;
-  opacity:.9;
-  transform:perspective(650px) rotateX(18deg);
-}
-.adventure-map-title{
-  top:18px;
-  font-size:14px;
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(255,255,255,.95);
-}
-.festival-banner{top:62px}
-.spot{
-  width:132px;
-  height:112px;
-  border-radius:26px;
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(255,255,255,.98);
-  box-shadow:0 14px 28px rgba(20,55,90,.14);
-  padding:10px;
-  gap:2px;
-}
-.spot .emoji{font-size:36px}
-.spot small{font-size:12px;color:#64748b}
-.spot:hover{transform:translateY(-3px)}
-.home{right:7%;top:148px}
-.cat{right:36%;top:210px}
-.shop{left:8%;top:148px}
-.mansion{right:42%;top:88px}
-.mine{left:9%;bottom:272px}
-.stable{right:11%;bottom:122px}
-.park{left:31%;bottom:110px}
-.island{left:42%;bottom:300px}
-.character{right:44%;bottom:52px;transform:scale(.94)}
-.side{
-  gap:10px;
-  max-height:calc(100vh - 18px);
-  overflow:auto;
-  padding-inline-end:2px;
-  scrollbar-width:thin;
-}
-.card{
-  border-radius:24px;
-  padding:12px;
-  background:rgba(255,255,255,.80);
-  border:1px solid rgba(255,255,255,.96);
-  box-shadow:0 14px 32px rgba(20,55,90,.10);
-}
-.card h2{
-  font-size:18px;
-  margin:0 0 8px;
-  color:#17324d;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.btn{
-  min-height:48px;
-  border-radius:16px;
-  font-size:15px;
-  margin:4px 0;
-  box-shadow:0 10px 18px rgba(180,125,0,.14);
-}
-.row{gap:6px}
-.quest,.ach{
-  border-radius:14px;
-  padding:8px;
-  font-size:13px;
-  background:rgba(255,255,255,.66);
-}
-.pets{
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-top:6px;
-}
-.petcard{
-  min-height:62px;
-  border-radius:14px;
-  font-size:12px;
-}
-.petcard b{font-size:24px}
-.adventure-card{
-  background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(233,248,255,.88))!important;
-  border:1px solid rgba(255,255,255,.98)!important;
-}
-.adventure-grid{gap:6px}
-.story-box{
-  margin:8px 0;
-  padding:11px;
-  border-radius:16px;
-  background:rgba(255,255,255,.72);
-  color:#17324d;
-  font-size:13px;
-}
-.modal-card{
-  border-radius:26px;
-  background:rgba(255,255,255,.92);
-  border:1px solid rgba(255,255,255,.98);
-}
-.egg{font-size:78px}
-.toast{bottom:18px;background:#17324d}
-@media(max-width:930px){
-  .layout{grid-template-columns:1fr}
-  .side{max-height:none;overflow:visible}
-  .world{min-height:600px}
-}
-@media(max-width:540px){
-  .app{padding:8px}
-  .top{grid-template-columns:1fr}
-  .hud{grid-template-columns:repeat(3,1fr)}
-  .pill{font-size:12px;padding:8px 5px}
-  .pill b{font-size:18px}
-  .world{min-height:585px;border-radius:26px}
-  .spot{width:108px;height:92px;border-radius:20px;font-size:12px}
-  .spot .emoji{font-size:30px}
-  .home{right:4%;top:148px}
-  .cat{right:36%;top:215px}
-  .shop{left:4%;top:148px}
-  .mansion{right:35%;top:82px}
-  .mine{left:4%;bottom:250px}
-  .stable{right:5%;bottom:126px}
-  .park{left:33%;bottom:98px}
-  .island{left:34%;bottom:312px}
+@media(max-width:700px){
+  :root{
+    --ui-blue:#2fb8ff;
+    --ui-deep:#087bd8;
+    --ui-green:#40d85f;
+    --ui-pink:#ff4da0;
+    --ui-card:rgba(255,255,255,.92);
+  }
+
+  html,body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden!important;
+    background:linear-gradient(180deg,#34bfff 0%,#8de8ff 30%,#00a3dd 100%)!important;
+    color:#12324f!important;
+  }
+
+  body:before{display:none!important}
+
+  .app{
+    width:100%!important;
+    max-width:430px!important;
+    margin:0 auto!important;
+    padding:8px 8px 96px!important;
+    min-height:100vh!important;
+  }
+
+  /* TOP PLAYER HEADER */
+  .top{
+    display:block!important;
+    position:sticky!important;
+    top:0!important;
+    z-index:80!important;
+    margin:0 -8px!important;
+    padding:8px 8px 3px!important;
+    background:linear-gradient(180deg,rgba(46,190,255,.98),rgba(46,190,255,.70),transparent)!important;
+    backdrop-filter:blur(10px)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+  }
+
+  .hero{
+    min-height:78px!important;
+    border-radius:28px!important;
+    padding:9px 70px 9px 10px!important;
+    background:linear-gradient(180deg,#ffffff,#eaf8ff)!important;
+    border:3px solid rgba(255,255,255,.82)!important;
+    box-shadow:0 12px 26px rgba(0,90,150,.20)!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:10px!important;
+    text-align:right!important;
+  }
+
+  .logo{
+    width:58px!important;
+    height:58px!important;
+    border-radius:22px!important;
+    border:4px solid #fff!important;
+    box-shadow:0 8px 16px rgba(0,79,130,.18)!important;
+  }
+
+  h1{
+    font-size:21px!important;
+    line-height:1.1!important;
+    margin:0!important;
+    color:#172033!important;
+  }
+
+  .hero p{
+    margin:5px 0 0!important;
+    font-size:11px!important;
+    color:#52677a!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .sound{
+    position:fixed!important;
+    top:18px!important;
+    left:16px!important;
+    z-index:100!important;
+    width:52px!important;
+    min-width:52px!important;
+    height:52px!important;
+    min-height:52px!important;
+    border-radius:19px!important;
+    background:linear-gradient(180deg,#fff,#eaf8ff)!important;
+    border:3px solid rgba(255,255,255,.9)!important;
+    box-shadow:0 10px 20px rgba(0,90,150,.18)!important;
+    font-size:20px!important;
+    padding:0!important;
+  }
+  .sound small{display:none!important}
+
+  /* RESOURCE HUD */
+  .hud{
+    position:sticky!important;
+    top:91px!important;
+    z-index:70!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,1fr)!important;
+    gap:7px!important;
+    margin:0 -3px 8px!important;
+    padding:4px 3px 7px!important;
+    background:linear-gradient(180deg,rgba(46,190,255,.65),transparent)!important;
+  }
+
+  .pill{
+    min-height:48px!important;
+    border-radius:19px!important;
+    padding:6px 5px!important;
+    background:linear-gradient(180deg,#ffffff,#eaf8ff)!important;
+    border:2px solid rgba(255,255,255,.82)!important;
+    box-shadow:0 9px 18px rgba(0,90,150,.15)!important;
+    color:#17324d!important;
+    font-size:10px!important;
+    line-height:1.15!important;
+  }
+  .pill b{font-size:16px!important}
+  .rank-pill{display:none!important}
+
+  /* LAYOUT */
+  .layout{display:block!important}
+
+  /* GAME MAP */
+  .world{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    max-width:414px!important;
+    min-height:1180px!important;
+    margin:0 auto 14px!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border:0!important;
+    border-radius:36px!important;
+    box-shadow:0 18px 46px rgba(0,71,120,.28)!important;
+    background:
+      radial-gradient(ellipse at 50% 11%,rgba(255,255,255,.72) 0 5%,transparent 6%),
+      radial-gradient(ellipse at 50% 22%,#80e675 0 12%,transparent 13%),
+      radial-gradient(ellipse at 20% 36%,#69d95c 0 16%,transparent 17%),
+      radial-gradient(ellipse at 80% 36%,#70df65 0 16%,transparent 17%),
+      radial-gradient(ellipse at 50% 49%,#84e777 0 13%,transparent 14%),
+      radial-gradient(ellipse at 21% 65%,#62d454 0 15%,transparent 16%),
+      radial-gradient(ellipse at 79% 65%,#76df67 0 16%,transparent 17%),
+      radial-gradient(ellipse at 50% 82%,#8be56d 0 18%,transparent 19%),
+      linear-gradient(180deg,#36c5ff 0%,#0fb7ee 48%,#008dcc 100%)!important;
+  }
+
+  .world:before{
+    content:""!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:134px 35px 130px!important;
+    border:16px solid rgba(246,226,176,.94)!important;
+    border-left-color:rgba(246,226,176,.72)!important;
+    border-right-color:rgba(246,226,176,.72)!important;
+    border-radius:49% 51% 50% 50%!important;
+    transform:rotate(-5deg)!important;
+    pointer-events:none!important;
+    background:transparent!important;
+    box-shadow:
+      inset 0 0 0 5px rgba(255,255,255,.26),
+      0 0 28px rgba(255,255,255,.22)!important;
+  }
+
+  .world:after{
+    content:"🏝️ אי ההרפתקאות"!important;
+    position:absolute!important;
+    top:18px!important;
+    right:26px!important;
+    left:26px!important;
+    z-index:8!important;
+    padding:12px 10px!important;
+    border-radius:24px!important;
+    text-align:center!important;
+    font-weight:1000!important;
+    font-size:22px!important;
+    color:#fff!important;
+    text-shadow:0 2px 5px rgba(0,0,0,.22)!important;
+    background:linear-gradient(180deg,#2f9bf0,#176bcd)!important;
+    border:3px solid rgba(255,255,255,.72)!important;
+    box-shadow:0 12px 28px rgba(0,72,130,.28)!important;
+  }
+
+  .cloud,.path,.character,.festival-banner{display:none!important}
+
+  /* MAP LOCATION BUTTONS */
+  .spot,
+  .home,.cat,.shop,.stable,.park,.mine,.mansion,.island{
+    position:absolute!important;
+    z-index:15!important;
+    width:152px!important;
+    height:108px!important;
+    min-height:108px!important;
+    border-radius:30px!important;
+    border:3px solid rgba(255,255,255,.96)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(242,250,255,.90))!important;
+    box-shadow:0 12px 28px rgba(0,63,110,.22)!important;
+    color:#17324d!important;
+    font-size:14px!important;
+    font-weight:1000!important;
+    line-height:1.1!important;
+    padding:9px 8px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:4px!important;
+    text-align:center!important;
+    transform:none!important;
+  }
+
+  .spot:active{transform:scale(.96)!important}
+  .spot:hover{transform:none!important}
+
+  .spot .emoji{
+    font-size:37px!important;
+    line-height:1!important;
+    filter:drop-shadow(0 6px 7px rgba(0,80,130,.16))!important;
+  }
+
+  .spot small{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:auto!important;
+    padding:3px 8px!important;
+    margin:0!important;
+    border-radius:999px!important;
+    font-size:11px!important;
+    font-weight:1000!important;
+    background:rgba(255,77,160,.13)!important;
+    color:#e11d72!important;
+  }
+
+  .spot:not(.locked)::after{
+    content:"✓"!important;
+    position:absolute!important;
+    left:8px!important;
+    top:8px!important;
+    width:25px!important;
+    height:25px!important;
+    border-radius:999px!important;
+    display:grid!important;
+    place-items:center!important;
+    color:#fff!important;
+    font-size:16px!important;
+    font-weight:1000!important;
+    background:linear-gradient(180deg,#61e46d,#1fb944)!important;
+    border:2px solid #fff!important;
+    box-shadow:0 6px 12px rgba(0,120,60,.22)!important;
+  }
+
+  .locked{
+    opacity:.86!important;
+    filter:none!important;
+  }
+  .locked small{
+    background:rgba(100,116,139,.16)!important;
+    color:#64748b!important;
+  }
+
+  .mansion{right:calc(50% - 76px)!important;top:108px!important}
+  .home{right:18px!important;top:238px!important}
+  .mine{left:18px!important;top:238px!important}
+  .cat{right:18px!important;top:418px!important}
+  .shop{left:18px!important;top:500px!important}
+  .island{right:calc(50% - 76px)!important;top:620px!important}
+  .stable{left:18px!important;top:785px!important}
+  .park{right:calc(50% - 76px)!important;top:870px!important}
+
+  /* Add illustrated feeling behind tiles */
+  .mansion:before{content:"🏰";position:absolute;top:-52px;font-size:82px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.20))}
+  .home:before{content:"🏡";position:absolute;top:-50px;font-size:78px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .mine:before{content:"⛰️";position:absolute;top:-50px;font-size:78px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .cat:before{content:"🐱";position:absolute;top:-52px;font-size:80px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .shop:before{content:"🏪";position:absolute;top:-50px;font-size:78px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .stable:before{content:"🐴";position:absolute;top:-52px;font-size:80px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .park:before{content:"🎪";position:absolute;top:-52px;font-size:80px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+  .island:before{content:"🌴";position:absolute;top:-54px;font-size:82px;z-index:-1;filter:drop-shadow(0 10px 10px rgba(0,65,110,.18))}
+
+  /* Hide old side menu on phone. Activities open from map/modal/bottom nav */
+  .side{
+    display:none!important;
+  }
+
+  /* Bottom mobile navigation */
+  .mobile-bottom-nav{
+    position:fixed!important;
+    right:8px!important;
+    left:8px!important;
+    bottom:8px!important;
+    z-index:120!important;
+    height:76px!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:6px!important;
+    padding:8px!important;
+    border-radius:30px!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(226,246,255,.94))!important;
+    border:3px solid rgba(255,255,255,.86)!important;
+    box-shadow:0 -10px 30px rgba(0,71,120,.26)!important;
+    backdrop-filter:blur(16px)!important;
+    -webkit-backdrop-filter:blur(16px)!important;
+  }
+
+  .mobile-bottom-nav button{
+    border:0!important;
+    border-radius:22px!important;
+    background:transparent!important;
+    color:#17324d!important;
+    font-size:11px!important;
+    font-weight:1000!important;
+    line-height:1.08!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:3px!important;
+  }
+  .mobile-bottom-nav b{font-size:25px!important;line-height:1!important}
+  .mobile-bottom-nav .main-paw{
+    background:linear-gradient(180deg,#ff72bd,#ec2185)!important;
+    color:#fff!important;
+    box-shadow:0 9px 20px rgba(236,33,133,.25)!important;
+    transform:translateY(-10px)!important;
+    width:72px!important;
+    height:72px!important;
+    margin:auto!important;
+    border-radius:999px!important;
+    border:4px solid rgba(255,255,255,.82)!important;
+  }
+  .mobile-bottom-nav .main-paw b{font-size:36px!important}
+
+  /* Zone modal */
+  .zone-action-modal{
+    position:fixed!important;
+    inset:0!important;
+    z-index:130!important;
+    background:rgba(0,75,125,.42)!important;
+    display:none!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+    padding:12px!important;
+    backdrop-filter:blur(8px)!important;
+    -webkit-backdrop-filter:blur(8px)!important;
+  }
+  .zone-action-modal.show{display:flex!important}
+
+  .zone-sheet{
+    width:min(414px,100%)!important;
+    max-height:82vh!important;
+    overflow:auto!important;
+    border-radius:32px!important;
+    padding:18px!important;
+    background:linear-gradient(180deg,#ffffff,#eaf8ff)!important;
+    border:3px solid rgba(255,255,255,.86)!important;
+    box-shadow:0 -16px 42px rgba(0,62,110,.25)!important;
+    text-align:center!important;
+  }
+  .zone-sheet h2{
+    margin:0 0 6px!important;
+    color:#17324d!important;
+    font-size:25px!important;
+  }
+  .zone-sheet p{
+    margin:0 0 12px!important;
+    color:#5f7185!important;
+    font-weight:900!important;
+    line-height:1.35!important;
+  }
+  .zone-actions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+  }
+  .zone-actions button{
+    min-height:58px!important;
+    border:0!important;
+    border-radius:20px!important;
+    padding:9px!important;
+    font-size:14px!important;
+    font-weight:1000!important;
+    color:#17324d!important;
+    background:linear-gradient(180deg,#fff5a8,#ffd84f)!important;
+    box-shadow:0 10px 18px rgba(180,125,0,.16)!important;
+  }
+  .zone-actions button.blue{background:linear-gradient(180deg,#e9f9ff,#9ee7ff)!important}
+  .zone-actions button.pink{background:linear-gradient(180deg,#ffd6ef,#ff7abd)!important;color:#68113d!important}
+  .zone-actions button.purple{background:linear-gradient(180deg,#eee3ff,#b69cff)!important;color:#351161!important}
+  .zone-close{
+    width:100%!important;
+    min-height:50px!important;
+    border:0!important;
+    border-radius:18px!important;
+    margin-top:10px!important;
+    font-weight:1000!important;
+    background:#17324d!important;
+    color:#fff!important;
+  }
+
+  .modal-card{
+    width:min(414px,94vw)!important;
+    max-height:86vh!important;
+    overflow:auto!important;
+    border-radius:30px!important;
+    background:linear-gradient(180deg,#fff,#eaf8ff)!important;
+  }
+
+  .toast{
+    bottom:92px!important;
+    z-index:150!important;
+  }
 }
 
 </style>
@@ -292,34 +505,35 @@ h1{font-size:clamp(30px,4vw,46px);color:#174166}
       <section class="card"><h2>🛒 שדרוגים</h2><button class="btn blue" id="buyShop">🥚 פתח ביצי חיות — 120 🪙</button><button class="btn blue" id="buyStable">🐴 פתח אורווה — 420 🪙</button><button class="btn blue" id="buyMine">💎 פתח Crystal Island — 900 🪙</button><button class="btn blue" id="buyPark">🎡 פתח פארק — 1400 🪙</button><button class="btn blue" id="upgradeHouse">🏡 שדרג בית — משתנה</button><button class="btn blue" id="buyMansion">🏰 ארמון ליאן — 2500 🪙 + 25 💎</button><button class="btn purple" id="buyIsland">🏝️ פתח אי סודי — רמה 20 + 50 💎</button></section>
       <section class="card"><h2>👗 סטייל לליאן</h2><div class="row"><button class="btn pink" id="buyCrown">👑 כתר 300 🪙</button><button class="btn pink" id="buyWings">🪽 כנפיים 12 💎</button></div><button class="btn pink" id="buyBow">🎀 סרט לשיער 180 🪙</button></section>
       <section class="card"><h2>🎁 פרסים</h2><button class="btn" id="giftBtn">תיבה יומית</button><button class="btn purple" id="wheelBtn">גלגל מזל יומי 🎡</button><button class="btn pink" id="loginBtn">🎁 בונוס כניסה יומי</button><div id="quests"></div></section><section class="card"><h2>🌈 Ultimate Fun</h2><button class="btn pink" id="partyBtn">🎉 PARTY TIME</button><button class="btn purple" id="festivalBtn">🌈 הפעל פסטיבל</button><button class="btn blue" id="photoBtn">📸 תמונת ניצחון</button></section>
-
-      <section class="card adventure-card">
-        <h2>🏝️ אי ההרפתקאות 2.0</h2>
-        <div class="adventure-grid">
-          <button class="btn purple" id="storyBtn">📖 סיפור היום</button>
-          <button class="btn pink" id="amuseBtn">🎡 פארק שעשועים</button>
-          <button class="btn blue" id="treasureBtn">🗺️ ציד אוצרות</button>
-          <button class="btn" id="adventureDailyBtn">🎁 תיבת אי יומית</button>
-        </div>
-        <div id="adventureStatus" class="story-box">טוען את אי ההרפתקאות...</div>
-      </section>
       <section class="card"><h2>🏆 הישגים</h2><div id="achievements"></div></section>
     </aside>
   </div>
 </div>
+
+<div class="mobile-bottom-nav" aria-label="ניווט תחתון">
+  <button onclick="mobileOpenDaily()"><b>🎁</b><span>בונוס יומי</span></button>
+  <button onclick="mobileOpenWheel()"><b>🎡</b><span>גלגל מזל</span></button>
+  <button class="main-paw" onclick="mobileOpenZone('cat')"><b>🐾</b><span>מנצ׳קין</span></button>
+  <button onclick="mobileOpenParty()"><b>🎉</b><span>PARTY</span></button>
+</div>
+
+<div class="zone-action-modal" id="zoneModal">
+  <div class="zone-sheet">
+    <h2 id="zoneTitle">פעילות</h2>
+    <p id="zoneDesc">בחרי מה לעשות</p>
+    <div class="zone-actions" id="zoneActions"></div>
+    <button class="zone-close" onclick="mobileCloseZone()">סגור</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <div class="modal" id="eggModal"><div class="modal-card"><div class="egg" id="eggIcon">🥚</div><h2 id="eggTitle">פתחת ביצה!</h2><p id="eggResult"></p><button class="btn" onclick="closeModal('eggModal')">סגור</button></div></div>
 <div class="modal" id="wheelModal"><div class="modal-card"><div class="egg">🎡</div><h2>גלגל המזל</h2><p id="wheelResult"></p><button class="btn" onclick="closeModal('wheelModal')">סגור</button></div></div><div class="modal" id="photoModal"><div class="modal-card"><h2>📸 תמונת ניצחון של ליאן</h2><img id="photoPreview" class="photo-preview" alt="תמונת ניצחון"><button class="btn" id="downloadPhotoBtn">הורד תמונה</button><button class="btn blue" onclick="closeModal('photoModal')">סגור</button></div></div>
-
-<div class="modal" id="storyModal"><div class="modal-card"><div class="egg">📖</div><h2 id="storyTitle">סיפור היום</h2><div class="story-box" id="storyText"></div><div id="storyChoices"></div><button class="btn blue" onclick="closeModal('storyModal')">סגור</button></div></div>
-<div class="modal" id="amuseModal"><div class="modal-card"><div class="egg">🎡</div><h2>פארק השעשועים</h2><p class="small">תפסי בלונים וקבלי מטבעות, XP והפתעות.</p><div class="park-game" id="balloonGame"></div><button class="btn pink" id="startBalloonsBtn">🎈 התחל תפוס בלונים</button><button class="btn purple" id="magicWheel2Btn">🎡 גלגל פארק מהיר</button><button class="btn blue" onclick="closeModal('amuseModal')">סגור</button></div></div>
-<div class="modal" id="treasureModal"><div class="modal-card"><div class="egg">🗺️</div><h2>ציד האוצרות</h2><p class="small">בחרי אריח אחד. לפעמים מסתתר שם אוצר גדול.</p><div class="adventure-grid" id="treasureGrid"></div><button class="btn blue" onclick="closeModal('treasureModal')">סגור</button></div></div>
-
 <script>
 const $=id=>document.getElementById(id);let audioCtx=null,soundOn=true;
 const petDefs={cat:{e:'🐱',name:'מנצקין',rar:'Starter',inc:1},dog:{e:'🐶',name:'כלב',rar:'Common',inc:2},bunny:{e:'🐰',name:'ארנב',rar:'Common',inc:2},fox:{e:'🦊',name:'שועל',rar:'Rare',inc:5},panda:{e:'🐼',name:'פנדה',rar:'Rare',inc:6},horse:{e:'🐴',name:'סוס',rar:'Epic',inc:9},unicorn:{e:'🦄',name:'חד קרן',rar:'Legendary',inc:16},dragon:{e:'🐉',name:'דרקון ורוד',rar:'Mythic',inc:26},phoenix:{e:'🪽',name:'פניקס אור',rar:'Ultimate',inc:38}};
 const start={coins:100,gems:0,level:1,xp:0,income:1,shop:false,stable:false,mine:false,park:false,mansion:false,house:1,petCounts:{cat:1},eggs:0,giftDay:'',wheelDay:'',wear:{crown:false,wings:false,bow:false},weather:'sun',island:false,festival:false,loginDay:'',loginStreak:0,drops:0,photoCount:0};
-let s=load();normalizeAdventureState();function load(){try{return {...start,...JSON.parse(localStorage.getItem('lianTycoonPro')||'{}')}}catch(e){return {...start}}}function save(){try{localStorage.setItem('lianTycoonPro',JSON.stringify(s))}catch(e){}}
+let s=load();function load(){try{return {...start,...JSON.parse(localStorage.getItem('lianTycoonPro')||'{}')}}catch(e){return {...start}}}function save(){try{localStorage.setItem('lianTycoonPro',JSON.stringify(s))}catch(e){}}
 function beep(freq=520,dur=.08,type='sine'){if(!soundOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.07,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
 function melody(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle'),i*90))}function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1700)}
 function petTotal(){return Object.values(s.petCounts).reduce((a,b)=>a+b,0)}function calcIncome(){let inc=0;for(const k in s.petCounts)inc+=(petDefs[k]?.inc||1)*s.petCounts[k];if(s.stable)inc+=5;if(s.mine)inc+=8;if(s.park)inc+=12;if(s.mansion)inc+=30;inc+=s.house*2;s.income=inc;return inc}
@@ -327,7 +541,7 @@ function rankName(){if(s.level>=30)return 'Lian Legend';if(s.level>=20)return 'S
 function render(){calcIncome();$('coins').textContent=Math.floor(s.coins);$('gems').textContent=s.gems;$('level').textContent=s.level;$('pets').textContent=petTotal();$('house').textContent=s.house;$('rank').textContent=rankName();$('xpBar').style.width=Math.min(100,(s.xp/(s.level*100))*100)+'%';$('incomeText').textContent=`העולם מייצר ${s.income} מטבעות לשנייה`;
  toggle('shop',s.shop,'פתוח');toggle('stable',s.stable,'פתוח');toggle('mine',s.mine,'Crystal');toggle('park',s.park,'פתוח');toggle('mansion',s.mansion,'פתוח');toggle('island',s.island,s.island?'פתוח':'רמה 20');$('homeText').textContent=['','קטן','גדול','אחוזה','ארמון'][s.house]||'אגדי';
  $('eggBasic').disabled=!s.shop||s.coins<180;$('eggMagic').disabled=!s.shop||s.coins<450;$('eggLegend').disabled=!s.shop||s.gems<18;$('buyShop').disabled=s.shop||s.coins<120;$('buyStable').disabled=s.stable||s.coins<420;$('buyMine').disabled=s.mine||s.coins<900;$('buyPark').disabled=s.park||s.coins<1400;$('buyMansion').disabled=s.mansion||s.coins<2500||s.gems<25;$('buyIsland').disabled=s.island||s.level<20||s.gems<50;$('upgradeHouse').disabled=s.house>=4||s.coins<houseCost();$('upgradeHouse').innerHTML=s.house>=4?'🏰 הבית בשיא':'🏡 שדרג בית — '+houseCost()+' 🪙';$('buyCrown').disabled=s.wear.crown||s.coins<300;$('buyWings').disabled=s.wear.wings||s.gems<12;$('buyBow').disabled=s.wear.bow||s.coins<180;
- $('crown').style.display=s.wear.crown?'block':'none';$('wings').style.display=s.wear.wings?'block':'none';$('bow').style.display=s.wear.bow?'block':'none';$('glow').style.display=s.mansion?'block':'none';$('petEmoji').textContent=bestPet();$('world').classList.toggle('crystal',s.mine);$('world').classList.toggle('rain',s.weather==='rain');$('world').classList.toggle('rainbow',s.weather==='rainbow');$('world').classList.toggle('night',s.weather==='night');$('world').classList.toggle('festival',!!s.festival);renderPets();renderQuests();renderAchievements();renderAdventure();save();}
+ $('crown').style.display=s.wear.crown?'block':'none';$('wings').style.display=s.wear.wings?'block':'none';$('bow').style.display=s.wear.bow?'block':'none';$('glow').style.display=s.mansion?'block':'none';$('petEmoji').textContent=bestPet();$('world').classList.toggle('crystal',s.mine);$('world').classList.toggle('rain',s.weather==='rain');$('world').classList.toggle('rainbow',s.weather==='rainbow');$('world').classList.toggle('night',s.weather==='night');$('world').classList.toggle('festival',!!s.festival);renderPets();renderQuests();renderAchievements();save();}
 function toggle(place,on,text){document.querySelector(`[data-place="${place}"]`).classList.toggle('locked',!on);const el=$(place+'Text');if(el)el.textContent=on?text:'נעול'}function houseCost(){return [0,500,1000,1800,99999][s.house]||99999}function bestPet(){const order=['phoenix','dragon','unicorn','horse','panda','fox','dog','bunny','cat'];return petDefs[order.find(k=>s.petCounts[k]>0)]?.e||'🐱'}
 function addCoins(n,x=50,y=50){s.coins+=n;s.xp+=Math.max(1,Math.floor(n/3));while(s.xp>=s.level*100){s.xp-=s.level*100;s.level++;s.gems+=3;melody();toast('עלית רמה! קיבלת 3 יהלומים 💎')}coinPop(n,x,y);render()}function coinPop(n,x,y){const p=document.createElement('div');p.className='coin-pop';p.textContent='+'+n+' 🪙';p.style.right=x+'%';p.style.top=y+'%';$('world').appendChild(p);setTimeout(()=>p.remove(),1000)}function spark(n=22){for(let i=0;i<n;i++){const d=document.createElement('div');d.className='spark';d.textContent=['✨','⭐','💎','🌈','💖'][Math.floor(Math.random()*5)];d.style.right=(20+Math.random()*60)+'%';d.style.top=(35+Math.random()*45)+'%';d.style.fontSize=(22+Math.random()*18)+'px';$('world').appendChild(d);setTimeout(()=>d.remove(),1500)}}
 function buy(key,cost,cb){if(s[key])return;if(s.coins<cost)return toast('אין מספיק מטבעות עדיין');s.coins-=cost;cb();spark();melody();render()}
@@ -343,100 +557,109 @@ function spawnGiftDrop(){if(document.querySelector('.dropgift'))return;const g=d
 function dailyLogin(){const today=new Date().toDateString();if(s.loginDay===today)return toast('כבר קיבלת בונוס כניסה היום');const yesterday=new Date(Date.now()-86400000).toDateString();s.loginStreak=(s.loginDay===yesterday)?(s.loginStreak||0)+1:1;s.loginDay=today;const c=150+s.loginStreak*70, gm=Math.min(20,2+s.loginStreak);s.coins+=c;s.gems+=gm;if(s.loginStreak%7===0){s.petCounts.unicorn=(s.petCounts.unicorn||0)+1;toast(`יום ${s.loginStreak}! קיבלת חד קרן 🦄`)}else toast(`בונוס יומי יום ${s.loginStreak}: ${c} 🪙 ו-${gm} 💎`);spark(30);melody();render()}
 function photoMode(){const cn=document.createElement('canvas'),ctx=cn.getContext('2d');cn.width=900;cn.height=1200;const grd=ctx.createLinearGradient(0,0,0,1200);grd.addColorStop(0,'#8fe7ff');grd.addColorStop(.55,'#fff1a8');grd.addColorStop(1,'#b7f7c1');ctx.fillStyle=grd;ctx.fillRect(0,0,900,1200);ctx.textAlign='center';ctx.fillStyle='#12324f';ctx.font='bold 54px Arial';ctx.fillText('Lian Pet Tycoon',450,90);ctx.font='bold 38px Arial';ctx.fillText('דרגה: '+rankName()+' · רמה '+s.level,450,145);const img=document.querySelector('.avatar');try{ctx.save();ctx.beginPath();ctx.arc(450,390,185,0,Math.PI*2);ctx.clip();ctx.drawImage(img,265,205,370,370);ctx.restore();}catch(e){ctx.font='160px Arial';ctx.fillText('👑',450,390)}ctx.font='bold 72px Arial';ctx.fillText(bestPet(),450,660);ctx.font='bold 42px Arial';ctx.fillText('🪙 '+Math.floor(s.coins)+'   💎 '+s.gems+'   🐾 '+petTotal(),450,760);ctx.font='bold 46px Arial';ctx.fillText(s.island?'🏝️ אי הקסמים פתוח!':'🏡 הטייקון של ליאן',450,860);ctx.font='32px Arial';ctx.fillText('תמונה מתוך המשחק של ליאן 👑',450,1040);const url=cn.toDataURL('image/png');$('photoPreview').src=url;$('downloadPhotoBtn').onclick=()=>{const a=document.createElement('a');a.href=url;a.download='lian-pet-tycoon-victory.png';a.click()};s.photoCount=(s.photoCount||0)+1;$('photoModal').classList.add('show');render()}
 
-
-/* ADVENTURE ISLAND 2.0 */
-function normalizeAdventureState(){
-  s.storyStep=s.storyStep||0;
-  s.storyDay=s.storyDay||'';
-  s.storyScore=s.storyScore||0;
-  s.parkTickets=s.parkTickets||0;
-  s.balloonBest=s.balloonBest||0;
-  s.treasures=s.treasures||0;
-  s.adventureGiftDay=s.adventureGiftDay||'';
-  s.adventureBadges=s.adventureBadges||[];
-}
-const storyChapters=[
-  {title:'המפתח הסודי',text:'מנצ׳קין מצא מפתח זהב קטן ליד יער הקסמים. המפתח מנצנץ וקורא לליאן לצאת להרפתקה.',choices:[
-    ['לפתוח את השער הסודי',()=>storyReward(120,3,55,'השער נפתח! מאחוריו הופיע שביל של כוכבים.')],
-    ['לקרוא לחיות שיעזרו',()=>storyReward(90,2,80,'כל החיות הגיעו והפכו לצוות הרפתקאות אמיתי!')],
-    ['לשמור את המפתח לתיבה',()=>storyReward(180,1,40,'בתיבה חיכו מטבעות נוצצים ומפה עתיקה.')]
-  ]},
-  {title:'יער הקסמים',text:'ליאן נכנסת ליער שבו העצים מדברים. ינשוף חכם מבקש ממנה לבחור דרך.',choices:[
-    ['דרך הפרחים הזוהרים',()=>storyReward(140,2,65,'הפרחים האירו את הדרך ופתחו משימה חדשה.')],
-    ['דרך הגשר הקטן',()=>storyReward(100,4,50,'מתחת לגשר חיכה אוצר כחול.')],
-    ['דרך עקבות החד-קרן',()=>{s.petCounts.unicorn=(s.petCounts.unicorn||0)+1;storyReward(80,0,90,'חד קרן חדש הצטרף לאי!')}]
-  ]},
-  {title:'מערת האוצר',text:'בקצה האי נמצאת מערה עם שלושה סמלים: כוכב, לב וכתר. רק סמל אחד פותח את האוצר הגדול.',choices:[
-    ['⭐ סמל הכוכב',()=>storyReward(220,3,80,'הכוכב פתח מפל של מטבעות!')],
-    ['💖 סמל הלב',()=>storyReward(150,5,70,'הלב העיר את הפניקס ושדרג את האי.')],
-    ['👑 סמל הכתר',()=>{s.wear.crown=true;storyReward(100,2,110,'כתר קסום נוסף לליאן!')}]
-  ]}
-];
-function storyReward(coins,gems,xp,msg){
-  s.coins+=coins;s.gems+=gems;s.xp+=xp;s.storyScore+=1;s.storyStep=(s.storyStep+1)%storyChapters.length;
-  if(s.storyScore===3 && !s.adventureBadges.includes('story'))s.adventureBadges.push('story');
-  toast(msg+' +'+coins+' 🪙 +'+gems+' 💎');spark(28);melody();render();openStory();
-}
-function openStory(){
-  normalizeAdventureState();
-  const ch=storyChapters[s.storyStep%storyChapters.length];
-  $('storyTitle').textContent='📖 '+ch.title;
-  $('storyText').textContent=ch.text;
-  $('storyChoices').innerHTML='';
-  ch.choices.forEach(([label,fn])=>{
-    const b=document.createElement('button');b.className='story-choice';b.textContent=label;b.onclick=fn;$('storyChoices').appendChild(b);
-  });
-  $('storyModal').classList.add('show');
-}
-function openAmuse(){ $('amuseModal').classList.add('show'); $('balloonGame').innerHTML='<div class="story-box">לחצי על “התחל תפוס בלונים” ואז תפסי כמה שיותר בלונים ב-20 שניות 🎈</div>'; }
-function startBalloons(){
-  const area=$('balloonGame');area.innerHTML='';let score=0;let time=20;
-  const timer=document.createElement('div');timer.className='story-box';timer.textContent='זמן: 20 · ניקוד: 0';area.appendChild(timer);
-  const spawn=setInterval(()=>{
-    const b=document.createElement('button');b.className='balloon';b.textContent=['🎈','🎈','🎀','⭐','💎'][Math.floor(Math.random()*5)];
-    b.style.right=(5+Math.random()*82)+'%';b.onclick=()=>{score++;s.coins+=25;s.xp+=8;if(b.textContent==='💎')s.gems++;b.remove();beep(760,.06,'triangle')};
-    area.appendChild(b);setTimeout(()=>b.remove(),4800);
-  },560);
-  const tick=setInterval(()=>{
-    time--;timer.textContent='זמן: '+time+' · ניקוד: '+score;
-    if(time<=0){clearInterval(spawn);clearInterval(tick);s.balloonBest=Math.max(s.balloonBest||0,score);s.parkTickets+=score;s.coins+=score*35;s.xp+=score*12;if(score>=12&&!s.adventureBadges.includes('balloons'))s.adventureBadges.push('balloons');timer.textContent='נגמר! תפסת '+score+' בלונים 🎉';toast('פרס פארק: '+(score*35)+' מטבעות');spark(30);render();}
-  },1000);
-}
-function quickParkWheel(){
-  const prizes=[['כרטיס פארק',()=>s.parkTickets+=1],['250 מטבעות',()=>s.coins+=250],['6 יהלומים',()=>s.gems+=6],['120 XP',()=>s.xp+=120],['חיית פנדה',()=>s.petCounts.panda=(s.petCounts.panda||0)+1]];
-  const p=prizes[Math.floor(Math.random()*prizes.length)];p[1]();toast('פארק השעשועים: '+p[0]+' 🎡');spark(24);render();
-}
-function openTreasure(){
-  const g=$('treasureGrid');g.innerHTML='';
-  const prize=Math.floor(Math.random()*6);
-  for(let i=0;i<6;i++){
-    const b=document.createElement('button');b.className='treasure-tile';b.textContent='❔';
-    b.onclick=()=>{ if(b.dataset.done)return; b.dataset.done='1';
-      if(i===prize){b.textContent='💰';s.coins+=520;s.gems+=7;s.treasures++;s.xp+=120;toast('מצאת אוצר גדול!')}
-      else {b.textContent=['🌸','🐾','⭐','🍀','🪙'][Math.floor(Math.random()*5)];s.coins+=70;s.xp+=20;toast('מצאת פרס קטן וחמוד')}
-      if(s.treasures>=3&&!s.adventureBadges.includes('treasure'))s.adventureBadges.push('treasure');
-      spark(20);render();
-    };
-    g.appendChild(b);
-  }
-  $('treasureModal').classList.add('show');
-}
-function adventureDailyGift(){
-  const today=new Date().toDateString();
-  if(s.adventureGiftDay===today)return toast('תיבת האי כבר נפתחה היום 🏝️');
-  s.adventureGiftDay=today;
-  const c=350+Math.floor(Math.random()*450),g=4+Math.floor(Math.random()*8);
-  s.coins+=c;s.gems+=g;s.xp+=160;s.parkTickets+=2;
-  toast('תיבת האי: '+c+' 🪙 '+g+' 💎 + 2 כרטיסים');spark(36);melody();render();
-}
-function renderAdventure(){
-  const el=$('adventureStatus'); if(!el)return;
-  normalizeAdventureState();
-  el.innerHTML='📖 פרקים שהושלמו: '+s.storyScore+'<br>🎈 שיא בלונים: '+(s.balloonBest||0)+'<br>🗺️ אוצרות: '+(s.treasures||0)+'<br>🎟️ כרטיסי פארק: '+(s.parkTickets||0)+'<br>🏅 תגי אי: '+(s.adventureBadges.length||0);
-}
-
-$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').innerHTML=(soundOn?'🔊':'🔇')+'<br><small>Sound</small>';beep(440)};$('partyBtn').onclick=partyTime;$('festivalBtn').onclick=()=>startFestival(60);$('photoBtn').onclick=photoMode;$('loginBtn').onclick=dailyLogin;$('storyBtn').onclick=openStory;$('amuseBtn').onclick=openAmuse;$('treasureBtn').onclick=openTreasure;$('adventureDailyBtn').onclick=adventureDailyGift;$('startBalloonsBtn').onclick=startBalloons;$('magicWheel2Btn').onclick=quickParkWheel;document.querySelectorAll('.spot').forEach(btn=>btn.onclick=()=>{const r=btn.getBoundingClientRect(),w=$('world').getBoundingClientRect();$('character').style.right=Math.max(5,Math.min(80,100-((r.left-w.left+r.width/2)/w.width*100)))+'%';$('character').style.bottom=Math.max(40,Math.min(410,(w.bottom-r.bottom)+30))+'px';beep(500);toast(btn.textContent.replace(/נעול|פתוח|מייצר כסף|Crystal|קטן|גדול|אחוזה|ארמון/g,'').trim())});
-function renderPets(){$('petList').innerHTML=Object.entries(s.petCounts).map(([k,v])=>`<div class="petcard"><b>${petDefs[k].e}</b>${petDefs[k].name} ×${v}</div>`).join('')}function renderQuests(){const qs=[['אספי 1000 מטבעות',s.coins>=1000],['פתחי 3 ביצים',s.eggs>=3],['קני כתר לליאן',s.wear.crown],['הגיעי לרמה 8',s.level>=8],['פתחי Crystal Island',s.mine],['בני את ארמון ליאן',s.mansion],['פתחי את האי הסודי',s.island],['תפסי 3 מתנות מעופפות',(s.drops||0)>=3]];$('quests').innerHTML=qs.map(q=>`<div class="quest"><span>${q[0]}</span><b class="${q[1]?'done':''}">${q[1]?'✅':'🔒'}</b></div>`).join('')}function renderAchievements(){const a=[['אספנית חיות',petTotal()>=5],['מלכת הביצים',s.eggs>=10],['עשירה בטייקון',s.coins>=5000],['סטייליסטית',s.wear.crown&&s.wear.wings&&s.wear.bow],['Lian Legend',s.mansion&&s.level>=10],['מלכת האי הסודי',s.island],['צלמת טייקון',(s.photoCount||0)>=3],['Party Queen',(s.drops||0)>=5||s.festival],['מספרת סיפורים',(s.storyScore||0)>=3],['אלופת בלונים',(s.balloonBest||0)>=12],['ציידת אוצרות',(s.treasures||0)>=3]];$('achievements').innerHTML=a.map(x=>`<div class="ach"><span>${x[0]}</span><b class="${x[1]?'done':''}">${x[1]?'🏆':'🔒'}</b></div>`).join('')}
+$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').innerHTML=(soundOn?'🔊':'🔇')+'<br><small>Sound</small>';beep(440)};$('partyBtn').onclick=partyTime;$('festivalBtn').onclick=()=>startFestival(60);$('photoBtn').onclick=photoMode;$('loginBtn').onclick=dailyLogin;document.querySelectorAll('.spot').forEach(btn=>btn.onclick=()=>{const r=btn.getBoundingClientRect(),w=$('world').getBoundingClientRect();$('character').style.right=Math.max(5,Math.min(80,100-((r.left-w.left+r.width/2)/w.width*100)))+'%';$('character').style.bottom=Math.max(40,Math.min(410,(w.bottom-r.bottom)+30))+'px';beep(500);toast(btn.textContent.replace(/נעול|פתוח|מייצר כסף|Crystal|קטן|גדול|אחוזה|ארמון/g,'').trim())});
+function renderPets(){$('petList').innerHTML=Object.entries(s.petCounts).map(([k,v])=>`<div class="petcard"><b>${petDefs[k].e}</b>${petDefs[k].name} ×${v}</div>`).join('')}function renderQuests(){const qs=[['אספי 1000 מטבעות',s.coins>=1000],['פתחי 3 ביצים',s.eggs>=3],['קני כתר לליאן',s.wear.crown],['הגיעי לרמה 8',s.level>=8],['פתחי Crystal Island',s.mine],['בני את ארמון ליאן',s.mansion],['פתחי את האי הסודי',s.island],['תפסי 3 מתנות מעופפות',(s.drops||0)>=3]];$('quests').innerHTML=qs.map(q=>`<div class="quest"><span>${q[0]}</span><b class="${q[1]?'done':''}">${q[1]?'✅':'🔒'}</b></div>`).join('')}function renderAchievements(){const a=[['אספנית חיות',petTotal()>=5],['מלכת הביצים',s.eggs>=10],['עשירה בטייקון',s.coins>=5000],['סטייליסטית',s.wear.crown&&s.wear.wings&&s.wear.bow],['Lian Legend',s.mansion&&s.level>=10],['מלכת האי הסודי',s.island],['צלמת טייקון',(s.photoCount||0)>=3],['Party Queen',(s.drops||0)>=5||s.festival]];$('achievements').innerHTML=a.map(x=>`<div class="ach"><span>${x[0]}</span><b class="${x[1]?'done':''}">${x[1]?'🏆':'🔒'}</b></div>`).join('')}
 setInterval(()=>{s.coins+=s.income*(s.festival?2:1);s.xp+=s.festival?2:1;if(s.mine&&Math.random()<.08)s.gems++;render()},1000);setInterval(()=>{const w=['sun','rain','rainbow','night'][Math.floor(Math.random()*4)];s.weather=w;render();toast(w==='rain'?'גשם קסום התחיל 🌧️':w==='rainbow'?'קשת הופיעה 🌈':w==='night'?'לילה קסום ירד ✨':'השמש חזרה ☀️')},45000);setInterval(spawnGiftDrop,120000);setInterval(()=>{if(Math.random()<.55)startFestival(45)},180000);render();
+</script>
+<script>
+
+/* PET TYCOON 3.0 MOBILE ISLAND ACTIONS */
+(function(){
+  function byId(id){return document.getElementById(id)}
+  window.mobileCloseZone=function(){
+    const m=byId('zoneModal'); if(m)m.classList.remove('show');
+  }
+  function clickExisting(id){
+    const el=byId(id);
+    if(el){ el.click(); return true; }
+    return false;
+  }
+  function action(label, cls, fn){
+    const b=document.createElement('button');
+    b.textContent=label;
+    if(cls)b.className=cls;
+    b.onclick=fn;
+    return b;
+  }
+  window.mobileOpenZone=function(place){
+    const modal=byId('zoneModal'), title=byId('zoneTitle'), desc=byId('zoneDesc'), actions=byId('zoneActions');
+    if(!modal||!title||!desc||!actions)return;
+    actions.innerHTML='';
+    const data={
+      home:['🏠 הבית של ליאן','שדרוג הבית מחזק את כל העולם ומעלה הכנסה.'],
+      cat:['🐱 מנצ׳קין','טיפול מהיר, איסוף מטבעות ומשחק עם החיה הראשית.'],
+      shop:['🥚 ביצי חיות','פתחי ביצים וקבלי חיות נדירות שמייצרות יותר מטבעות.'],
+      stable:['🐴 אורוות הסוסים','רכיבה, תחרויות ופרסי סוסים.'],
+      park:['🎡 פארק השעשועים','משחקים, גלגל מזל ופרסים מהירים.'],
+      mine:['💎 מכרת הקריסטלים','יהלומים, שדרוגים ואוצרות נוצצים.'],
+      mansion:['🏰 ארמון ליאן','יעד יוקרתי שמעלה את דרגת האי.'],
+      island:['🏝️ האי הסודי','אזור מתקדם להרפתקאות ופרסים מיוחדים.']
+    };
+    const d=data[place]||['פעילות','בחרי פעולה'];
+    title.textContent=d[0]; desc.textContent=d[1];
+
+    if(place==='cat'){
+      actions.appendChild(action('אסוף מטבעות 🪙','',()=>clickExisting('collectBtn')));
+      actions.appendChild(action('תמונת ניצחון 📸','blue',()=>clickExisting('photoBtn')));
+      actions.appendChild(action('כתר לליאן 👑','pink',()=>clickExisting('buyCrown')));
+      actions.appendChild(action('סרט לשיער 🎀','pink',()=>clickExisting('buyBow')));
+    }else if(place==='shop'){
+      actions.appendChild(action('ביצה רגילה 🥚','blue',()=>clickExisting('eggBasic')));
+      actions.appendChild(action('ביצת קסם ✨','pink',()=>clickExisting('eggMagic')));
+      actions.appendChild(action('ביצה אגדית 💎','purple',()=>clickExisting('eggLegend')));
+      actions.appendChild(action('פתח אזור ביצים 🔓','',()=>clickExisting('buyShop')));
+    }else if(place==='stable'){
+      actions.appendChild(action('פתח אורווה 🐴','blue',()=>clickExisting('buyStable')));
+      actions.appendChild(action('כנפיים קסומות 🪽','purple',()=>clickExisting('buyWings')));
+      actions.appendChild(action('אסוף הכנסה 🪙','',()=>clickExisting('collectBtn')));
+      actions.appendChild(action('תמונה עם הסוס 📸','pink',()=>clickExisting('photoBtn')));
+    }else if(place==='park'){
+      actions.appendChild(action('פתח פארק 🎡','blue',()=>clickExisting('buyPark')));
+      actions.appendChild(action('גלגל מזל 🎡','purple',()=>clickExisting('wheelBtn')));
+      actions.appendChild(action('PARTY TIME 🎉','pink',()=>clickExisting('partyBtn')));
+      actions.appendChild(action('פסטיבל 🌈','pink',()=>clickExisting('festivalBtn')));
+    }else if(place==='mine'){
+      actions.appendChild(action('פתח Crystal Island 💎','blue',()=>clickExisting('buyMine')));
+      actions.appendChild(action('ביצה אגדית 💎','purple',()=>clickExisting('eggLegend')));
+      actions.appendChild(action('אסוף מטבעות 🪙','',()=>clickExisting('collectBtn')));
+      actions.appendChild(action('תיבה יומית 🎁','pink',()=>clickExisting('giftBtn')));
+    }else if(place==='mansion'){
+      actions.appendChild(action('בנה ארמון 🏰','purple',()=>clickExisting('buyMansion')));
+      actions.appendChild(action('שדרג בית 🏡','blue',()=>clickExisting('upgradeHouse')));
+      actions.appendChild(action('תמונת ניצחון 📸','pink',()=>clickExisting('photoBtn')));
+      actions.appendChild(action('אסוף מטבעות 🪙','',()=>clickExisting('collectBtn')));
+    }else if(place==='island'){
+      actions.appendChild(action('פתח אי סודי 🏝️','purple',()=>clickExisting('buyIsland')));
+      actions.appendChild(action('פסטיבל אי 🌈','pink',()=>clickExisting('festivalBtn')));
+      actions.appendChild(action('גלגל מזל 🎡','blue',()=>clickExisting('wheelBtn')));
+      actions.appendChild(action('תיבה יומית 🎁','',()=>clickExisting('giftBtn')));
+    }else{
+      actions.appendChild(action('שדרג בית 🏡','blue',()=>clickExisting('upgradeHouse')));
+      actions.appendChild(action('אסוף מטבעות 🪙','',()=>clickExisting('collectBtn')));
+      actions.appendChild(action('בונוס יומי 🎁','pink',()=>clickExisting('loginBtn')));
+      actions.appendChild(action('תמונת ניצחון 📸','purple',()=>clickExisting('photoBtn')));
+    }
+    modal.classList.add('show');
+    try{beep(620,.07,'triangle')}catch(e){}
+  }
+
+  window.mobileOpenDaily=function(){ clickExisting('loginBtn') || clickExisting('giftBtn'); }
+  window.mobileOpenWheel=function(){ clickExisting('wheelBtn'); }
+  window.mobileOpenParty=function(){ clickExisting('partyBtn'); }
+
+  function bindMobileMap(){
+    document.querySelectorAll('.spot').forEach(btn=>{
+      btn.onclick=function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        mobileOpenZone(btn.dataset.place||'home');
+      }
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindMobileMap);
+  else bindMobileMap();
+  setTimeout(bindMobileMap,500);
+})();
+
 </script>
 </body></html>
