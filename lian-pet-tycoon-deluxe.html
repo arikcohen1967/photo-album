@@ -54,6 +54,19 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
 .photo-preview{width:100%;max-height:430px;object-fit:contain;border-radius:22px;background:#fff;margin:8px 0}
 @media(max-width:540px){.hud{grid-template-columns:repeat(2,1fr)}.island{left:35%;bottom:330px}.festival-banner{font-size:13px;max-width:94%;white-space:normal}}
 
+
+/* ADVENTURE ISLAND 2.0 */
+.adventure-card{background:linear-gradient(145deg,#fff,#eaf8ff)!important;border:3px solid rgba(255,255,255,.92)!important}
+.adventure-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.story-box{border-radius:22px;background:linear-gradient(145deg,#ffffff,#eef9ff);padding:14px;margin:10px 0;text-align:right;font-weight:900;line-height:1.55;color:#17324d}
+.story-choice{width:100%;border:0;border-radius:18px;background:linear-gradient(145deg,#fff5a8,#ffd84f);padding:13px 12px;margin:6px 0;font-weight:1000;color:#4a3100;font-size:16px;box-shadow:0 10px 18px rgba(180,125,0,.16)}
+.park-game{min-height:240px;position:relative;overflow:hidden;border-radius:24px;background:linear-gradient(180deg,#baf3ff,#e9f9ff 45%,#a7f3d0);border:3px solid #fff;margin:10px 0}
+.balloon{position:absolute;border:0;background:transparent;font-size:42px;animation:floatUp 4.8s linear forwards;filter:drop-shadow(0 8px 8px rgba(0,0,0,.16))}
+@keyframes floatUp{from{bottom:-55px;transform:translateX(0) rotate(-5deg)}to{bottom:110%;transform:translateX(22px) rotate(8deg)}}
+.treasure-tile{border:0;border-radius:20px;background:linear-gradient(145deg,#fff,#fff1a8);min-height:70px;font-size:32px;box-shadow:0 12px 22px rgba(0,0,0,.12)}
+.adventure-map-title{position:absolute;right:50%;top:104px;transform:translateX(50%);z-index:4;background:rgba(255,255,255,.78);border:2px solid #fff;border-radius:999px;padding:9px 14px;font-weight:1000;color:#174166;box-shadow:0 12px 22px rgba(0,0,0,.12)}
+@media(max-width:540px){.adventure-grid{grid-template-columns:1fr}.adventure-map-title{top:118px;font-size:13px}.story-choice{font-size:15px}}
+
 </style>
 </head>
 <body>
@@ -80,6 +93,17 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
       <section class="card"><h2>🛒 שדרוגים</h2><button class="btn blue" id="buyShop">🥚 פתח ביצי חיות — 120 🪙</button><button class="btn blue" id="buyStable">🐴 פתח אורווה — 420 🪙</button><button class="btn blue" id="buyMine">💎 פתח Crystal Island — 900 🪙</button><button class="btn blue" id="buyPark">🎡 פתח פארק — 1400 🪙</button><button class="btn blue" id="upgradeHouse">🏡 שדרג בית — משתנה</button><button class="btn blue" id="buyMansion">🏰 ארמון ליאן — 2500 🪙 + 25 💎</button><button class="btn purple" id="buyIsland">🏝️ פתח אי סודי — רמה 20 + 50 💎</button></section>
       <section class="card"><h2>👗 סטייל לליאן</h2><div class="row"><button class="btn pink" id="buyCrown">👑 כתר 300 🪙</button><button class="btn pink" id="buyWings">🪽 כנפיים 12 💎</button></div><button class="btn pink" id="buyBow">🎀 סרט לשיער 180 🪙</button></section>
       <section class="card"><h2>🎁 פרסים</h2><button class="btn" id="giftBtn">תיבה יומית</button><button class="btn purple" id="wheelBtn">גלגל מזל יומי 🎡</button><button class="btn pink" id="loginBtn">🎁 בונוס כניסה יומי</button><div id="quests"></div></section><section class="card"><h2>🌈 Ultimate Fun</h2><button class="btn pink" id="partyBtn">🎉 PARTY TIME</button><button class="btn purple" id="festivalBtn">🌈 הפעל פסטיבל</button><button class="btn blue" id="photoBtn">📸 תמונת ניצחון</button></section>
+
+      <section class="card adventure-card">
+        <h2>🏝️ אי ההרפתקאות 2.0</h2>
+        <div class="adventure-grid">
+          <button class="btn purple" id="storyBtn">📖 סיפור היום</button>
+          <button class="btn pink" id="amuseBtn">🎡 פארק שעשועים</button>
+          <button class="btn blue" id="treasureBtn">🗺️ ציד אוצרות</button>
+          <button class="btn" id="adventureDailyBtn">🎁 תיבת אי יומית</button>
+        </div>
+        <div id="adventureStatus" class="story-box">טוען את אי ההרפתקאות...</div>
+      </section>
       <section class="card"><h2>🏆 הישגים</h2><div id="achievements"></div></section>
     </aside>
   </div>
@@ -87,11 +111,16 @@ h1{margin:0;font-size:clamp(28px,5vw,52px);color:#124777} .hero p{margin:5px 0 0
 <div class="toast" id="toast"></div>
 <div class="modal" id="eggModal"><div class="modal-card"><div class="egg" id="eggIcon">🥚</div><h2 id="eggTitle">פתחת ביצה!</h2><p id="eggResult"></p><button class="btn" onclick="closeModal('eggModal')">סגור</button></div></div>
 <div class="modal" id="wheelModal"><div class="modal-card"><div class="egg">🎡</div><h2>גלגל המזל</h2><p id="wheelResult"></p><button class="btn" onclick="closeModal('wheelModal')">סגור</button></div></div><div class="modal" id="photoModal"><div class="modal-card"><h2>📸 תמונת ניצחון של ליאן</h2><img id="photoPreview" class="photo-preview" alt="תמונת ניצחון"><button class="btn" id="downloadPhotoBtn">הורד תמונה</button><button class="btn blue" onclick="closeModal('photoModal')">סגור</button></div></div>
+
+<div class="modal" id="storyModal"><div class="modal-card"><div class="egg">📖</div><h2 id="storyTitle">סיפור היום</h2><div class="story-box" id="storyText"></div><div id="storyChoices"></div><button class="btn blue" onclick="closeModal('storyModal')">סגור</button></div></div>
+<div class="modal" id="amuseModal"><div class="modal-card"><div class="egg">🎡</div><h2>פארק השעשועים</h2><p class="small">תפסי בלונים וקבלי מטבעות, XP והפתעות.</p><div class="park-game" id="balloonGame"></div><button class="btn pink" id="startBalloonsBtn">🎈 התחל תפוס בלונים</button><button class="btn purple" id="magicWheel2Btn">🎡 גלגל פארק מהיר</button><button class="btn blue" onclick="closeModal('amuseModal')">סגור</button></div></div>
+<div class="modal" id="treasureModal"><div class="modal-card"><div class="egg">🗺️</div><h2>ציד האוצרות</h2><p class="small">בחרי אריח אחד. לפעמים מסתתר שם אוצר גדול.</p><div class="adventure-grid" id="treasureGrid"></div><button class="btn blue" onclick="closeModal('treasureModal')">סגור</button></div></div>
+
 <script>
 const $=id=>document.getElementById(id);let audioCtx=null,soundOn=true;
 const petDefs={cat:{e:'🐱',name:'מנצקין',rar:'Starter',inc:1},dog:{e:'🐶',name:'כלב',rar:'Common',inc:2},bunny:{e:'🐰',name:'ארנב',rar:'Common',inc:2},fox:{e:'🦊',name:'שועל',rar:'Rare',inc:5},panda:{e:'🐼',name:'פנדה',rar:'Rare',inc:6},horse:{e:'🐴',name:'סוס',rar:'Epic',inc:9},unicorn:{e:'🦄',name:'חד קרן',rar:'Legendary',inc:16},dragon:{e:'🐉',name:'דרקון ורוד',rar:'Mythic',inc:26},phoenix:{e:'🪽',name:'פניקס אור',rar:'Ultimate',inc:38}};
 const start={coins:100,gems:0,level:1,xp:0,income:1,shop:false,stable:false,mine:false,park:false,mansion:false,house:1,petCounts:{cat:1},eggs:0,giftDay:'',wheelDay:'',wear:{crown:false,wings:false,bow:false},weather:'sun',island:false,festival:false,loginDay:'',loginStreak:0,drops:0,photoCount:0};
-let s=load();function load(){try{return {...start,...JSON.parse(localStorage.getItem('lianTycoonPro')||'{}')}}catch(e){return {...start}}}function save(){try{localStorage.setItem('lianTycoonPro',JSON.stringify(s))}catch(e){}}
+let s=load();normalizeAdventureState();function load(){try{return {...start,...JSON.parse(localStorage.getItem('lianTycoonPro')||'{}')}}catch(e){return {...start}}}function save(){try{localStorage.setItem('lianTycoonPro',JSON.stringify(s))}catch(e){}}
 function beep(freq=520,dur=.08,type='sine'){if(!soundOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;audioCtx=audioCtx||new AC();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.07,audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
 function melody(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle'),i*90))}function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1700)}
 function petTotal(){return Object.values(s.petCounts).reduce((a,b)=>a+b,0)}function calcIncome(){let inc=0;for(const k in s.petCounts)inc+=(petDefs[k]?.inc||1)*s.petCounts[k];if(s.stable)inc+=5;if(s.mine)inc+=8;if(s.park)inc+=12;if(s.mansion)inc+=30;inc+=s.house*2;s.income=inc;return inc}
@@ -99,7 +128,7 @@ function rankName(){if(s.level>=30)return 'Lian Legend';if(s.level>=20)return 'S
 function render(){calcIncome();$('coins').textContent=Math.floor(s.coins);$('gems').textContent=s.gems;$('level').textContent=s.level;$('pets').textContent=petTotal();$('house').textContent=s.house;$('rank').textContent=rankName();$('xpBar').style.width=Math.min(100,(s.xp/(s.level*100))*100)+'%';$('incomeText').textContent=`העולם מייצר ${s.income} מטבעות לשנייה`;
  toggle('shop',s.shop,'פתוח');toggle('stable',s.stable,'פתוח');toggle('mine',s.mine,'Crystal');toggle('park',s.park,'פתוח');toggle('mansion',s.mansion,'פתוח');toggle('island',s.island,s.island?'פתוח':'רמה 20');$('homeText').textContent=['','קטן','גדול','אחוזה','ארמון'][s.house]||'אגדי';
  $('eggBasic').disabled=!s.shop||s.coins<180;$('eggMagic').disabled=!s.shop||s.coins<450;$('eggLegend').disabled=!s.shop||s.gems<18;$('buyShop').disabled=s.shop||s.coins<120;$('buyStable').disabled=s.stable||s.coins<420;$('buyMine').disabled=s.mine||s.coins<900;$('buyPark').disabled=s.park||s.coins<1400;$('buyMansion').disabled=s.mansion||s.coins<2500||s.gems<25;$('buyIsland').disabled=s.island||s.level<20||s.gems<50;$('upgradeHouse').disabled=s.house>=4||s.coins<houseCost();$('upgradeHouse').innerHTML=s.house>=4?'🏰 הבית בשיא':'🏡 שדרג בית — '+houseCost()+' 🪙';$('buyCrown').disabled=s.wear.crown||s.coins<300;$('buyWings').disabled=s.wear.wings||s.gems<12;$('buyBow').disabled=s.wear.bow||s.coins<180;
- $('crown').style.display=s.wear.crown?'block':'none';$('wings').style.display=s.wear.wings?'block':'none';$('bow').style.display=s.wear.bow?'block':'none';$('glow').style.display=s.mansion?'block':'none';$('petEmoji').textContent=bestPet();$('world').classList.toggle('crystal',s.mine);$('world').classList.toggle('rain',s.weather==='rain');$('world').classList.toggle('rainbow',s.weather==='rainbow');$('world').classList.toggle('night',s.weather==='night');$('world').classList.toggle('festival',!!s.festival);renderPets();renderQuests();renderAchievements();save();}
+ $('crown').style.display=s.wear.crown?'block':'none';$('wings').style.display=s.wear.wings?'block':'none';$('bow').style.display=s.wear.bow?'block':'none';$('glow').style.display=s.mansion?'block':'none';$('petEmoji').textContent=bestPet();$('world').classList.toggle('crystal',s.mine);$('world').classList.toggle('rain',s.weather==='rain');$('world').classList.toggle('rainbow',s.weather==='rainbow');$('world').classList.toggle('night',s.weather==='night');$('world').classList.toggle('festival',!!s.festival);renderPets();renderQuests();renderAchievements();renderAdventure();save();}
 function toggle(place,on,text){document.querySelector(`[data-place="${place}"]`).classList.toggle('locked',!on);const el=$(place+'Text');if(el)el.textContent=on?text:'נעול'}function houseCost(){return [0,500,1000,1800,99999][s.house]||99999}function bestPet(){const order=['phoenix','dragon','unicorn','horse','panda','fox','dog','bunny','cat'];return petDefs[order.find(k=>s.petCounts[k]>0)]?.e||'🐱'}
 function addCoins(n,x=50,y=50){s.coins+=n;s.xp+=Math.max(1,Math.floor(n/3));while(s.xp>=s.level*100){s.xp-=s.level*100;s.level++;s.gems+=3;melody();toast('עלית רמה! קיבלת 3 יהלומים 💎')}coinPop(n,x,y);render()}function coinPop(n,x,y){const p=document.createElement('div');p.className='coin-pop';p.textContent='+'+n+' 🪙';p.style.right=x+'%';p.style.top=y+'%';$('world').appendChild(p);setTimeout(()=>p.remove(),1000)}function spark(n=22){for(let i=0;i<n;i++){const d=document.createElement('div');d.className='spark';d.textContent=['✨','⭐','💎','🌈','💖'][Math.floor(Math.random()*5)];d.style.right=(20+Math.random()*60)+'%';d.style.top=(35+Math.random()*45)+'%';d.style.fontSize=(22+Math.random()*18)+'px';$('world').appendChild(d);setTimeout(()=>d.remove(),1500)}}
 function buy(key,cost,cb){if(s[key])return;if(s.coins<cost)return toast('אין מספיק מטבעות עדיין');s.coins-=cost;cb();spark();melody();render()}
@@ -115,8 +144,100 @@ function spawnGiftDrop(){if(document.querySelector('.dropgift'))return;const g=d
 function dailyLogin(){const today=new Date().toDateString();if(s.loginDay===today)return toast('כבר קיבלת בונוס כניסה היום');const yesterday=new Date(Date.now()-86400000).toDateString();s.loginStreak=(s.loginDay===yesterday)?(s.loginStreak||0)+1:1;s.loginDay=today;const c=150+s.loginStreak*70, gm=Math.min(20,2+s.loginStreak);s.coins+=c;s.gems+=gm;if(s.loginStreak%7===0){s.petCounts.unicorn=(s.petCounts.unicorn||0)+1;toast(`יום ${s.loginStreak}! קיבלת חד קרן 🦄`)}else toast(`בונוס יומי יום ${s.loginStreak}: ${c} 🪙 ו-${gm} 💎`);spark(30);melody();render()}
 function photoMode(){const cn=document.createElement('canvas'),ctx=cn.getContext('2d');cn.width=900;cn.height=1200;const grd=ctx.createLinearGradient(0,0,0,1200);grd.addColorStop(0,'#8fe7ff');grd.addColorStop(.55,'#fff1a8');grd.addColorStop(1,'#b7f7c1');ctx.fillStyle=grd;ctx.fillRect(0,0,900,1200);ctx.textAlign='center';ctx.fillStyle='#12324f';ctx.font='bold 54px Arial';ctx.fillText('Lian Pet Tycoon',450,90);ctx.font='bold 38px Arial';ctx.fillText('דרגה: '+rankName()+' · רמה '+s.level,450,145);const img=document.querySelector('.avatar');try{ctx.save();ctx.beginPath();ctx.arc(450,390,185,0,Math.PI*2);ctx.clip();ctx.drawImage(img,265,205,370,370);ctx.restore();}catch(e){ctx.font='160px Arial';ctx.fillText('👑',450,390)}ctx.font='bold 72px Arial';ctx.fillText(bestPet(),450,660);ctx.font='bold 42px Arial';ctx.fillText('🪙 '+Math.floor(s.coins)+'   💎 '+s.gems+'   🐾 '+petTotal(),450,760);ctx.font='bold 46px Arial';ctx.fillText(s.island?'🏝️ אי הקסמים פתוח!':'🏡 הטייקון של ליאן',450,860);ctx.font='32px Arial';ctx.fillText('תמונה מתוך המשחק של ליאן 👑',450,1040);const url=cn.toDataURL('image/png');$('photoPreview').src=url;$('downloadPhotoBtn').onclick=()=>{const a=document.createElement('a');a.href=url;a.download='lian-pet-tycoon-victory.png';a.click()};s.photoCount=(s.photoCount||0)+1;$('photoModal').classList.add('show');render()}
 
-$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').innerHTML=(soundOn?'🔊':'🔇')+'<br><small>Sound</small>';beep(440)};$('partyBtn').onclick=partyTime;$('festivalBtn').onclick=()=>startFestival(60);$('photoBtn').onclick=photoMode;$('loginBtn').onclick=dailyLogin;document.querySelectorAll('.spot').forEach(btn=>btn.onclick=()=>{const r=btn.getBoundingClientRect(),w=$('world').getBoundingClientRect();$('character').style.right=Math.max(5,Math.min(80,100-((r.left-w.left+r.width/2)/w.width*100)))+'%';$('character').style.bottom=Math.max(40,Math.min(410,(w.bottom-r.bottom)+30))+'px';beep(500);toast(btn.textContent.replace(/נעול|פתוח|מייצר כסף|Crystal|קטן|גדול|אחוזה|ארמון/g,'').trim())});
-function renderPets(){$('petList').innerHTML=Object.entries(s.petCounts).map(([k,v])=>`<div class="petcard"><b>${petDefs[k].e}</b>${petDefs[k].name} ×${v}</div>`).join('')}function renderQuests(){const qs=[['אספי 1000 מטבעות',s.coins>=1000],['פתחי 3 ביצים',s.eggs>=3],['קני כתר לליאן',s.wear.crown],['הגיעי לרמה 8',s.level>=8],['פתחי Crystal Island',s.mine],['בני את ארמון ליאן',s.mansion],['פתחי את האי הסודי',s.island],['תפסי 3 מתנות מעופפות',(s.drops||0)>=3]];$('quests').innerHTML=qs.map(q=>`<div class="quest"><span>${q[0]}</span><b class="${q[1]?'done':''}">${q[1]?'✅':'🔒'}</b></div>`).join('')}function renderAchievements(){const a=[['אספנית חיות',petTotal()>=5],['מלכת הביצים',s.eggs>=10],['עשירה בטייקון',s.coins>=5000],['סטייליסטית',s.wear.crown&&s.wear.wings&&s.wear.bow],['Lian Legend',s.mansion&&s.level>=10],['מלכת האי הסודי',s.island],['צלמת טייקון',(s.photoCount||0)>=3],['Party Queen',(s.drops||0)>=5||s.festival]];$('achievements').innerHTML=a.map(x=>`<div class="ach"><span>${x[0]}</span><b class="${x[1]?'done':''}">${x[1]?'🏆':'🔒'}</b></div>`).join('')}
+
+/* ADVENTURE ISLAND 2.0 */
+function normalizeAdventureState(){
+  s.storyStep=s.storyStep||0;
+  s.storyDay=s.storyDay||'';
+  s.storyScore=s.storyScore||0;
+  s.parkTickets=s.parkTickets||0;
+  s.balloonBest=s.balloonBest||0;
+  s.treasures=s.treasures||0;
+  s.adventureGiftDay=s.adventureGiftDay||'';
+  s.adventureBadges=s.adventureBadges||[];
+}
+const storyChapters=[
+  {title:'המפתח הסודי',text:'מנצ׳קין מצא מפתח זהב קטן ליד יער הקסמים. המפתח מנצנץ וקורא לליאן לצאת להרפתקה.',choices:[
+    ['לפתוח את השער הסודי',()=>storyReward(120,3,55,'השער נפתח! מאחוריו הופיע שביל של כוכבים.')],
+    ['לקרוא לחיות שיעזרו',()=>storyReward(90,2,80,'כל החיות הגיעו והפכו לצוות הרפתקאות אמיתי!')],
+    ['לשמור את המפתח לתיבה',()=>storyReward(180,1,40,'בתיבה חיכו מטבעות נוצצים ומפה עתיקה.')]
+  ]},
+  {title:'יער הקסמים',text:'ליאן נכנסת ליער שבו העצים מדברים. ינשוף חכם מבקש ממנה לבחור דרך.',choices:[
+    ['דרך הפרחים הזוהרים',()=>storyReward(140,2,65,'הפרחים האירו את הדרך ופתחו משימה חדשה.')],
+    ['דרך הגשר הקטן',()=>storyReward(100,4,50,'מתחת לגשר חיכה אוצר כחול.')],
+    ['דרך עקבות החד-קרן',()=>{s.petCounts.unicorn=(s.petCounts.unicorn||0)+1;storyReward(80,0,90,'חד קרן חדש הצטרף לאי!')}]
+  ]},
+  {title:'מערת האוצר',text:'בקצה האי נמצאת מערה עם שלושה סמלים: כוכב, לב וכתר. רק סמל אחד פותח את האוצר הגדול.',choices:[
+    ['⭐ סמל הכוכב',()=>storyReward(220,3,80,'הכוכב פתח מפל של מטבעות!')],
+    ['💖 סמל הלב',()=>storyReward(150,5,70,'הלב העיר את הפניקס ושדרג את האי.')],
+    ['👑 סמל הכתר',()=>{s.wear.crown=true;storyReward(100,2,110,'כתר קסום נוסף לליאן!')}]
+  ]}
+];
+function storyReward(coins,gems,xp,msg){
+  s.coins+=coins;s.gems+=gems;s.xp+=xp;s.storyScore+=1;s.storyStep=(s.storyStep+1)%storyChapters.length;
+  if(s.storyScore===3 && !s.adventureBadges.includes('story'))s.adventureBadges.push('story');
+  toast(msg+' +'+coins+' 🪙 +'+gems+' 💎');spark(28);melody();render();openStory();
+}
+function openStory(){
+  normalizeAdventureState();
+  const ch=storyChapters[s.storyStep%storyChapters.length];
+  $('storyTitle').textContent='📖 '+ch.title;
+  $('storyText').textContent=ch.text;
+  $('storyChoices').innerHTML='';
+  ch.choices.forEach(([label,fn])=>{
+    const b=document.createElement('button');b.className='story-choice';b.textContent=label;b.onclick=fn;$('storyChoices').appendChild(b);
+  });
+  $('storyModal').classList.add('show');
+}
+function openAmuse(){ $('amuseModal').classList.add('show'); $('balloonGame').innerHTML='<div class="story-box">לחצי על “התחל תפוס בלונים” ואז תפסי כמה שיותר בלונים ב-20 שניות 🎈</div>'; }
+function startBalloons(){
+  const area=$('balloonGame');area.innerHTML='';let score=0;let time=20;
+  const timer=document.createElement('div');timer.className='story-box';timer.textContent='זמן: 20 · ניקוד: 0';area.appendChild(timer);
+  const spawn=setInterval(()=>{
+    const b=document.createElement('button');b.className='balloon';b.textContent=['🎈','🎈','🎀','⭐','💎'][Math.floor(Math.random()*5)];
+    b.style.right=(5+Math.random()*82)+'%';b.onclick=()=>{score++;s.coins+=25;s.xp+=8;if(b.textContent==='💎')s.gems++;b.remove();beep(760,.06,'triangle')};
+    area.appendChild(b);setTimeout(()=>b.remove(),4800);
+  },560);
+  const tick=setInterval(()=>{
+    time--;timer.textContent='זמן: '+time+' · ניקוד: '+score;
+    if(time<=0){clearInterval(spawn);clearInterval(tick);s.balloonBest=Math.max(s.balloonBest||0,score);s.parkTickets+=score;s.coins+=score*35;s.xp+=score*12;if(score>=12&&!s.adventureBadges.includes('balloons'))s.adventureBadges.push('balloons');timer.textContent='נגמר! תפסת '+score+' בלונים 🎉';toast('פרס פארק: '+(score*35)+' מטבעות');spark(30);render();}
+  },1000);
+}
+function quickParkWheel(){
+  const prizes=[['כרטיס פארק',()=>s.parkTickets+=1],['250 מטבעות',()=>s.coins+=250],['6 יהלומים',()=>s.gems+=6],['120 XP',()=>s.xp+=120],['חיית פנדה',()=>s.petCounts.panda=(s.petCounts.panda||0)+1]];
+  const p=prizes[Math.floor(Math.random()*prizes.length)];p[1]();toast('פארק השעשועים: '+p[0]+' 🎡');spark(24);render();
+}
+function openTreasure(){
+  const g=$('treasureGrid');g.innerHTML='';
+  const prize=Math.floor(Math.random()*6);
+  for(let i=0;i<6;i++){
+    const b=document.createElement('button');b.className='treasure-tile';b.textContent='❔';
+    b.onclick=()=>{ if(b.dataset.done)return; b.dataset.done='1';
+      if(i===prize){b.textContent='💰';s.coins+=520;s.gems+=7;s.treasures++;s.xp+=120;toast('מצאת אוצר גדול!')}
+      else {b.textContent=['🌸','🐾','⭐','🍀','🪙'][Math.floor(Math.random()*5)];s.coins+=70;s.xp+=20;toast('מצאת פרס קטן וחמוד')}
+      if(s.treasures>=3&&!s.adventureBadges.includes('treasure'))s.adventureBadges.push('treasure');
+      spark(20);render();
+    };
+    g.appendChild(b);
+  }
+  $('treasureModal').classList.add('show');
+}
+function adventureDailyGift(){
+  const today=new Date().toDateString();
+  if(s.adventureGiftDay===today)return toast('תיבת האי כבר נפתחה היום 🏝️');
+  s.adventureGiftDay=today;
+  const c=350+Math.floor(Math.random()*450),g=4+Math.floor(Math.random()*8);
+  s.coins+=c;s.gems+=g;s.xp+=160;s.parkTickets+=2;
+  toast('תיבת האי: '+c+' 🪙 '+g+' 💎 + 2 כרטיסים');spark(36);melody();render();
+}
+function renderAdventure(){
+  const el=$('adventureStatus'); if(!el)return;
+  normalizeAdventureState();
+  el.innerHTML='📖 פרקים שהושלמו: '+s.storyScore+'<br>🎈 שיא בלונים: '+(s.balloonBest||0)+'<br>🗺️ אוצרות: '+(s.treasures||0)+'<br>🎟️ כרטיסי פארק: '+(s.parkTickets||0)+'<br>🏅 תגי אי: '+(s.adventureBadges.length||0);
+}
+
+$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').innerHTML=(soundOn?'🔊':'🔇')+'<br><small>Sound</small>';beep(440)};$('partyBtn').onclick=partyTime;$('festivalBtn').onclick=()=>startFestival(60);$('photoBtn').onclick=photoMode;$('loginBtn').onclick=dailyLogin;$('storyBtn').onclick=openStory;$('amuseBtn').onclick=openAmuse;$('treasureBtn').onclick=openTreasure;$('adventureDailyBtn').onclick=adventureDailyGift;$('startBalloonsBtn').onclick=startBalloons;$('magicWheel2Btn').onclick=quickParkWheel;document.querySelectorAll('.spot').forEach(btn=>btn.onclick=()=>{const r=btn.getBoundingClientRect(),w=$('world').getBoundingClientRect();$('character').style.right=Math.max(5,Math.min(80,100-((r.left-w.left+r.width/2)/w.width*100)))+'%';$('character').style.bottom=Math.max(40,Math.min(410,(w.bottom-r.bottom)+30))+'px';beep(500);toast(btn.textContent.replace(/נעול|פתוח|מייצר כסף|Crystal|קטן|גדול|אחוזה|ארמון/g,'').trim())});
+function renderPets(){$('petList').innerHTML=Object.entries(s.petCounts).map(([k,v])=>`<div class="petcard"><b>${petDefs[k].e}</b>${petDefs[k].name} ×${v}</div>`).join('')}function renderQuests(){const qs=[['אספי 1000 מטבעות',s.coins>=1000],['פתחי 3 ביצים',s.eggs>=3],['קני כתר לליאן',s.wear.crown],['הגיעי לרמה 8',s.level>=8],['פתחי Crystal Island',s.mine],['בני את ארמון ליאן',s.mansion],['פתחי את האי הסודי',s.island],['תפסי 3 מתנות מעופפות',(s.drops||0)>=3]];$('quests').innerHTML=qs.map(q=>`<div class="quest"><span>${q[0]}</span><b class="${q[1]?'done':''}">${q[1]?'✅':'🔒'}</b></div>`).join('')}function renderAchievements(){const a=[['אספנית חיות',petTotal()>=5],['מלכת הביצים',s.eggs>=10],['עשירה בטייקון',s.coins>=5000],['סטייליסטית',s.wear.crown&&s.wear.wings&&s.wear.bow],['Lian Legend',s.mansion&&s.level>=10],['מלכת האי הסודי',s.island],['צלמת טייקון',(s.photoCount||0)>=3],['Party Queen',(s.drops||0)>=5||s.festival],['מספרת סיפורים',(s.storyScore||0)>=3],['אלופת בלונים',(s.balloonBest||0)>=12],['ציידת אוצרות',(s.treasures||0)>=3]];$('achievements').innerHTML=a.map(x=>`<div class="ach"><span>${x[0]}</span><b class="${x[1]?'done':''}">${x[1]?'🏆':'🔒'}</b></div>`).join('')}
 setInterval(()=>{s.coins+=s.income*(s.festival?2:1);s.xp+=s.festival?2:1;if(s.mine&&Math.random()<.08)s.gems++;render()},1000);setInterval(()=>{const w=['sun','rain','rainbow','night'][Math.floor(Math.random()*4)];s.weather=w;render();toast(w==='rain'?'גשם קסום התחיל 🌧️':w==='rainbow'?'קשת הופיעה 🌈':w==='night'?'לילה קסום ירד ✨':'השמש חזרה ☀️')},45000);setInterval(spawnGiftDrop,120000);setInterval(()=>{if(Math.random()<.55)startFestival(45)},180000);render();
 </script>
 </body></html>
