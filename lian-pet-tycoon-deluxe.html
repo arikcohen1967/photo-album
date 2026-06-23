@@ -104,6 +104,71 @@ body{padding-bottom:96px}
   .pro-panel{bottom:84px;max-height:78vh;width:calc(100vw - 16px);border-radius:26px;padding:14px}.pro-grid{grid-template-columns:1fr}.ride-game{height:300px}.festival-banner{top:8px;font-size:12px;padding:7px 10px}
 }
 
+
+
+/* === ARIK PRO FIX: CENTER WORLD LAYOUT - NO OVERLAPS === */
+:root{--mapShadow:0 18px 42px rgba(15,55,90,.26)}
+.world{
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255,255,255,.52), transparent 16%),
+    radial-gradient(circle at 18% 70%, rgba(255,255,255,.25), transparent 17%),
+    linear-gradient(180deg,#8ee8ff 0 19%,#67df86 19% 100%) !important;
+}
+.world:before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 37%, rgba(255,236,171,.85) 0 11%, transparent 12%),
+    radial-gradient(ellipse at 50% 88%, rgba(255,217,125,.96) 0 22%, transparent 23%),
+    radial-gradient(circle at 17% 56%, rgba(29,137,70,.35), transparent 18%),
+    radial-gradient(circle at 83% 56%, rgba(29,137,70,.35), transparent 18%),
+    linear-gradient(90deg, transparent 0 47%, rgba(247,198,105,.82) 47% 53%, transparent 53% 100%);
+}
+.path{display:none!important}
+.spot{
+  min-width:0!important;text-align:center!important;line-height:1.12!important;
+  border:2px solid rgba(255,255,255,.96)!important;
+  box-shadow:var(--mapShadow), inset 0 1px 0 rgba(255,255,255,.75)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(236,250,255,.92))!important;
+}
+.spot:after{content:'';position:absolute;inset:auto 14% -10px 14%;height:16px;border-radius:50%;background:rgba(25,81,43,.20);filter:blur(7px);z-index:-1}
+.spot .emoji{font-size:42px!important;margin-bottom:2px!important}.spot small{display:block!important;white-space:normal!important}
+.mansion{background:linear-gradient(145deg,#fff3c4,#e8fff6)!important;border-color:#fff5b8!important}
+.home{background:linear-gradient(145deg,#ffe4f2,#ffffff)!important}
+.stable{background:linear-gradient(145deg,#fff1d7,#ffffff)!important}
+.park{background:linear-gradient(145deg,#e7ffe7,#ffffff)!important}
+.mine,.island{background:linear-gradient(145deg,#e3f4ff,#ffffff)!important}
+.character{z-index:15!important}.pet{z-index:16!important}
+@media(max-width:540px){
+  body{padding-bottom:112px!important;background:#bff3ff!important}
+  .layout{display:block!important}.side{display:none!important}
+  .world{min-height:760px!important;border-radius:28px!important;margin:0 0 12px!important;overflow:hidden!important;border:2px solid rgba(255,255,255,.95)!important}
+  .cloud{opacity:.88!important}.c1{top:24px!important;right:9%!important}.c2{top:52px!important;left:9%!important}
+  .spot{width:104px!important;height:92px!important;border-radius:25px!important;padding:8px 7px!important;font-size:12px!important;transform:none!important}
+  .spot .emoji{font-size:31px!important}.spot small{font-size:10px!important;line-height:1.1!important;margin-top:2px!important}
+  /* Top palace row */
+  .mansion{right:50%!important;left:auto!important;top:72px!important;width:138px!important;height:100px!important;transform:translateX(50%)!important;z-index:8!important}
+  .home{right:5%!important;left:auto!important;top:196px!important;width:104px!important;height:94px!important;z-index:7!important}
+  .shop{left:5%!important;right:auto!important;top:196px!important;width:104px!important;height:94px!important;z-index:7!important}
+  /* Middle activity ring */
+  .cat{right:50%!important;left:auto!important;top:318px!important;width:128px!important;height:112px!important;transform:translateX(50%)!important;z-index:9!important}
+  .park{left:5%!important;right:auto!important;top:345px!important;width:108px!important;height:98px!important;z-index:7!important}
+  .stable{right:5%!important;left:auto!important;top:345px!important;width:108px!important;height:98px!important;z-index:7!important}
+  /* Bottom activity row */
+  .mine{left:5%!important;right:auto!important;top:478px!important;width:106px!important;height:94px!important;z-index:7!important}
+  .island{right:5%!important;left:auto!important;top:478px!important;bottom:auto!important;width:106px!important;height:94px!important;transform:none!important;z-index:7!important}
+  .character{right:50%!important;left:auto!important;bottom:48px!important;top:auto!important;width:142px!important;height:168px!important;transform:translateX(50%) scale(1.06)!important;z-index:14!important}
+  .avatar{right:12px!important;bottom:34px!important;width:112px!important;height:112px!important;border-radius:50%!important;border:6px solid #fff!important}
+  .pet{right:-52px!important;bottom:12px!important;font-size:58px!important}
+  .wear-glow{right:2px!important;bottom:25px!important;width:136px!important;height:136px!important}
+  .wear-crown{right:39px!important;bottom:128px!important}.wear-wings{right:-40px!important;bottom:60px!important}.wear-bow{right:38px!important;bottom:128px!important}
+  .festival-banner{top:8px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;max-width:90%!important;z-index:20!important}
+  .bottom-dock{z-index:70!important;background:linear-gradient(180deg,rgba(24,42,92,.96),rgba(12,22,54,.98))!important;border:1px solid rgba(255,255,255,.24)!important;box-shadow:0 -18px 50px rgba(0,0,0,.28)!important}
+  .dock-btn{color:#fff!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.10)!important}.dock-btn.active{background:linear-gradient(145deg,#ff78bd,#8b5cf6)!important;box-shadow:0 0 0 2px rgba(255,255,255,.65) inset!important}
+}
+@media(min-width:541px){
+ .world{min-height:760px!important}.mansion{right:50%!important;top:70px!important;transform:translateX(50%)!important;width:190px!important;height:145px!important}.home{right:8%!important;top:245px!important}.shop{left:8%!important;top:245px!important}.cat{right:50%!important;top:285px!important;transform:translateX(50%)!important}.park{left:10%!important;bottom:235px!important}.stable{right:10%!important;bottom:235px!important}.mine{left:10%!important;bottom:80px!important}.island{right:10%!important;left:auto!important;bottom:80px!important;transform:none!important}.character{right:50%!important;bottom:80px!important;transform:translateX(50%) scale(1.18)!important}
+}
+
 </style>
 </head>
 <body>
