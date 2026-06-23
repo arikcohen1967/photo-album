@@ -189,6 +189,40 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
 }
 </style>
 
+
+<style id="final-clickable-lian-and-nav">
+.avatar-wrap,.lian-doll{cursor:pointer;transition:.18s transform,.18s filter}
+.avatar-wrap:active,.lian-doll:active{transform:scale(1.08);filter:brightness(1.08)}
+.avatar-wrap.zoomed,.lian-doll.zoomed{transform:scale(1.18);z-index:30;position:relative}
+.lian-photo-modal{
+  position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+  background:rgba(4,20,45,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:18px
+}
+.lian-photo-modal.show{display:flex;animation:fadeIn .18s ease both}
+.lian-photo-card{
+  width:min(90vw,420px);border-radius:32px;background:linear-gradient(180deg,#fff,#fff0f8);
+  border:4px solid #fff;box-shadow:0 28px 80px rgba(0,0,0,.34);padding:12px;text-align:center
+}
+.lian-photo-card img{width:100%;max-height:62vh;object-fit:cover;border-radius:24px;display:block;background:#fff}
+.lian-photo-card b{display:block;margin-top:10px;font-size:22px;color:#12336e}
+.close-lian{position:absolute;top:16px;left:16px;border:0;border-radius:50%;width:50px;height:50px;background:#fff;font-size:26px;font-weight:1000;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.nav-item,.nav-home{cursor:pointer;user-select:none}
+.nav-item:active,.nav-home:active{transform:scale(.96)}
+.nav-panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.nav-card{border:0;border-radius:26px;background:rgba(255,255,255,.88);box-shadow:0 12px 25px rgba(26,81,127,.16);padding:16px;text-align:center;font-weight:1000;color:#12336e;min-height:118px}
+.nav-card .big{font-size:52px;display:block;margin-bottom:6px}
+.nav-card small{display:block;margin-top:6px;color:#5b6d84;font-weight:800;font-size:14px;line-height:1.35}
+.danger{background:linear-gradient(180deg,#ff7a7a,#e53939)!important;color:#fff!important}
+@media(max-width:560px){
+  .lian-photo-card{border-radius:28px}
+  .lian-photo-card img{border-radius:22px}
+  .nav-panel-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .nav-card{border-radius:22px;padding:12px;min-height:108px}
+  .nav-card .big{font-size:44px}
+}
+</style>
+
 </head>
 <body>
 <main class="app">
@@ -328,6 +362,94 @@ document.getElementById("navBackBtn").onclick=goHome;
 document.getElementById("navHomeBtn").onclick=goHome;
 document.getElementById("navSoundBtn").onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";document.getElementById("navSoundBtn").textContent=soundOn?"🔊":"🔇";clickSound()};
 
+
+/* FINAL: clickable Lian photo + active bottom navigation */
+function closeAllScreensFinal(){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+}
+function finalGoHome(){
+  if(typeof clickSound==="function") clickSound();
+  closeAllScreensFinal();
+  document.getElementById("homeScreen").classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+const finalNavData={
+  shop:{e:"🛒",t:"חנות",d:"קנו אוכל, אביזרים, צעצועים ושדרוגים לחיות.",items:[["🍖","אוכל לחיות","מעלה אנרגיה ושמחה"],["👑","כתרים ואביזרים","פריטים יפים לדמות"],["🧸","צעצועים","משחקים לחיות"],["💎","חבילת יהלומים","פרס מיוחד"]]},
+  bag:{e:"🎒",t:"תיק",d:"כל הפריטים שליאן אספה נמצאים כאן.",items:[["🎁","מתנות","3 מתנות זמינות"],["🍎","אוכל","7 פריטים"],["👗","בגדים","4 אביזרים"],["🏆","גביעים","2 הישגים"]]},
+  missions:{e:"📋",t:"משימות",d:"משימות יומיות ושבועיות עם פרסים.",items:[["🐾","טפלו ב־5 חיות","פרס: 500 מטבעות"],["🪙","אספו מטבעות","פרס: 300 מטבעות"],["🎮","שחקו 3 משחקים","פרס: 200 מטבעות"],["⭐","עלו רמה","פרס: 80 XP"]]},
+  settings:{e:"⚙️",t:"הגדרות",d:"שליטה בצלילים, מוזיקה ואיפוס המשחק.",items:[["🔊","צלילים","כיבוי/הפעלה"],["🎵","מוזיקה","בקרוב"],["💾","שמירה","המשחק נשמר בדפדפן"],["🧹","איפוס","התחלה מחדש"]]}
+};
+function finalOpenNav(key){
+  if(key==="home"){finalGoHome();return}
+  if(typeof clickSound==="function") clickSound();
+  const n=finalNavData[key]; if(!n)return;
+  document.getElementById("navEmoji").textContent=n.e;
+  document.getElementById("navBigEmoji").textContent=n.e;
+  document.getElementById("navTitle").textContent=n.t;
+  document.getElementById("navHeading").textContent=n.t;
+  document.getElementById("navDesc").textContent=n.d;
+  document.getElementById("navContent").innerHTML=n.items.map((it,idx)=>{
+    if(key==="settings" && idx===3) return `<button class="nav-card danger" data-action="reset"><span class="big">${it[0]}</span>${it[1]}<small>${it[2]}</small></button>`;
+    return `<button class="nav-card" data-action="${key}"><span class="big">${it[0]}</span>${it[1]}<small>${it[2]}</small></button>`;
+  }).join("");
+  closeAllScreensFinal();
+  document.getElementById("navScreen").classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll(".nav-card").forEach(btn=>btn.onclick=()=>{
+    if(typeof clickSound==="function") clickSound();
+    if(btn.dataset.action==="reset"){try{coins=12450;document.getElementById("coins").textContent=coins.toLocaleString("en-US")}catch(e){}}
+    if(typeof addXP==="function") addXP(20);
+    if(typeof showReward==="function") showReward("פעולה בוצעה! ⭐","⭐");
+  });
+}
+document.querySelectorAll("[data-nav]").forEach(btn=>{
+  btn.onclick=()=>finalOpenNav(btn.dataset.nav);
+});
+["navBackBtn","navHomeBtn"].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.onclick=finalGoHome;
+});
+const navSound=document.getElementById("navSoundBtn");
+if(navSound) navSound.onclick=()=>{
+  try{
+    soundOn=!soundOn;
+    document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";
+    navSound.textContent=soundOn?"🔊":"🔇";
+    if(typeof clickSound==="function") clickSound();
+  }catch(e){}
+};
+
+function setupLianClick(){
+  const modal=document.getElementById("lianPhotoModal");
+  const big=document.getElementById("lianBigPhoto");
+  const close=document.getElementById("closeLianPhoto");
+  const img=document.querySelector(".avatar-wrap img");
+  const clickable=[...document.querySelectorAll(".avatar-wrap,.lian-doll")];
+  clickable.forEach(el=>{
+    el.addEventListener("click",()=>{
+      if(typeof clickSound==="function") clickSound();
+      el.classList.add("zoomed");
+      setTimeout(()=>el.classList.remove("zoomed"),350);
+      if(img && big && modal){
+        big.src=img.src;
+        modal.classList.add("show");
+      }
+    });
+  });
+  if(close) close.onclick=()=>modal.classList.remove("show");
+  if(modal) modal.addEventListener("click",(e)=>{if(e.target===modal)modal.classList.remove("show")});
+}
+setupLianClick();
+
 </script>
+
+<div class="lian-photo-modal" id="lianPhotoModal">
+  <button class="close-lian" id="closeLianPhoto">×</button>
+  <div class="lian-photo-card">
+    <img id="lianBigPhoto" src="" alt="ליאן">
+    <b>💗 ליאן 💗</b>
+  </div>
+</div>
+
 </body>
 </html>
