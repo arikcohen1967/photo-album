@@ -82,6 +82,59 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
 .app{padding:16px 14px 112px}.top{grid-template-columns:1fr;gap:14px;margin-bottom:18px}.welcome{border-radius:31px;min-height:110px;padding:14px 16px;gap:12px}.avatar-wrap{width:92px;height:92px;min-width:92px;margin-top:-20px}.welcome h1{font-size:33px}.welcome p{font-size:17px}.sound{width:66px;height:66px;border-radius:22px}.stats{grid-template-columns:repeat(4,1fr);border-radius:28px;padding:10px;gap:6px;min-height:90px}.stat{border-radius:20px;flex-direction:column;gap:2px;padding:8px 4px}.stat .ico{font-size:38px}.stat b{font-size:23px}.stat span{font-size:12px}.title{display:none}.grid{grid-template-columns:repeat(2,1fr);gap:11px;max-width:720px}.tile{min-height:255px;border-radius:28px;padding:14px 10px}.tile .big{font-size:80px}.tile h3{font-size:25px}.tile p{font-size:16px}.info{grid-template-columns:1fr 1fr;gap:10px}.panel{padding:12px 12px;border-radius:23px}}
 @media(max-width:560px){
 .app{padding:12px 12px 110px}.welcome{border-radius:29px;padding:12px;min-height:96px}.avatar-wrap{width:84px;height:84px;min-width:84px;margin-top:-18px;padding:6px}.welcome h1{font-size:29px;white-space:nowrap}.welcome p{font-size:16px}.sound{width:62px;height:62px;font-size:30px}.stats{border-radius:27px}.stat .ico{font-size:34px}.stat b{font-size:20px}.grid{gap:10px}.tile{min-height:238px;border-radius:27px}.tile .big{font-size:72px}.tile h3{font-size:22px}.tile p{font-size:14px}.info{grid-template-columns:1fr;gap:10px}.panel{min-height:auto}.bottom-nav{height:86px;width:100%;border-radius:30px 30px 0 0}.nav-item{font-size:12px}.nav-item .n{font-size:25px}.nav-home{width:94px;height:94px}}
+
+/* PRO GAME UPGRADE */
+.screen{animation:screenFade .28s ease both}
+@keyframes screenFade{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+.tile{animation:tileIn .55s cubic-bezier(.2,.8,.2,1) both}
+.tile:nth-child(1){animation-delay:.02s}.tile:nth-child(2){animation-delay:.06s}.tile:nth-child(3){animation-delay:.10s}.tile:nth-child(4){animation-delay:.14s}
+.tile:nth-child(5){animation-delay:.18s}.tile:nth-child(6){animation-delay:.22s}.tile:nth-child(7){animation-delay:.26s}.tile:nth-child(8){animation-delay:.30s}
+@keyframes tileIn{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+.tile:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(26,81,127,.28)}
+.tile.locked{opacity:.58;filter:grayscale(.25)}
+.tile.locked:after{content:"🔒";position:absolute;top:12px;left:12px;background:rgba(255,255,255,.86);border-radius:999px;padding:8px 10px;font-size:22px;box-shadow:0 8px 18px rgba(0,0,0,.14)}
+.lian-hero{
+  max-width:920px;margin:0 auto 16px;border-radius:32px;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(255,240,250,.84));
+  border:3px solid rgba(255,255,255,.95);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;overflow:hidden;position:relative
+}
+.lian-hero:before{content:"";position:absolute;inset:auto -30px -55px auto;width:180px;height:180px;border-radius:50%;background:rgba(255,101,181,.20)}
+.lian-doll{width:86px;height:86px;border-radius:28px;background:linear-gradient(180deg,#fff,#ffe6f4);display:grid;place-items:center;font-size:58px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.04),0 12px 24px rgba(0,0,0,.13);animation:breathe 2.2s ease-in-out infinite}
+@keyframes breathe{50%{transform:translateY(-4px) scale(1.03)}}
+.level-box{text-align:right;position:relative;z-index:1}
+.level-box b{font-size:24px;color:#12336e}
+.level-box span{display:block;font-weight:900;color:#55677e;margin-top:4px}
+.xp-track{height:16px;background:#e6d7f4;border-radius:999px;overflow:hidden;margin-top:9px;box-shadow:inset 0 2px 4px rgba(0,0,0,.08)}
+.xp-track i{display:block;height:100%;width:42%;border-radius:999px;background:linear-gradient(90deg,#7440ff,#ff65b5,#ffd84f);transition:.35s width}
+.gift-btn{position:relative;z-index:1;border:0;border-radius:24px;background:linear-gradient(180deg,#ffd84f,#ff951c);font-weight:1000;color:#513100;font-size:17px;min-height:58px;padding:0 16px;box-shadow:0 12px 24px rgba(178,104,0,.25)}
+.world-map{max-width:920px;margin:0 auto 16px;border-radius:34px;padding:14px;background:rgba(255,255,255,.74);border:3px solid rgba(255,255,255,.95);box-shadow:var(--shadow)}
+.map-title{font-size:23px;font-weight:1000;color:#12336e;margin:0 4px 12px;text-align:right}
+.map-line{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.map-island{position:relative;min-height:92px;border-radius:25px;background:linear-gradient(180deg,#fff,#eaffff);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:1000;color:#12336e;box-shadow:inset 0 -5px 0 rgba(0,0,0,.04);cursor:pointer}
+.map-island .mi{font-size:39px;filter:drop-shadow(0 7px 6px rgba(0,0,0,.12))}
+.map-island.lock:after{content:"🔒";position:absolute;top:8px;left:8px}.map-island.lock{opacity:.58;filter:grayscale(.3)}
+.reward-pop{
+  position:fixed;z-index:200;left:50%;top:18%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#fff,#fff7c6,#ffe1f2);border:3px solid #fff;border-radius:30px;
+  box-shadow:0 24px 60px rgba(0,0,0,.25);padding:18px 24px;text-align:center;font-weight:1000;color:#12336e;display:none;max-width:90vw
+}
+.reward-pop.show{display:block;animation:rewardIn 1.9s ease both}
+.reward-pop .rp-emoji{font-size:72px;display:block}
+@keyframes rewardIn{0%{opacity:0;transform:translateX(-50%) translateY(18px) scale(.7)}15%,78%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-18px) scale(.92)}}
+.coin-fly{position:fixed;z-index:180;font-size:34px;pointer-events:none;animation:coinFly 1.05s ease-out forwards}
+@keyframes coinFly{to{transform:translateY(-90px) scale(1.35) rotate(18deg);opacity:0}}
+@media(max-width:560px){
+  .lian-hero{border-radius:27px;grid-template-columns:auto 1fr;gap:10px;padding:12px}
+  .lian-doll{width:72px;height:72px;border-radius:23px;font-size:48px}
+  .gift-btn{grid-column:1/-1;width:100%}
+  .level-box b{font-size:21px}.level-box span{font-size:14px}
+  .world-map{border-radius:28px;padding:12px}
+  .map-line{grid-template-columns:repeat(3,1fr);gap:8px}
+  .map-island{min-height:82px;border-radius:22px;font-size:13px}
+  .map-island .mi{font-size:34px}
+}
+
 </style>
 </head>
 <body>
@@ -126,8 +179,36 @@ document.getElementById("backBtn").onclick=()=>{clickSound();document.getElement
 document.getElementById("homeBtn").onclick=()=>{clickSound();document.getElementById("activityScreen").classList.remove("active");document.getElementById("homeScreen").classList.add("active");window.scrollTo({top:0,behavior:"smooth"})};
 document.getElementById("screenSoundBtn").onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";document.getElementById("screenSoundBtn").textContent=soundOn?"🔊":"🔇";clickSound()};
 
-document.getElementById("earnBtn").onclick=()=>{clickSound();coins+=50;document.getElementById("coins").textContent=coins.toLocaleString("en-US")};
+document.getElementById("earnBtn").onclick=()=>{clickSound();coins+=50;document.getElementById("coins").textContent=coins.toLocaleString("en-US");addXP(35);coinFly();showReward("אספת 50 מטבעות + 35 XP","🪙")};
 document.getElementById("soundBtn").onclick=()=>{soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";const ss=document.getElementById("screenSoundBtn");if(ss)ss.textContent=soundOn?"🔊":"🔇";clickSound()};
+
+let xp=420, level=15;
+function showReward(msg, emoji="🎉"){
+  const p=document.getElementById("rewardPop");
+  document.querySelector(".rp-emoji").textContent=emoji;
+  document.getElementById("rewardText").textContent=msg;
+  p.classList.remove("show"); void p.offsetWidth; p.classList.add("show");
+}
+function addXP(amount){
+  xp+=amount;
+  if(xp>=1000){xp-=1000;level++;showReward("עלית לרמה "+level+"! ⭐","⭐")}
+  document.getElementById("levelNum").textContent=level;
+  document.getElementById("xpText").textContent="XP "+xp+" / 1000 עד הרמה הבאה";
+  document.getElementById("xpBar").style.width=Math.max(4,Math.min(100,xp/10))+"%";
+}
+function coinFly(){
+  for(let i=0;i<8;i++){
+    const c=document.createElement("div");c.className="coin-fly";c.textContent=i%2?"🪙":"💎";
+    c.style.left=(35+Math.random()*30)+"vw";c.style.top=(48+Math.random()*24)+"vh";
+    document.body.appendChild(c);setTimeout(()=>c.remove(),1100);
+  }
+}
+document.querySelectorAll(".map-island:not(.lock)").forEach(btn=>btn.addEventListener("click",()=>{
+  const key=btn.dataset.screen; const tile=document.querySelector('.tile[data-screen="'+key+'"]'); if(tile) tile.click();
+}));
+document.querySelectorAll(".map-island.lock").forEach(btn=>btn.addEventListener("click",()=>showReward("האי הזה ייפתח ברמה גבוהה יותר 🔒","🔒")));
+document.getElementById("dailyGiftBtn").onclick=()=>{clickSound();coins+=250;document.getElementById("coins").textContent=coins.toLocaleString("en-US");addXP(80);coinFly();showReward("מתנה יומית: 250 מטבעות + 80 XP","🎁")};
+
 </script>
 </body>
 </html>
