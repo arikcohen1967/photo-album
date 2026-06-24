@@ -43,10 +43,14 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 .gameWrap{display:grid;grid-template-columns:1fr 290px;gap:14px;align-items:start}
 .boardBox{padding:10px;border-radius:26px;background:rgba(255,255,255,.06);border:1px solid var(--line);overflow:auto;touch-action:none}
 #board{position:relative;margin:auto;background:#020617;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);touch-action:none}
-.slot{position:absolute;border:1px dashed rgba(255,255,255,.14);background:rgba(255,255,255,.025)}
-.piece{position:absolute;border:1px solid rgba(255,255,255,.34);box-shadow:0 12px 24px rgba(0,0,0,.35);cursor:grab;touch-action:none;border-radius:6px;background-repeat:no-repeat;transition:box-shadow .15s,transform .15s}
-.piece.locked{box-shadow:0 0 0 2px #30e88b,0 0 28px rgba(48,232,139,.45);cursor:default}
-.piece.dragging{z-index:9999;transform:scale(1.04);box-shadow:0 24px 45px rgba(0,0,0,.52)}
+.slot{position:absolute;border:1px dashed rgba(255,255,255,.12);background:rgba(255,255,255,.018)}
+.piece{position:absolute;cursor:grab;touch-action:none;transition:filter .15s,transform .15s;overflow:visible}
+.piece svg{position:absolute;inset:0;overflow:visible;filter:drop-shadow(0 12px 20px rgba(0,0,0,.42))}
+.piece .pieceImg{pointer-events:none}
+.piece .pieceStroke{fill:none;stroke:rgba(255,255,255,.62);stroke-width:1.35;vector-effect:non-scaling-stroke;pointer-events:none}
+.piece.locked{cursor:default;filter:drop-shadow(0 0 12px rgba(48,232,139,.75))}
+.piece.locked .pieceStroke{stroke:#30e88b;stroke-width:2}
+.piece.dragging{z-index:9999;transform:scale(1.045);filter:drop-shadow(0 24px 34px rgba(0,0,0,.62))}
 .side{position:sticky;top:12px}
 .preview{width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.07)}
 .preview svg,.preview img{width:100%;display:block}
@@ -73,7 +77,7 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
   <div class="top">
     <div class="badge">LIAN PUZZLE PRO · PREMIUM</div>
     <h1>🧩 Lian Puzzle PRO</h1>
-    <p>פאזלים מקצועיים מהתמונות של ליאן · 20 / 40 / 75 חלקים · מותאם לטלפון</p>
+    <p>פאזלים מקצועיים מהתמונות של ליאן · חלקים בצורת פאזל אמיתי · 20 / 40 / 75 חלקים · מותאם לטלפון</p>
     <div class="stats">
       <div class="stat"><small>XP</small><span id="xpView">0</span></div>
       <div class="stat"><small>מטבעות</small><span id="coinView">0</span></div>
@@ -170,29 +174,72 @@ function startPuzzle(n){
   buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>timer.textContent=fmt(Math.floor((Date.now()-startTime)/1000)),1000);show("game")
 }
 function placedEl(){placed.textContent=`${placed}/${pieceTotal}`}
-function buildBoard(){
-  const w = window.innerWidth - 8;
-  const h = Math.max(260, window.innerHeight - 240);
-
-  const pw = w / cols;
-  const ph = h / rows;
-  board.style.width=w+"px";board.style.height=h+"px";board.innerHTML="";
+function makePuzzlePattern(rCount,cCount){
+  const right=Array.from({length:rCount},()=>Array(cCount-1).fill(0));
+  const down=Array.from({length:rCount-1},()=>Array(cCount).fill(0));
+  for(let r=0;r<rCount;r++)for(let c=0;c<cCount-1;c++)right[r][c]=((r+c)%2===0?1:-1);
+  for(let r=0;r<rCount-1;r++)for(let c=0;c<cCount;c++)down[r][c]=((r+c)%2===0?-1:1);
+  return {right,down}
+}
+let puzzlePattern=null;
+function edgePath(x1,y1,x2,y2,type,orient,tab){
+  if(type===0)return `L ${x2} ${y2}`;
+  const dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy),ux=dx/len,uy=dy/len;
+  const nx=-uy,ny=ux,sgn=type;
+  const p1=.28*len,p2=.38*len,p3=.50*len,p4=.62*len,p5=.72*len;
+  const knob=tab*.92;
+  const a=[x1+ux*p1,y1+uy*p1], b=[x1+ux*p2,y1+uy*p2], m=[x1+ux*p3,y1+uy*p3], d=[x1+ux*p4,y1+uy*p4], e=[x1+ux*p5,y1+uy*p5];
+  const out=[nx*knob*sgn,ny*knob*sgn];
+  return `L ${a[0]} ${a[1]} C ${b[0]} ${b[1]}, ${b[0]+out[0]} ${b[1]+out[1]}, ${m[0]+out[0]} ${m[1]+out[1]} C ${d[0]+out[0]} ${d[1]+out[1]}, ${d[0]} ${d[1]}, ${e[0]} ${e[1]} L ${x2} ${y2}`
+}
+function piecePath(r,c,pw,ph,tab){
+  const top = r===0?0:-puzzlePattern.down[r-1][c];
+  const right = c===cols-1?0:puzzlePattern.right[r][c];
+  const bottom = r===rows-1?0:puzzlePattern.down[r][c];
+  const left = c===0?0:-puzzlePattern.right[r][c-1];
+  let d=`M 0 0`;
+  d+=edgePath(0,0,pw,0,top,'h',tab);
+  d+=edgePath(pw,0,pw,ph,right,'v',tab);
+  d+=edgePath(pw,ph,0,ph,bottom,'h',tab);
+  d+=edgePath(0,ph,0,0,left,'v',tab);
+  return d+' Z'
+}
+function getImageSize(src){
+  return new Promise(resolve=>{
+    if(!src || String(src).startsWith('<svg')) return resolve({w:4,h:3});
+    const im=new Image(); im.onload=()=>resolve({w:im.naturalWidth||4,h:im.naturalHeight||3}); im.onerror=()=>resolve({w:4,h:3}); im.src=src;
+  })
+}
+async function buildBoard(){
+  const box=document.querySelector('.boardBox');
+  const natural=await getImageSize(imgData);
+  const ratio=Math.max(.62,Math.min(1.55,natural.h/natural.w));
+  const maxW=Math.min(box.clientWidth-20, window.innerWidth-28, 980);
+  const maxH=Math.max(300, Math.min(window.innerHeight-250, 690));
+  let w=maxW, h=w*ratio;
+  if(h>maxH){h=maxH;w=h/ratio}
+  w=Math.floor(w); h=Math.floor(h);
+  const pw=w/cols, ph=h/rows, tab=Math.min(pw,ph)*.24;
+  puzzlePattern=makePuzzlePattern(rows,cols);
+  board.style.width=w+'px';board.style.height=h+'px';board.innerHTML='';board.style.overflow='visible';
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
-    let sl=document.createElement("div");sl.className="slot";sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
+    let sl=document.createElement('div');sl.className='slot';sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
   }
+  const href = (imgData && !String(imgData).startsWith('<svg')) ? imgData : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(selected.svg||'')}`;
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
-    let p=document.createElement("div");p.className="piece";p.dataset.r=r;p.dataset.c=c;p.dataset.locked="0";
-    let x=Math.random()*(w-pw),y=Math.random()*(h-ph);
-    p.style.cssText=`width:${pw}px;height:${ph}px;left:${x}px;top:${y}px;background-size:${w}px ${h}px;background-position:${-c*pw}px ${-r*ph}px`;
-    if(imgData && !String(imgData).startsWith("<svg")) p.style.backgroundImage=`url("${imgData}")`;
-    else{
-      let svg=(selected.svg||"").replace(/"/g,"'");
-      p.style.backgroundImage=`url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
-    }
-    board.appendChild(p);drag(p,pw,ph,w,h)
+    const d=piecePath(r,c,pw,ph,tab), id=`clip_${Date.now()}_${r}_${c}_${Math.random().toString(36).slice(2)}`;
+    let p=document.createElement('div');p.className='piece';p.dataset.r=r;p.dataset.c=c;p.dataset.locked='0';p.dataset.tx=c*pw-tab;p.dataset.ty=r*ph-tab;
+    let x=Math.random()*Math.max(1,w-(pw+tab*2)),y=Math.random()*Math.max(1,h-(ph+tab*2));
+    p.style.cssText=`width:${pw+tab*2}px;height:${ph+tab*2}px;left:${x}px;top:${y}px`;
+    p.innerHTML=`<svg viewBox="${-tab} ${-tab} ${pw+tab*2} ${ph+tab*2}" preserveAspectRatio="none">
+      <defs><clipPath id="${id}" clipPathUnits="userSpaceOnUse"><path d="${d}"></path></clipPath></defs>
+      <image class="pieceImg" href="${href}" x="${-c*pw}" y="${-r*ph}" width="${w}" height="${h}" clip-path="url(#${id})" preserveAspectRatio="none"></image>
+      <path class="pieceStroke" d="${d}"></path>
+    </svg>`;
+    board.appendChild(p);drag(p,pw,ph,w,h,tab)
   }
 }
-function drag(el,pw,ph,w,h){
+function drag(el,pw,ph,w,h,tab){
   let sx=0,sy=0,ox=0,oy=0;
   el.addEventListener("pointerdown",e=>{
     if(el.dataset.locked==="1")return;
@@ -200,20 +247,21 @@ function drag(el,pw,ph,w,h){
   });
   el.addEventListener("pointermove",e=>{
     if(!el.classList.contains("dragging"))return;
-    let nx=Math.max(0,Math.min(w-pw,ox+e.clientX-sx)),ny=Math.max(0,Math.min(h-ph,oy+e.clientY-sy));
+    let nx=Math.max(-tab,Math.min(w-pw-tab,ox+e.clientX-sx)),ny=Math.max(-tab,Math.min(h-ph-tab,oy+e.clientY-sy));
     el.style.left=nx+"px";el.style.top=ny+"px"
   });
   el.addEventListener("pointerup",()=>snap(el,pw,ph));
+  el.addEventListener("pointercancel",()=>snap(el,pw,ph));
 }
 function snap(el,pw,ph){
   el.classList.remove("dragging");
-  let r=+el.dataset.r,c=+el.dataset.c,tx=c*pw,ty=r*ph,x=parseFloat(el.style.left),y=parseFloat(el.style.top);
-  if(Math.abs(x-tx)<pw*.32 && Math.abs(y-ty)<ph*.32){
+  let tx=+el.dataset.tx,ty=+el.dataset.ty,x=parseFloat(el.style.left),y=parseFloat(el.style.top);
+  if(Math.abs(x-tx)<pw*.34 && Math.abs(y-ty)<ph*.34){
     el.style.left=tx+"px";el.style.top=ty+"px";el.classList.add("locked");el.dataset.locked="1";placed++;placedEl();beep(650);
     if(placed===pieceTotal)win()
   }
 }
-function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*w+"px";p.style.top=Math.random()*h+"px"})}
+function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
 function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
 function win(){
   clearInterval(timerInt);let sec=Math.floor((Date.now()-startTime)/1000);
