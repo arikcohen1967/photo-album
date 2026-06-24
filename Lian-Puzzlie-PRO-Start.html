@@ -2,61 +2,226 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Lian Puzzle PRO</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#0f172a;color:#fff}
-header{padding:24px;text-align:center;background:linear-gradient(135deg,#1e293b,#334155)}
-h1{margin:0}
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:16px;padding:20px;max-width:1100px;margin:auto
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#07080b;--ink:#f8fafc;--muted:rgba(248,250,252,.65);
+  --glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.14);--line:rgba(255,255,255,.14);
+  --shadow:0 28px 80px rgba(0,0,0,.45);
 }
-.card{
-background:#1e293b;border-radius:20px;overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,.3);
-cursor:pointer;transition:.25s
+html,body{margin:0;min-height:100%;font-family:Arial,"Segoe UI",sans-serif;color:var(--ink);background:
+radial-gradient(circle at 12% 8%,rgba(255,255,255,.12),transparent 25%),
+radial-gradient(circle at 88% 10%,rgba(148,163,184,.18),transparent 30%),
+linear-gradient(135deg,#050608,#0d1016 48%,#171b23);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:
+linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;opacity:.8}
+.app{width:min(1180px,100%);margin:auto;padding:18px 12px 24px;position:relative;z-index:1}
+.top{border:1px solid var(--line);border-radius:30px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.055));box-shadow:var(--shadow);backdrop-filter:blur(24px);text-align:center}
+.badge{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:12px;font-weight:900;letter-spacing:1px}
+h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
+.top p{margin:0;color:var(--muted);font-weight:800;line-height:1.5}
+.back{position:fixed;right:14px;top:14px;z-index:20;border:none;border-radius:999px;background:rgba(255,255,255,.13);color:#fff;border:1px solid var(--line);padding:10px 14px;font-weight:900;backdrop-filter:blur(18px);cursor:pointer}
+.screen{display:none}.screen.active{display:block}
+.panel{margin:16px 0;padding:16px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));box-shadow:0 18px 45px rgba(0,0,0,.32);backdrop-filter:blur(24px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{padding:12px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11);font-weight:900}
+.stat small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:13px}
+.photo{position:relative;min-height:160px;border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#111827;cursor:pointer;box-shadow:0 18px 38px rgba(0,0,0,.3)}
+.photo svg{width:100%;height:130px;display:block}
+.photo b{display:block;padding:10px;font-size:15px}
+.photo .tag{position:absolute;top:10px;left:10px;padding:5px 8px;border-radius:999px;background:#fff;color:#07080b;font-size:11px;font-weight:1000}
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn{border:none;border-radius:18px;padding:13px 18px;font-size:16px;font-weight:1000;cursor:pointer;color:#071018;background:#fff;box-shadow:0 12px 28px rgba(0,0,0,.22)}
+.btn.dark{background:rgba(255,255,255,.10);color:#fff;border:1px solid var(--line)}
+.btn.green{background:#30e88b}.btn.yellow{background:#ffd166}.btn.red{background:#ff6b6b}
+.file{display:none}
+.gameWrap{display:grid;grid-template-columns:1fr 290px;gap:14px;align-items:start}
+.boardBox{padding:10px;border-radius:26px;background:rgba(255,255,255,.06);border:1px solid var(--line);overflow:auto;touch-action:none}
+#board{position:relative;margin:auto;background:#020617;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);touch-action:none}
+.slot{position:absolute;border:1px dashed rgba(255,255,255,.14);background:rgba(255,255,255,.025)}
+.piece{position:absolute;border:1px solid rgba(255,255,255,.34);box-shadow:0 12px 24px rgba(0,0,0,.35);cursor:grab;touch-action:none;border-radius:6px;background-repeat:no-repeat;transition:box-shadow .15s,transform .15s}
+.piece.locked{box-shadow:0 0 0 2px #30e88b,0 0 28px rgba(48,232,139,.45);cursor:default}
+.piece.dragging{z-index:9999;transform:scale(1.04);box-shadow:0 24px 45px rgba(0,0,0,.52)}
+.side{position:sticky;top:12px}
+.preview{width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.07)}
+.preview svg,.preview img{width:100%;display:block}
+.help{color:var(--muted);font-weight:800;line-height:1.55}
+.win{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.62);backdrop-filter:blur(14px);z-index:50;padding:18px}
+.win.show{display:flex}
+.winCard{width:min(430px,100%);border-radius:34px;padding:26px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.24);box-shadow:var(--shadow)}
+.confetti{font-size:54px;animation:pop .7s infinite alternate}
+@keyframes pop{to{transform:scale(1.12) rotate(4deg)}}
+@media(max-width:800px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .gameWrap{grid-template-columns:1fr}
+  .side{position:static}
+  .photo{min-height:145px}
+  .photo svg{height:115px}
 }
-.card:hover{transform:translateY(-4px)}
-.card img{width:100%;height:140px;object-fit:cover}
-.card h3{padding:12px;margin:0}
-.panel{
-max-width:900px;margin:20px auto;padding:20px;background:#111827;
-border-radius:20px
-}
-.btn{
-border:none;border-radius:12px;padding:12px 18px;
-margin:6px;cursor:pointer;font-size:16px
-}
-.easy{background:#22c55e}.mid{background:#f59e0b}.hard{background:#ef4444}
-.note{text-align:center;color:#cbd5e1}
 </style>
 </head>
 <body>
-<header>
-<h1>🧩 Lian Puzzle PRO</h1>
-<p>גרסה ראשונית מקצועית</p>
-</header>
+<button class="back" onclick="location.href='index.html'">← חזרה</button>
+<div class="app">
 
-<div class="panel">
-<h2>בחר קטגוריה</h2>
-<p>קושי: 20 / 40 / 75 חלקים</p>
-<button class="btn easy">קל - 20</button>
-<button class="btn mid">בינוני - 40</button>
-<button class="btn hard">קשה - 75</button>
+<section id="home" class="screen active">
+  <div class="top">
+    <div class="badge">LIAN PUZZLE PRO · PREMIUM</div>
+    <h1>🧩 Lian Puzzle PRO</h1>
+    <p>פאזלים מקצועיים עם נופים, חיות, טירות וחלל · 20 / 40 / 75 חלקים · מותאם לטלפון</p>
+    <div class="stats">
+      <div class="stat"><small>XP</small><span id="xpView">0</span></div>
+      <div class="stat"><small>מטבעות</small><span id="coinView">0</span></div>
+      <div class="stat"><small>פאזלים</small><span id="doneView">0</span></div>
+      <div class="stat"><small>שיא</small><span id="bestView">--:--</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>בחר תמונה להרכבה</h2>
+    <div class="gallery" id="gallery"></div>
+    <div style="height:12px"></div>
+    <div class="controls">
+      <label class="btn dark">📱 תמונה מהטלפון <input id="upload" class="file" type="file" accept="image/*"></label>
+    </div>
+  </div>
+</section>
+
+<section id="difficulty" class="screen">
+  <div class="top">
+    <div class="badge">בחר רמת קושי</div>
+    <h1 id="chosenTitle">פאזל חדש</h1>
+    <p>החלקים יתפזרו על הלוח. גררו באצבע והצמידו למקום הנכון.</p>
+  </div>
+  <div class="panel controls">
+    <button class="btn green" onclick="startPuzzle(20)">קל · 20 חלקים</button>
+    <button class="btn yellow" onclick="startPuzzle(40)">בינוני · 40 חלקים</button>
+    <button class="btn red" onclick="startPuzzle(75)">קשה · 75 חלקים</button>
+    <button class="btn dark" onclick="show('home')">חזרה לגלריה</button>
+  </div>
+</section>
+
+<section id="game" class="screen">
+  <div class="top">
+    <div class="badge">משחק פעיל</div>
+    <h1 id="gameTitle">Puzzle</h1>
+    <div class="stats">
+      <div class="stat"><small>זמן</small><span id="timer">00:00</span></div>
+      <div class="stat"><small>חלקים במקום</small><span id="placed">0/20</span></div>
+      <div class="stat"><small>קושי</small><span id="levelName">קל</span></div>
+      <div class="stat"><small>רמז</small><span id="hintCount">3</span></div>
+    </div>
+  </div>
+
+  <div class="gameWrap">
+    <div class="boardBox"><div id="board"></div></div>
+    <aside class="panel side">
+      <h2>תמונה מקורית</h2>
+      <div class="preview" id="preview"></div>
+      <p class="help">טיפ: כשחלק קרוב למקום הנכון הוא ננעל לבד. בטלפון גוררים עם האצבע.</p>
+      <div class="controls">
+        <button class="btn dark" onclick="flashPreview()">👀 רמז</button>
+        <button class="btn dark" onclick="shufflePieces()">🔀 ערבוב</button>
+        <button class="btn dark" onclick="show('home')">יציאה</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
 </div>
 
-<div class="grid">
-<div class="card"><img src="https://picsum.photos/600/400?1"><h3>🌅 שקיעה בים</h3></div>
-<div class="card"><img src="https://picsum.photos/600/400?2"><h3>🏔️ הרי שלג</h3></div>
-<div class="card"><img src="https://picsum.photos/600/400?3"><h3>🌲 יער קסום</h3></div>
-<div class="card"><img src="https://picsum.photos/600/400?4"><h3>🏰 טירה</h3></div>
-<div class="card"><img src="https://picsum.photos/600/400?5"><h3>🐼 פנדה</h3></div>
-<div class="card"><img src="https://picsum.photos/600/400?6"><h3>🚀 חלל</h3></div>
+<div id="win" class="win">
+  <div class="winCard">
+    <div class="confetti">🎉</div>
+    <h1>אלופה!</h1>
+    <p id="winText">הפאזל הושלם</p>
+    <div class="controls">
+      <button class="btn green" onclick="closeWin();show('home')">גלריה</button>
+      <button class="btn dark" onclick="closeWin();startPuzzle(pieceTotal)">שחק שוב</button>
+    </div>
+  </div>
 </div>
 
-<p class="note">שלב ראשון: עיצוב וקטלוג תמונות. בשלב הבא נוסיף מנוע פאזל מלא עם 20/40/75 חלקים, טיימר, XP, מטבעות ושיאים.</p>
+<script>
+const puzzles=[
+ {title:"שקיעה באגם",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ff9a8b"/><stop offset=".48" stop-color="#ffd166"/><stop offset="1" stop-color="#15314b"/></linearGradient></defs><rect width="800" height="520" fill="url(#a)"/><circle cx="405" cy="215" r="82" fill="#fff3b0"/><path d="M0 278L150 160l86 76 120-125 160 150 110-88 174 122v225H0z" fill="#10283d"/><path d="M0 355c120-38 240 38 360 0s260-28 440 8v157H0z" fill="#0d2338"/><path d="M0 398c130 40 230-22 350 8 160 40 280-12 450 18v96H0z" fill="#143a54"/></svg>`},
+ {title:"יער קסום",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#101827"/><stop offset="1" stop-color="#0b3b2e"/></linearGradient></defs><rect width="800" height="520" fill="url(#b)"/><circle cx="630" cy="95" r="54" fill="#e7f0ff"/><g fill="#14532d"><path d="M80 480l70-340 80 340z"/><path d="M210 480l90-400 95 400z"/><path d="M470 480l75-360 90 360z"/><path d="M610 480l65-300 80 300z"/></g><g fill="#22c55e" opacity=".9"><circle cx="160" cy="320" r="4"/><circle cx="535" cy="260" r="5"/><circle cx="420" cy="175" r="3"/><circle cx="705" cy="220" r="4"/></g><path d="M0 420c160-30 270 25 410-4 135-28 250-20 390 12v92H0z" fill="#0f241c"/></svg>`},
+ {title:"טירת קריסטל",cat:"קסום",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7dd3fc"/><stop offset=".55" stop-color="#c084fc"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient></defs><rect width="800" height="520" fill="url(#c)"/><path d="M130 438h540V230l-70-55-55 42-80-86-70 74-80-98-80 105-105-70z" fill="#eef2ff" opacity=".88"/><path d="M170 438V210h100v228M340 438V160h120v278M540 438V230h100v208" fill="#c4b5fd"/><path d="M180 210l40-88 45 88M350 160l50-110 52 110M550 230l45-100 45 100" fill="#f8fafc"/><rect x="370" y="315" width="65" height="123" rx="30" fill="#312e81"/><path d="M0 438c170-42 300 18 420-8 150-32 250-20 380 10v80H0z" fill="#111827" opacity=".55"/></svg>`},
+ {title:"סוס לבן",cat:"חיות",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#bae6fd"/><stop offset="1" stop-color="#86efac"/></linearGradient></defs><rect width="800" height="520" fill="url(#d)"/><circle cx="100" cy="85" r="58" fill="#fde68a"/><path d="M145 395c75-160 245-220 405-135 70 38 96 98 110 135" fill="none" stroke="#fff" stroke-width="46" stroke-linecap="round"/><path d="M560 248c58-88 126-65 147 0 9 28-9 59-39 63l-85 10z" fill="#fff"/><path d="M626 238c-10-54 20-76 48-98 0 50-5 85-26 111z" fill="#f8fafc"/><circle cx="662" cy="260" r="8" fill="#111827"/><path d="M260 405l-28 70M390 400l-10 75M520 390l34 78" stroke="#fff" stroke-width="24" stroke-linecap="round"/><path d="M575 254c-60-66-160-75-242-42" stroke="#d1d5db" stroke-width="18" stroke-linecap="round"/><path d="M0 430c160 25 300-20 430 0 135 20 250-15 370 5v85H0z" fill="#15803d"/></svg>`},
+ {title:"עולם החלל",cat:"חלל",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="520" fill="#050816"/><g fill="#fff"><circle cx="100" cy="80" r="3"/><circle cx="240" cy="140" r="2"/><circle cx="520" cy="90" r="3"/><circle cx="680" cy="170" r="2"/><circle cx="350" cy="60" r="2"/><circle cx="610" cy="330" r="3"/><circle cx="150" cy="320" r="2"/></g><circle cx="380" cy="255" r="110" fill="#2563eb"/><path d="M290 220c55 20 105 0 170 26s82 70 10 96c-68 24-175-12-205-70-10-22 0-40 25-52z" fill="#22c55e"/><path d="M100 390c190-100 430-132 620-92" fill="none" stroke="#e879f9" stroke-width="18" opacity=".75"/><circle cx="650" cy="135" r="58" fill="#f97316"/><path d="M120 160l70 20-70 20 20-20z" fill="#e5e7eb"/><path d="M150 180l90 0" stroke="#60a5fa" stroke-width="8"/></svg>`},
+ {title:"חוף טרופי",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="e" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#67e8f9"/><stop offset=".55" stop-color="#38bdf8"/><stop offset=".56" stop-color="#fef3c7"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><rect width="800" height="520" fill="url(#e)"/><circle cx="660" cy="95" r="62" fill="#fde68a"/><path d="M0 280c130 35 260-40 390 0s260 10 410-20v70H0z" fill="#06b6d4" opacity=".75"/><path d="M150 465c80-90 78-180 52-285" stroke="#7c2d12" stroke-width="28" stroke-linecap="round"/><path d="M200 180c-70-80-120-70-170-40 70 25 120 48 170 40zM205 172c10-100 70-120 130-130-35 75-65 125-130 130zM205 180c88-38 145-5 195 40-82 18-142 5-195-40z" fill="#15803d"/></svg>`}
+];
+let selected=null,imgData=null,pieceTotal=20,rows=4,cols=5,placed=0,startTime=0,timerInt=null,hints=3;
+let store=JSON.parse(localStorage.getItem("lianPuzzlePro")||'{"xp":0,"coins":0,"done":0,"best":null}');
+function save(){localStorage.setItem("lianPuzzlePro",JSON.stringify(store));updateStats()}
+function updateStats(){xpView.textContent=store.xp;coinView.textContent=store.coins;doneView.textContent=store.done;bestView.textContent=store.best?fmt(store.best):"--:--"}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");if(id!=="game"&&timerInt)clearInterval(timerInt)}
+function renderGallery(){gallery.innerHTML=puzzles.map((p,i)=>`<div class="photo" onclick="choose(${i})"><span class="tag">${p.cat}</span>${p.svg}<b>${p.title}</b></div>`).join("")}
+function choose(i){selected=puzzles[i];imgData=selected.svg;chosenTitle.textContent=selected.title;show("difficulty")}
+upload.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{selected={title:"תמונה מהטלפון",cat:"שלי",svg:`<img src="${r.result}">`};imgData=r.result;chosenTitle.textContent=selected.title;show("difficulty")};r.readAsDataURL(f)}
+function dims(n){if(n===20)return[4,5,"קל"];if(n===40)return[5,8,"בינוני"];return[5,15,"קשה"]}
+function startPuzzle(n){
+  pieceTotal=n;[rows,cols,levelName.textContent]=dims(n);placed=0;hints=3;hintCount.textContent=hints;
+  gameTitle.textContent=selected.title;placedEl();preview.innerHTML=selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`;
+  buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>timer.textContent=fmt(Math.floor((Date.now()-startTime)/1000)),1000);show("game")
+}
+function placedEl(){placed.textContent=`${placed}/${pieceTotal}`}
+function buildBoard(){
+  const maxW=Math.min(window.innerWidth-28,760),w=maxW,h=Math.round(w*0.65),pw=w/cols,ph=h/rows;
+  board.style.width=w+"px";board.style.height=h+"px";board.innerHTML="";
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    let sl=document.createElement("div");sl.className="slot";sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
+  }
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    let p=document.createElement("div");p.className="piece";p.dataset.r=r;p.dataset.c=c;p.dataset.locked="0";
+    let x=Math.random()*(w-pw),y=Math.random()*(h-ph);
+    p.style.cssText=`width:${pw}px;height:${ph}px;left:${x}px;top:${y}px;background-size:${w}px ${h}px;background-position:${-c*pw}px ${-r*ph}px`;
+    if(imgData && !String(imgData).startsWith("<svg")) p.style.backgroundImage=`url("${imgData}")`;
+    else{
+      let svg=selected.svg.replace(/"/g,"'");
+      p.style.backgroundImage=`url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
+    }
+    board.appendChild(p);drag(p,pw,ph,w,h)
+  }
+}
+function drag(el,pw,ph,w,h){
+  let sx=0,sy=0,ox=0,oy=0;
+  el.addEventListener("pointerdown",e=>{
+    if(el.dataset.locked==="1")return;
+    el.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=parseFloat(el.style.left);oy=parseFloat(el.style.top);el.classList.add("dragging")
+  });
+  el.addEventListener("pointermove",e=>{
+    if(!el.classList.contains("dragging"))return;
+    let nx=Math.max(0,Math.min(w-pw,ox+e.clientX-sx)),ny=Math.max(0,Math.min(h-ph,oy+e.clientY-sy));
+    el.style.left=nx+"px";el.style.top=ny+"px"
+  });
+  el.addEventListener("pointerup",()=>snap(el,pw,ph));
+}
+function snap(el,pw,ph){
+  el.classList.remove("dragging");
+  let r=+el.dataset.r,c=+el.dataset.c,tx=c*pw,ty=r*ph,x=parseFloat(el.style.left),y=parseFloat(el.style.top);
+  if(Math.abs(x-tx)<pw*.32 && Math.abs(y-ty)<ph*.32){
+    el.style.left=tx+"px";el.style.top=ty+"px";el.classList.add("locked");el.dataset.locked="1";placed++;placedEl();beep(650);
+    if(placed===pieceTotal)win()
+  }
+}
+function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*w+"px";p.style.top=Math.random()*h+"px"})}
+function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
+function win(){
+  clearInterval(timerInt);let sec=Math.floor((Date.now()-startTime)/1000);
+  let coins=pieceTotal===20?30:pieceTotal===40?75:160,xp=pieceTotal===20?20:pieceTotal===40?45:100;
+  store.coins+=coins;store.xp+=xp;store.done++;if(!store.best||sec<store.best)store.best=sec;save();
+  winText.textContent=`זמן: ${fmt(sec)} · קיבלת ${coins} מטבעות ו-${xp} XP`;
+  document.getElementById("win").classList.add("show");beep(880);setTimeout(()=>beep(1040),130)
+}
+function closeWin(){win.classList.remove("show")}
+function fmt(s){let m=Math.floor(s/60),r=s%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0")}
+function beep(f){try{let A=window.AudioContext||window.webkitAudioContext,a=new A(),o=a.createOscillator(),g=a.createGain();o.frequency.value=f;o.type="sine";g.gain.value=.05;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.08)}catch(e){}}
+renderGallery();updateStats();
+</script>
 </body>
 </html>
