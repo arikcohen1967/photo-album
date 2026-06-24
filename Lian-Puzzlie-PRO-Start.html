@@ -44,13 +44,19 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 .boardBox{padding:10px;border-radius:26px;background:rgba(255,255,255,.06);border:1px solid var(--line);overflow:auto;touch-action:none}
 #board{position:relative;margin:auto;background:#020617;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);touch-action:none}
 .slot{position:absolute;border:1px dashed rgba(255,255,255,.12);background:rgba(255,255,255,.018)}
-.piece{position:absolute;cursor:grab;touch-action:none;transition:filter .15s,transform .15s;overflow:visible}
+.piece{position:absolute;cursor:grab;touch-action:none;transition:filter .15s,transform .15s,left .12s ease,top .12s ease;overflow:visible}
 .piece svg{position:absolute;inset:0;overflow:visible;filter:drop-shadow(0 12px 20px rgba(0,0,0,.42))}
 .piece .pieceImg{pointer-events:none}
 .piece .pieceStroke{fill:none;stroke:rgba(255,255,255,.62);stroke-width:1.35;vector-effect:non-scaling-stroke;pointer-events:none}
 .piece.locked{cursor:default;filter:drop-shadow(0 0 12px rgba(48,232,139,.75))}
 .piece.locked .pieceStroke{stroke:#30e88b;stroke-width:2}
 .piece.dragging{z-index:9999;transform:scale(1.045);filter:drop-shadow(0 24px 34px rgba(0,0,0,.62))}
+.piece.magnet{filter:drop-shadow(0 0 18px rgba(48,232,139,.95));transform:scale(1.06)}
+.piece.magnet .pieceStroke{stroke:#30e88b;stroke-width:2.6}
+.piece.snapPop{animation:snapPop .28s ease-out}
+@keyframes snapPop{0%{transform:scale(1.08)}60%{transform:scale(.98)}100%{transform:scale(1)}}
+.snapMsg{position:absolute;z-index:10000;transform:translate(-50%,-130%);padding:7px 12px;border-radius:999px;background:rgba(48,232,139,.95);color:#04130b;font-weight:1000;font-size:14px;box-shadow:0 14px 28px rgba(0,0,0,.34);pointer-events:none;animation:msgPop .75s ease-out forwards;white-space:nowrap}
+@keyframes msgPop{0%{opacity:0;transform:translate(-50%,-90%) scale(.8)}25%{opacity:1;transform:translate(-50%,-130%) scale(1)}100%{opacity:0;transform:translate(-50%,-190%) scale(1.04)}}
 .side{position:sticky;top:12px}
 .preview{width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.07)}
 .preview svg,.preview img{width:100%;display:block}
@@ -126,8 +132,8 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
     <div class="stats" style="display:none">
       <div class="stat"><small>זמן</small><span id="timer2">00:00</span></div>
       <div class="stat"><small>חלקים במקום</small><span id="placed2">0/20</span></div>
-      <div class="stat"><small>קושי</small><span id="levelName">קל</span></div>
-      <div class="stat"><small>רמז</small><span id="hintCount">3</span></div>
+      <div class="stat"><small>קושי</small><span id="levelName2">קל</span></div>
+      <div class="stat"><small>רמז</small><span id="hintCount2">3</span></div>
     </div>
   </div>
 
@@ -136,7 +142,7 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
     <aside class="panel side">
       <h2>תמונה מקורית</h2>
       <div class="preview" id="preview"></div>
-      <p class="help">טיפ: כשחלק קרוב למקום הנכון הוא ננעל לבד. בטלפון גוררים עם האצבע.</p>
+      <p class="help">טיפ: כשחלק קרוב למקום הנכון הוא מקבל הילה ירוקה וננעל כמו מגנט. בטלפון גוררים עם האצבע.</p>
       <div class="controls">
         <button class="btn dark" onclick="flashPreview()">👀 רמז</button>
         <button class="btn dark" onclick="shufflePieces()">🔀 ערבוב</button>
@@ -178,11 +184,11 @@ function choose(i){selected=puzzles[i];imgData=selected.src||selected.svg;chosen
 upload.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{selected={title:"תמונה מהטלפון",cat:"שלי",src:r.result};imgData=r.result;chosenTitle.textContent=selected.title;show("difficulty")};r.readAsDataURL(f)}
 function dims(n){if(n===20)return[4,5,"קל"];if(n===40)return[5,8,"בינוני"];return[5,15,"קשה"]}
 function startPuzzle(n){
-  pieceTotal=n;[rows,cols,levelName.textContent]=dims(n);placed=0;hints=3;hintCount.textContent=hints;
-  placedEl();preview.innerHTML=selected.src?`<img src="${selected.src}">`:(selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`);
-  buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>timer.textContent=fmt(Math.floor((Date.now()-startTime)/1000)),1000);show("game")
+  pieceTotal=n;let d=dims(n);rows=d[0];cols=d[1];levelName.textContent=d[2];if(window.levelName2)levelName2.textContent=d[2];placed=0;hints=3;hintCount.textContent=hints;if(window.hintCount2)hintCount2.textContent=hints;
+  placedEl();preview.innerHTML=selected.src?`<img src="${selected.src}">`:(selected.svg&&selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`);
+  buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>{const t=fmt(Math.floor((Date.now()-startTime)/1000));timer.textContent=t;if(window.timer2)timer2.textContent=t},1000);show("game")
 }
-function placedEl(){placed.textContent=`${placed}/${pieceTotal}`}
+function placedEl(){placed.textContent=`${placed}/${pieceTotal}`;if(window.placed2)placed2.textContent=`${placed}/${pieceTotal}`}
 function makePuzzlePattern(rCount,cCount){
   const right=Array.from({length:rCount},()=>Array(cCount-1).fill(0));
   const down=Array.from({length:rCount-1},()=>Array(cCount).fill(0));
@@ -257,21 +263,50 @@ function drag(el,pw,ph,w,h,tab){
   el.addEventListener("pointermove",e=>{
     if(!el.classList.contains("dragging"))return;
     let nx=Math.max(-tab,Math.min(w-pw-tab,ox+e.clientX-sx)),ny=Math.max(-tab,Math.min(h-ph-tab,oy+e.clientY-sy));
-    el.style.left=nx+"px";el.style.top=ny+"px"
+    el.style.left=nx+"px";el.style.top=ny+"px";
+    smartMagnet(el,pw,ph)
   });
   el.addEventListener("pointerup",()=>snap(el,pw,ph));
   el.addEventListener("pointercancel",()=>snap(el,pw,ph));
 }
+function smartMagnet(el,pw,ph){
+  if(el.dataset.locked==="1")return;
+  const tx=+el.dataset.tx,ty=+el.dataset.ty,x=parseFloat(el.style.left),y=parseFloat(el.style.top);
+  const dx=tx-x,dy=ty-y,dist=Math.hypot(dx,dy),range=Math.max(22,Math.min(pw,ph)*.42);
+  if(dist<range){
+    el.classList.add("magnet");
+    const pull=(1-dist/range)*.22;
+    el.style.left=(x+dx*pull)+"px";
+    el.style.top=(y+dy*pull)+"px";
+  }else{
+    el.classList.remove("magnet")
+  }
+}
 function snap(el,pw,ph){
   el.classList.remove("dragging");
   let tx=+el.dataset.tx,ty=+el.dataset.ty,x=parseFloat(el.style.left),y=parseFloat(el.style.top);
-  if(Math.abs(x-tx)<pw*.34 && Math.abs(y-ty)<ph*.34){
-    el.style.left=tx+"px";el.style.top=ty+"px";el.classList.add("locked");el.dataset.locked="1";placed++;placedEl();beep(650);
+  if(Math.abs(x-tx)<pw*.38 && Math.abs(y-ty)<ph*.38){
+    el.style.left=tx+"px";el.style.top=ty+"px";el.classList.remove("magnet");el.classList.add("locked","snapPop");el.dataset.locked="1";placed++;placedEl();beep(650);vibrate(24);showSnapMsg(el,"✔ מושלם!");
+    setTimeout(()=>el.classList.remove("snapPop"),320);
     if(placed===pieceTotal)win()
+  }else{
+    el.classList.remove("magnet")
   }
 }
-function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
-function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
+function showSnapMsg(el,text){
+  const msg=document.createElement("div");
+  msg.className="snapMsg";
+  msg.textContent=text;
+  const x=parseFloat(el.style.left)+el.offsetWidth/2;
+  const y=parseFloat(el.style.top)+el.offsetHeight/2;
+  msg.style.left=x+"px";
+  msg.style.top=y+"px";
+  board.appendChild(msg);
+  setTimeout(()=>msg.remove(),800)
+}
+function vibrate(ms){try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
+function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.classList.remove("magnet");p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
+function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;if(window.hintCount2)hintCount2.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
 function win(){
   clearInterval(timerInt);let sec=Math.floor((Date.now()-startTime)/1000);
   let coins=pieceTotal===20?30:pieceTotal===40?75:160,xp=pieceTotal===20?20:pieceTotal===40?45:100;
