@@ -50,6 +50,7 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 .piece .pieceStroke{fill:none;stroke:rgba(255,255,255,.62);stroke-width:1.35;vector-effect:non-scaling-stroke;pointer-events:none}
 .piece.locked{cursor:default;pointer-events:none;filter:none}
 .piece.locked .pieceStroke{stroke:rgba(255,255,255,.18);stroke-width:.8}
+.piece.connected .pieceStroke{stroke:rgba(255,255,255,.92);stroke-width:1.7}
 .piece.dragging{z-index:9999;transform:scale(1.045);filter:drop-shadow(0 24px 34px rgba(0,0,0,.62))}
 .side{position:sticky;top:12px}
 .preview{width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.07)}
@@ -285,31 +286,61 @@ function markConnected(g){
 }
 function tryAttachToNeighbor(el,pw,ph,tab){
   if(el.dataset.locked==="1") return false;
-  const r=+el.dataset.r,c=+el.dataset.c;
-  const x=parseFloat(el.style.left),y=parseFloat(el.style.top);
-  const neighbors=[
-    {r:r,c:c-1,dx:-(pw),dy:0},
-    {r:r,c:c+1,dx:(pw),dy:0},
-    {r:r-1,c:c,dx:0,dy:-(ph)},
-    {r:r+1,c:c,dx:0,dy:(ph)}
-  ];
-  const threshold=Math.min(pw,ph)*0.38;
-  let best=null;
-  neighbors.forEach(n=>{
-    if(n.r<0||n.r>=rows||n.c<0||n.c>=cols) return;
-    const other=getPiece(n.r,n.c);
-    if(!other || other===el) return;
-    const ox=parseFloat(other.style.left), oy=parseFloat(other.style.top);
-    const wantX=ox-n.dx, wantY=oy-n.dy; // dragged piece location required to fit this neighbor
-    const dist=Math.hypot(x-wantX,y-wantY);
-    if(dist<threshold && (!best || dist<best.dist)) best={other,wantX,wantY,dist};
-  });
+
+  const movingGroup = groupOf(el);
+  const threshold = Math.max(18, Math.min(pw,ph)*0.58);
+  let best = null;
+
+  // בודק את כל החלקים בקבוצה הנגררת, לא רק את החלק שנגעו בו.
+  for(const movingPiece of movingGroup.items){
+    const r=+movingPiece.dataset.r, c=+movingPiece.dataset.c;
+    const x=parseFloat(movingPiece.style.left), y=parseFloat(movingPiece.style.top);
+
+    const neighbors=[
+      {r:r,c:c-1,dx:-(pw),dy:0},
+      {r:r,c:c+1,dx:(pw),dy:0},
+      {r:r-1,c:c,dx:0,dy:-(ph)},
+      {r:r+1,c:c,dx:0,dy:(ph)}
+    ];
+
+    neighbors.forEach(n=>{
+      if(n.r<0||n.r>=rows||n.c<0||n.c>=cols) return;
+      const other=getPiece(n.r,n.c);
+      if(!other || other===movingPiece) return;
+      if(other.dataset.group && other.dataset.group===movingGroup.id) return;
+
+      const ox=parseFloat(other.style.left), oy=parseFloat(other.style.top);
+      const wantX=ox-n.dx, wantY=oy-n.dy; // איפה החלק הנגרר צריך להיות ביחס לשכן
+      const dist=Math.hypot(x-wantX,y-wantY);
+
+      if(dist<threshold && (!best || dist<best.dist)){
+        best={movingPiece, other, dx:wantX-x, dy:wantY-y, dist};
+      }
+    });
+  }
+
   if(!best) return false;
-  const g=mergeGroups(el,best.other);
-  const dx=best.wantX-x, dy=best.wantY-y;
-  moveGroup(g,dx,dy);
-  markConnected(g);
+
+  // חשוב: מזיזים רק את הקבוצה הנגררת למיקום המדויק.
+  // אחר כך מאחדים קבוצות. בגרסה הקודמת הזזנו גם את החלק השכן ולכן החיבור "ברח".
+  moveGroup(movingGroup,best.dx,best.dy);
+  const merged = mergeGroups(best.movingPiece,best.other);
+  markConnected(merged);
   beep(720);
+
+  // אם התחברנו לחלק שכבר נעול על הלוח — נועלים גם את הקבוצה החדשה.
+  if(best.other.dataset.locked==="1"){
+    merged.items.forEach(item=>{
+      if(item.dataset.locked!=="1"){
+        item.classList.add("locked");
+        item.classList.remove("connected");
+        item.dataset.locked="1";
+        placedCount++;
+      }
+    });
+    placedEl();
+    if(placedCount===pieceTotal)win();
+  }
   return true;
 }
 function tryLockGroupToBoard(el,pw,ph){
@@ -367,12 +398,14 @@ function snap(el,pw,ph,tab){
   g.items.forEach(item=>item.classList.remove("dragging"));
   activeDragGroup=null;
 
-  // First: if the connected group is close to the real board location, lock the whole group.
+  // קודם מנסים לנעול למיקום הסופי על הלוח.
   if(tryLockGroupToBoard(el,pw,ph)) return;
 
-  // Second: if this piece touches its true neighboring piece, connect them together.
-  // No flashing and no early hint. It only snaps when the fit is close enough.
-  tryAttachToNeighbor(el,pw,ph,tab);
+  // אם לא על הלוח — מנסים לחבר לשכן אמיתי. אין הבהוב ואין סימון מוקדם.
+  if(tryAttachToNeighbor(el,pw,ph,tab)){
+    // אחרי חיבור לשכן, אולי כל הקבוצה כבר קרובה מספיק ללוח.
+    tryLockGroupToBoard(el,pw,ph);
+  }
 }
 function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
 function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
