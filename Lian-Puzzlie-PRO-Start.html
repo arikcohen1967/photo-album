@@ -120,13 +120,13 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
   <div class="top gameTopCompact">
     <div class="compactBar">
       <span>⏱ <span id="timer">00:00</span></span>
-      <span>🧩 <span id="placed">0/20</span></span>
+      <span>🧩 מחוברים <span id="placed">0/20</span></span>
       <span>💡 <span id="hintCount">3</span></span>
       <span id="levelName">קל</span>
     </div>
     <div class="stats" style="display:none">
       <div class="stat"><small>זמן</small><span id="timer2">00:00</span></div>
-      <div class="stat"><small>חלקים במקום</small><span id="placed2">0/20</span></div>
+      <div class="stat"><small>חלקים מחוברים</small><span id="placed2">0/20</span></div>
       <div class="stat"><small>קושי</small><span id="levelName">קל</span></div>
       <div class="stat"><small>רמז</small><span id="hintCount">3</span></div>
     </div>
@@ -137,7 +137,7 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
     <aside class="panel side">
       <h2>תמונה מקורית</h2>
       <div class="preview" id="preview"></div>
-      <p class="help">טיפ: גוררים חלק למיקום המדויק. רק בהתאמה מלאה הוא נצמד וננעל במקום.</p>
+      <p class="help">טיפ: גוררים חלקים אחד לשני. חלקים תואמים מתחברים לקבוצה, אבל לא ננעלים ללוח ואפשר להזיז אותם יחד.</p>
       <div class="controls">
         <button class="btn dark" onclick="flashPreview()">👀 רמז</button>
         <button class="btn dark" onclick="shufflePieces()">🔀 ערבוב</button>
@@ -184,7 +184,7 @@ function startPuzzle(n){
   placedEl();preview.innerHTML=selected.src?`<img src="${selected.src}">`:(selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`);
   buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>timer.textContent=fmt(Math.floor((Date.now()-startTime)/1000)),1000);show("game")
 }
-function placedEl(){document.getElementById('placed').textContent=`${placedCount}/${pieceTotal}`}
+function placedEl(){document.getElementById('placed').textContent=`${placedCount}/${pieceTotal}`; const p2=document.getElementById('placed2'); if(p2)p2.textContent=`${placedCount}/${pieceTotal}`}
 function makePuzzlePattern(rCount,cCount){
   const right=Array.from({length:rCount},()=>Array(cCount-1).fill(0));
   const down=Array.from({length:rCount-1},()=>Array(cCount).fill(0));
@@ -281,12 +281,17 @@ function moveGroup(g,dx,dy){
 }
 function markConnected(g){
   g.items.forEach(item=>{
-    if(item.dataset.locked!=="1") item.classList.add("connected");
+    item.classList.add("connected");
   });
+  updateConnectedProgress(g);
+}
+function updateConnectedProgress(g){
+  const maxGroup = groups.length ? Math.max(...groups.map(gr=>gr.items.length)) : 0;
+  placedCount = Math.max(maxGroup, g ? g.items.length : 0);
+  placedEl();
+  if(placedCount===pieceTotal) win();
 }
 function tryAttachToNeighbor(el,pw,ph,tab){
-  if(el.dataset.locked==="1") return false;
-
   const movingGroup = groupOf(el);
   const threshold = Math.max(18, Math.min(pw,ph)*0.58);
   let best = null;
@@ -328,19 +333,9 @@ function tryAttachToNeighbor(el,pw,ph,tab){
   markConnected(merged);
   beep(720);
 
-  // אם התחברנו לחלק שכבר נעול על הלוח — נועלים גם את הקבוצה החדשה.
-  if(best.other.dataset.locked==="1"){
-    merged.items.forEach(item=>{
-      if(item.dataset.locked!=="1"){
-        item.classList.add("locked");
-        item.classList.remove("connected");
-        item.dataset.locked="1";
-        placedCount++;
-      }
-    });
-    placedEl();
-    if(placedCount===pieceTotal)win();
-  }
+  // אין נעילה ללוח: החלקים נשארים מחוברים כקבוצה שאפשר להזיז.
+  // ניצחון מתקבל רק כאשר כל החלקים מחוברים לאותה קבוצה.
+  updateConnectedProgress(merged);
   return true;
 }
 function tryLockGroupToBoard(el,pw,ph){
@@ -398,14 +393,9 @@ function snap(el,pw,ph,tab){
   g.items.forEach(item=>item.classList.remove("dragging"));
   activeDragGroup=null;
 
-  // קודם מנסים לנעול למיקום הסופי על הלוח.
-  if(tryLockGroupToBoard(el,pw,ph)) return;
-
-  // אם לא על הלוח — מנסים לחבר לשכן אמיתי. אין הבהוב ואין סימון מוקדם.
-  if(tryAttachToNeighbor(el,pw,ph,tab)){
-    // אחרי חיבור לשכן, אולי כל הקבוצה כבר קרובה מספיק ללוח.
-    tryLockGroupToBoard(el,pw,ph);
-  }
+  // אין נעילה אוטומטית ללוח בכלל.
+  // החלקים מתחברים רק לחלקים תואמים ונשארים ניתנים להזזה כקבוצה.
+  tryAttachToNeighbor(el,pw,ph,tab);
 }
 function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
 function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
