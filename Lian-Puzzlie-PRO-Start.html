@@ -167,6 +167,7 @@ const puzzles = Array.from({length:19},(_,i)=>{
   return {title:`תמונה ${n}`,cat:"התמונות של ליאן",src:`${IMAGE_BASE}${n}.jpg`};
 });
 let selected=null,imgData=null,pieceTotal=20,rows=4,cols=5,placedCount=0,startTime=0,timerInt=null,hints=3;
+let groups=[], activeDragGroup=null;
 let store=JSON.parse(localStorage.getItem("lianPuzzlePro")||'{"xp":0,"coins":0,"done":0,"best":null}');
 function save(){localStorage.setItem("lianPuzzlePro",JSON.stringify(store));updateStats()}
 function updateStats(){xpView.textContent=store.xp;coinView.textContent=store.coins;doneView.textContent=store.done;bestView.textContent=store.best?fmt(store.best):"--:--"}
@@ -230,6 +231,7 @@ async function buildBoard(){
   w=Math.floor(w); h=Math.floor(h);
   const pw=w/cols, ph=h/rows, tab=Math.min(pw,ph)*.24;
   puzzlePattern=makePuzzlePattern(rows,cols);
+  groups=[]; activeDragGroup=null;
   board.style.width=w+'px';board.style.height=h+'px';board.innerHTML='';board.style.overflow='visible';
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     let sl=document.createElement('div');sl.className='slot';sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
@@ -248,41 +250,129 @@ async function buildBoard(){
     board.appendChild(p);drag(p,pw,ph,w,h,tab)
   }
 }
-function drag(el,pw,ph,w,h,tab){
-  let sx=0,sy=0,ox=0,oy=0;
-  el.addEventListener("pointerdown",e=>{
-    if(el.dataset.locked==="1")return;
-    el.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=parseFloat(el.style.left);oy=parseFloat(el.style.top);el.classList.add("dragging")
-  });
-  el.addEventListener("pointermove",e=>{
-    if(!el.classList.contains("dragging"))return;
-    let nx=Math.max(-tab,Math.min(w-pw-tab,ox+e.clientX-sx)),ny=Math.max(-tab,Math.min(h-ph-tab,oy+e.clientY-sy));
-    el.style.left=nx+"px";el.style.top=ny+"px"
-  });
-  el.addEventListener("pointerup",()=>snap(el,pw,ph));
-  el.addEventListener("pointercancel",()=>snap(el,pw,ph));
+
+function pieceKey(r,c){return r+"_"+c}
+function allPieces(){return Array.from(document.querySelectorAll(".piece"))}
+function getPiece(r,c){return document.querySelector(`.piece[data-r="${r}"][data-c="${c}"]`)}
+function ensureGroup(el){
+  if(el.dataset.group) return el.dataset.group;
+  const gid="g_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+  el.dataset.group=gid; groups.push({id:gid,items:[el]});
+  return gid;
 }
-function snap(el,pw,ph){
-  el.classList.remove("dragging");
-  if(el.dataset.locked==="1")return;
-  const tx=+el.dataset.tx, ty=+el.dataset.ty;
-  const x=parseFloat(el.style.left), y=parseFloat(el.style.top);
-  const dist=Math.hypot(x-tx,y-ty);
-  const lockRadius=Math.min(pw,ph)*0.22; // נעילה רק כשהחלק באמת יושב כמעט בדיוק במקום
-  if(dist<=lockRadius){
-    lockPiece(el,tx,ty);
+function groupOf(el){
+  const gid=ensureGroup(el);
+  return groups.find(g=>g.id===gid);
+}
+function mergeGroups(a,b){
+  const ga=groupOf(a), gb=groupOf(b);
+  if(ga.id===gb.id) return ga;
+  gb.items.forEach(item=>{item.dataset.group=ga.id; ga.items.push(item)});
+  groups=groups.filter(g=>g.id!==gb.id);
+  ga.items=[...new Set(ga.items)];
+  return ga;
+}
+function moveGroup(g,dx,dy){
+  g.items.forEach(item=>{
+    item.style.left=(parseFloat(item.style.left)+dx)+"px";
+    item.style.top=(parseFloat(item.style.top)+dy)+"px";
+  });
+}
+function markConnected(g){
+  g.items.forEach(item=>{
+    if(item.dataset.locked!=="1") item.classList.add("connected");
+  });
+}
+function tryAttachToNeighbor(el,pw,ph,tab){
+  if(el.dataset.locked==="1") return false;
+  const r=+el.dataset.r,c=+el.dataset.c;
+  const x=parseFloat(el.style.left),y=parseFloat(el.style.top);
+  const neighbors=[
+    {r:r,c:c-1,dx:-(pw),dy:0},
+    {r:r,c:c+1,dx:(pw),dy:0},
+    {r:r-1,c:c,dx:0,dy:-(ph)},
+    {r:r+1,c:c,dx:0,dy:(ph)}
+  ];
+  const threshold=Math.min(pw,ph)*0.38;
+  let best=null;
+  neighbors.forEach(n=>{
+    if(n.r<0||n.r>=rows||n.c<0||n.c>=cols) return;
+    const other=getPiece(n.r,n.c);
+    if(!other || other===el) return;
+    const ox=parseFloat(other.style.left), oy=parseFloat(other.style.top);
+    const wantX=ox-n.dx, wantY=oy-n.dy; // dragged piece location required to fit this neighbor
+    const dist=Math.hypot(x-wantX,y-wantY);
+    if(dist<threshold && (!best || dist<best.dist)) best={other,wantX,wantY,dist};
+  });
+  if(!best) return false;
+  const g=mergeGroups(el,best.other);
+  const dx=best.wantX-x, dy=best.wantY-y;
+  moveGroup(g,dx,dy);
+  markConnected(g);
+  beep(720);
+  return true;
+}
+function tryLockGroupToBoard(el,pw,ph){
+  const g=groupOf(el);
+  const threshold=Math.min(pw,ph)*0.45;
+  let anchor=null;
+  for(const item of g.items){
+    if(item.dataset.locked==="1") continue;
+    const x=parseFloat(item.style.left), y=parseFloat(item.style.top);
+    const tx=+item.dataset.tx, ty=+item.dataset.ty;
+    const dist=Math.hypot(x-tx,y-ty);
+    if(dist<threshold){anchor={item,dx:tx-x,dy:ty-y};break;}
   }
-}
-function lockPiece(el,tx,ty){
-  el.style.left=tx+"px";
-  el.style.top=ty+"px";
-  el.dataset.locked="1";
-  el.classList.add("locked");
-  el.style.transform="none";
-  placedCount++;
+  if(!anchor) return false;
+  moveGroup(g,anchor.dx,anchor.dy);
+  g.items.forEach(item=>{
+    if(item.dataset.locked!=="1"){
+      item.classList.add("locked");
+      item.classList.remove("connected");
+      item.dataset.locked="1";
+      placedCount++;
+    }
+  });
   placedEl();
   beep(650);
   if(placedCount===pieceTotal)win();
+  return true;
+}
+
+function drag(el,pw,ph,w,h,tab){
+  let sx=0,sy=0,positions=[];
+  el.addEventListener("pointerdown",e=>{
+    if(el.dataset.locked==="1")return;
+    el.setPointerCapture(e.pointerId);
+    sx=e.clientX; sy=e.clientY;
+    const g=groupOf(el);
+    activeDragGroup=g;
+    positions=g.items.map(item=>({item,left:parseFloat(item.style.left),top:parseFloat(item.style.top)}));
+    g.items.forEach(item=>item.classList.add("dragging"));
+  });
+  el.addEventListener("pointermove",e=>{
+    if(!activeDragGroup || !el.classList.contains("dragging"))return;
+    const dx=e.clientX-sx, dy=e.clientY-sy;
+    positions.forEach(pos=>{
+      let nx=pos.left+dx, ny=pos.top+dy;
+      const item=pos.item;
+      item.style.left=nx+"px"; item.style.top=ny+"px";
+    });
+  });
+  el.addEventListener("pointerup",()=>snap(el,pw,ph,tab));
+  el.addEventListener("pointercancel",()=>snap(el,pw,ph,tab));
+}
+function snap(el,pw,ph,tab){
+  const g=activeDragGroup || groupOf(el);
+  g.items.forEach(item=>item.classList.remove("dragging"));
+  activeDragGroup=null;
+
+  // First: if the connected group is close to the real board location, lock the whole group.
+  if(tryLockGroupToBoard(el,pw,ph)) return;
+
+  // Second: if this piece touches its true neighboring piece, connect them together.
+  // No flashing and no early hint. It only snaps when the fit is close enough.
+  tryAttachToNeighbor(el,pw,ph,tab);
 }
 function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
 function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
