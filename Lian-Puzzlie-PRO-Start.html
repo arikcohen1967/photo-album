@@ -171,7 +171,11 @@ function startPuzzle(n){
 }
 function placedEl(){placed.textContent=`${placed}/${pieceTotal}`}
 function buildBoard(){
-  const maxW=Math.min(window.innerWidth-28,760),w=maxW,h=Math.round(w*0.65),pw=w/cols,ph=h/rows;
+  const w = window.innerWidth - 8;
+  const h = Math.max(260, window.innerHeight - 240);
+
+  const pw = w / cols;
+  const ph = h / rows;
   board.style.width=w+"px";board.style.height=h+"px";board.innerHTML="";
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     let sl=document.createElement("div");sl.className="slot";sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
