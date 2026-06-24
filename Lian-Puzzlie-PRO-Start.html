@@ -50,7 +50,8 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 .piece .pieceStroke{fill:none;stroke:rgba(255,255,255,.62);stroke-width:1.35;vector-effect:non-scaling-stroke;pointer-events:none}
 .piece.locked{cursor:default;pointer-events:none;filter:none}
 .piece.locked .pieceStroke{stroke:rgba(255,255,255,.18);stroke-width:.8}
-.piece.connected .pieceStroke{stroke:rgba(255,255,255,.92);stroke-width:1.7}
+.piece.connected .pieceStroke{stroke:rgba(255,255,255,.08);stroke-width:.35}
+#board.completed .pieceStroke{display:none}
 .piece.dragging{z-index:9999;transform:scale(1.045);filter:drop-shadow(0 24px 34px rgba(0,0,0,.62))}
 .side{position:sticky;top:12px}
 .preview{width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.07)}
@@ -233,6 +234,7 @@ async function buildBoard(){
   const pw=w/cols, ph=h/rows, tab=Math.min(pw,ph)*.24;
   puzzlePattern=makePuzzlePattern(rows,cols);
   groups=[]; activeDragGroup=null;
+  board.classList.remove('completed');
   board.style.width=w+'px';board.style.height=h+'px';board.innerHTML='';board.style.overflow='visible';
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     let sl=document.createElement('div');sl.className='slot';sl.style.cssText=`left:${c*pw}px;top:${r*ph}px;width:${pw}px;height:${ph}px`;board.appendChild(sl)
@@ -400,6 +402,7 @@ function snap(el,pw,ph,tab){
 function shufflePieces(){document.querySelectorAll(".piece:not(.locked)").forEach(p=>{let w=board.clientWidth-p.clientWidth,h=board.clientHeight-p.clientHeight;p.style.left=Math.random()*Math.max(1,w)+"px";p.style.top=Math.random()*Math.max(1,h)+"px"})}
 function flashPreview(){if(hints<=0)return;hints--;hintCount.textContent=hints;preview.style.transform="scale(1.05)";preview.style.boxShadow="0 0 0 4px #fff";setTimeout(()=>{preview.style.transform="";preview.style.boxShadow=""},900)}
 function win(){
+  board.classList.add('completed');
   clearInterval(timerInt);let sec=Math.floor((Date.now()-startTime)/1000);
   let coins=pieceTotal===20?30:pieceTotal===40?75:160,xp=pieceTotal===20?20:pieceTotal===40?45:100;
   store.coins+=coins;store.xp+=xp;store.done++;if(!store.best||sec<store.best)store.best=sec;save();
