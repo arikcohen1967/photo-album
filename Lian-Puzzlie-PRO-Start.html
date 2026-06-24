@@ -31,7 +31,8 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 .stat small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:13px}
 .photo{position:relative;min-height:160px;border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#111827;cursor:pointer;box-shadow:0 18px 38px rgba(0,0,0,.3)}
-.photo svg{width:100%;height:130px;display:block}
+.photo svg,.photo img{width:100%;height:130px;display:block}
+.photo img{object-fit:cover;background:#fff}
 .photo b{display:block;padding:10px;font-size:15px}
 .photo .tag{position:absolute;top:10px;left:10px;padding:5px 8px;border-radius:999px;background:#fff;color:#07080b;font-size:11px;font-weight:1000}
 .controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
@@ -72,7 +73,7 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
   <div class="top">
     <div class="badge">LIAN PUZZLE PRO · PREMIUM</div>
     <h1>🧩 Lian Puzzle PRO</h1>
-    <p>פאזלים מקצועיים עם נופים, חיות, טירות וחלל · 20 / 40 / 75 חלקים · מותאם לטלפון</p>
+    <p>פאזלים מקצועיים מהתמונות של ליאן · 20 / 40 / 75 חלקים · מותאם לטלפון</p>
     <div class="stats">
       <div class="stat"><small>XP</small><span id="xpView">0</span></div>
       <div class="stat"><small>מטבעות</small><span id="coinView">0</span></div>
@@ -147,26 +148,25 @@ h1{margin:12px 0 6px;font-size:clamp(34px,6vw,58px)}
 </div>
 
 <script>
-const puzzles=[
- {title:"שקיעה באגם",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ff9a8b"/><stop offset=".48" stop-color="#ffd166"/><stop offset="1" stop-color="#15314b"/></linearGradient></defs><rect width="800" height="520" fill="url(#a)"/><circle cx="405" cy="215" r="82" fill="#fff3b0"/><path d="M0 278L150 160l86 76 120-125 160 150 110-88 174 122v225H0z" fill="#10283d"/><path d="M0 355c120-38 240 38 360 0s260-28 440 8v157H0z" fill="#0d2338"/><path d="M0 398c130 40 230-22 350 8 160 40 280-12 450 18v96H0z" fill="#143a54"/></svg>`},
- {title:"יער קסום",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#101827"/><stop offset="1" stop-color="#0b3b2e"/></linearGradient></defs><rect width="800" height="520" fill="url(#b)"/><circle cx="630" cy="95" r="54" fill="#e7f0ff"/><g fill="#14532d"><path d="M80 480l70-340 80 340z"/><path d="M210 480l90-400 95 400z"/><path d="M470 480l75-360 90 360z"/><path d="M610 480l65-300 80 300z"/></g><g fill="#22c55e" opacity=".9"><circle cx="160" cy="320" r="4"/><circle cx="535" cy="260" r="5"/><circle cx="420" cy="175" r="3"/><circle cx="705" cy="220" r="4"/></g><path d="M0 420c160-30 270 25 410-4 135-28 250-20 390 12v92H0z" fill="#0f241c"/></svg>`},
- {title:"טירת קריסטל",cat:"קסום",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7dd3fc"/><stop offset=".55" stop-color="#c084fc"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient></defs><rect width="800" height="520" fill="url(#c)"/><path d="M130 438h540V230l-70-55-55 42-80-86-70 74-80-98-80 105-105-70z" fill="#eef2ff" opacity=".88"/><path d="M170 438V210h100v228M340 438V160h120v278M540 438V230h100v208" fill="#c4b5fd"/><path d="M180 210l40-88 45 88M350 160l50-110 52 110M550 230l45-100 45 100" fill="#f8fafc"/><rect x="370" y="315" width="65" height="123" rx="30" fill="#312e81"/><path d="M0 438c170-42 300 18 420-8 150-32 250-20 380 10v80H0z" fill="#111827" opacity=".55"/></svg>`},
- {title:"סוס לבן",cat:"חיות",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#bae6fd"/><stop offset="1" stop-color="#86efac"/></linearGradient></defs><rect width="800" height="520" fill="url(#d)"/><circle cx="100" cy="85" r="58" fill="#fde68a"/><path d="M145 395c75-160 245-220 405-135 70 38 96 98 110 135" fill="none" stroke="#fff" stroke-width="46" stroke-linecap="round"/><path d="M560 248c58-88 126-65 147 0 9 28-9 59-39 63l-85 10z" fill="#fff"/><path d="M626 238c-10-54 20-76 48-98 0 50-5 85-26 111z" fill="#f8fafc"/><circle cx="662" cy="260" r="8" fill="#111827"/><path d="M260 405l-28 70M390 400l-10 75M520 390l34 78" stroke="#fff" stroke-width="24" stroke-linecap="round"/><path d="M575 254c-60-66-160-75-242-42" stroke="#d1d5db" stroke-width="18" stroke-linecap="round"/><path d="M0 430c160 25 300-20 430 0 135 20 250-15 370 5v85H0z" fill="#15803d"/></svg>`},
- {title:"עולם החלל",cat:"חלל",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="520" fill="#050816"/><g fill="#fff"><circle cx="100" cy="80" r="3"/><circle cx="240" cy="140" r="2"/><circle cx="520" cy="90" r="3"/><circle cx="680" cy="170" r="2"/><circle cx="350" cy="60" r="2"/><circle cx="610" cy="330" r="3"/><circle cx="150" cy="320" r="2"/></g><circle cx="380" cy="255" r="110" fill="#2563eb"/><path d="M290 220c55 20 105 0 170 26s82 70 10 96c-68 24-175-12-205-70-10-22 0-40 25-52z" fill="#22c55e"/><path d="M100 390c190-100 430-132 620-92" fill="none" stroke="#e879f9" stroke-width="18" opacity=".75"/><circle cx="650" cy="135" r="58" fill="#f97316"/><path d="M120 160l70 20-70 20 20-20z" fill="#e5e7eb"/><path d="M150 180l90 0" stroke="#60a5fa" stroke-width="8"/></svg>`},
- {title:"חוף טרופי",cat:"נופים",svg:`<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="e" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#67e8f9"/><stop offset=".55" stop-color="#38bdf8"/><stop offset=".56" stop-color="#fef3c7"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><rect width="800" height="520" fill="url(#e)"/><circle cx="660" cy="95" r="62" fill="#fde68a"/><path d="M0 280c130 35 260-40 390 0s260 10 410-20v70H0z" fill="#06b6d4" opacity=".75"/><path d="M150 465c80-90 78-180 52-285" stroke="#7c2d12" stroke-width="28" stroke-linecap="round"/><path d="M200 180c-70-80-120-70-170-40 70 25 120 48 170 40zM205 172c10-100 70-120 130-130-35 75-65 125-130 130zM205 180c88-38 145-5 195 40-82 18-142 5-195-40z" fill="#15803d"/></svg>`}
-];
+const IMAGE_BASE = "./"; // התמונות נמצאות באותה תיקייה באתר: 1.jpg עד 19.jpg
+const puzzles = Array.from({length:19},(_,i)=>{
+  const n=i+1;
+  return {title:`תמונה ${n}`,cat:"התמונות של ליאן",src:`${IMAGE_BASE}${n}.jpg`};
+});
 let selected=null,imgData=null,pieceTotal=20,rows=4,cols=5,placed=0,startTime=0,timerInt=null,hints=3;
 let store=JSON.parse(localStorage.getItem("lianPuzzlePro")||'{"xp":0,"coins":0,"done":0,"best":null}');
 function save(){localStorage.setItem("lianPuzzlePro",JSON.stringify(store));updateStats()}
 function updateStats(){xpView.textContent=store.xp;coinView.textContent=store.coins;doneView.textContent=store.done;bestView.textContent=store.best?fmt(store.best):"--:--"}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");if(id!=="game"&&timerInt)clearInterval(timerInt)}
-function renderGallery(){gallery.innerHTML=puzzles.map((p,i)=>`<div class="photo" onclick="choose(${i})"><span class="tag">${p.cat}</span>${p.svg}<b>${p.title}</b></div>`).join("")}
-function choose(i){selected=puzzles[i];imgData=selected.svg;chosenTitle.textContent=selected.title;show("difficulty")}
-upload.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{selected={title:"תמונה מהטלפון",cat:"שלי",svg:`<img src="${r.result}">`};imgData=r.result;chosenTitle.textContent=selected.title;show("difficulty")};r.readAsDataURL(f)}
+function renderGallery(){
+  gallery.innerHTML=puzzles.map((p,i)=>`<div class="photo" onclick="choose(${i})"><span class="tag">${p.cat}</span>${p.src?`<img src="${p.src}" alt="${p.title}" loading="lazy" onerror="this.parentElement.style.display='none'">`:p.svg}<b>${p.title}</b></div>`).join("")
+}
+function choose(i){selected=puzzles[i];imgData=selected.src||selected.svg;chosenTitle.textContent=selected.title;show("difficulty")}
+upload.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{selected={title:"תמונה מהטלפון",cat:"שלי",src:r.result};imgData=r.result;chosenTitle.textContent=selected.title;show("difficulty")};r.readAsDataURL(f)}
 function dims(n){if(n===20)return[4,5,"קל"];if(n===40)return[5,8,"בינוני"];return[5,15,"קשה"]}
 function startPuzzle(n){
   pieceTotal=n;[rows,cols,levelName.textContent]=dims(n);placed=0;hints=3;hintCount.textContent=hints;
-  gameTitle.textContent=selected.title;placedEl();preview.innerHTML=selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`;
+  gameTitle.textContent=selected.title;placedEl();preview.innerHTML=selected.src?`<img src="${selected.src}">`:(selected.svg.startsWith("<")?selected.svg:`<img src="${imgData}">`);
   buildBoard();startTime=Date.now();clearInterval(timerInt);timerInt=setInterval(()=>timer.textContent=fmt(Math.floor((Date.now()-startTime)/1000)),1000);show("game")
 }
 function placedEl(){placed.textContent=`${placed}/${pieceTotal}`}
@@ -182,7 +182,7 @@ function buildBoard(){
     p.style.cssText=`width:${pw}px;height:${ph}px;left:${x}px;top:${y}px;background-size:${w}px ${h}px;background-position:${-c*pw}px ${-r*ph}px`;
     if(imgData && !String(imgData).startsWith("<svg")) p.style.backgroundImage=`url("${imgData}")`;
     else{
-      let svg=selected.svg.replace(/"/g,"'");
+      let svg=(selected.svg||"").replace(/"/g,"'");
       p.style.backgroundImage=`url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
     }
     board.appendChild(p);drag(p,pw,ph,w,h)
