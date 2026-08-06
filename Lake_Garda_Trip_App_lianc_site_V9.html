@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<title>טיול בת מצווה – אגם גארדה 2026 · V10</title>
+<title>טיול בת מצווה – אגם גארדה 2026 · V12</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -38,6 +38,65 @@ border-radius:24px;margin:14px 0;padding:16px;box-shadow:0 15px 45px rgba(0,0,0,
 .date{font-size:12px;color:var(--accent)}
 .day-icon{font-size:34px}
 .challenge{margin-top:12px;background:rgba(255,177,91,.1);border:1px solid rgba(255,177,91,.2);padding:11px 12px;border-radius:15px;font-size:13px;line-height:1.5}
+.challenge-camera{
+  margin-top:10px;
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.challenge-photo-btn,.challenge-delete-btn{
+  border:0;
+  border-radius:12px;
+  padding:10px 13px;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.challenge-photo-btn{
+  background:#fff;
+  color:#111827;
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+.challenge-delete-btn{
+  background:rgba(255,255,255,.08);
+  color:#ffd3d3;
+  border:1px solid rgba(255,255,255,.14);
+}
+.challenge-status{
+  width:100%;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+}
+.challenge-preview{
+  width:100%;
+  margin-top:9px;
+  border-radius:15px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.25);
+  display:none;
+}
+.challenge-preview.has-photo{display:block}
+.challenge-preview img{
+  display:block;
+  width:100%;
+  max-height:320px;
+  object-fit:cover;
+}
+.challenge-photo-meta{
+  padding:8px 10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+}
+.challenge.completed{
+  border-color:rgba(76,217,100,.46);
+  background:rgba(76,217,100,.10);
+}
+
 .start-day{width:100%;margin:12px 0 0;padding:12px;border:0;border-radius:15px;background:#193e5b;color:white;font-weight:800}
 .stop{margin-top:13px;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:14px}
 .stop.next{outline:2px solid var(--green);box-shadow:0 0 0 5px rgba(54,209,139,.09)}
@@ -100,7 +159,7 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 10 · מנגנון מיקום משופר לאייפון, עם הודעות שגיאה מדויקות</p>
+  <p>גרסה 12 · אתגרי יום עם מצלמה, תמונות וזיכרונות מהטיול</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -632,6 +691,7 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
         <a id="parkingMaps" class="btn maps" style="display:none">פתח במפות</a>
       </div>
       <button class="small-btn" type="button" onclick="saveParking()">שמור את המיקום הנוכחי</button>
+      <button id="clearParkingBtn" class="small-btn clear" type="button" onclick="clearParking()" style="display:none">🗑️ מחק מיקום חניה</button>
       <div class="warning">שמירת החניה דורשת הרשאת מיקום בדפדפן.</div>
     </div>
   </div>
@@ -655,10 +715,219 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
   </div>
 </div>
 
+
+<input id="challengeCameraInput"
+       type="file"
+       accept="image/*"
+       capture="environment"
+       hidden>
+
 <script>
 const tripDays = [{"date": "2026-09-30", "label": "רביעי · 30.09.2026", "title": "נחיתה והגעה למלון", "icon": "✈️", "challenge": "לצלם את התמונה המשפחתית הראשונה באיטליה.", "stops": [{"time": "16:00", "name": "נחיתה בנמל התעופה ורונה", "dest": "Verona Villafranca Airport", "note": "איסוף מזוודות ורכב שכור."}, {"time": "18:00", "name": "נסיעה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "צ'ק-אין והתארגנות רגועה."}]}, {"date": "2026-10-01", "label": "חמישי · 01.10.2026", "title": "Gardaland", "icon": "🎢", "challenge": "לבחור יחד את המתקן הכי טוב של היום.", "stops": [{"time": "08:30", "name": "יציאה ל-Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "מומלץ להגיע לפני פתיחת השערים."}, {"time": "יום מלא", "name": "Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "לשמור את הכרטיסים גם כצילום מסך."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ניווט ישיר חזרה למלון."}]}, {"date": "2026-10-02", "label": "שישי · 02.10.2026", "title": "Movieland ומופע אבירים", "icon": "🎬", "challenge": "לצלם סלפי בסגנון סרט.", "stops": [{"time": "בוקר", "name": "Movieland", "dest": "Movieland The Hollywood Park, Via Fossalta 58, Lazise", "note": "להגיע מוקדם כדי להספיק את המתקנים המרכזיים."}, {"time": "לפי ההזמנה", "name": "Medieval Times", "dest": "Medieval Times, Via Fossalta 58, Lazise", "note": "יש לבדוק את שעת המופע המדויקת מראש."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "מומלץ להביא שכבה דקה לערב."}]}, {"date": "2026-10-03", "label": "שבת · 03.10.2026", "title": "סובב אגם וראפטינג", "icon": "🚣", "challenge": "למצוא נקודת תצפית אחת שאף אחד לא רוצה לעזוב.", "stops": [{"time": "בוקר", "name": "מרכז הראפטינג", "dest": "Rafting Center Valdadige, Brentino Belluno, Verona", "note": "לעדכן לפי שם החברה המדויק באישור ההזמנה."}, {"time": "צהריים", "name": "נסיעה נופית סביב האגם", "dest": "Lake Garda, Italy", "note": "לעצור בנקודות תצפית בהתאם לזמן ולמזג האוויר."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "להכין בגדים ונעליים להחלפה."}]}, {"date": "2026-10-04", "label": "ראשון · 04.10.2026", "title": "מלצ'סינה, מונטה באלדו ולימונה", "icon": "🏔️", "challenge": "לצלם תמונת פסגה משפחתית.", "stops": [{"time": "08:30", "name": "חניון רכבל מלצ'סינה", "dest": "Parcheggio Funivia Malcesine Monte Baldo, Via Navene Vecchia 12, Malcesine", "note": "חניון נוח ליד תחנת הרכבל."}, {"time": "בוקר", "name": "רכבל מונטה באלדו", "dest": "Funivia Malcesine Monte Baldo", "note": "לבדוק בבוקר רוח ומצב פעילות הרכבל."}, {"time": "אחה״צ", "name": "לימונה סול גארדה", "dest": "Limone sul Garda, Italy", "note": "לבדוק אם המעבר יהיה במעבורת או ברכב."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "זהו יום נסיעות ארוך יחסית."}]}, {"date": "2026-10-05", "label": "שני · 05.10.2026", "title": "ונציה", "icon": "🛶", "challenge": "למצוא גשר קטן ויפה מחוץ למסלול הראשי.", "stops": [{"time": "בוקר", "name": "בוקר רגוע במלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ארוחת בוקר ויציאה בנחת."}, {"time": "צהריים", "name": "חניון Tronchetto בוונציה", "dest": "Venezia Tronchetto Parking, Isola Nova del Tronchetto 33, Venezia", "note": "לשמור צילום של מיקום הרכב והקומה."}, {"time": "ערב", "name": "Piazzale Roma / מרכז ונציה", "dest": "Piazzale Roma, Venezia", "note": "ממשיכים ברגל או בתחבורה ציבורית."}]}, {"date": "2026-10-06", "label": "שלישי · 06.10.2026", "title": "ונציה, ורונה והטיסה", "icon": "🏛️", "challenge": "לבחור יחד את רגע השיא של הטיול.", "stops": [{"time": "בוקר", "name": "סיור אחרון בוונציה", "dest": "Piazza San Marco, Venezia", "note": "להשאיר מספיק זמן לחזרה לרכב."}, {"time": "צהריים", "name": "חניון מרכז ורונה", "dest": "Parcheggio Cittadella, Piazza Cittadella, Verona", "note": "סיור קצר בארנה ובמרכז ההיסטורי."}, {"time": "18:30", "name": "החזרת הרכב בשדה", "dest": "Verona Villafranca Airport", "note": "להשאיר זמן לתדלוק ולהחזרת הרכב."}]}];
 let activeDay = 0;
 let activeStop = 0;
+let activeChallengeDay = null;
+
+const challengeDB = {
+  db: null,
+  open() {
+    if (this.db) return Promise.resolve(this.db);
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('garda-trip-memories', 1);
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains('challengePhotos')) {
+          db.createObjectStore('challengePhotos', {keyPath:'day'});
+        }
+      };
+      request.onsuccess = () => {
+        this.db = request.result;
+        resolve(this.db);
+      };
+      request.onerror = () => reject(request.error);
+    });
+  },
+  async put(record) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('challengePhotos', 'readwrite');
+      tx.objectStore('challengePhotos').put(record);
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+    });
+  },
+  async get(day) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const request = db.transaction('challengePhotos', 'readonly')
+        .objectStore('challengePhotos').get(day);
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error);
+    });
+  },
+  async delete(day) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('challengePhotos', 'readwrite');
+      tx.objectStore('challengePhotos').delete(day);
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+};
+
+function formatChallengePhotoTime(iso) {
+  try {
+    return new Date(iso).toLocaleString('he-IL');
+  } catch (e) {
+    return '';
+  }
+}
+
+function prepareChallengeCards() {
+  document.querySelectorAll('.challenge').forEach((card, dayIndex) => {
+    card.dataset.challengeDay = dayIndex;
+    const controls = document.createElement('div');
+    controls.className = 'challenge-camera';
+    controls.innerHTML = `
+      <button type="button" class="challenge-photo-btn" data-camera-day="${dayIndex}">📷 צלם את האתגר</button>
+      <button type="button" class="challenge-delete-btn" data-delete-day="${dayIndex}" style="display:none">🗑️ מחק תמונה</button>
+      <div class="challenge-status" id="challengeStatus${dayIndex}">עדיין לא צולמה תמונה</div>
+      <div class="challenge-preview" id="challengePreview${dayIndex}">
+        <img id="challengeImage${dayIndex}" alt="תמונת אתגר היום">
+        <div class="challenge-photo-meta" id="challengeMeta${dayIndex}"></div>
+      </div>`;
+    card.appendChild(controls);
+  });
+
+  document.querySelectorAll('[data-camera-day]').forEach(btn => {
+    btn.addEventListener('click', () => openChallengeCamera(Number(btn.dataset.cameraDay)));
+  });
+  document.querySelectorAll('[data-delete-day]').forEach(btn => {
+    btn.addEventListener('click', () => deleteChallengePhoto(Number(btn.dataset.deleteDay)));
+  });
+
+  const input = document.getElementById('challengeCameraInput');
+  input.addEventListener('change', handleChallengePhoto);
+  restoreAllChallengePhotos();
+}
+
+function openChallengeCamera(dayIndex) {
+  activeChallengeDay = dayIndex;
+  const input = document.getElementById('challengeCameraInput');
+  input.value = '';
+  input.click();
+}
+
+async function compressChallengeImage(file) {
+  const bitmap = await createImageBitmap(file);
+  const maxSide = 1600;
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const width = Math.max(1, Math.round(bitmap.width * scale));
+  const height = Math.max(1, Math.round(bitmap.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d', {alpha:false});
+  ctx.drawImage(bitmap, 0, 0, width, height);
+  if (bitmap.close) bitmap.close();
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Image conversion failed')),
+      'image/jpeg', 0.82);
+  });
+}
+
+async function handleChallengePhoto(event) {
+  const file = event.target.files && event.target.files[0];
+  const dayIndex = activeChallengeDay;
+  if (!file || dayIndex === null) return;
+
+  const status = document.getElementById(`challengeStatus${dayIndex}`);
+  status.textContent = 'שומר את התמונה...';
+
+  try {
+    let blob;
+    try {
+      blob = await compressChallengeImage(file);
+    } catch (e) {
+      blob = file;
+    }
+
+    const record = {
+      day: dayIndex,
+      blob,
+      savedAt: new Date().toISOString(),
+      name: file.name || `challenge-day-${dayIndex + 1}.jpg`
+    };
+    await challengeDB.put(record);
+    localStorage.setItem(`garda-challenge-${dayIndex}-done`, '1');
+    showChallengePhoto(dayIndex, record);
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'לא ניתן היה לשמור את התמונה. נסה שוב.';
+    alert('לא ניתן היה לשמור את התמונה במכשיר. נסה לצלם שוב.');
+  } finally {
+    activeChallengeDay = null;
+    event.target.value = '';
+  }
+}
+
+function showChallengePhoto(dayIndex, record) {
+  const card = document.querySelector(`.challenge[data-challenge-day="${dayIndex}"]`);
+  const preview = document.getElementById(`challengePreview${dayIndex}`);
+  const image = document.getElementById(`challengeImage${dayIndex}`);
+  const meta = document.getElementById(`challengeMeta${dayIndex}`);
+  const status = document.getElementById(`challengeStatus${dayIndex}`);
+  const deleteBtn = document.querySelector(`[data-delete-day="${dayIndex}"]`);
+
+  if (image.dataset.objectUrl) URL.revokeObjectURL(image.dataset.objectUrl);
+  const objectUrl = URL.createObjectURL(record.blob);
+  image.src = objectUrl;
+  image.dataset.objectUrl = objectUrl;
+  preview.classList.add('has-photo');
+  card.classList.add('completed');
+  status.textContent = '✅ האתגר הושלם והתמונה נשמרה במכשיר';
+  meta.textContent = `צולם ונשמר: ${formatChallengePhotoTime(record.savedAt)}`;
+  deleteBtn.style.display = 'inline-flex';
+}
+
+async function restoreAllChallengePhotos() {
+  for (let i = 0; i < tripDays.length; i++) {
+    try {
+      const record = await challengeDB.get(i);
+      if (record && record.blob) showChallengePhoto(i, record);
+    } catch (e) {
+      console.warn('Could not restore challenge photo', i, e);
+    }
+  }
+}
+
+async function deleteChallengePhoto(dayIndex) {
+  if (!confirm('למחוק את תמונת אתגר היום?')) return;
+  try {
+    await challengeDB.delete(dayIndex);
+    localStorage.removeItem(`garda-challenge-${dayIndex}-done`);
+    const card = document.querySelector(`.challenge[data-challenge-day="${dayIndex}"]`);
+    const preview = document.getElementById(`challengePreview${dayIndex}`);
+    const image = document.getElementById(`challengeImage${dayIndex}`);
+    const meta = document.getElementById(`challengeMeta${dayIndex}`);
+    const status = document.getElementById(`challengeStatus${dayIndex}`);
+    const deleteBtn = document.querySelector(`[data-delete-day="${dayIndex}"]`);
+
+    if (image.dataset.objectUrl) URL.revokeObjectURL(image.dataset.objectUrl);
+    image.removeAttribute('src');
+    delete image.dataset.objectUrl;
+    preview.classList.remove('has-photo');
+    card.classList.remove('completed');
+    meta.textContent = '';
+    status.textContent = 'עדיין לא צולמה תמונה';
+    deleteBtn.style.display = 'none';
+  } catch (e) {
+    alert('לא ניתן למחוק את התמונה כרגע.');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', prepareChallengeCards);
 
 document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
   const key = 'garda-' + cb.dataset.key;
@@ -793,23 +1062,72 @@ function saveParking() {
     alert(locationErrorMessage(error));
   });
 }
+function formatElapsed(isoTime) {
+  const saved = new Date(isoTime).getTime();
+  const now = Date.now();
+  const diff = Math.max(0, now - saved);
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return 'נשמר לפני פחות מדקה';
+  if (minutes < 60) return `נשמר לפני ${minutes} דקות`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `נשמר לפני ${hours} שעות`;
+  const days = Math.floor(hours / 24);
+  return `נשמר לפני ${days} ימים`;
+}
+
 function openParking() {
   const raw = localStorage.getItem('garda-parking');
   const status = document.getElementById('parkingStatus');
   const w = document.getElementById('parkingWaze');
   const m = document.getElementById('parkingMaps');
+  const clearBtn = document.getElementById('clearParkingBtn');
+
   if (!raw) {
     status.textContent = 'עדיין לא נשמר מיקום חניה.';
-    w.style.display = 'none'; m.style.display = 'none';
+    w.style.display = 'none';
+    m.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'none';
   } else {
-    const p = JSON.parse(raw);
-    const when = new Date(p.time).toLocaleString('he-IL');
-    status.textContent = 'המיקום נשמר בתאריך ' + when + (p.accuracy ? ' · דיוק משוער: ' + p.accuracy + ' מטר.' : '.');
-    w.href = `https://www.waze.com/ul?ll=${p.lat},${p.lng}&navigate=yes`;
-    m.href = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
-    w.style.display = 'block'; m.style.display = 'block';
+    try {
+      const p = JSON.parse(raw);
+      const when = new Date(p.time).toLocaleString('he-IL');
+      const accuracyText = p.accuracy ? ` · דיוק משוער: ${p.accuracy} מטר` : '';
+      status.textContent = `${formatElapsed(p.time)} · ${when}${accuracyText}`;
+      w.href = `https://www.waze.com/ul?ll=${p.lat},${p.lng}&navigate=yes`;
+      m.href = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+      w.style.display = 'inline-flex';
+      m.style.display = 'inline-flex';
+      if (clearBtn) clearBtn.style.display = 'block';
+    } catch (e) {
+      localStorage.removeItem('garda-parking');
+      status.textContent = 'מיקום החניה השמור לא היה תקין ונמחק.';
+      w.style.display = 'none';
+      m.style.display = 'none';
+      if (clearBtn) clearBtn.style.display = 'none';
+    }
   }
   document.getElementById('parkingModal').classList.add('open');
+}
+
+function clearParking() {
+  const raw = localStorage.getItem('garda-parking');
+  if (!raw) {
+    alert('אין מיקום חניה שמור למחיקה.');
+    return;
+  }
+  const approved = confirm('למחוק את מיקום החניה השמור?');
+  if (!approved) return;
+
+  localStorage.removeItem('garda-parking');
+  const status = document.getElementById('parkingStatus');
+  const w = document.getElementById('parkingWaze');
+  const m = document.getElementById('parkingMaps');
+  const clearBtn = document.getElementById('clearParkingBtn');
+
+  status.textContent = 'מיקום החניה נמחק בהצלחה.';
+  w.style.display = 'none';
+  m.style.display = 'none';
+  if (clearBtn) clearBtn.style.display = 'none';
 }
 function closeParking() { document.getElementById('parkingModal').classList.remove('open'); }
 function closeParkingBackdrop(e) { if (e.target.id === 'parkingModal') closeParking(); }
@@ -972,7 +1290,7 @@ renderExpenses();
 })();
 
 
-/* V10: robust iPhone click/touch binding for the six center buttons */
+/* V12: robust iPhone click/touch binding for the six center buttons */
 (function bindQuickActions(){
   function bind(id, action){
     const el = document.getElementById(id);
