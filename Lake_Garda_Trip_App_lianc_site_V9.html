@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071a2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Garda 2026">
+<title>טיול בת מצווה – אגם גארדה 2026 · V9</title>
+<style>
+:root {
+  --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
+  --accent:#6dd3ff; --green:#36d18b; --orange:#ffb15b; --red:#ff6b6b; --line:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:
+radial-gradient(circle at top right,#123d5d 0,transparent 35%),var(--bg);color:var(--text);padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+.hero{padding:calc(24px + env(safe-area-inset-top)) 18px 24px;background:
+linear-gradient(160deg,rgba(30,115,160,.8),rgba(8,25,40,.96));border-bottom:1px solid var(--line)}
+.kicker{font-size:13px;color:#d8f2ff;letter-spacing:.4px}
+.hero h1{font-size:30px;line-height:1.1;margin:9px 0}
+.hero p{color:var(--muted);margin:0 0 18px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:13px;border:1px solid var(--line);background:rgba(255,255,255,.07);border-radius:18px}
+.stat b{display:block;font-size:17px;margin-bottom:4px}
+.stat span{font-size:12px;color:#c7d8e6}
+.wrap{padding:16px;max-width:760px;margin:auto}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.quick a,.quick button{position:relative;z-index:2;touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,255,255,.12);cursor:pointer;padding:15px;border-radius:18px;background:var(--panel);border:1px solid var(--line);font-weight:700;text-align:center;color:var(--text)}
+.day-card{background:linear-gradient(180deg,var(--panel),#0d1c2c);border:1px solid var(--line);
+border-radius:24px;margin:14px 0;padding:16px;box-shadow:0 15px 45px rgba(0,0,0,.18)}
+.day-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.day-head h2{margin:4px 0 0;font-size:21px}
+.date{font-size:12px;color:var(--accent)}
+.day-icon{font-size:34px}
+.challenge{margin-top:12px;background:rgba(255,177,91,.1);border:1px solid rgba(255,177,91,.2);padding:11px 12px;border-radius:15px;font-size:13px;line-height:1.5}
+.start-day{width:100%;margin:12px 0 0;padding:12px;border:0;border-radius:15px;background:#193e5b;color:white;font-weight:800}
+.stop{margin-top:13px;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:14px}
+.stop.next{outline:2px solid var(--green);box-shadow:0 0 0 5px rgba(54,209,139,.09)}
+.stop-top{display:flex;justify-content:space-between;align-items:center}
+.time{font-size:12px;color:#d7e4ef;background:rgba(255,255,255,.08);padding:5px 8px;border-radius:999px}
+.stop h3{font-size:17px;margin:12px 0 5px}
+.stop p{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{display:block;padding:11px 8px;border-radius:14px;text-align:center;font-size:13px;font-weight:800}
+.waze{background:var(--green);color:#032418} .maps{background:#2f6fdf;color:white}
+.mini-check{display:flex;align-items:center;gap:7px;font-size:12px;color:#d7e4ef}
+.mini-check input,.checklist input{width:20px;height:20px;accent-color:var(--green)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:16px;margin:14px 0}
+.panel h2{font-size:19px;margin:0 0 12px}
+.checklist label{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.checklist label:last-child{border-bottom:0}
+.hotel-card{background:linear-gradient(135deg,#164e63,#18334e);border-radius:22px;padding:17px;border:1px solid var(--line)}
+.hotel-card h3{margin:0 0 6px}
+.hotel-card p{margin:0 0 13px;color:#d1e3ef;font-size:13px}
+.emergency{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.emergency a{background:#551f2c;border:1px solid rgba(255,255,255,.12);padding:14px;border-radius:16px;text-align:center;font-weight:800}
+.bottom-nav{position:fixed!important;z-index:1000;inset:auto 0 0 0!important;margin:0!important;
+padding:5px 8px calc(5px + env(safe-area-inset-bottom));min-height:58px;
+background:rgba(7,17,28,.78);-webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);
+border-top:1px solid rgba(255,255,255,.10);box-shadow:0 -8px 28px rgba(0,0,0,.22);
+display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
+.bottom-nav a{font-size:10px;line-height:1.1;text-align:center;padding:5px 3px 4px;border-radius:11px;color:#d8e6f0;min-width:0}
+.bottom-nav a:active{background:rgba(255,255,255,.09)}
+.bottom-nav b{display:block;font-size:18px;line-height:1;margin-bottom:3px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.66);z-index:50;display:none;align-items:flex-end}
+.modal.open{display:flex}
+.sheet{width:100%;max-height:88vh;overflow:auto;background:#0d1c2c;border-radius:26px 26px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.close{border:0;background:rgba(255,255,255,.08);color:white;border-radius:12px;padding:9px 12px}
+.next-box{margin-top:14px;background:#14384b;border:1px solid rgba(109,211,255,.25);border-radius:20px;padding:16px}
+.next-box h3{margin:6px 0}
+.day-progress{height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin:12px 0}
+.day-progress span{display:block;height:100%;background:var(--green);width:0}
+.parking-status{font-size:13px;color:var(--muted);line-height:1.5}
+.small-btn{width:100%;padding:12px;border:0;border-radius:14px;background:#6d4aff;color:white;font-weight:800;margin-top:10px}
+.warning{font-size:12px;color:#f8d9a6;margin-top:8px}
+.around-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.around-grid button{border:0;border-radius:15px;padding:13px;background:#183a52;color:white;font-weight:800}
+.budget-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.budget-form input,.budget-form select{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#0b1c2a;color:white}
+.budget-form button{grid-column:1/-1;padding:12px;border:0;border-radius:13px;background:var(--green);color:#06291d;font-weight:900}
+.expense-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.expense-row:last-child{border-bottom:0}
+.total{font-size:24px;font-weight:900;margin:6px 0 14px}
+.clear{width:100%;margin-top:12px;padding:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#ffb1b1;border-radius:12px}
+@media print {
+ body{background:white;color:#111;padding:0} .bottom-nav,.quick,.start-day,.modal{display:none!important}
+ .hero{background:white;color:#111;border-bottom:2px solid #222;padding:20px}
+ .hero p,.stat span,.stop p,.date{color:#444} .stat,.day-card,.stop,.panel,.hotel-card{background:white;color:#111;box-shadow:none;border:1px solid #bbb;break-inside:avoid}
+ .btn{border:1px solid #999;color:#111;background:white} .wrap{max-width:none}
+}
+</style>
+</head>
+<body>
+<header class="hero" id="home">
+  <div class="kicker">משפחת כהן · טיול בת מצווה</div>
+  <h1>אגם גארדה וונציה 2026</h1>
+  <p>גרסה 9 · כפתורי המרכז תוקנו להפעלה באייפון ובכל מקום בעולם</p>
+  <div class="hero-grid">
+    <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
+    <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="quick" id="quickActions">
+    <button id="quickToday" type="button">✨ היום שלי</button>
+    <a id="quickRoute" href="#days">📅 כל המסלול</a>
+    <button id="quickSaveParking" type="button">📍 שמור חניה</button>
+    <button id="quickOpenParking" type="button">🚘 איפה חנינו?</button>
+    <button id="quickAround" type="button">📍 Around Me</button>
+    <a id="quickBudget" href="#budget">💶 תקציב</a>
+  </div>
+
+  <section class="hotel-card" id="hotel">
+    <h3>🏡 Bio Agriturismo Vojon</h3>
+    <p>Via del Forte 6, 46040 Ponti sul Mincio MN, Italy</p>
+    <div class="actions">
+      <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">נווט למלון</a>
+      <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">פתח במפות</a>
+    </div>
+  </section>
+
+  <div id="days">
+    <section class="day-card" id="day-0" data-date="2026-09-30">
+      <div class="day-head">
+        <div>
+          <span class="date">רביעי · 30.09.2026</span>
+          <h2>נחיתה והגעה למלון</h2>
+        </div>
+        <div class="day-icon">✈️</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> לצלם את התמונה המשפחתית הראשונה באיטליה.</div>
+      <button class="start-day" type="button" onclick="openDayMode(0)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="0" data-stop="0">
+          <div class="stop-top">
+            <span class="time">16:00</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day0-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>נחיתה בנמל התעופה ורונה</h3>
+          <p>איסוף מזוודות ורכב שכור.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Verona%20Villafranca%20Airport&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Verona%20Villafranca%20Airport">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="0" data-stop="1">
+          <div class="stop-top">
+            <span class="time">18:00</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day0-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>נסיעה למלון</h3>
+          <p>צ'ק-אין והתארגנות רגועה.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-1" data-date="2026-10-01">
+      <div class="day-head">
+        <div>
+          <span class="date">חמישי · 01.10.2026</span>
+          <h2>Gardaland</h2>
+        </div>
+        <div class="day-icon">🎢</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> לבחור יחד את המתקן הכי טוב של היום.</div>
+      <button class="start-day" type="button" onclick="openDayMode(1)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="1" data-stop="0">
+          <div class="stop-top">
+            <span class="time">08:30</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day1-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>יציאה ל-Gardaland</h3>
+          <p>מומלץ להגיע לפני פתיחת השערים.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Gardaland%20Resort%2C%20Via%20Derna%204%2C%20Castelnuovo%20del%20Garda&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Gardaland%20Resort%2C%20Via%20Derna%204%2C%20Castelnuovo%20del%20Garda">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="1" data-stop="1">
+          <div class="stop-top">
+            <span class="time">יום מלא</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day1-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>Gardaland</h3>
+          <p>לשמור את הכרטיסים גם כצילום מסך.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Gardaland%20Resort%2C%20Via%20Derna%204%2C%20Castelnuovo%20del%20Garda&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Gardaland%20Resort%2C%20Via%20Derna%204%2C%20Castelnuovo%20del%20Garda">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="1" data-stop="2">
+          <div class="stop-top">
+            <span class="time">ערב</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day1-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חזרה למלון</h3>
+          <p>ניווט ישיר חזרה למלון.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-2" data-date="2026-10-02">
+      <div class="day-head">
+        <div>
+          <span class="date">שישי · 02.10.2026</span>
+          <h2>Movieland ומופע אבירים</h2>
+        </div>
+        <div class="day-icon">🎬</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> לצלם סלפי בסגנון סרט.</div>
+      <button class="start-day" type="button" onclick="openDayMode(2)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="2" data-stop="0">
+          <div class="stop-top">
+            <span class="time">בוקר</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day2-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>Movieland</h3>
+          <p>להגיע מוקדם כדי להספיק את המתקנים המרכזיים.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Movieland%20The%20Hollywood%20Park%2C%20Via%20Fossalta%2058%2C%20Lazise&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Movieland%20The%20Hollywood%20Park%2C%20Via%20Fossalta%2058%2C%20Lazise">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="2" data-stop="1">
+          <div class="stop-top">
+            <span class="time">לפי ההזמנה</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day2-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>Medieval Times</h3>
+          <p>יש לבדוק את שעת המופע המדויקת מראש.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Medieval%20Times%2C%20Via%20Fossalta%2058%2C%20Lazise&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Medieval%20Times%2C%20Via%20Fossalta%2058%2C%20Lazise">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="2" data-stop="2">
+          <div class="stop-top">
+            <span class="time">ערב</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day2-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חזרה למלון</h3>
+          <p>מומלץ להביא שכבה דקה לערב.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-3" data-date="2026-10-03">
+      <div class="day-head">
+        <div>
+          <span class="date">שבת · 03.10.2026</span>
+          <h2>סובב אגם וראפטינג</h2>
+        </div>
+        <div class="day-icon">🚣</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> למצוא נקודת תצפית אחת שאף אחד לא רוצה לעזוב.</div>
+      <button class="start-day" type="button" onclick="openDayMode(3)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="3" data-stop="0">
+          <div class="stop-top">
+            <span class="time">בוקר</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day3-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>מרכז הראפטינג</h3>
+          <p>לעדכן לפי שם החברה המדויק באישור ההזמנה.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Rafting%20Center%20Valdadige%2C%20Brentino%20Belluno%2C%20Verona&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Rafting%20Center%20Valdadige%2C%20Brentino%20Belluno%2C%20Verona">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="3" data-stop="1">
+          <div class="stop-top">
+            <span class="time">צהריים</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day3-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>נסיעה נופית סביב האגם</h3>
+          <p>לעצור בנקודות תצפית בהתאם לזמן ולמזג האוויר.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Lake%20Garda%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Lake%20Garda%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="3" data-stop="2">
+          <div class="stop-top">
+            <span class="time">ערב</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day3-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חזרה למלון</h3>
+          <p>להכין בגדים ונעליים להחלפה.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-4" data-date="2026-10-04">
+      <div class="day-head">
+        <div>
+          <span class="date">ראשון · 04.10.2026</span>
+          <h2>מלצ'סינה, מונטה באלדו ולימונה</h2>
+        </div>
+        <div class="day-icon">🏔️</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> לצלם תמונת פסגה משפחתית.</div>
+      <button class="start-day" type="button" onclick="openDayMode(4)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="4" data-stop="0">
+          <div class="stop-top">
+            <span class="time">08:30</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day4-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חניון רכבל מלצ'סינה</h3>
+          <p>חניון נוח ליד תחנת הרכבל.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Parcheggio%20Funivia%20Malcesine%20Monte%20Baldo%2C%20Via%20Navene%20Vecchia%2012%2C%20Malcesine&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Parcheggio%20Funivia%20Malcesine%20Monte%20Baldo%2C%20Via%20Navene%20Vecchia%2012%2C%20Malcesine">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="4" data-stop="1">
+          <div class="stop-top">
+            <span class="time">בוקר</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day4-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>רכבל מונטה באלדו</h3>
+          <p>לבדוק בבוקר רוח ומצב פעילות הרכבל.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Funivia%20Malcesine%20Monte%20Baldo&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Funivia%20Malcesine%20Monte%20Baldo">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="4" data-stop="2">
+          <div class="stop-top">
+            <span class="time">אחה״צ</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day4-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>לימונה סול גארדה</h3>
+          <p>לבדוק אם המעבר יהיה במעבורת או ברכב.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Limone%20sul%20Garda%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Limone%20sul%20Garda%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="4" data-stop="3">
+          <div class="stop-top">
+            <span class="time">ערב</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day4-stop3">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חזרה למלון</h3>
+          <p>זהו יום נסיעות ארוך יחסית.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-5" data-date="2026-10-05">
+      <div class="day-head">
+        <div>
+          <span class="date">שני · 05.10.2026</span>
+          <h2>ונציה</h2>
+        </div>
+        <div class="day-icon">🛶</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> למצוא גשר קטן ויפה מחוץ למסלול הראשי.</div>
+      <button class="start-day" type="button" onclick="openDayMode(5)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="5" data-stop="0">
+          <div class="stop-top">
+            <span class="time">בוקר</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day5-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>בוקר רגוע במלון</h3>
+          <p>ארוחת בוקר ויציאה בנחת.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Via%20del%20Forte%206%2C%2046040%20Ponti%20sul%20Mincio%20MN%2C%20Italy">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="5" data-stop="1">
+          <div class="stop-top">
+            <span class="time">צהריים</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day5-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חניון Tronchetto בוונציה</h3>
+          <p>לשמור צילום של מיקום הרכב והקומה.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Venezia%20Tronchetto%20Parking%2C%20Isola%20Nova%20del%20Tronchetto%2033%2C%20Venezia&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Venezia%20Tronchetto%20Parking%2C%20Isola%20Nova%20del%20Tronchetto%2033%2C%20Venezia">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="5" data-stop="2">
+          <div class="stop-top">
+            <span class="time">ערב</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day5-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>Piazzale Roma / מרכז ונציה</h3>
+          <p>ממשיכים ברגל או בתחבורה ציבורית.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Piazzale%20Roma%2C%20Venezia&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Piazzale%20Roma%2C%20Venezia">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    
+    <section class="day-card" id="day-6" data-date="2026-10-06">
+      <div class="day-head">
+        <div>
+          <span class="date">שלישי · 06.10.2026</span>
+          <h2>ונציה, ורונה והטיסה</h2>
+        </div>
+        <div class="day-icon">🏛️</div>
+      </div>
+      <div class="challenge">🎯 <b>אתגר היום:</b> לבחור יחד את רגע השיא של הטיול.</div>
+      <button class="start-day" type="button" onclick="openDayMode(6)">התחל את היום הזה</button>
+      <div class="stops">
+        <article class="stop" data-day="6" data-stop="0">
+          <div class="stop-top">
+            <span class="time">בוקר</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day6-stop0">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>סיור אחרון בוונציה</h3>
+          <p>להשאיר מספיק זמן לחזרה לרכב.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Piazza%20San%20Marco%2C%20Venezia&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Piazza%20San%20Marco%2C%20Venezia">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="6" data-stop="1">
+          <div class="stop-top">
+            <span class="time">צהריים</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day6-stop1">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>חניון מרכז ורונה</h3>
+          <p>סיור קצר בארנה ובמרכז ההיסטורי.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Parcheggio%20Cittadella%2C%20Piazza%20Cittadella%2C%20Verona&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Parcheggio%20Cittadella%2C%20Piazza%20Cittadella%2C%20Verona">Google Maps</a>
+          </div>
+        </article>
+        
+        <article class="stop" data-day="6" data-stop="2">
+          <div class="stop-top">
+            <span class="time">18:30</span>
+            <label class="mini-check">
+              <input type="checkbox" data-key="day6-stop2">
+              <span>בוצע</span>
+            </label>
+          </div>
+          <h3>החזרת הרכב בשדה</h3>
+          <p>להשאיר זמן לתדלוק ולהחזרת הרכב.</p>
+          <div class="actions">
+            <a class="btn waze" href="https://www.waze.com/ul?q=Verona%20Villafranca%20Airport&navigate=yes">פתח ב-Waze</a>
+            <a class="btn maps" href="https://www.google.com/maps/search/?api=1&query=Verona%20Villafranca%20Airport">Google Maps</a>
+          </div>
+        </article>
+        </div>
+    </section>
+    </div>
+
+  <section class="panel" id="budget">
+    <h2>💶 מעקב תקציב</h2>
+    <div class="total">€<span id="budgetTotal">0.00</span></div>
+    <div class="budget-form">
+      <select id="expenseCategory">
+        <option>אוכל</option><option>דלק</option><option>אטרקציות</option><option>חניה</option><option>קניות</option><option>אחר</option>
+      </select>
+      <input id="expenseAmount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="סכום באירו">
+      <input id="expenseNote" type="text" placeholder="הערה קצרה">
+      <button type="button" onclick="addExpense()">הוסף הוצאה</button>
+    </div>
+    <div id="expenseList"></div>
+    <button class="clear" type="button" onclick="clearExpenses()">מחיקת כל ההוצאות</button>
+  </section>
+
+  <section class="panel checklist" id="gear">
+    <h2>🎒 צ'קליסט לפני היציאה</h2>
+    <label><input type="checkbox" data-key="gear-passports">דרכונים וכרטיסי טיסה</label>
+    <label><input type="checkbox" data-key="gear-car">רישיון נהיגה ואישור רכב שכור</label>
+    <label><input type="checkbox" data-key="gear-insurance">ביטוח נסיעות</label>
+    <label><input type="checkbox" data-key="gear-tickets">כרטיסים לפארקים ולמופעים</label>
+    <label><input type="checkbox" data-key="gear-power">מטענים וסוללה ניידת</label>
+    <label><input type="checkbox" data-key="gear-warm">בגד חם למונטה באלדו</label>
+    <label><input type="checkbox" data-key="gear-rafting">בגדים ונעליים להחלפה לראפטינג</label>
+  </section>
+
+  <section class="panel" id="emergency">
+    <h2>🆘 מספרי חירום באיטליה</h2>
+    <div class="emergency">
+      <a href="tel:112">112<br><small>חירום כללי</small></a>
+      <a href="tel:118">118<br><small>אמבולנס</small></a>
+      <a href="tel:115">115<br><small>כבאות</small></a>
+      <a href="tel:113">113<br><small>משטרה</small></a>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom-nav">
+  <a href="#home"><b>🏠</b>בית</a>
+  <a href="#days"><b>📅</b>ימים</a>
+  <a href="#hotel"><b>🚗</b>מלון</a>
+  <a href="#emergency"><b>🆘</b>חירום</a>
+</nav>
+
+<div class="modal" id="dayModal" onclick="closeOnBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div><small id="modalDate"></small><h2 id="modalTitle" style="margin:4px 0 0"></h2></div>
+      <button class="close" type="button" onclick="closeDayMode()">סגור</button>
+    </div>
+    <div class="day-progress"><span id="progressBar"></span></div>
+    <div class="next-box">
+      <small>התחנה הבאה</small>
+      <h3 id="nextName"></h3>
+      <p id="nextNote" style="color:var(--muted)"></p>
+      <div class="actions">
+        <a id="nextWaze" class="btn waze">פתח ב-Waze</a>
+        <a id="nextMaps" class="btn maps">Google Maps</a>
+      </div>
+      <button class="small-btn" type="button" onclick="markCurrentDone()">סמן כבוצע ועבור לתחנה הבאה</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="parkingModal" onclick="closeParkingBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">🚘 מיקום החניה</h2>
+      <button class="close" type="button" onclick="closeParking()">סגור</button>
+    </div>
+    <div class="next-box">
+      <p id="parkingStatus" class="parking-status">עדיין לא נשמר מיקום חניה.</p>
+      <div class="actions">
+        <a id="parkingWaze" class="btn waze" style="display:none">נווט לרכב</a>
+        <a id="parkingMaps" class="btn maps" style="display:none">פתח במפות</a>
+      </div>
+      <button class="small-btn" type="button" onclick="saveParking()">שמור את המיקום הנוכחי</button>
+      <div class="warning">שמירת החניה דורשת הרשאת מיקום בדפדפן.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="aroundModal" onclick="closeAroundBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">📍 Around Me</h2>
+      <button class="close" type="button" onclick="closeAround()">סגור</button>
+    </div>
+    <p style="color:var(--muted)">החיפוש משתמש במיקום הנוכחי שלך — בישראל, באיטליה או בכל מקום אחר.</p>
+    <div class="around-grid">
+      <button onclick="searchNearby('restaurants')">🍝 מסעדות</button>
+      <button onclick="searchNearby('gelato')">🍦 גלידריות</button>
+      <button onclick="searchNearby('pharmacy')">💊 בתי מרקחת</button>
+      <button onclick="searchNearby('gas station')">⛽ תחנות דלק</button>
+      <button onclick="searchNearby('supermarket')">🛒 סופרמרקטים</button>
+      <button onclick="searchNearby('parking')">🅿️ חניה</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const tripDays = [{"date": "2026-09-30", "label": "רביעי · 30.09.2026", "title": "נחיתה והגעה למלון", "icon": "✈️", "challenge": "לצלם את התמונה המשפחתית הראשונה באיטליה.", "stops": [{"time": "16:00", "name": "נחיתה בנמל התעופה ורונה", "dest": "Verona Villafranca Airport", "note": "איסוף מזוודות ורכב שכור."}, {"time": "18:00", "name": "נסיעה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "צ'ק-אין והתארגנות רגועה."}]}, {"date": "2026-10-01", "label": "חמישי · 01.10.2026", "title": "Gardaland", "icon": "🎢", "challenge": "לבחור יחד את המתקן הכי טוב של היום.", "stops": [{"time": "08:30", "name": "יציאה ל-Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "מומלץ להגיע לפני פתיחת השערים."}, {"time": "יום מלא", "name": "Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "לשמור את הכרטיסים גם כצילום מסך."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ניווט ישיר חזרה למלון."}]}, {"date": "2026-10-02", "label": "שישי · 02.10.2026", "title": "Movieland ומופע אבירים", "icon": "🎬", "challenge": "לצלם סלפי בסגנון סרט.", "stops": [{"time": "בוקר", "name": "Movieland", "dest": "Movieland The Hollywood Park, Via Fossalta 58, Lazise", "note": "להגיע מוקדם כדי להספיק את המתקנים המרכזיים."}, {"time": "לפי ההזמנה", "name": "Medieval Times", "dest": "Medieval Times, Via Fossalta 58, Lazise", "note": "יש לבדוק את שעת המופע המדויקת מראש."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "מומלץ להביא שכבה דקה לערב."}]}, {"date": "2026-10-03", "label": "שבת · 03.10.2026", "title": "סובב אגם וראפטינג", "icon": "🚣", "challenge": "למצוא נקודת תצפית אחת שאף אחד לא רוצה לעזוב.", "stops": [{"time": "בוקר", "name": "מרכז הראפטינג", "dest": "Rafting Center Valdadige, Brentino Belluno, Verona", "note": "לעדכן לפי שם החברה המדויק באישור ההזמנה."}, {"time": "צהריים", "name": "נסיעה נופית סביב האגם", "dest": "Lake Garda, Italy", "note": "לעצור בנקודות תצפית בהתאם לזמן ולמזג האוויר."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "להכין בגדים ונעליים להחלפה."}]}, {"date": "2026-10-04", "label": "ראשון · 04.10.2026", "title": "מלצ'סינה, מונטה באלדו ולימונה", "icon": "🏔️", "challenge": "לצלם תמונת פסגה משפחתית.", "stops": [{"time": "08:30", "name": "חניון רכבל מלצ'סינה", "dest": "Parcheggio Funivia Malcesine Monte Baldo, Via Navene Vecchia 12, Malcesine", "note": "חניון נוח ליד תחנת הרכבל."}, {"time": "בוקר", "name": "רכבל מונטה באלדו", "dest": "Funivia Malcesine Monte Baldo", "note": "לבדוק בבוקר רוח ומצב פעילות הרכבל."}, {"time": "אחה״צ", "name": "לימונה סול גארדה", "dest": "Limone sul Garda, Italy", "note": "לבדוק אם המעבר יהיה במעבורת או ברכב."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "זהו יום נסיעות ארוך יחסית."}]}, {"date": "2026-10-05", "label": "שני · 05.10.2026", "title": "ונציה", "icon": "🛶", "challenge": "למצוא גשר קטן ויפה מחוץ למסלול הראשי.", "stops": [{"time": "בוקר", "name": "בוקר רגוע במלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ארוחת בוקר ויציאה בנחת."}, {"time": "צהריים", "name": "חניון Tronchetto בוונציה", "dest": "Venezia Tronchetto Parking, Isola Nova del Tronchetto 33, Venezia", "note": "לשמור צילום של מיקום הרכב והקומה."}, {"time": "ערב", "name": "Piazzale Roma / מרכז ונציה", "dest": "Piazzale Roma, Venezia", "note": "ממשיכים ברגל או בתחבורה ציבורית."}]}, {"date": "2026-10-06", "label": "שלישי · 06.10.2026", "title": "ונציה, ורונה והטיסה", "icon": "🏛️", "challenge": "לבחור יחד את רגע השיא של הטיול.", "stops": [{"time": "בוקר", "name": "סיור אחרון בוונציה", "dest": "Piazza San Marco, Venezia", "note": "להשאיר מספיק זמן לחזרה לרכב."}, {"time": "צהריים", "name": "חניון מרכז ורונה", "dest": "Parcheggio Cittadella, Piazza Cittadella, Verona", "note": "סיור קצר בארנה ובמרכז ההיסטורי."}, {"time": "18:30", "name": "החזרת הרכב בשדה", "dest": "Verona Villafranca Airport", "note": "להשאיר זמן לתדלוק ולהחזרת הרכב."}]}];
+let activeDay = 0;
+let activeStop = 0;
+
+document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
+  const key = 'garda-' + cb.dataset.key;
+  cb.checked = localStorage.getItem(key) === '1';
+  cb.addEventListener('change', () => {
+    localStorage.setItem(key, cb.checked ? '1' : '0');
+    refreshHighlights();
+  });
+});
+
+function isDone(day, stop) {
+  return localStorage.getItem(`garda-day${day}-stop${stop}`) === '1';
+}
+function firstIncomplete(day) {
+  const stops = tripDays[day].stops;
+  for (let i=0;i<stops.length;i++) if (!isDone(day,i)) return i;
+  return stops.length - 1;
+}
+function refreshHighlights() {
+  document.querySelectorAll('.stop').forEach(el => el.classList.remove('next'));
+  tripDays.forEach((day, di) => {
+    const si = firstIncomplete(di);
+    const el = document.querySelector(`.stop[data-day="${di}"][data-stop="${si}"]`);
+    if (el && !isDone(di,si)) el.classList.add('next');
+  });
+}
+function openToday() {
+  const today = new Date();
+  const iso = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  let idx = tripDays.findIndex(d => d.date === iso);
+  if (idx < 0) idx = 0;
+  openDayMode(idx);
+}
+function openDayMode(dayIndex) {
+  activeDay = dayIndex;
+  activeStop = firstIncomplete(dayIndex);
+  updateDayModal();
+  document.getElementById('dayModal').classList.add('open');
+}
+function updateDayModal() {
+  const day = tripDays[activeDay];
+  const stop = day.stops[activeStop];
+  document.getElementById('modalDate').textContent = day.label;
+  document.getElementById('modalTitle').textContent = day.icon + ' ' + day.title;
+  document.getElementById('nextName').textContent = stop.name;
+  document.getElementById('nextNote').textContent = stop.note;
+  document.getElementById('nextWaze').href = 'https://www.waze.com/ul?q=' + encodeURIComponent(stop.dest) + '&navigate=yes';
+  document.getElementById('nextMaps').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(stop.dest);
+  const doneCount = day.stops.filter((_,i) => isDone(activeDay,i)).length;
+  document.getElementById('progressBar').style.width = Math.round(doneCount/day.stops.length*100) + '%';
+}
+function markCurrentDone() {
+  const key = `garda-day${activeDay}-stop${activeStop}`;
+  localStorage.setItem(key,'1');
+  const cb = document.querySelector(`input[data-key="day${activeDay}-stop${activeStop}"]`);
+  if (cb) cb.checked = true;
+  activeStop = firstIncomplete(activeDay);
+  updateDayModal();
+  refreshHighlights();
+}
+function closeDayMode() { document.getElementById('dayModal').classList.remove('open'); }
+function closeOnBackdrop(e) { if (e.target.id === 'dayModal') closeDayMode(); }
+
+function saveParking() {
+  if (!navigator.geolocation) {
+    alert('שמירת מיקום אינה נתמכת בדפדפן הזה.');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    const data = {lat:pos.coords.latitude,lng:pos.coords.longitude,time:new Date().toISOString()};
+    localStorage.setItem('garda-parking', JSON.stringify(data));
+    openParking();
+  }, () => alert('לא התקבלה הרשאת מיקום. יש לאפשר גישה למיקום בהגדרות הדפדפן.'),
+  {enableHighAccuracy:true, timeout:12000});
+}
+function openParking() {
+  const raw = localStorage.getItem('garda-parking');
+  const status = document.getElementById('parkingStatus');
+  const w = document.getElementById('parkingWaze');
+  const m = document.getElementById('parkingMaps');
+  if (!raw) {
+    status.textContent = 'עדיין לא נשמר מיקום חניה.';
+    w.style.display = 'none'; m.style.display = 'none';
+  } else {
+    const p = JSON.parse(raw);
+    const when = new Date(p.time).toLocaleString('he-IL');
+    status.textContent = 'המיקום נשמר בתאריך ' + when + '.';
+    w.href = `https://www.waze.com/ul?ll=${p.lat},${p.lng}&navigate=yes`;
+    m.href = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+    w.style.display = 'block'; m.style.display = 'block';
+  }
+  document.getElementById('parkingModal').classList.add('open');
+}
+function closeParking() { document.getElementById('parkingModal').classList.remove('open'); }
+function closeParkingBackdrop(e) { if (e.target.id === 'parkingModal') closeParking(); }
+
+function openAround() { document.getElementById('aroundModal').classList.add('open'); }
+function closeAround() { document.getElementById('aroundModal').classList.remove('open'); }
+function closeAroundBackdrop(e) { if (e.target.id === 'aroundModal') closeAround(); }
+function searchNearby(term) {
+  const labels = {
+    restaurants: 'מסעדות',
+    gelato: 'גלידריות',
+    pharmacy: 'בתי מרקחת',
+    'gas station': 'תחנות דלק',
+    supermarket: 'סופרמרקטים',
+    parking: 'חניה'
+  };
+  const label = labels[term] || term;
+  const fallbackUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(term + ' near me');
+
+  // Open a tab immediately so iPhone/Safari will not block it after the GPS callback.
+  const mapWindow = window.open('about:blank', '_blank');
+  const openMap = url => {
+    if (mapWindow && !mapWindow.closed) mapWindow.location.href = url;
+    else window.location.href = url;
+  };
+
+  if (!navigator.geolocation) {
+    openMap(fallbackUrl);
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude.toFixed(6);
+    const lng = pos.coords.longitude.toFixed(6);
+    // This URL pins the search viewport to the user's exact current area.
+    const url = `https://www.google.com/maps/search/${encodeURIComponent(term)}/@${lat},${lng},15z`;
+    openMap(url);
+  }, () => {
+    // Google Maps itself will use the phone's current location when permission
+    // is available to the app, even if the local HTML file could not access it.
+    openMap(fallbackUrl);
+  }, {enableHighAccuracy:true, timeout:10000, maximumAge:120000});
+}
+
+function getExpenses() {
+  try { return JSON.parse(localStorage.getItem('garda-expenses') || '[]'); }
+  catch { return []; }
+}
+function saveExpenses(items) {
+  localStorage.setItem('garda-expenses', JSON.stringify(items));
+  renderExpenses();
+}
+function addExpense() {
+  const amount = parseFloat(document.getElementById('expenseAmount').value);
+  const category = document.getElementById('expenseCategory').value;
+  const note = document.getElementById('expenseNote').value.trim();
+  if (!amount || amount <= 0) return alert('יש להזין סכום תקין.');
+  const items = getExpenses();
+  items.unshift({amount,category,note,time:new Date().toISOString()});
+  saveExpenses(items);
+  document.getElementById('expenseAmount').value='';
+  document.getElementById('expenseNote').value='';
+}
+function renderExpenses() {
+  const items = getExpenses();
+  document.getElementById('budgetTotal').textContent = items.reduce((s,x)=>s+x.amount,0).toFixed(2);
+  document.getElementById('expenseList').innerHTML = items.map(x =>
+    `<div class="expense-row"><span>${x.category}${x.note ? ' · '+x.note : ''}</span><b>€${x.amount.toFixed(2)}</b></div>`
+  ).join('');
+}
+function clearExpenses() {
+  if (confirm('למחוק את כל ההוצאות שנשמרו?')) saveExpenses([]);
+}
+
+refreshHighlights();
+renderExpenses();
+
+
+// iPhone / Quick Look safeguard: keep the navigation on the real visible bottom edge.
+(function keepBottomNavAtVisualBottom(){
+  const nav = document.querySelector('.bottom-nav');
+  if (!nav) return;
+  const sync = () => {
+    const vv = window.visualViewport;
+    if (!vv) { nav.style.transform = ''; return; }
+    const layoutHeight = document.documentElement.clientHeight;
+    const shift = Math.max(0, vv.offsetTop + vv.height - layoutHeight);
+    nav.style.transform = `translate3d(0, ${Math.round(shift)}px, 0)`;
+  };
+  sync();
+  window.addEventListener('resize', sync, {passive:true});
+  window.addEventListener('orientationchange', () => setTimeout(sync, 120), {passive:true});
+  window.addEventListener('scroll', sync, {passive:true});
+  if (window.visualViewport) {
+    visualViewport.addEventListener('resize', sync, {passive:true});
+    visualViewport.addEventListener('scroll', sync, {passive:true});
+  }
+})();
+
+// Smart map handling: from Israel show the Italian destination; in Italy start navigation.
+(function enableMapsFromAnywhere(){
+  const ITALY_BOUNDS = {minLat:35.0,maxLat:48.8,minLng:6.0,maxLng:19.0};
+  let cachedPosition = null;
+
+  function isInItaly(pos){
+    if (!pos) return false;
+    const {latitude:lat, longitude:lng} = pos.coords;
+    return lat >= ITALY_BOUNDS.minLat && lat <= ITALY_BOUNDS.maxLat &&
+           lng >= ITALY_BOUNDS.minLng && lng <= ITALY_BOUNDS.maxLng;
+  }
+
+  function previewWazeUrl(url){
+    try {
+      const u = new URL(url, location.href);
+      u.searchParams.delete('navigate');
+      return u.toString();
+    } catch(e) {
+      return url.replace(/([?&])navigate=yes(&|$)/, '$1').replace(/[?&]$/, '');
+    }
+  }
+
+  function toast(message){
+    let el = document.getElementById('mapModeToast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'mapModeToast';
+      el.style.cssText = 'position:fixed;left:18px;right:18px;bottom:92px;z-index:99999;background:rgba(9,22,38,.96);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:12px 16px;text-align:center;font-weight:700;box-shadow:0 12px 35px rgba(0,0,0,.35);opacity:0;transform:translateY(8px);transition:.22s;pointer-events:none';
+      document.body.appendChild(el);
+    }
+    el.textContent = message;
+    requestAnimationFrame(() => { el.style.opacity='1'; el.style.transform='translateY(0)'; });
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => { el.style.opacity='0'; el.style.transform='translateY(8px)'; }, 3200);
+  }
+
+  function getPosition(callback){
+    if (cachedPosition) return callback(cachedPosition);
+    if (!navigator.geolocation) return callback(null);
+    navigator.geolocation.getCurrentPosition(
+      pos => { cachedPosition = pos; callback(pos); },
+      () => callback(null),
+      {enableHighAccuracy:false, timeout:4500, maximumAge:300000}
+    );
+  }
+
+  document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href*="waze.com/ul"]');
+    if (!link) return;
+    e.preventDefault();
+    const original = link.href;
+    getPosition(pos => {
+      if (isInItaly(pos)) {
+        window.location.href = original;
+      } else {
+        toast('אתם מחוץ לאיטליה — נפתחת תצוגת היעד במפה, בלי להתחיל ניווט מישראל.');
+        window.location.href = previewWazeUrl(original);
+      }
+    });
+  }, true);
+
+  // Google Maps search links already work worldwide. Open them as destination previews.
+  document.querySelectorAll('a[href*="google.com/maps"]').forEach(a => {
+    a.setAttribute('target','_blank');
+    a.setAttribute('rel','noopener');
+  });
+})();
+
+
+/* V9: robust iPhone click/touch binding for the six center buttons */
+(function bindQuickActions(){
+  function bind(id, action){
+    const el = document.getElementById(id);
+    if(!el) return;
+    let touched = false;
+    el.addEventListener('touchend', function(ev){
+      touched = true;
+      ev.preventDefault();
+      action();
+      setTimeout(function(){ touched = false; }, 450);
+    }, {passive:false});
+    el.addEventListener('click', function(ev){
+      if(touched) return;
+      ev.preventDefault();
+      action();
+    });
+  }
+
+  function goTo(id){
+    const target = document.getElementById(id);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  bind('quickToday', function(){ openToday(); });
+  bind('quickRoute', function(){ goTo('days'); });
+  bind('quickSaveParking', function(){ saveParking(); });
+  bind('quickOpenParking', function(){ openParking(); });
+  bind('quickAround', function(){ openAround(); });
+  bind('quickBudget', function(){ goTo('budget'); });
+})();
+
+</script>
+</body>
+</html>
+Lake_Garda_Trip_App_lianc_site_V9.html
+HTML
